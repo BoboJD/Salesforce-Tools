@@ -1,0 +1,9 @@
+{
+    "orgName": "apex-mock",
+    "edition": "Developer",
+    "settings": {
+        "lightningExperienceSettings": {
+            "enableS1DesktopEnabled": true
+        }
+    }
+}
