@@ -21,3 +21,9 @@ Maintain fflib
 git subtree pull --prefix=fflib-apex-mocks git@github.com:apex-enterprise-patterns/fflib-apex-mocks.git master
 git subtree pull --prefix=fflib-apex-common git@github.com:apex-enterprise-patterns/fflib-apex-common.git master
 ```
+
+Then copy fflib content to project
+```sh
+cp -r fflib-apex-mocks/sfdx-source/apex-mocks/main/* force-app/fflib/
+cp -r fflib-apex-common/sfdx-source/apex-common/main/* force-app/fflib/
+```
