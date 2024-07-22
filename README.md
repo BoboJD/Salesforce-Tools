@@ -2,7 +2,7 @@
 
 Create a scratch org and set a password to your user
 ```sh
-sf org create scratch --definition-file config/project-scratch-def.json --alias salesforce-tools --duration-days 30 -s
+sf org create scratch --definition-file config/project-scratch-def.json --alias salesforce-tools --duration-days 30 --set-default
 sf org generate password --complexity 3 --length 16
 ```
 
