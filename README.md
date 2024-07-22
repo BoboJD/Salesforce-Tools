@@ -6,6 +6,11 @@ sf org create scratch --definition-file config/project-scratch-def.json --alias 
 sf org generate password --complexity 3 --length 16
 ```
 
+Deploy project to scratch org
+```sh
+sf project deploy start --source-dir force-app
+```
+
 Create a new package version
 ```sh
 sf package version create --package "Salesforce Tools" --wait 10 --installation-key-bypass
