@@ -1,17 +1,21 @@
 {
+  "apexInsertFinalNewline": false,
+  "arrowParens": "avoid",
+  "bracketSameLine": true,
+  "bracketSpacing": false,
   "trailingComma": "none",
-  "plugins": [
-    "prettier-plugin-apex",
-    "@prettier/plugin-xml"
-  ],
   "overrides": [
     {
-      "files": "**/lwc/**/*.html",
-      "options": { "parser": "lwc" }
+    "files": "**/lwc/**/*.html",
+    "options": { "parser": "lwc" }
     },
     {
-      "files": "*.{cmp,page,component}",
-      "options": { "parser": "html" }
+    "files": "*.{cmp,page,component}",
+    "options": { "parser": "html" }
     }
-  ]
+  ],
+  "printWidth": 160,
+  "singleQuote": true,
+  "tabWidth": 4,
+  "useTabs": true
 }
