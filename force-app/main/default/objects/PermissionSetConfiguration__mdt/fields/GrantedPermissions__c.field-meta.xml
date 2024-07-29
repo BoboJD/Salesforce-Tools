@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>GrantedPermissions__c</fullName>
+    <description>List of permission sets separted by &quot;;&quot;</description>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <inlineHelpText>separted by &quot;;&quot;</inlineHelpText>
+    <label>Granted permissions</label>
+    <length>2000</length>
+    <type>LongTextArea</type>
+    <visibleLines>3</visibleLines>
+</CustomField>
