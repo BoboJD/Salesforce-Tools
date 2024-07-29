@@ -3,7 +3,7 @@ public class DecoratedPicklistEntry{
 	@AuraEnabled public String label {get;set;}
 	@AuraEnabled public String description {get;set;}
 	@AuraEnabled public Map<String, Object> fields {get;set;}
-	@AuraEnabled public String validFor {get; set;}
+	@AuraEnabled public String validFor {get;set;}
 	@AuraEnabled public Boolean checked {get;set;}
 
 	private DecoratedPicklistEntry(){
@@ -48,9 +48,8 @@ public class DecoratedPicklistEntry{
 	}
 
 	public DecoratedPicklistEntry setFieldValue(SObject record, List<SObjectField> sObjectFields){
-		for(SObjectField sObjectField : sObjectFields){
+		for(SObjectField sObjectField : sObjectFields)
 			setFieldValue(record, sObjectField);
-		}
 		return this;
 	}
 

@@ -1,21 +1,21 @@
 @IsTest
 private class ApexPagesUtilsTest{
 
-	// @IsTest
-	// static void extractSetIdsParameterFromUrlWithCommaSeparatedStringShouldReturnSetIds(){
-	// 	Id accountId = fflib_IDGenerator.generate(Schema.Account.SObjectType);
-	// 	Id contactId = fflib_IDGenerator.generate(Schema.Contact.SObjectType);
-	// 	String parameter = 'myParameter';
-	// 	String concatenation = accountId + ',' + contactId;
-	// 	ApexPages.currentPage().getParameters().put(parameter, concatenation);
+	@IsTest
+	static void extractSetIdsParameterFromUrlWithCommaSeparatedStringShouldReturnSetIds(){
+		Id accountId = fflib_IDGenerator.generate(Schema.Account.SObjectType);
+		Id contactId = fflib_IDGenerator.generate(Schema.Contact.SObjectType);
+		String parameter = 'myParameter';
+		String concatenation = accountId + ',' + contactId;
+		ApexPages.currentPage().getParameters().put(parameter, concatenation);
 
-	// 	Test.startTest();
-	// 	Set<Id> ids = ApexPagesUtils.extractSetIdsParameterFromUrl(parameter);
-	// 	Test.stopTest();
+		Test.startTest();
+		Set<Id> ids = ApexPagesUtils.extractSetIdsParameterFromUrl(parameter);
+		Test.stopTest();
 
-	// 	Set<Id> expectedIds = new Set<Id>{accountId, contactId};
-	// 	Assert.equals(expectedIds, ids);
-	// }
+		Set<Id> expectedIds = new Set<Id>{accountId, contactId};
+		Assert.equals(expectedIds, ids);
+	}
 
 	@IsTest
 	static void extractSetIdsParameterFromUrlWithNullStringShouldReturnEmptySetIds(){

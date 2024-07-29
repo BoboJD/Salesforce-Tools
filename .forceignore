@@ -10,3 +10,8 @@ package.xml
 
 # LWC Jest
 **/__tests__/**
+
+# SF Files
+**/sfdcInternalInt*
+
+**profiles

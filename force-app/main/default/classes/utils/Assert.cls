@@ -62,8 +62,8 @@ public with sharing class Assert{
 
 	public static void errorWithLog(Map<String, Object> result, String message){
 		errorWithMessage(result, message);
-		// List<Log__c> logs = [SELECT Id FROM Log__c];
-		// System.Assert.areEqual(1, logs.size(), 'No log created.');
+		List<Log__c> logs = [SELECT Id FROM Log__c];
+		System.Assert.areEqual(1, logs.size(), 'No log created.');
 	}
 
 	public static void messageContains(String message, String searchedTerm){

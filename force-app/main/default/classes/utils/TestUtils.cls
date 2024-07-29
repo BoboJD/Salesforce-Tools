@@ -1,6 +1,5 @@
 @IsTest
 public class TestUtils{
-
 	private static final String CHARS = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 
 	public static SObject setReadableFields(SObject sObj, Map<SObjectField, Object> valueBysObjField){
@@ -43,5 +42,9 @@ public class TestUtils{
 			randomString += CHARS.substring(index, index + 1);
 		}
 		return randomString;
+	}
+
+	public static User selectChatterFreeUser(){
+		return [SELECT Id FROM User WHERE Name = 'Chatter Free User' LIMIT 1];
 	}
 }
