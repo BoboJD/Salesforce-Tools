@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <classAccesses>
+        <apexClass>LogFactoryController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <description>Allow user to create logs</description>
     <fieldPermissions>
         <editable>true</editable>
         <field>Log__c.Endpoint__c</field>
@@ -51,7 +56,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>Log</label>
+    <label>Log - Creation only</label>
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>false</allowDelete>
@@ -69,8 +74,4 @@
         <recordType>Log__c.Info</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
-    <tabSettings>
-        <tab>Log__c</tab>
-        <visibility>Available</visibility>
-    </tabSettings>
 </PermissionSet>

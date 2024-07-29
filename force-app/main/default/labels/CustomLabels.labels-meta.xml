@@ -8,4 +8,20 @@
         <shortDescription>AnErrorOccurredContactAnAdministrator</shortDescription>
         <value>An error occurred, contact an administrator.</value>
     </labels>
+    <labels>
+        <fullName>ErrorLossOfInternetConnection</fullName>
+        <categories>ui,error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ErrorLossOfInternetConnection</shortDescription>
+        <value>Loss of internet connection.</value>
+    </labels>
+    <labels>
+        <fullName>ErrorProcessingFailed</fullName>
+        <categories>ui,error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ErrorProcessingFailed</shortDescription>
+        <value>Processing failed, please try again.</value>
+    </labels>
 </CustomLabels>

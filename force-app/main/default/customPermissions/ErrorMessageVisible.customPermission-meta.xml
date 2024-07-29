@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Allow user to see error message of custom development (instead of generic error message)</description>
+    <isLicensed>false</isLicensed>
+    <label>ErrorMessageVisible</label>
+</CustomPermission>

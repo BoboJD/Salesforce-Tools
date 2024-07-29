@@ -47,4 +47,8 @@ public class TestUtils{
 	public static User selectChatterFreeUser(){
 		return [SELECT Id FROM User WHERE Name = 'Chatter Free User' LIMIT 1];
 	}
+
+	public static User selectStandardUser(){
+		return [SELECT Id FROM User WHERE Name = 'Standard User' LIMIT 1];
+	}
 }

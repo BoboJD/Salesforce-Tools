@@ -44,6 +44,14 @@ public inherited sharing class UserBuilder extends SObjectBuilder{
 			.withLastName('User');
 	}
 
+
+	public static UserBuilder newStandardUser(){
+		return newUser()
+			.withProfile(profileByName.get(ProfileConstants.Standard_USER))
+			.withFirstName('Standard')
+			.withLastName('User');
+	}
+
 	public UserBuilder withAlias(String alias){
 		setFieldValue(User.Alias, alias);
 		return this;
