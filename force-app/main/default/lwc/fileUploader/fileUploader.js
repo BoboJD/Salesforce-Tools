@@ -7,7 +7,6 @@ import apex from './apex';
 import label from './labels';
 
 export default class FileUploader extends LightningElement{
-	@api objectApiName;
 	@api recordId;
 	@api hideAddFiles = false;
 	@api hideDate = false;
@@ -17,6 +16,7 @@ export default class FileUploader extends LightningElement{
 		addFile: { displayed: false }
 	};
 	@track filter = {};
+	label = label;
 
 	get filteredFiles(){
 		if(this.utilityData.files.length)

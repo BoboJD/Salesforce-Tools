@@ -18,7 +18,7 @@
 							<c-picklist
 								label={label.FileType}
 								options={fileTypes}
-								value={fieldsFileupload.Type__c}
+								value={fieldsFileupload.tlz__Type__c}
 								onvaluechange={setFileType}
 								required>
 							</c-picklist>
@@ -27,12 +27,12 @@
 							<c-input
 								type="checkbox"
 								label={label.SetTheFileAsPrivate}
-								checked={fieldsFileupload.PrivateFile__c}
+								checked={fieldsFileupload.tlz__PrivateFile__c}
 								onvaluechange={setPrivateFile}>
 							</c-input>
 						</div>
 					</div>
-					<template if:true={fieldsFileupload.Type__c}>
+					<template if:true={fieldsFileupload.tlz__Type__c}>
 						<div class="slds-form__row">
 							<div class="slds-form__item">
 								<a href="https://www.ilovepdf.com/compress_pdf" target="_blank">{label.LinkToReduceTheSizeOfPDFs}</a>
@@ -47,7 +47,7 @@
 							<div class="slds-form__item">
 								<lightning-file-upload
 									label={label.File_s}
-									file-field-name="JSON_fileupload__c"
+									file-field-name="tlz__JSON_fileupload__c"
 									file-field-value={jsonFileupload}
 									onuploadfinished={handleSuccess}
 									multiple={multiple}>

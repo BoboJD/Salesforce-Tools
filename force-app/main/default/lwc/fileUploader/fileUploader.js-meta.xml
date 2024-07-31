@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <LightningComponentBundle xmlns="urn:metadata.tooling.soap.sforce.com" fqn="fileUploader">
-    <apiVersion>61.0</apiVersion> 
-    <isExposed>false</isExposed>
+    <apiVersion>61.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Files related list</masterLabel>
+    <description>Display the files related list, allowing user to define a file type at upload.</description>
+    <targets>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <property name="hideAddFiles" type="Boolean" default="false" label="Hide 'add files' button" />
+            <property name="hideDate" type="Boolean" default="false" label="Hide created date field" />
+            <property name="massDeleteOption" type="Boolean" default="false" label="Allow deletion of selected files" />
+        </targetConfig>
+    </targetConfigs>
 </LightningComponentBundle>

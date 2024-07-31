@@ -8,9 +8,9 @@ export default class FileUploaderAddFileModal extends LightningElement{
 	@api options;
 	@api multiple = false;
 	@track fieldsFileupload = {
-		Type__c: '',
-		RecordId__c: '',
-		PrivateFile__c: false
+		tlz__Type__c: '',
+		tlz__RecordId__c: '',
+		tlz__PrivateFile__c: false
 	};
 	label = label;
 
@@ -27,29 +27,29 @@ export default class FileUploaderAddFileModal extends LightningElement{
 	}
 
 	isAllowedToBeSelected(fileType){
-		return (this.utilityData.config.AvailableValues__c && this.utilityData.config.AvailableValues__c.includes(fileType))
-			|| (this.utilityData.isAdmin && this.utilityData.config.AvailableValuesForAdmin__c && this.utilityData.config.AvailableValuesForAdmin__c.includes(fileType));
+		return (this.utilityData.config.tlz__AvailableValues__c && this.utilityData.config.tlz__AvailableValues__c.includes(fileType))
+			|| (this.utilityData.isAdmin && this.utilityData.config.tlz__AvailableValuesForAdmin__c && this.utilityData.config.tlz__AvailableValuesForAdmin__c.includes(fileType));
 	}
 
-	get selectedFileTypeIsVisibleOnlySiege(){
-		return this.utilityData.config.AvailableValuesForAdmin__c?.includes(this.fieldsFileupload.Type__c);
+	get selectedFileTypeIsVisibleOnlyAdmin(){
+		return this.utilityData.config.tlz__AvailableValuesForAdmin__c?.includes(this.fieldsFileupload.tlz__Type__c);
 	}
 
 	setFileType(e){
-		this.fieldsFileupload.Type__c = e.detail.value;
-		if(this.utilityData?.isAdmin && this.selectedFileTypeIsVisibleOnlySiege)
-			this.fieldsFileupload.PrivateFile__c = true;
+		this.fieldsFileupload.tlz__Type__c = e.detail.value;
+		if(this.utilityData?.isAdmin && this.selectedFileTypeIsVisibleOnlyAdmin)
+			this.fieldsFileupload.tlz__PrivateFile__c = true;
 	}
 
 	setPrivateFile(e){
-		this.fieldsFileupload.PrivateFile__c = e.detail.checked;
+		this.fieldsFileupload.tlz__PrivateFile__c = e.detail.checked;
 	}
 
 	connectedCallback(){
 		this.setupKeypressListener();
 		if(this.fileTypes.length === 1)
-			this.fieldsFileupload.Type__c = this.fileTypes[0].value;
-		this.fieldsFileupload.RecordId__c = this.recordId;
+			this.fieldsFileupload.tlz__Type__c = this.fileTypes[0].value;
+		this.fieldsFileupload.tlz__RecordId__c = this.recordId;
 	}
 
 	setupKeypressListener(){
