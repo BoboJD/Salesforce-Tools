@@ -5,7 +5,7 @@ public with sharing class UserPermissionSet extends UsersHandler{
 	private Map<Id, User> userById{
 		get{
 			if(userById == null)
-				userById = new Map<Id, User>([SELECT Id, Profile.Name FROM User WHERE Id IN :userIds]);
+				userById = new Map<Id, User>(UsersSelector.newInstance().selectByIds(userIds));
 			return userById;
 		}set;
 	}

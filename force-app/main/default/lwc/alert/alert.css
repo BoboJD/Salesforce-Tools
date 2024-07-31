@@ -1,0 +1,8 @@
+:host{
+	width: 100%;
+	display: block;
+}
+
+.slds-alert_error, .slds-alert_offline{
+	--slds-c-icon-color-foreground-default: white;
+}

@@ -52,6 +52,11 @@ public inherited sharing class UserBuilder extends SObjectBuilder{
 			.withLastName('User');
 	}
 
+	public UserBuilder withAdmin(Boolean admin){
+		setFieldValue(User.Admin__c, admin);
+		return this;
+	}
+
 	public UserBuilder withAlias(String alias){
 		setFieldValue(User.Alias, alias);
 		return this;

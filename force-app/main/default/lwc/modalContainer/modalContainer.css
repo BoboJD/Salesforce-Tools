@@ -1,0 +1,46 @@
+:host{
+	display: block;
+}
+
+:host.fixed-position{
+    position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 9001;
+}
+
+.slds-modal__container{
+	width: 100%;
+	max-width: 100%;
+}
+
+.slds-modal__content{
+	min-height: 200px;
+}
+
+.slds-modal__close{
+	--lwc-colorTextIconDefault: white;
+	--slds-c-button-text-color-active: white;
+	--slds-c-button-text-color-hover: white;
+	--slds-c-button-shadow-focus: 0 0 3px white;
+	--slds-g-color-neutral-base-30: white;
+}
+
+@media all and (min-width: 48em){
+	:host.fixed-position{
+		width: 768px;
+	}
+}
+@media all and (max-width: 48em){
+	:host.fixed-position{
+		left: 0;
+		transform: none;
+	}
+	.slds-modal__container{
+		padding: 0;
+		margin: 0;
+	}
+}

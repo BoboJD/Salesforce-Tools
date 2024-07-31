@@ -1,0 +1,37 @@
+:host{
+	width: 100%;
+}
+.file{
+	cursor: pointer;
+	margin-bottom: 3px;
+}
+.file .thumbnail{
+	height: auto;
+	min-width: 30px;
+	max-width: 30px;
+	max-height: 35px;
+}
+.file .slds-tile__title{
+	color: var(--lwc-brandTextLink,rgb(0, 109, 204));
+}
+.file .slds-tile__detail{
+	color: var(--lwc-colorTextWeak,rgb(62, 62, 60));
+}
+.file .slds-tile__detail span:after{
+	content: "\2022";
+	margin: 0 5px;
+}
+.file .slds-tile__detail span:last-child:after{
+	content: "";
+	margin: 0;
+}
+.left{
+	flex: 0;
+	width: 55px;
+}
+.right{
+	flex-grow: 1;
+}
+.file .slds-media__body{
+	width: 50px;
+}

@@ -1,0 +1,6 @@
+c-filter lightning-checkbox-group .slds-form-element__legend{
+	display: none!important;
+}
+c-filter lightning-checkbox-group .slds-form-element__control{
+	column-count: 2;
+}

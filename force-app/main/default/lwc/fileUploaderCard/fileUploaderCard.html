@@ -1,0 +1,67 @@
+<template>
+	<div class="file">
+		<div class="slds-grid slds-gutters">
+			<div if:true={displaySelection} class="slds-col slds-align-middle left">
+				<c-input
+					type="checkbox"
+					label={label.Select}
+					variant="label-hidden"
+					checked={file.selected}
+					onvaluechange={dispatchSelection}>
+				</c-input>
+			</div>
+			<div class="slds-col slds-align-middle left" onclick={filePreview}>
+				<template lwc:if={isExcel}>
+					<lightning-icon icon-name="doctype:excel" size="medium"></lightning-icon>
+				</template>
+				<template lwc:else>
+					<img if:true={file.previewLink} src={file.previewLink} class="thumbnail" />
+					<lightning-icon if:false={file.previewLink} icon-name="doctype:unknown" size="medium"></lightning-icon>
+				</template>
+			</div>
+			<div class="slds-col right">
+				<div class="slds-var-p-horizontal_medium slds-var-p-vertical_xx-small slds-tile slds-media slds-hint-parent">
+					<div class="slds-media__body" onclick={filePreview}>
+						<div class="slds-grid slds-grid_align-spread slds-has-flexi-truncate">
+							<h3 class="slds-tile__title slds-truncate" title={file.title}>{file.title}</h3>
+						</div>
+						<div class="slds-tile__detail">
+							<span if:true={file.type}>{file.type}</span>
+							<span if:true={displayCreatedDate}>{file.createdDate}</span>
+							<span if:true={file.size}>{file.size}{file.sizeUnit}</span>
+							<span if:true={file.extension}>{file.extension}</span>
+						</div>
+					</div>
+					<div if:true={displayDeleteBtn} class="slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open">
+						<lightning-button-icon
+							icon-name="utility:down"
+							alternative-text="Menu"
+							size="x-small"
+							onclick={toggleMenu}>
+						</lightning-button-icon>
+						<div if:true={displayMenu} class="slds-dropdown slds-dropdown_right">
+							<ul>
+								<li class="slds-dropdown__item" onclick={downloadFile}>
+									<a href="javascript:void(0);" tabindex="0">
+										<span class="slds-truncate" title={label.Download}>
+											<lightning-icon icon-name="utility:download" alternative-text={label.Download} size="x-small" class="slds-var-m-right_x-small"></lightning-icon>
+											{label.Download}
+										</span>
+									</a>
+								</li>
+								<li class="slds-dropdown__item" onclick={deleteFile}>
+									<a href="javascript:void(0);" tabindex="0">
+										<span class="slds-truncate" title={label.Delete}>
+											<lightning-icon icon-name="utility:delete" alternative-text={label.Delete} size="x-small" class="slds-var-m-right_x-small"></lightning-icon>
+											{label.Delete}
+										</span>
+									</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>

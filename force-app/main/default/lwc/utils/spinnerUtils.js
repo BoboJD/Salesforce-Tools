@@ -1,5 +1,5 @@
 const PAGE = 'c-page';
-const SPINNER = 'c-spinner-mce';
+const SPINNER = 'c-spinner';
 
 const displaySpinner = cmp => {
 	cmp.isLoading = true;

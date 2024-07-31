@@ -1,0 +1,58 @@
+<template>
+	<div class={formElementClass}>
+		<label if:false={labelHidden} class="slds-form-element__label">
+			<span if:true={inputRequired} class="slds-required">*&nbsp;</span>
+			{label}
+		</label>
+		<div class="slds-form-element__control">
+			<div class="slds-form-element__static">
+				<div class={comboboxContainerClass}>
+					<div class={comboboxClass}>
+						<div class={comboboxFormElementClass}>
+							<template if:false={selectedSearchResult}>
+								<input type="text" class="slds-input slds-combobox__input" autocomplete="off" placeholder={placeholder} onkeyup={performSearch} disabled={disabled} readonly={readOnly} />
+								<span if:false={readOnly} class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right">
+									<lightning-icon icon-name="utility:search" alternative-text="search" size="x-small"></lightning-icon>
+								</span>
+							</template>
+							<template if:true={selectedSearchResult}>
+								<span if:true={iconName} class="slds-icon_container slds-combobox__input-entity-icon">
+									<lightning-icon icon-name={iconName} size="small"></lightning-icon>
+								 </span>
+								<div class="slds-input_faux slds-combobox__input slds-combobox__input-value">
+									<span class="slds-truncate">{selectedSearchResult.label}</span>
+								</div>
+								<button if:true={displayRemove} class="slds-button slds-button_icon slds-input__icon slds-input__icon_right" onclick={removeSelectedSearchResult}>
+									<lightning-icon icon-name="utility:close" size="x-small"></lightning-icon>
+								</button>
+							</template>
+						</div>
+						<div class="slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid">
+							<ul class="slds-listbox slds-listbox_vertical">
+								<template for:each={searchResults} for:item="searchResult" for:index="index">
+									<c-lookup-search-result
+										key={searchResult.value}
+										icon-name={iconName}
+										searched-term={searchedTerm}
+										index={index}
+										search-result={searchResult}
+										onselectitem={selectItem}>
+									</c-lookup-search-result>
+								</template>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<lightning-button-icon
+				if:true={edit}
+				icon-name="utility:edit"
+				variant="bare"
+				alternative-text={editTitle}
+				title={editTitle}
+				onclick={dispatchEdit}>
+			</lightning-button-icon>
+		</div>
+		<div if:true={hasError} class="slds-form-element__help">{label.CompleteThisField}</div>
+	</div>
+</template>

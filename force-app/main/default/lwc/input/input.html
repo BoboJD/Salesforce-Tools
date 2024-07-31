@@ -1,0 +1,132 @@
+<template>
+	<div class={formElementClass}>
+		<template lwc:if={defaultType}>
+			<template lwc:if={readOnly}>
+				<label if:false={labelHidden} class="slds-form-element__label">{label}</label>
+				<div class="slds-form-element__control">
+					<span class="slds-form-element__static slds-grow">
+						<lightning-formatted-text value={readOnlyValue}></lightning-formatted-text>
+					</span>
+					<button if:true={displayEdit} class="edit-button slds-shrink-none slds-button slds-button_icon-bare" title={editTitle} onclick={dispatchEdit}>
+						<span class="slds-button__icon slds-button__icon_hint"></span>
+						<span class="slds-assistive-text">{editTitle}</span>
+					</button>
+				</div>
+			</template>
+			<template lwc:else>
+				<template if:true={typeToggle}>
+					<label if:false={labelHidden} class="slds-form-element__label">
+						<span if:true={inputRequired} class="slds-required">*&nbsp;</span>
+						{label}
+					</label>
+				</template>
+				<lightning-input
+					type={inputType}
+					label={label}
+					field-level-help={fieldLevelHelp}
+					placeholder={placeholder}
+					message-toggle-active={messageToggleActive}
+					message-toggle-inactive={messageToggleInactive}
+					date-style={dateStyle}
+					checked={checked}
+					value={value}
+					step={step}
+					variant={inputVariant}
+					onchange={dispatchValueChange}
+					onfocusout={reportValidity}
+					autocomplete={autocomplete}
+					min={min}
+					min-length={minLength}
+					max={max}
+					max-length={maxLength}
+					required={inputRequired}
+					disabled={disabled}>
+				</lightning-input>
+			</template>
+		</template>
+		<template lwc:else>
+			<label if:false={labelHidden} class="slds-form-element__label">
+				<span if:true={inputRequired} class="slds-required">*&nbsp;</span>
+				{label}
+			</label>
+			<div class="slds-form-element__control">
+				<span class="slds-form-element__static slds-grow">
+					<div if:true={typeTextarea}>
+						<lightning-textarea
+							label={label}
+							variant="label-hidden"
+							value={value}
+							onchange={dispatchValueChange}
+							maxlength={maxLength}>
+						</lightning-textarea>
+					</div>
+					<div if:true={typeRichtext} class="slds-rich-text-custom">
+						<lightning-input-rich-text
+							label={label}
+							value={value}
+							onchange={dispatchValueChange}>
+						</lightning-input-rich-text>
+					</div>
+					<span if:true={typeCheckbox} class="slds-checkbox">
+						<template if:true={labelInline}>
+							<abbr if:true={inputRequired} class="slds-required" title="required">*</abbr>
+						</template>
+						<input type="checkbox"
+							id="custom-input"
+							checked={checked}
+							disabled={checkboxDisabled}
+							required={inputRequired}
+							onchange={dispatchValueChange}
+							onfocusout={reportValidity} />
+						<label class="slds-checkbox__label" for="custom-input">
+							<span class="slds-checkbox_faux"></span>
+							<span if:true={labelInline} class="slds-form-element__label">{label}</span>
+						</label>
+					</span>
+					<template if:true={typeFile}>
+						<lightning-button
+							if:true={displayUploadButton}
+							variant="brand-outline"
+							icon-name="utility:upload"
+							label={label.AddFile}
+							onclick={displayFileUploadModal}
+							disabled={isLoading}>
+						</lightning-button>
+						<template if:true={files.length}>
+							<c-spinner size="small" hide-by-default></c-spinner>
+							<div class="slds-grid slds-gutters slds-wrap slds-m-top_small">
+								<template for:each={files} for:item="file">
+									<span class="slds-pill slds-pill_link" key={file.documentId}>
+										<span class="slds-pill__icon_container">
+											<lightning-icon icon-name="utility:file"></lightning-icon>
+										</span>
+										<a href="#" class="slds-pill__action" title={file.name} onclick={previewFile} data-document-id={file.documentId}>
+											<span class="slds-pill__label">{file.name}</span>
+										</a>
+										<button if:false={readOnly} class="slds-button slds-button_icon slds-button_icon slds-icon_container slds-icon-utility-close slds-pill__remove" title={label.Delete} onclick={deleteFile} data-document-id={file.documentId}>
+											<lightning-icon icon-name="utility:close"></lightning-icon>
+										</button>
+									</span>
+								</template>
+							</div>
+						</template>
+					</template>
+				</span>
+				<button if:true={displayEdit} class="edit-button slds-shrink-none slds-button slds-button_icon-bare" title={editTitle} onclick={dispatchEdit}>
+					<span class="slds-button__icon slds-button__icon_hint"></span>
+					<span class="slds-assistive-text">{editTitle}</span>
+				</button>
+			</div>
+			<div if:true={hasError} class="slds-form-element__help">{errorMessage}</div>
+		</template>
+	</div>
+
+	<c-file-uploader-add-file-modal
+		if:true={modal.fileUpload.displayed}
+		options={options}
+		onhidemodal={hideFileUploadModal}
+		onfileupload={dispatchValueChange}
+		record-id={recordId}
+		multiple={multiple}>
+	</c-file-uploader-add-file-modal>
+</template>

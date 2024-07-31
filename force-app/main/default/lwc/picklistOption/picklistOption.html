@@ -1,0 +1,27 @@
+<template>
+	<span onclick={dispatchSelection}>
+		<li if:false={button} class="slds-listbox__item">
+			<div class={className}>
+				<span class="slds-media__figure slds-listbox__option-icon">
+					<lightning-icon
+						if:true={displayIcon}
+						class="slds-icon_container slds-icon-utility-check slds-current-color"
+						icon-name={iconName}
+						alternative-text={iconAlernativeText}
+						size="x-small">
+					</lightning-icon>
+				</span>
+				<span class="slds-media__body">
+					<span class="slds-listbox__option-text slds-listbox__option-text_entity">{option.label}</span>
+					<span if:true={option.description} class="slds-listbox__option-meta slds-listbox__option-meta_entity">{option.description}</span>
+				</span>
+			</div>
+		</li>
+		<template if:true={button}>
+			<input type="radio" checked={isSelected} disabled={disabled} />
+			<div class="slds-radio_button__label">
+			  	<span class="slds-radio_faux">{option.label}</span>
+			</div>
+		</template>
+	</span>
+</template>

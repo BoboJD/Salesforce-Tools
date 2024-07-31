@@ -1,0 +1,7 @@
+c-filter-section{
+	display: block;
+	margin-bottom: 0.5rem;
+}
+c-filter-section:last-child{
+	margin-bottom: 0;
+}

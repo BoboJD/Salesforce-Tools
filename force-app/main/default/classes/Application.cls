@@ -11,12 +11,18 @@ public inherited sharing class Application{
 	public static final fflib_Application.SelectorFactory Selector =
 		new fflib_Application.SelectorFactory(
 			new Map<SObjectType, Type>{
+				ContentDocument.SObjectType => ContentDocumentsSelector.class,
+				ContentDocumentLink.SObjectType => ContentDocumentLinksSelector.class,
+				ContentVersion.SObjectType => ContentVersionsSelector.class,
 				PermissionSet.SObjectType => PermissionSetsSelector.class,
-				PermissionSetAssignment.SObjectType => PermissionSetAssignmentsSelector.class});
+				PermissionSetAssignment.SObjectType => PermissionSetAssignmentsSelector.class,
+				User.SObjectType => UsersSelector.class,
+				UserRecordAccess.SObjectType => UserRecordAccessesSelector.class});
 
 	public static final fflib_Application.DomainFactory Domain =
 		new fflib_Application.DomainFactory(
 			Application.Selector,
 				new Map<SObjectType, Type>{
+					ContentDocumentLink.SObjectType => ContentDocumentLinks.Constructor.class,
 					User.SObjectType => Users.Constructor.class});
 }

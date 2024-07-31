@@ -62,7 +62,7 @@ const isDisconnectedError = error => {
 };
 
 const retrieveErrorMessage = error => {
-	return error?.message || error?.body?.message || ErreurMerciDeContacterVotreAdministrateur;
+	return error?.message || error?.body?.message || AnErrorOccurredContactAnAdministrator;
 };
 
 const retrieveStackTrace = error => {
@@ -75,7 +75,7 @@ const handleErrorForUser = (cmp, error) => {
 	}else if(errorContainsUnableToLockRowException(error)){
 		displayWarningToast(cmp, ErrorProcessingFailed);
 	}else{
-		const errorMessage = displayTrueError ? retrieveErrorMessage(error) : ErreurMerciDeContacterVotreAdministrateur;
+		const errorMessage = displayTrueError ? retrieveErrorMessage(error) : AnErrorOccurredContactAnAdministrator;
 		const stackTrace = displayTrueError ? retrieveStackTrace(error) : '';
 		displayErrorToast(cmp, errorMessage, stackTrace);
 	}

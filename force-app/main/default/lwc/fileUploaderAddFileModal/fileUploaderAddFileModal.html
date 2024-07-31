@@ -1,0 +1,66 @@
+<template>
+	<div class="slds-modal slds-fade-in-open">
+		<div class="slds-modal__container">
+			<header class="slds-modal__header">
+				<lightning-button-icon
+					class="slds-modal__close"
+					title={label.Cancel}
+					icon-name="utility:close"
+					icon-class="slds-button_icon-inverse"
+					onclick={dispatchHideModal}>
+				</lightning-button-icon>
+				<h2 class="slds-text-heading_medium slds-hyphenate">{label.SelectOfFiles}</h2>
+			</header>
+			<div class="slds-modal__content slds-var-p-around_medium slds-is-relative" style="overflow: initial;">
+				<div class="slds-form">
+					<div class="slds-form__row">
+						<div class="slds-form__item">
+							<c-picklist
+								label={label.FileType}
+								options={fileTypes}
+								value={fieldsFileupload.Type__c}
+								onvaluechange={setFileType}
+								required>
+							</c-picklist>
+						</div>
+						<div class="slds-form__item">
+							<c-input
+								type="checkbox"
+								label={label.SetTheFileAsPrivate}
+								checked={fieldsFileupload.PrivateFile__c}
+								onvaluechange={setPrivateFile}>
+							</c-input>
+						</div>
+					</div>
+					<template if:true={fieldsFileupload.Type__c}>
+						<div class="slds-form__row">
+							<div class="slds-form__item">
+								<a href="https://www.ilovepdf.com/compress_pdf" target="_blank">{label.LinkToReduceTheSizeOfPDFs}</a>
+							</div>
+						</div>
+						<div class="slds-form__row">
+							<div class="slds-form__item">
+								<a href="https://www.ilovepdf.com/merge_pdf" target="_blank">{label.LinkToMergePDFs}</a>
+							</div>
+						</div>
+						<div class="slds-form__row">
+							<div class="slds-form__item">
+								<lightning-file-upload
+									label={label.File_s}
+									file-field-name="JSON_fileupload__c"
+									file-field-value={jsonFileupload}
+									onuploadfinished={handleSuccess}
+									multiple={multiple}>
+								</lightning-file-upload>
+							</div>
+						</div>
+					</template>
+				</div>
+			</div>
+			<footer class="slds-modal__footer">
+				<lightning-button variant="neutral" onclick={dispatchHideModal} label={label.Cancel}></lightning-button>
+			</footer>
+		</div>
+	</div>
+	<div class="slds-backdrop slds-backdrop_open"></div>
+</template>

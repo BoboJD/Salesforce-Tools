@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>LoadingPicture__c</fullName>
+    <inlineHelpText>replace the spinner by the provided picture</inlineHelpText>
+    <label>Loading picture</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Url</type>
+</CustomField>

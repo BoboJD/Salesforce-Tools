@@ -1,0 +1,16 @@
+<template >
+	<section class="slds-modal slds-fade-in-open">
+		<c-modal-container
+			theme={theme}
+			title={title}
+			message={message}
+			confirm-label={confirmLabel}
+			no-padding={noPadding}
+			onclosemodal={dispatchCloseModal}
+			onconfirm={dispatchConfirm}
+		>
+			<template lwc:if={noMessage}><slot></slot></template>
+		</c-modal-container>
+	</section>
+	<div class="slds-backdrop slds-backdrop_open"></div>
+</template>

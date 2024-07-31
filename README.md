@@ -30,5 +30,7 @@ git subtree pull --prefix=fflib-apex-common git@github.com:apex-enterprise-patte
 Then copy fflib content to project
 ```sh
 cp -r fflib-apex-mocks/sfdx-source/apex-mocks/main/* force-app/fflib/
+cp -r fflib-apex-mocks/sfdx-source/apex-mocks/test/* force-app/fflib/
 cp -r fflib-apex-common/sfdx-source/apex-common/main/* force-app/fflib/
+cp -r fflib-apex-common/sfdx-source/apex-common/test/* force-app/fflib/
 ```

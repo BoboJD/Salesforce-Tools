@@ -1,0 +1,21 @@
+<template>
+	<div class={selectionClass}>
+		<h3 class={sectionTitleClass}>
+			<button class="slds-button slds-section__title-action" onclick={toggleClosed}>
+				<lightning-icon
+					if:false={nonCollapsible}
+					class="slds-section__title-action-icon slds-button__icon slds-button__icon_left"
+					icon-name="utility:switch"
+					size="x-small">
+				</lightning-icon>
+				<span class="slds-truncate" title={label}>{label}</span>
+			</button>
+			<div class={slotActionsClass}>
+				<slot name="actions" onslotchange={handleActionsSlotChange}></slot>
+			</div>
+		</h3>
+		<div class="slds-section__content">
+			<slot></slot>
+		</div>
+	</div>
+</template>

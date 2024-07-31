@@ -1,0 +1,6 @@
+<template>
+	<template if:true={typeAttributes.displayWarning}>
+		<lightning-icon variant="warning" icon-name="utility:warning" alternative-text={typeAttributes.warningMessage} title={typeAttributes.warningMessage} size="x-small"></lightning-icon>
+	</template>
+	<lightning-formatted-number value={value} format-style="currency" currency-code={typeAttributes.currencyCode}></lightning-formatted-number>
+</template>

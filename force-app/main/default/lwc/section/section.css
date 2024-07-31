@@ -1,0 +1,6 @@
+:host{
+	width: 100%;
+}
+.slds-section__title{
+	align-items: flex-start!important;
+}

@@ -1,0 +1,6 @@
+.slds-modal__close{
+	--lwc-colorTextIconDefault: white;
+	--slds-c-button-text-color-active: white;
+	--slds-c-button-text-color-hover: white;
+	--slds-c-button-shadow-focus: 0 0 3px white;
+}

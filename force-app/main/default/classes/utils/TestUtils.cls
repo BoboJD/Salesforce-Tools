@@ -44,6 +44,10 @@ public class TestUtils{
 		return randomString;
 	}
 
+	public static Account selectAccount(){
+		return [SELECT Id FROM Account WHERE Name = 'TestAccount' LIMIT 1];
+	}
+
 	public static User selectChatterFreeUser(){
 		return [SELECT Id FROM User WHERE Name = 'Chatter Free User' LIMIT 1];
 	}

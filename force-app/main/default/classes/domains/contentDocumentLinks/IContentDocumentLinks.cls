@@ -1,0 +1,1 @@
+public interface IContentDocumentLinks extends fflib_ISObjectDomain{}

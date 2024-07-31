@@ -1,0 +1,15 @@
+<template>
+	<fieldset class="slds-col_padded-large">
+		<legend class="slds-form-element__legend slds-form-element__label slds-text-title_bold slds-text-title_caps">{section.label}</legend>
+		<div class="slds-form-element__control">
+			<template if:true={isCheckbox}>
+				<lightning-checkbox-group
+					label={section.label}
+					options={section.options}
+					value={section.value}
+					onchange={dispatchValueChange}>
+				</lightning-checkbox-group>
+			</template>
+		</div>
+	</fieldset>
+</template>

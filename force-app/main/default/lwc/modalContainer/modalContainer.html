@@ -1,0 +1,35 @@
+<template>
+	<div class={containerClass}>
+		<header class={headerClass}>
+			<lightning-button-icon
+				if:false={hideCloseIcon}
+				icon-name="utility:close"
+				alternative-text={label.CloseThisWindow}
+				title={label.CloseThisWindow}
+				variant="bare"
+				onclick={dispatchCloseModal}
+				class="slds-modal__close"
+				size="large">
+			</lightning-button-icon>
+			<h2 class="slds-text-heading_small">
+				<template lwc:if={title}>{title}</template>
+				<template lwc:else><slot name="title"></slot></template>
+			</h2>
+		</header>
+		<div class={contentClass}>
+			<template lwc:if={message}>{message}</template>
+			<template lwc:else><slot></slot></template>
+		</div>
+		<footer class="slds-modal__footer">
+			<lightning-button variant="neutral" onclick={dispatchCloseModal} label={closeLabel}></lightning-button>
+			<lightning-button
+				if:false={hideConfirm}
+				variant="brand"
+				onclick={dispatchConfirm}
+				label={confirmLabel}
+				class="slds-var-m-left_small"
+				disabled={confirmDisabled}>
+			</lightning-button>
+		</footer>
+	</div>
+</template>

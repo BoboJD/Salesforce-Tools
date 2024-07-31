@@ -1,0 +1,128 @@
+<template>
+    <div class={formElementClass}>
+        <label if:true={displayLabel} class="slds-form-element__label">
+            <span if:true={inputRequired} class="mce-form-element__label-required">*&nbsp;</span>
+            {label}
+        </label>
+        <div class="slds-form-element__control" onclick={ignore}>
+            <template if:true={readOnly}>
+                <span class="slds-form-element__static slds-grow">
+                    <lightning-formatted-text value={selectedItemLabel}></lightning-formatted-text>
+                </span>
+                <button if:true={displayEdit} class="edit-button slds-shrink-none slds-button slds-button_icon-bare" title={editTitle} onclick={dispatchEdit}>
+                    <span class="slds-button__icon slds-button__icon_hint"></span>
+                    <span class="slds-assistive-text">{editTitle}</span>
+                </button>
+            </template>
+            <template if:false={readOnly}>
+                <div if:true={isPicklist} class="slds-combobox_container">
+                    <div class={comboboxClass}>
+                        <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" onclick={openListbox}>
+                            <input type="text"
+                                class="slds-input slds-combobox__input"
+                                placeholder={placeholder}
+                                readonly={inputReadonly}
+                                value={selectedItemLabel}
+                                onkeyup={setFilteredTerm}
+								onfocus={setFocusOn}
+								onfocusout={setFocusOut}
+                                disabled={disabled} />
+                            <span class="slds-icon_container slds-icon-utility-down slds-input__icon slds-input__icon_right">
+                                <lightning-icon
+                                    icon-name="utility:down"
+                                    alternative-text="down"
+                                    class="slds-icon slds-icon slds-icon-text-default"
+                                    size="x-small">
+                                </lightning-icon>
+                            </span>
+                        </div>
+                        <div class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid">
+                            <ul class="slds-listbox slds-listbox_vertical">
+                                <c-picklist-option
+                                    if:true={addNewRecordOption}
+                                    option={newRecordOption}
+                                    onselect={dispatchNewRecord}
+                                    new-record-option>
+                                </c-picklist-option>
+                                <template for:each={filteredOptions} for:item="option">
+                                    <c-picklist-option
+                                        key={option.value}
+                                        option={option}
+                                        selected-items={selectedItems}
+                                        onselect={setValue}>
+                                    </c-picklist-option>
+                                </template>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div if:true={isButton} class="slds-radio_button-group">
+                    <template for:each={filteredOptions} for:item="option">
+                        <c-picklist-option
+                            key={option.value}
+                            class="slds-button slds-radio_button"
+                            option={option}
+                            selected-items={selectedItems}
+                            onselect={setValue}
+                            disabled-values={disabledValues}
+                            button>
+                        </c-picklist-option>
+                    </template>
+                </div>
+                <template if:true={isRadio}>
+                    <lightning-radio-group
+                        type="radio"
+                        label={label}
+                        variant="label-hidden"
+                        options={filteredOptions}
+                        value={value}
+                        onchange={setValue}
+                        required={required}
+                        disabled={disabled}>
+                    </lightning-radio-group>
+                </template>
+                <template if:true={isCheckbox}>
+                    <lightning-checkbox-group
+                        label={label}
+                        variant="label-hidden"
+                        options={filteredOptions}
+                        value={value}
+                        onchange={setValue}
+                        required={required}
+                        disabled={disabled}>
+                    </lightning-checkbox-group>
+                </template>
+                <template if:true={isDual}>
+                    <lightning-dual-listbox
+                        label={label}
+                        variant="label-hidden"
+						field-level-help={fieldLevelHelp}
+                        source-label={sourceLabel}
+                        selected-label={selectedLabel}
+                        options={filteredOptions}
+                        value={value}
+                        max={max}
+                        onchange={setValue}
+                        required={required}
+                        disabled={disabled}>
+                    </lightning-dual-listbox>
+                </template>
+            </template>
+        </div>
+        <div if:true={hasError} class="slds-form-element__help">{label.CompleteThisField}</div>
+    </div>
+    <div if:true={displaySelectedValues} class="slds-form-element">
+        <label class="slds-form-element__label">{label.SelectedValues}</label>
+        <div class="slds-form-element__control">
+            <template for:each={selectedOptions} for:item="option">
+                <lightning-pill
+                    key={option.value}
+                    data-value={option.value}
+                    label={option.label}
+                    class="slds-m-right_x-small"
+                    onremove={removeSelectedOption}>
+                </lightning-pill>
+            </template>
+        </div>
+    </div>
+</template>

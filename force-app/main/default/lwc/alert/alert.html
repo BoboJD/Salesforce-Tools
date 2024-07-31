@@ -1,0 +1,22 @@
+<template>
+	<div class={className}>
+		<span class="slds-assistive-text">{theme}</span>
+		<lightning-icon if:true={hasVariation} icon-name={iconName} class="slds-m-right_x-small" size="x-small"></lightning-icon>
+		<h2>
+			<template lwc:if={message}>
+				<lightning-formatted-rich-text value={message}></lightning-formatted-rich-text>
+			</template>
+			<template lwc:else>
+				<slot></slot>
+			</template>
+		</h2>
+		<lightning-button
+			if:true={closable}
+			class="slds-notify__close"
+			label={label.Close}
+			title={label.Close}
+			icon-name="utility:close"
+			onclick={dispatchClose}>
+		</lightning-button>
+	</div>
+</template>

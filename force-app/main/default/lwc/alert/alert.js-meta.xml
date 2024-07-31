@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>61.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Alert</masterLabel>
+    <description>Display an alert in a lightning page.</description>
+    <targets>
+        <target>lightning__RecordPage</target>
+        <target>lightning__HomePage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__HomePage,lightning__RecordPage">
+            <property name="message" type="String" label="Message" />
+            <property name="theme" type="String" default="basic" label="Theme" datasource="basic,warning,error,offline" />
+            <property name="closable" type="Boolean" default="false" label="Possibilité de masquer l'alerte" />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

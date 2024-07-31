@@ -1,0 +1,43 @@
+:host{
+	width: 100%;
+	--lwc-varSpacingVerticalSmall: 0;
+}
+
+.edit-button{
+	position: static;
+	width: auto;
+	height: auto;
+	float: right;
+	align-self: flex-start;
+}
+
+.edit-button .slds-button__icon{
+	display: block;
+	width: 0.875rem;
+	height: 0.875rem;
+	overflow: hidden;
+	background-color: transparent;
+	background-image: url('/img/sprites/pencils.png');
+	background-repeat: no-repeat;
+	background-position: 0 0;
+}
+.edit-button:hover .slds-button__icon{
+	background-position: 0 -21px;
+}
+.edit-button:focus .slds-button__icon{
+	background-position: 0 -42px;
+}
+
+.slds-form-element_readonly .slds-checkbox [type=checkbox][disabled]+.slds-checkbox_faux{
+	background-color: rgb(255,255,255);
+}
+
+.slds-rich-text-custom{
+	border: 1px solid rgb(201, 201, 201);
+	border-radius: 0.25rem;
+}
+
+.slds-has-error .slds-rich-text-custom{
+	border: 2px solid rgb(234, 0, 30);
+	box-shadow: rgb(234, 0, 30) 0 0 0 1px inset;
+}

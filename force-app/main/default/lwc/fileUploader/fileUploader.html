@@ -1,0 +1,69 @@
+<template>
+	<c-file-uploader-add-file-modal
+		if:true={modal.addFile.displayed}
+		record-id={recordId}
+		utility-data={utilityData}
+		onhidemodal={hideAddFileModal}
+		onfileupload={hideAddFileModalAndRefreshFiles}>
+	</c-file-uploader-add-file-modal>
+
+	<lightning-card>
+		<div slot="title">
+			<lightning-icon icon-name="standard:file" size="small" class="slds-var-m-right_medium"></lightning-icon>
+			<span class="slds-text-title_bold">{label.Files} ({utilityData.files.length})</span>
+		</div>
+		<div slot="actions">
+			<template if:false={hideAddFiles}>
+				<lightning-button
+					if:true={utilityData.hasEditAccess}
+					icon-name="utility:upload"
+					variant="neutral"
+					label={label.AddFiles}
+					onclick={displayAddFileModal}>
+				</lightning-button>
+			</template>
+			<lightning-button-icon
+				if:true={hasSelectedFiles}
+				icon-name="utility:delete"
+				variant="border-filled"
+				alternative-text={label.DeleteSelection}
+				title={label.DeleteSelection}
+				class="slds-var-m-left_small"
+				onclick={deleteFiles}>
+			</lightning-button-icon>
+			<lightning-button-icon
+				icon-name="utility:refresh"
+				variant="border-filled"
+				alternative-text={label.Refresh}
+				title={label.Refresh}
+				class="slds-var-m-left_small"
+				onclick={refresh}>
+			</lightning-button-icon>
+			<lightning-button-icon
+				if:true={filteredFiles.length}
+				icon-name="utility:download"
+				variant="border-filled"
+				alternative-text={label.DownloadAllFiles}
+				title={label.DownloadAllFiles}
+				class="slds-var-m-left_small"
+				onclick={downloadEveryFiles}>
+			</lightning-button-icon>
+			<c-filter if:true={displayFilterBtn} class="slds-var-m-left_small" filter={filter} onapply={setFilter}></c-filter>
+		</div>
+		<c-spinner size="small"></c-spinner>
+		<div if:true={filteredFiles.length} class="slds-var-p-horizontal_medium slds-var-p-vertical_xx-small">
+			<template for:each={filteredFiles} for:item="file">
+				<c-file-uploader-card
+					key={file.id}
+					file={file}
+					display-delete-btn={utilityData.hasEditAccess}
+					hide-date={hideDate}
+					mass-delete-option={massDeleteOption}
+					onselection={setSelected}
+					ondownloadfile={downloadFile}
+					ondeletefile={deleteFile}>
+				</c-file-uploader-card>
+			</template>
+		</div>
+	</lightning-card>
+</template>

@@ -1,0 +1,21 @@
+<template>
+	<lightning-button-icon
+		class="slds-float_right slds-m-around_xx-small"
+		icon-name="utility:close"
+		variant="bare"
+		onclick={dispatchCloseModal}>
+	</lightning-button-icon>
+	<div class="slds-modal__content slds-var-m-vertical_medium">
+		<template for:each={sections} for:item="section">
+			<c-filter-section
+				if:true={section.options.length}
+				key={section.filterOption}
+				section={section}
+				onvaluechange={setFilterOptionValue}>
+			</c-filter-section>
+		</template>
+	</div>
+	<footer class="slds-modal__footer">
+		<lightning-button label={label.Apply} variant="brand" onclick={dispatchApply}></lightning-button>
+	</footer>
+</template>

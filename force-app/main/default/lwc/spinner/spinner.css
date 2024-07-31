@@ -1,0 +1,48 @@
+.loading-fox{
+	width: 100%;
+	position: absolute;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 9999;
+	left: 0;
+}
+.loading-fox.fox-fixed{
+	position: fixed;
+}
+.loading-fox .fox-white-bg{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	background: rgba(255,255,255,0.5);
+	z-index: 1;
+}
+.loading-fox .fox-logo{
+	width: 150px;
+	z-index: 2;
+}
+.loading-fox.fox-size__large .fox-logo{
+	width:200px;
+}
+.loading-fox.fox-size__medium .fox-logo{
+	width:150px;
+}
+.loading-fox.fox-size__small .fox-logo{
+	width:100px;
+}
+.loading-fox.fox-size__x-small .fox-logo{
+	width:60px;
+}
+.loading-fox.infinite-rotate img{
+	animation: rotation 1.5s infinite linear;
+}
+
+@keyframes rotation {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(359deg);
+	}
+}

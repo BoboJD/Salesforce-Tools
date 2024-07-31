@@ -1,0 +1,45 @@
+:host{
+    width: 100%;
+}
+.slds-form-element .mce-form-element__label-required{
+    color: #D50000;
+}
+.slds-combobox__input{
+    padding-left: var(--sds-c-input-spacing-horizontal-start, var(--lwc-spacingSmall,0.75rem));
+    border: 1px solid var(--sds-c-input-color-border, #dddbda);
+    border-radius: var(--sds-c-input-radius-border,.25rem);
+}
+.is-disabled .slds-combobox__input{
+    background-color: var(--lwc-colorBackgroundInputDisabled,rgb(236, 235, 234));
+    border-color: #a8b7c7;
+    cursor: not-allowed;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.edit-button{
+	position: static;
+    width: auto;
+    height: auto;
+    float: right;
+    align-self: flex-start;
+}
+
+.edit-button .slds-button__icon{
+	display: block;
+    width: 0.875rem;
+    height: 0.875rem;
+    overflow: hidden;
+    background-color: transparent;
+    background-image: url('/img/sprites/pencils.png');
+    background-repeat: no-repeat;
+    background-position: 0 0;
+}
+.edit-button:hover .slds-button__icon{
+	background-position: 0 -21px;
+}
+.edit-button:focus .slds-button__icon{
+	background-position: 0 -42px;
+}

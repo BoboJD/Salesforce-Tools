@@ -1,0 +1,17 @@
+<template>
+	<div class="filter" onclick={preventToTriggerCloseModal}>
+		<lightning-button-icon-stateful
+			icon-name="utility:filterList"
+			selected={displayModal}
+			alternative-text={label.Filter}
+			onclick={toggleModal}>
+		</lightning-button-icon-stateful>
+		<c-filter-modal
+			if:true={displayModal}
+			filter={filter}
+			class="slds-nubbin_top-right"
+			onclosemodal={closeModal}
+			onapply={dispatchApplyThenCloseModal}>
+		</c-filter-modal>
+	</div>
+</template>

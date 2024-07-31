@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="urn:metadata.tooling.soap.sforce.com" fqn="htmlEditor">
+    <apiVersion>61.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>HTML Editor</masterLabel>
+    <targets>
+        <target>lightning__AppPage</target>
+        <target>lightning__HomePage</target>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__AppPage">
+            <property name="html" type="String" label="HTML"></property>
+        </targetConfig>
+        <targetConfig targets="lightning__HomePage">
+            <property name="html" type="String" label="HTML"></property>
+        </targetConfig>
+        <targetConfig targets="lightning__RecordPage">
+            <property name="html" type="String" label="HTML"></property>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

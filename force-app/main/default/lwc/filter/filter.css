@@ -1,0 +1,19 @@
+:host{
+	position: relative;
+}
+
+.filter{
+	display: inline-block;
+}
+
+c-filter-modal{
+	display: block;
+	position: absolute;
+	z-index: 9008;
+	background: white;
+	top: 40px;
+    right: -8px;
+	border: 1px solid #b6b6b6;
+    border-radius: 5px;
+	width: min(512px, 100vw);
+}

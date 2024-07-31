@@ -5,7 +5,7 @@ const functionExist = (input, functionName) => {
 const checkRequiredFields = (cmp, otherSelectors) => {
 	let allValid = true;
 	const lightningComponents = 'lightning-checkbox-group,lightning-radio-group,lightning-input,lightning-combobox,lightning-dual-listbox';
-	const customLightningComponents = 'c-lwc-input,c-lwc-lookup,c-lwc-picklist';
+	const customLightningComponents = 'c-input,c-lookup,c-picklist';
 	let selectors = customLightningComponents + ',' + lightningComponents + (otherSelectors ? ','+otherSelectors : '');
 	let inputs = cmp.template.querySelectorAll(selectors);
 	if(inputs?.length > 0){
