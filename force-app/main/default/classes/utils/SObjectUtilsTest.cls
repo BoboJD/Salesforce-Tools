@@ -98,24 +98,34 @@ private class SObjectUtilsTest{
 		Assert.isTrue(opportunity.IsWon);
 	}
 
-	// @IsTest
-	// static void getRecordViewPageShouldReturnUrl(){
-	// 	Id accountId = fflib_IDGenerator.generate(Schema.Account.SObjectType);
-	// 	String expectedUrl = '/lightning/r/Account/'+accountId+'/view';
+	@IsTest
+	static void getRecordViewPageShouldReturnUrl(){
+		Id accountId = fflib_IDGenerator.generate(Schema.Account.SObjectType);
 
-	// 	Test.startTest();
-	// 	String url = SObjectUtils.getRecordViewPage(accountId);
-	// 	Test.stopTest();
+		Test.startTest();
+		String url = SObjectUtils.getRecordViewPage(accountId);
+		Test.stopTest();
 
-	// 	Assert.equals(expectedUrl, url);
-	// }
+		Assert.equals('/lightning/r/Account/'+accountId+'/view', url);
+	}
 
-	// @IsTest
-	// static void getRecordViewPageShouldReturnNull(){
-	// 	Test.startTest();
-	// 	String url = SObjectUtils.getRecordViewPage(null);
-	// 	Test.stopTest();
+	@IsTest
+	static void getRecordViewPageShouldReturnNull(){
+		Test.startTest();
+		String url = SObjectUtils.getRecordViewPage(null);
+		Test.stopTest();
 
-	// 	Assert.isNull(url);
-	// }
+		Assert.isNull(url);
+	}
+
+	@IsTest
+	static void getExternalUrlShouldReturnUrl(){
+		Id accountId = fflib_IDGenerator.generate(Schema.Account.SObjectType);
+
+		Test.startTest();
+		String url = SObjectUtils.getExternalUrl(accountId);
+		Test.stopTest();
+
+		Assert.isTrue(url.contains('/lightning/r/Account/'+accountId+'/view'));
+	}
 }

@@ -32,8 +32,7 @@ public inherited sharing class SObjectFieldUtils{
 				for(Integer index = 0; index < controlEntries.size(); index++){
 					Object controlValue = (Object) (controlEntries[index].isActive() ? controlEntries[index].getLabel() : null);
 					Integer bitIndex = index / 6;
-					if(bitIndex > base64chars.size() - 1)
-						break;
+					if(bitIndex > base64chars.size() - 1) break;
 					Integer bitShift = 5 - Math.mod(index, 6);
 					if(controlValue == null || (BASE64MAP.indexOf(base64chars[bitIndex]) & (1 << bitShift)) == 0)
 						continue;

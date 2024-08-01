@@ -4,10 +4,10 @@ private class EmailUtilsTest{
 	@IsTest
 	static void returnDomainWithAFullEmailAdress(){
 		Test.startTest();
-		String domain = EmailUtils.getDomain('test@moncourtierenergie.com');
+		String domain = EmailUtils.getDomain('test@gmail.com');
 		Test.stopTest();
 
-		Assert.equals('moncourtierenergie.com', domain);
+		Assert.equals('gmail.com', domain);
 	}
 
 	@IsTest

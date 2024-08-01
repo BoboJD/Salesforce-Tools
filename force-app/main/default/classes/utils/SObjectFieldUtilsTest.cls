@@ -20,6 +20,14 @@ private class SObjectFieldUtilsTest{
 	}
 
 	@IsTest
+	static void getDependentPicklistValuesShouldReturnMapOfDecoratedPicklistEntry(){
+		Map<String, List<DecoratedPicklistEntry>> dependPicklist = SObjectFieldUtils.getDependentPicklistValues(Log__c.FormFactor__c);
+		Assert.equals(1, dependPicklist.size());
+		Assert.isTrue(dependPicklist.containsKey(LogConstants.TYPE_LNG_CMP));
+		Assert.equals(3, dependPicklist.get(LogConstants.TYPE_LNG_CMP).size());
+	}
+
+	@IsTest
 	static void getLabelOfPicklistValueShouldReturnLabelOfPicklistEntry(){
 		Task task = new Task(
 			Priority = 'High'
@@ -59,6 +67,28 @@ private class SObjectFieldUtilsTest{
 		Assert.equals(2, values?.size());
 		Assert.equals('2021', values[0]);
 		Assert.equals('2022', values[1]);
+	}
+
+
+
+	@IsTest
+	static void multipicklistLabelsShouldReturn2Values(){
+		Log__c log = new Log__c(
+			FormFactor__c = 'Small;Medium'
+		);
+		List<String> labels = SObjectFieldUtils.multipicklistLabels(log, Log__c.FormFactor__c);
+		Assert.equals(2, labels.size());
+	}
+
+	@IsTest
+	static void multipicklistLabelsWithSeparatorShouldReturnConcatenedLabels(){
+		Log__c log = new Log__c(
+			FormFactor__c = 'Small;Medium'
+		);
+		String concatenedLabels = SObjectFieldUtils.multipicklistLabels(log, Log__c.FormFactor__c, ', ');
+		String expectedConcatenation = SObjectFieldUtils.getLabelOfPicklistValue(Log__c.FormFactor__c, 'Small')
+			+ ', ' + SObjectFieldUtils.getLabelOfPicklistValue(Log__c.FormFactor__c, 'Medium');
+		Assert.equals(expectedConcatenation, concatenedLabels);
 	}
 
 	@IsTest

@@ -55,6 +55,18 @@ private class ApexPagesUtilsTest{
 	}
 
 	@IsTest
+	static void extractStringParameterFromUrlShouldReturnString(){
+		String parameter = 'myParameter';
+		ApexPages.currentPage().getParameters().put(parameter, 'param');
+
+		Test.startTest();
+		String returnedString = ApexPagesUtils.extractStringParameterFromUrl(parameter);
+		Test.stopTest();
+
+		Assert.equals('param', returnedString);
+	}
+
+	@IsTest
 	static void extractBooleanParameterFromUrlWithNullValueShouldReturnFalse(){
 		String parameter = 'myParameter';
 		ApexPages.currentPage().getParameters().put(parameter, null);

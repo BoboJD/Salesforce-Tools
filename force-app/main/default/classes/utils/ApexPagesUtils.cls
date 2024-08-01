@@ -10,9 +10,8 @@ public inherited sharing class ApexPagesUtils{
 		return String.isNotBlank(dateString) ? Date.valueOf(dateString) : null;
 	}
 
-	public static String extractTabParameterFromUrl(String parameter){
-		String tabString = ApexPages.currentPage().getParameters().get(parameter);
-		return String.isNotBlank(tabString) ? String.valueOf(tabString) : null;
+	public static String extractStringParameterFromUrl(String parameter){
+		return ApexPages.currentPage().getParameters().get(parameter);
 	}
 
 	public static Boolean extractBooleanParameterFromUrl(String parameter){

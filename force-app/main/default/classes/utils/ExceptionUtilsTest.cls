@@ -61,14 +61,14 @@ private class ExceptionUtilsTest{
 		Assert.isTrue(isRestrictedPicklist);
 	}
 
-	// @IsTest
-	// static void isRestrictedPicklistWithPicklistInParamsShouldReturnTrue(){
-	// 	Test.startTest();
-	// 	Boolean isRestrictedPicklist = ExceptionUtils.isRestrictedPicklist(new CustomException('toto'+ExceptionConstants.INVALID_OR_NULL_FOR_RESTRICTED_PICKLIST+': [Code_APE__c]'), Account.Code_APE__c);
-	// 	Test.stopTest();
+	@IsTest
+	static void isRestrictedPicklistWithPicklistInParamsShouldReturnTrue(){
+		Test.startTest();
+		Boolean isRestrictedPicklist = ExceptionUtils.isRestrictedPicklist(new CustomException('toto'+ExceptionConstants.INVALID_OR_NULL_FOR_RESTRICTED_PICKLIST+': [tlz__FormFactor__c]'), Log__c.FormFactor__c);
+		Test.stopTest();
 
-	// 	Assert.isTrue(isRestrictedPicklist);
-	// }
+		Assert.isTrue(isRestrictedPicklist);
+	}
 
 	@IsTest
 	static void isUnknownWithRestrictedPicklistExceptionShouldReturnFalse(){

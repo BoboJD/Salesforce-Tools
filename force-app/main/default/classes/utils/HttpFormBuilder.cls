@@ -1,6 +1,5 @@
 @SuppressWarnings('PMD.ExcessiveParameterList')
 public class HttpFormBuilder{
-	
 	private static final String BOUNDARY = '1ff13444ed8140c7a32fc4e6451aa76d';
 
 	public static String getContentType(){

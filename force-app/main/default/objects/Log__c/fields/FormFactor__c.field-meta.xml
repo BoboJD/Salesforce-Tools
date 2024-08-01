@@ -6,6 +6,7 @@
     <trackTrending>false</trackTrending>
     <type>MultiselectPicklist</type>
     <valueSet>
+        <controllingField>Type__c</controllingField>
         <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
@@ -25,6 +26,18 @@
                 <label>Phone</label>
             </value>
         </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Lightning component</controllingFieldValue>
+            <valueName>Large</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lightning component</controllingFieldValue>
+            <valueName>Medium</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lightning component</controllingFieldValue>
+            <valueName>Small</valueName>
+        </valueSettings>
     </valueSet>
     <visibleLines>3</visibleLines>
 </CustomField>

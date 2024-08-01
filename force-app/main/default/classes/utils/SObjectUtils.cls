@@ -55,6 +55,4 @@ public inherited sharing class SObjectUtils{
 	public static String getExternalUrl(Id recordId){
 		return URL.getOrgDomainUrl().toExternalForm() + getRecordViewPage(recordId);
 	}
-
-	private class SObjectUtilsException extends Exception{}
 }
