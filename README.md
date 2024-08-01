@@ -11,6 +11,11 @@ Deploy project to scratch org
 sf project deploy start --source-dir force-app
 ```
 
+Assign permission sets
+```sh
+sf org assign permset -n LogManage -n ToolsAdmin
+```
+
 Create a new package version
 ```sh
 sf package version create --package "Salesforce Tools" --wait 10 --installation-key-bypass
