@@ -1,7 +1,8 @@
 import { notifyRecordUpdateAvailable } from 'lightning/uiRecordApi';
+import { generateUrl } from "lightning/fileDownload";
 
 const downloadFile = fileId => {
-	window.open(`/sfc/servlet.shepherd/version/download/${fileId}?asPdf=false&operationContext=CHATTER`);
+	window.open(generateUrl(fileId));
 };
 
 const refreshRecord = recordId => {

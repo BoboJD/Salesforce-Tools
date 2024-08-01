@@ -8,10 +8,21 @@
 	</c-file-uploader-add-file-modal>
 
 	<lightning-card>
-		<div slot="title">
-			<lightning-icon icon-name="standard:file" size="small" class="slds-var-m-right_medium"></lightning-icon>
-			<span class="slds-text-title_bold">{label.Files} ({utilityData.files.length})</span>
-		</div>
+		<h2 slot="title" class="slds-card__header-title">
+			<div class="slds-media slds-no-space slds-grow">
+				<div class="slds-m-right_small stencil slds-avatar slds-avatar_small">
+					<lightning-icon icon-name="standard:file" size="small"></lightning-icon>
+				</div>
+				<div class="slds-media__body slds-align-middle">
+					<h2 class="slds-card__header-title">
+						<a class="slds-card__header-link baseCard__header-title-container" href={combinedAttachmentUrl} onclick={navigateToCombinedAttachments}>
+							<span class="slds-truncate slds-m-right--xx-small" title={label.Files}>{label.Files}</span>
+							<span class="lds-shrink-none slds-m-right--xx-small" title={numberOfFiles}>{numberOfFiles}</span>
+						</a>
+					</h2>
+				</div>
+			</div>
+		</h2>
 		<div slot="actions">
 			<template if:false={hideAddFiles}>
 				<lightning-button

@@ -1,13 +1,18 @@
-import { LightningElement, track, api } from 'lwc';
-import { displaySpinner, hideSpinner, displaySuccessToast, downloadFile, displayErrorToast } from 'c/utils';
+import { LightningElement, track, api, wire } from 'lwc';
+import { displaySpinner, hideSpinner, displaySuccessToast, downloadFile, displayErrorToast, format } from 'c/utils';
 import { loadStyle } from 'lightning/platformResourceLoader';
+import { IsConsoleNavigation, getFocusedTabInfo, openSubtab } from 'lightning/platformWorkspaceApi';
+import { NavigationMixin } from 'lightning/navigation';
+import { RefreshEvent, registerRefreshContainer, unregisterRefreshContainer } from "lightning/refresh";
 import { FilterOption } from 'c/filter';
 import fileUploaderCss from '@salesforce/resourceUrl/fileUploaderCss';
 import apex from './apex';
 import label from './labels';
 
-export default class FileUploader extends LightningElement{
+export default class FileUploader extends NavigationMixin(LightningElement){
+	@wire(IsConsoleNavigation) isConsoleNavigation;
 	@api recordId;
+	@api objectApiName;
 	@api hideAddFiles = false;
 	@api hideDate = false;
 	@api massDeleteOption = false;
@@ -17,6 +22,7 @@ export default class FileUploader extends LightningElement{
 	};
 	@track filter = {};
 	label = label;
+	refreshContainerId;
 
 	get filteredFiles(){
 		if(this.utilityData.files.length)
@@ -44,6 +50,14 @@ export default class FileUploader extends LightningElement{
 		return this.utilityData.files.filter(file => file.selected).length;
 	}
 
+	get numberOfFiles(){
+		return `(${this.utilityData.files.length})`;
+	}
+
+	get combinedAttachmentsUrl(){
+		return `/lightning/r/Account/${this.recordId}/related/CombinedAttachments/view`;
+	}
+
 	setFilter(e){
 		this.filter = e.detail.filter;
 	}
@@ -57,10 +71,23 @@ export default class FileUploader extends LightningElement{
 	}
 
 	connectedCallback(){
+		this.refreshContainerId = registerRefreshContainer(this, this.refreshContainer);
 		loadStyle(this, fileUploaderCss);
 		apex.getUtilityData(this, { recordId: this.recordId }, utilityData => {
 			this.utilityData = utilityData;
 			this.initFilter();
+			hideSpinner(this);
+		});
+	}
+
+	disconnectedCallback() {
+		unregisterRefreshContainer(this.refreshContainerId);
+	}
+
+	refreshContainer() {
+		displaySpinner(this);
+		apex.getFiles(this, { recordId: this.recordId }, files => {
+			this.utilityData.files = files;
 			hideSpinner(this);
 		});
 	}
@@ -103,7 +130,7 @@ export default class FileUploader extends LightningElement{
 
 	downloadFile(e){
 		const { contentVersionId } = e.detail;
-		this.dispatchEvent(new CustomEvent('opensubtab', { detail: { recordId: contentVersionId } }));
+		downloadFile(contentVersionId);
 	}
 
 	deleteFile(e){
@@ -118,11 +145,7 @@ export default class FileUploader extends LightningElement{
 	}
 
 	refreshFiles(){
-		displaySpinner(this);
-		apex.getFiles(this, { recordId: this.recordId }, files => {
-			this.utilityData.files = files;
-			hideSpinner(this);
-		});
+		this.dispatchEvent(new RefreshEvent());
 	}
 
 	deleteFiles(){
@@ -137,6 +160,27 @@ export default class FileUploader extends LightningElement{
 				hideSpinner(this);
 				this.refreshFiles();
 			});
+		}
+	}
+
+	navigateToCombinedAttachments(){
+		this.openSubtab({
+            type: 'standard__recordRelationshipPage',
+            attributes: {
+                recordId: this.recordId,
+                objectApiName: this.objectApiName,
+                relationshipApiName: 'CombinedAttachments',
+                actionName: 'view'
+            },
+        });
+	}
+
+	async openSubtab(pageReference){
+		if(this.isConsoleNavigation){
+			const { parentTabId } = await getFocusedTabInfo();
+			await openSubtab(parentTabId, { pageReference, focus: true });
+		}else{
+			this[NavigationMixin.Navigate](pageReference);
 		}
 	}
 }
