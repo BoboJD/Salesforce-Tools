@@ -1,12 +1,12 @@
-.slds-tabs_card c-file-uploader .slds-card{
+.slds-tabs_card tlz-file-uploader .slds-card{
 	border: var(--lwc-borderWidthThin,1px) solid var(--lwc-cardColorBorder,rgb(221, 219, 218))!important;
 	border-radius: var(--lwc-borderRadiusMedium,0.25rem)!important;
 }
-c-file-uploader .slds-card .slds-card__header{
+tlz-file-uploader .slds-card .slds-card__header{
 	background: var(--lwc-pageHeaderColorBackground,rgb(243, 242, 242))!important;
 	padding: var(--lwc-varSpacingVerticalMedium,1rem) var(--lwc-varSpacingHorizontalMedium,1rem)!important;
 	margin: 0!important;
 }
-c-file-uploader .slds-card .slds-card__body{
+tlz-file-uploader .slds-card .slds-card__body{
 	margin: 0!important;
 }
