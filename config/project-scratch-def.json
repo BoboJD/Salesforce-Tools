@@ -1,13 +1,18 @@
 {
   "orgName": "Salesforce Tools",
   "edition": "Developer",
-  "features": ["EnableSetPasswordInApi"],
+  "features": ["EnableSetPasswordInApi", "PlatformCache"],
   "settings": {
     "lightningExperienceSettings": {
       "enableS1DesktopEnabled": true
     },
     "mobileSettings": {
       "enableS1EncryptedStoragePref2": false
-    }
+    },
+	"securitySettings": {
+		"sessionSettings": {
+			"sessionTimeout": "TwentyFourHours"
+		}
+	}
   }
 }
