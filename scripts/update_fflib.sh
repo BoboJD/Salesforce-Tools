@@ -3,7 +3,7 @@
 main(){
 	pull_changes
 	copy_changes_to_directory
-	# add_system_to_assert "force-app/fflib/"
+	add_system_to_assert "force-app/fflib/"
 	echo "fflib has been updated."
 }
 
@@ -14,18 +14,21 @@ pull_changes(){
 }
 
 copy_changes_to_directory(){
-	echo "$apex_mocks_output"
-	if [[ $apex_mocks_output = *"Already up to date."* ]]; then
-		echo "No changes on apex mocks."
-	# else
-		# cp -r fflib-apex-mocks/sfdx-source/apex-mocks/main/* force-app/fflib/
-		# cp -r fflib-apex-mocks/sfdx-source/apex-mocks/test/* force-app/fflib/
+	if [[ -n "$apex_mocks_output" ]]; then
+		if [[ $apex_mocks_output = *"Already up to date."* ]]; then
+			echo "No changes on apex mocks."
+		else
+			cp -r fflib-apex-mocks/sfdx-source/apex-mocks/main/* force-app/fflib/
+			cp -r fflib-apex-mocks/sfdx-source/apex-mocks/test/* force-app/fflib/
+		fi
 	fi
-	if [[ $apex_common_output = *"Already up to date."* ]]; then
-		echo "No changes on apex common."
-	# else
-		# cp -r fflib-apex-common/sfdx-source/apex-common/main/* force-app/fflib/
-		# cp -r fflib-apex-common/sfdx-source/apex-common/test/* force-app/fflib/
+	if [[ -n "$apex_common_output" ]]; then
+		if [[ $apex_common_output = *"Already up to date."* ]]; then
+			echo "No changes on apex common."
+		else
+			cp -r fflib-apex-common/sfdx-source/apex-common/main/* force-app/fflib/
+			cp -r fflib-apex-common/sfdx-source/apex-common/test/* force-app/fflib/
+		fi
 	fi
 }
 
