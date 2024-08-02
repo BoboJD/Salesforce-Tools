@@ -1,6 +1,7 @@
 {
   "orgName": "Salesforce Tools",
   "edition": "Developer",
+  "language": "en_US",
   "features": ["EnableSetPasswordInApi", "PlatformCache"],
   "settings": {
     "lightningExperienceSettings": {
