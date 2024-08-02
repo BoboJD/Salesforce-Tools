@@ -4,6 +4,6 @@
     <protected>false</protected>
     <values>
         <field>GrantedPermissions__c</field>
-        <value xsi:type="xsd:string">LogManage</value>
+        <value xsi:type="xsd:string">ToolsAdmin</value>
     </values>
 </CustomMetadata>

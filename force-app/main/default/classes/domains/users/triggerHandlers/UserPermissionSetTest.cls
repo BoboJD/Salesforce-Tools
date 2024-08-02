@@ -16,7 +16,7 @@ private class UserPermissionSetTest{
 			SELECT Id
 			FROM PermissionSetAssignment
 			WHERE AssigneeId = :user.Id
-			AND (PermissionSet.Name = 'LogCreationOnly' OR PermissionSet.Name = 'LogManage')
+			AND (PermissionSet.Name = 'ToolsUser' OR PermissionSet.Name = 'ToolsAdmin')
 		];
 	}
 
