@@ -49,3 +49,9 @@ This project is licensed under the MIT License. See the LICENSE file for details
 This project includes code from the salesforce.com, Inc. repository which is licensed under the BSD-3-Clause license. The full license text is included in the LICENSE file.
 
 This project includes code from FinancialForce.com, Inc., which is licensed under terms similar to the BSD-3-Clause license. The full license text is included in the LICENSE file.
+
+This project includes code from various sources, including Stack Overflow. Code copied from Stack Overflow is licensed under the Creative Commons Attribution-ShareAlike 4.0 International License (CC BY-SA 4.0).
+
+## Attribution for Stack Overflow Code
+
+Some code snippets in this project were copied from Stack Overflow and are used under the terms of the CC BY-SA 4.0 license. While the exact posts are not identifiable, we acknowledge the contributions of the Stack Overflow community.
