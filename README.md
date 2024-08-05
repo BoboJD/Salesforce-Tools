@@ -39,3 +39,7 @@ cp -r fflib-apex-mocks/sfdx-source/apex-mocks/test/* force-app/fflib/
 cp -r fflib-apex-common/sfdx-source/apex-common/main/* force-app/fflib/
 cp -r fflib-apex-common/sfdx-source/apex-common/test/* force-app/fflib/
 ```
+
+## Acknowledgements
+
+This project includes code from the salesforce.com, Inc. repository which is licensed under the BSD-3-Clause license. The full license text is included in the LICENSE file.
