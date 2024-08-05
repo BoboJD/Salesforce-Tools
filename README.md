@@ -52,6 +52,10 @@ This project includes code from FinancialForce.com, Inc., which is licensed unde
 
 This project includes code from various sources, including Stack Overflow. Code copied from Stack Overflow is licensed under the Creative Commons Attribution-ShareAlike 4.0 International License (CC BY-SA 4.0).
 
+### Specific Acknowledgments
+
+- **RollupHelper**: This class was copied and modified from a gist by Thibault WEBER. See the original source [here](https://gist.github.com/grotib/838a40928d17d241f974319f04336bc3/edit).
+
 ## Attribution for Stack Overflow Code
 
 Some code snippets in this project were copied from Stack Overflow and are used under the terms of the CC BY-SA 4.0 license. While the exact posts are not identifiable, we acknowledge the contributions of the Stack Overflow community.
