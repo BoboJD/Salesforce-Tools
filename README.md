@@ -40,6 +40,12 @@ cp -r fflib-apex-common/sfdx-source/apex-common/main/* force-app/fflib/
 cp -r fflib-apex-common/sfdx-source/apex-common/test/* force-app/fflib/
 ```
 
+## License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
+
 ## Acknowledgements
 
 This project includes code from the salesforce.com, Inc. repository which is licensed under the BSD-3-Clause license. The full license text is included in the LICENSE file.
+
+This project includes code from FinancialForce.com, Inc., which is licensed under terms similar to the BSD-3-Clause license. The full license text is included in the LICENSE file.
