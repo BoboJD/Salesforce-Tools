@@ -8,6 +8,8 @@ sf org generate password --complexity 3 --length 16
 
 Deploy project to scratch org
 ```sh
+sf project deploy start --source-dir fflib-apex-mocks/sfdx-source
+sf project deploy start --source-dir fflib-apex-common/sfdx-source
 sf project deploy start --source-dir force-app
 ```
 
@@ -30,14 +32,6 @@ Maintain fflib
 ```sh
 git subtree pull --prefix=fflib-apex-mocks git@github.com:apex-enterprise-patterns/fflib-apex-mocks.git master
 git subtree pull --prefix=fflib-apex-common git@github.com:apex-enterprise-patterns/fflib-apex-common.git master
-```
-
-Then copy fflib content to project
-```sh
-cp -r fflib-apex-mocks/sfdx-source/apex-mocks/main/* force-app/fflib/
-cp -r fflib-apex-mocks/sfdx-source/apex-mocks/test/* force-app/fflib/
-cp -r fflib-apex-common/sfdx-source/apex-common/main/* force-app/fflib/
-cp -r fflib-apex-common/sfdx-source/apex-common/test/* force-app/fflib/
 ```
 
 ## License
