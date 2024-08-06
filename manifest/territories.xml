@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+	<types>
+		<members>Territory2</members>
+		<name>Settings</name>
+	</types>
+	<types>
+		<members>*</members>
+		<name>Territory2</name>
+	</types>
+	<types>
+		<members>*</members>
+		<name>Territory2Model</name>
+	</types>
+	<types>
+		<members>*</members>
+		<name>Territory2Rule</name>
+	</types>
+	<types>
+		<members>*</members>
+		<name>Territory2Type</name>
+	</types>
+	<version>61.0</version>
+</Package>
