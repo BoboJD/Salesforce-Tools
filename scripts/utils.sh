@@ -1,6 +1,6 @@
 #!/bin/sh
 SECONDS=0
-source ./scripts/colors.sh
+source "$SCRIPT_DIR/colors.sh"
 
 # Common methods
 ## error_exit

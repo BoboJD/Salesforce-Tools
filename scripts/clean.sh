@@ -1,5 +1,6 @@
 #!/bin/sh
-source ./scripts/utils.sh
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+source "$SCRIPT_DIR/utils.sh"
 
 main() {
 	determine_current_branch
