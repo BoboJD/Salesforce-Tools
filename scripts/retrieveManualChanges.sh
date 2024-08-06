@@ -59,6 +59,7 @@ main(){
 			recreate_org_shape
 		fi
 		check_installed_managed_packages_version
+		updating_salesforce_tools_subtree
 	fi
 
 	remove_ignored_files
@@ -248,6 +249,12 @@ check_installed_managed_packages_version(){
 			check_package_version "$appexchange_id" "$appexchange_name"
 		done
 	fi
+}
+
+updating_salesforce_tools_subtree(){
+	echo -ne "\nUpdating ${RGreen}Salesforce-Tools${NC} subtree... "
+	git subtree pull --prefix=tlz git@github.com:BoboJD/Salesforce-Tools.git master -m "Merge subtree" > /dev/null 2>&1
+	echo "Done."
 }
 
 check_package_version(){
