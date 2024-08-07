@@ -397,12 +397,12 @@ create_scratch_org(){
 		local setdefaultusername=""
 		if [ "$defaultusername_option" = "-s" ] || [ "$defaultusername_option" = "--setdefaultusername" ]; then
 			echo -ne " as ${RGreen}default org${NC} for project"
-			setdefaultusername="-d"
+			setdefaultusername="--set-default"
 		fi
 		echo ". Starting creation..."
 
 
-		local scratch_org_creation_result=$(sf org create scratch -f config/project-scratch-def.json -y 30 -w 20 --json -a $org_alias $setdefaultusername)
+		local scratch_org_creation_result=$(sf org create scratch -f config/project-scratch-def.json -y 30 -w 20 --json --alias $org_alias $setdefaultusername)
 
 		local status=$(echo "$scratch_org_creation_result" | jq -r '.status')
 		if [ "$status" -eq 0 ]; then
