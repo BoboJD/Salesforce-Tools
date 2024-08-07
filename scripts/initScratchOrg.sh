@@ -45,7 +45,7 @@ deploy(){
 
 assign_permissionsets_to_current_user(){
 	echo -ne "\nAssigning ${RBlue}permissionsets${NC} to current user... "
-	sf org assign permset -n ToolsAdmin
+	sf org assign permset -n ToolsAdmin > /dev/null
 	echo "Done."
 }
 
