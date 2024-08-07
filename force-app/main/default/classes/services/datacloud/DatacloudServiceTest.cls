@@ -5,6 +5,7 @@ private class DatacloudServiceTest{
 	static void setup(){
 		User standardUser = UserBuilder.newStandardUser().build();
 		System.runAs(standardUser){
+			AccountBuilder.newAccount().build();
 			ContactBuilder.build(new List<ContactBuilder>{
 				ContactBuilder.newContact().withEmail('toto@toto.fr'),
 				ContactBuilder.newContact().withEmail('tata@toto.fr')
