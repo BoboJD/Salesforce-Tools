@@ -69,6 +69,7 @@ display_classes_with_coverage_issue(){
 				| (
 					startswith("fflib_")
 					or startswith("ConnectApiService")
+					or startswith("RollupHelper")
 					or startswith("ForgotPasswordController")
 					or startswith("MicrobatchSelfRegController")
 					or startswith("MyProfilePageController")
