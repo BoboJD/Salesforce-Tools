@@ -49,3 +49,6 @@ $RECYCLE.BIN/
 
 # PMD
 .pmdCache
+
+# Salesforce CLI files
+testsresults/
