@@ -262,7 +262,7 @@ updating_salesforce_tools_subtree(){
 		git stash push -m "Stashing before subtree pull" > /dev/null 2>&1
 		git subtree pull --prefix="$PREFIX" "$REPO" "$BRANCH" -m "Merge subtree" > /dev/null 2>&1
 		git stash pop > /dev/null 2>&1
-	done
+	fi
 	echo "Done."
 }
 
