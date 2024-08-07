@@ -58,7 +58,6 @@ display_org_wide_coverage(){
 }
 
 display_classes_with_coverage_issue(){
-	echo -e "\nClass with coverage less than 95% :"
 	classes_with_coverage_issue=$(jq -r '
 		.coverage.coverage[]
 		| select(
@@ -74,20 +73,24 @@ display_classes_with_coverage_issue(){
 					or startswith("MicrobatchSelfRegController")
 					or startswith("MyProfilePageController")
 					or startswith("SiteRegisterController")
-					or startswith("CustomException")
 				)
 				| not
 			)
 		)
 		| "• \(.name): \(.coveredPercent)%"
 		' "$test_file")
-	echo "$classes_with_coverage_issue" | sort
+	if [ -n "$classes_with_coverage_issue" ]; then
+		echo -e "\nClass with coverage less than 95% :"
+		echo "$classes_with_coverage_issue" | sort
+	fi
 }
 
 display_classes_without_coverage(){
-	echo -e "\nClass without coverage :"
-	classes_without_coverage=$(jq -r '.coverage.coverage[] | select(.coveredPercent == 0 and (.name | startswith("fflib_") | not)) | "• \(.name)"' "$test_file")
-	echo "$classes_without_coverage" | sort
+	classes_without_coverage=$(jq -r '.coverage.coverage[] | select(.coveredPercent == 0 and (.name | (startswith("fflib_") or startswith("CustomException")) | not)) | "• \(.name)"' "$test_file")
+	if [ -n "$classes_without_coverage" ]; then
+		echo -e "\nClass without coverage :"
+		echo "$classes_without_coverage" | sort
+	fi
 }
 
 display_failed_tests(){

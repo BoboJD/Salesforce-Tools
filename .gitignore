@@ -47,8 +47,8 @@ $RECYCLE.BIN/
 # VSCode IDE
 .vscode
 
-# PMD
+# PMD Cache
 .pmdCache
 
-# Salesforce CLI files
-testsresults/
+# Files created from scripts
+testresults/
