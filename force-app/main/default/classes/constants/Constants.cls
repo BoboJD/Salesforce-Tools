@@ -6,4 +6,5 @@ public class Constants{
 	public static final String NONE = '- Aucun -';
 	public static final String STATUS = 'status';
 	public static final String SUCCESS = 'SUCCESS';
+	@TestVisible private Constants(){} // Fix for coverage
 }

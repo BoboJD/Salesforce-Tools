@@ -6,4 +6,5 @@ public class ExceptionConstants{
 	public static final String INVALID_OR_NULL_FOR_RESTRICTED_PICKLIST = 'INVALID_OR_NULL_FOR_RESTRICTED_PICKLIST';
 	public static final String UNABLE_TO_LOCK_ROW = 'UNABLE_TO_LOCK_ROW';
 	public static final String UNKNOWN = 'UNKNOWN_EXCEPTION';
+	@TestVisible private ExceptionConstants(){} // Fix for coverage
 }
