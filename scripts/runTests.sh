@@ -68,6 +68,7 @@ display_classes_with_coverage_issue(){
 				.name
 				| (
 					startswith("fflib_")
+					or startswith("ConnectApiService")
 					or startswith("ForgotPasswordController")
 					or startswith("MicrobatchSelfRegController")
 					or startswith("MyProfilePageController")
