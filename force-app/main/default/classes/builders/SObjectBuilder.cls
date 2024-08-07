@@ -3,12 +3,12 @@ public inherited sharing abstract class SObjectBuilder{
 	private Map<String, Object> valueByFieldName;
 	private Map<SObjectField, Object> valueBySObjectField;
 
-	protected SObjectBuilder(){
+	public SObjectBuilder(){
 		valueByFieldName = new Map<String, Object>();
 		valueBySObjectField = new Map<SObjectField, Object>();
 	}
 
-	protected SObjectBuilder(String recordTypeDeveloperName){
+	public SObjectBuilder(String recordTypeDeveloperName){
 		this();
 		withRecordType(recordTypeDeveloperName);
 	}
@@ -30,11 +30,11 @@ public inherited sharing abstract class SObjectBuilder{
 		return this;
 	}
 
-	protected SObject buildRecord(){
+	public SObject buildRecord(){
 		return buildRecord(true);
 	}
 
-	protected SObject buildRecordWithoutCommit(){
+	public SObject buildRecordWithoutCommit(){
 		return buildRecord(false);
 	}
 
