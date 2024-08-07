@@ -18,6 +18,7 @@ main(){
 	create_scratch_org $scratch_org_name $option
 	deploy_project
 	assign_permissionsets_to_current_user
+	import_data
 	echo -e "\n${RGreen}Scratch org is ready !${NC}"
 	display_duration_of_script
 }
@@ -45,6 +46,12 @@ deploy(){
 assign_permissionsets_to_current_user(){
 	echo -ne "\nAssigning ${RBlue}permissionsets${NC} to current user... "
 	sf org assign permset -n ToolsAdmin
+	echo "Done."
+}
+
+import_data(){
+	echo -ne "\Importing ${RBlue}data${NC} to scratch org... "
+	sf data import tree --files data/tlz__EncryptionKey__c.json > /dev/null
 	echo "Done."
 }
 

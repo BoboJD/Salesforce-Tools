@@ -1,0 +1,11 @@
+{
+    "records": [
+        {
+            "attributes": {
+                "type": "tlz__EncryptionKey__c",
+                "referenceId": "tlz__EncryptionKey__cRef1"
+            },
+            "tlz__Value__c": "xLNSoRbaMiEVrCOppUkj2ITiyTIWRmJuxpcBT2VR5+0="
+        }
+    ]
+}
