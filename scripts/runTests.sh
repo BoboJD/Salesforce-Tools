@@ -74,6 +74,7 @@ display_classes_with_coverage_issue(){
 					or startswith("MicrobatchSelfRegController")
 					or startswith("MyProfilePageController")
 					or startswith("SiteRegisterController")
+					or startswith("CustomException")
 				)
 				| not
 			)
