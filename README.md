@@ -1,55 +1,93 @@
 # Salesforce Tools
 
-Create a scratch org and set a password to your user
-```sh
-sf org create scratch --definition-file config/project-scratch-def.json --alias salesforce-tools --duration-days 30 --set-default
-sf org generate password --complexity 3 --length 16
-```
+This project is an unlocked package containing fflib files, utility classes, and service Apex classes. It also includes best practices used in conjunction with fflib. The repository features a `scripts` folder to manage deployments and keep the repository up-to-date.
 
-Deploy project to scratch org
-```sh
-sf project deploy start --source-dir fflib-apex-mocks/sfdx-source
-sf project deploy start --source-dir fflib-apex-common/sfdx-source
-sf project deploy start --source-dir force-app
-```
+## Usage
 
-Assign permission sets
-```sh
-sf org assign permset -n LogManage -n ToolsAdmin
-```
+To deploy the latest version of the unlocked package in your org, use the following command. Replace `VERSIONNUMBER` with the specific version you wish to install and `YOUR_ORG_NAME` with the alias of your Salesforce org.
 
-Create a new package version
-```sh
-sf package version create --package "Salesforce Tools" --wait 10 --installation-key-bypass
-```
+ ```sh
+  sf package install --package "Salesforce Tools@VERSIONNUMBER" --wait 10 --publish-wait 10 --target-org YOUR_ORG_NAME
+  ```
 
-Install your new package version
-```sh
-sf package install --package "Salesforce Tools@VERSIONNUMBER" --wait 10 --publish-wait 10 --target-org ORG_NAME
-```
+* `VERSIONNUMBER`: The version of the package (e.g., 1.0.0).
+* `YOUR_ORG_NAME`: The alias of your Salesforce org.
 
-Maintain fflib
-```sh
-git subtree pull --prefix=fflib-apex-mocks git@github.com:apex-enterprise-patterns/fflib-apex-mocks.git master
-git subtree pull --prefix=fflib-apex-common git@github.com:apex-enterprise-patterns/fflib-apex-common.git master
-```
+After deployment, you can add this repository as a subtree of your project to reference the components and Apex classes.
+
+  ```sh
+  git subtree add --prefix=tlz git@github.com:BoboJD/Salesforce-Tools.git master
+  ```
+
+To use the package's components and Apex classes, reference them with the "tlz" namespace.
+
+## Contributing to the Project
+
+We welcome contributions! To get started :
+
+1. **Fork the Repository**: Create a fork of the repository to work on your changes.
+2. **Create a Branch**: Create a new branch for each feature or bug fix.
+3. **Make Changes**: Implement your changes and ensure that they adhere to the project’s coding standards.
+4. **Test Your Changes**: Run tests to ensure that your changes do not introduce any issues.
+5. **Submit a Pull Request**: Once you’re satisfied with your changes, submit a pull request for review.
+
+### Create a scratch org
+
+To initialize a new scratch org, use the following script. Add the `-s` flag to set this org as the default.
+
+  ```sh
+  sh scripts/initScratchOrg.sh test -s
+  ```
+
+* `test`: Replace with your desired scratch org alias.
+* `-s`: Optional flag to set this org as the default.
+
+### Maintaining fflib Libraries
+
+To update the fflib libraries, use the following commands :
+
+  ```sh
+  # Update fflib-apex-mocks
+  git subtree pull --prefix=fflib-apex-mocks git@github.com:apex-enterprise-patterns/fflib-apex-mocks.git master
+
+  # Update fflib-apex-common
+  git subtree pull --prefix=fflib-apex-common git@github.com:apex-enterprise-patterns/fflib-apex-common.git master
+  ```
+
+### Managing Package Versions
+
+To create a new version of the package, use :
+
+  ```sh
+  sf package version create --package "Salesforce Tools" --wait 10 --installation-key-bypass
+  ```
+
+* `--package "Salesforce Tools"`: Replace with the name of your package.
+* `--wait 10`: Adjust the wait time if needed; this specifies the number of minutes to wait for the process to complete.
+* `--installation-key-bypass`: Bypass the installation key prompt.
+
+### Reporting Issues
+
+For issues or suggestions, please open an issue on the [GitHub Issues](https://github.com/BoboJD/Salesforce-Tools/issues) page.
+
+Thank you for contributing!
 
 ## License
 
-This project is licensed under the MIT License. See the LICENSE file for details.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgements
 
-This project includes code from the salesforce.com, Inc. repository which is licensed under the BSD-3-Clause license. The full license text is included in the LICENSE file.
+This project includes code from:
 
-This project includes code from FinancialForce.com, Inc., which is licensed under terms similar to the BSD-3-Clause license. The full license text is included in the LICENSE file.
-
-This project includes code from various sources, including Stack Overflow. Code copied from Stack Overflow is licensed under the Creative Commons Attribution-ShareAlike 4.0 International License (CC BY-SA 4.0).
+* Salesforce.com, Inc., licensed under the BSD-3-Clause license.
+* FinancialForce.com, Inc., with a license similar to the BSD-3-Clause license.
+* Various sources, including Stack Overflow, under the Creative Commons Attribution-ShareAlike 4.0 International License (CC BY-SA 4.0).
 
 ### Specific Acknowledgments
 
-- **RollupHelper**: This class was copied and modified from a gist by Thibault WEBER. See the original source [here](https://gist.github.com/grotib/838a40928d17d241f974319f04336bc3/edit).
+- **RollupHelper**: Adapted from a gist by Thibault WEBER. See the [original source](https://gist.github.com/grotib/838a40928d17d241f974319f04336bc3/edit).
 
-## Attribution for Stack Overflow Code
+### Attribution for Stack Overflow Code
 
-Some code snippets in this project were copied from Stack Overflow and are used under the terms of the CC BY-SA 4.0 license. While the exact posts are not identifiable, we acknowledge the contributions of the Stack Overflow community.
+Code snippets from Stack Overflow are used under the terms of the CC BY-SA 4.0 license. We acknowledge the Stack Overflow community for their contributions.
