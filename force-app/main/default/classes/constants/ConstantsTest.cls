@@ -6,6 +6,7 @@ private class ConstantsTest{
 		new Constants();
 		new ContentDocumentConstants();
 		new ContentDocumentLinkConstants();
+		new CustomNotificationConstants();
 		new ExceptionConstants();
 		new LogConstants();
 		new OrganizationConstants();
