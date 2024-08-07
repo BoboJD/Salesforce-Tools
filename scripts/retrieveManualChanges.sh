@@ -257,7 +257,8 @@ updating_salesforce_tools_subtree(){
 	local BRANCH="master"
 	echo -ne "\nFetching ${RGreen}Salesforce-Tools${NC} subtree... "
 	git fetch $REPO $BRANCH > /dev/null 2>&1
-	if ! git diff --quiet FETCH_HEAD $PREFIX/$BRANCH; then
+	local SUBTREE_LATEST=$(git log -n 1 --pretty=format:%H -- "$PREFIX")
+	if ! git diff --quiet FETCH_HEAD $SUBTREE_LATEST; then
 		echo -n "Subtree has changed. Pulling the latest changes... "
 		git stash push -m "Stashing before subtree pull" > /dev/null 2>&1
 		git subtree pull --prefix="$PREFIX" "$REPO" "$BRANCH" -m "Merge subtree" > /dev/null 2>&1
