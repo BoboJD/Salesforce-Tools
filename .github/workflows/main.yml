@@ -92,7 +92,8 @@ jobs:
 
       - name: XMLStarlet in Linux
         run: |
-          sudo apt-get install xmlstarlet
+          sudo apt-get update
+          sudo apt-get install -y xmlstarlet
           xml --version
 
       - name: Authorize DevHub
