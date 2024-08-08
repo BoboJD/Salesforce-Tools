@@ -7,7 +7,8 @@
    <exclude-pattern>.*/.sfdx/.*</exclude-pattern>
    <exclude-pattern>.*/Application.*</exclude-pattern>
    <exclude-pattern>.*/mocks/.*</exclude-pattern>
-   <exclude-pattern>.*/fflib/.*</exclude-pattern>
+   <exclude-pattern>.*/fflib-apex-common/.*</exclude-pattern>
+   <exclude-pattern>.*/fflib-apex-mocks/.*</exclude-pattern>
 
    <rule ref="category/apex/bestpractices.xml">
       <exclude name="ApexAssertionsShouldIncludeMessage"/>
