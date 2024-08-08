@@ -5,6 +5,11 @@ on:
     types: [opened, edited, reopened, synchronize]
   workflow_dispatch:
 
+env:
+  SFDX_CONSUMER_KEY: ${{ secrets.SFDX_CONSUMER_KEY }}
+  SFDX_JWT_SECRET_KEY: ${{ secrets.SFDX_JWT_SECRET_KEY }}
+  SFDX_USERNAME: ${{ secrets.SFDX_USERNAME }}
+
 jobs:
   check_files_content:
     name: Check files content
@@ -86,8 +91,8 @@ jobs:
 
       - name: Authorize DevHub
         run: |
-          echo ${{ secrets.SFDX_JWT_SECRET_KEY }} > server.key
-          sf org login jwt --client-id ${{ secrets.SFDX_CONSUMER_KEY }} --jwt-key-file server.key --username  "${{ secrets.SFDX_USERNAME }}" --alias "salesforce-tools" --set-default-dev-hub
+          echo "$SFDX_JWT_SECRET_KEY" > server.key
+          sf org login jwt --client-id "$SFDX_CONSUMER_KEY" --jwt-key-file server.key --username  "$SFDX_USERNAME" --alias "salesforce-tools" --set-default-dev-hub
 
       - name: Create Scratch Org and deploy metadata files
         run: sh scripts/initScratchOrg.sh salesforce-tools-test -s
