@@ -1,6 +1,6 @@
 #!/bin/sh
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-."$SCRIPT_DIR/utils.sh"
+. "$SCRIPT_DIR/utils.sh"
 . ./scripts/parameters.sh
 current_branch=$(git symbolic-ref --short HEAD)
 
