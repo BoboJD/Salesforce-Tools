@@ -86,7 +86,7 @@ This project includes code from:
 
 ### Specific Acknowledgments
 
-- **RollupHelper**: Adapted from a gist by Thibault WEBER. See the [original source](https://gist.github.com/grotib/838a40928d17d241f974319f04336bc3/edit).
+* **RollupHelper**: Adapted from a gist by Thibault WEBER. See the [original source](https://gist.github.com/grotib/838a40928d17d241f974319f04336bc3/edit).
 
 ### Attribution for Stack Overflow Code
 
