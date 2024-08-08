@@ -3,6 +3,7 @@ run-name: ${{ github.actor }} is sending new lines of code 🚀
 on:
   pull_request:
     types: [opened, edited, reopened, synchronize]
+  workflow_dispatch:
 
 jobs:
   check_files_content:
@@ -84,13 +85,9 @@ jobs:
         run: npm install -g @salesforce/cli
 
       - name: Authorize DevHub
-        uses: svierk/sfdx-login@main
-        with:
-          client-id: ${{ secrets.SFDX_CONSUMER_KEY }}
-          jwt-secret-key: ${{ secrets.SFDX_JWT_SECRET_KEY }}
-          username: ${{ secrets.SFDX_USERNAME }}
-          set-default-dev-hub: true
-          alias: salesforce-tools
+        run: |
+          echo ${{ secrets.SFDX_JWT_SECRET_KEY }} > server.key
+          sf org login jwt --client-id ${{ secrets.SFDX_CONSUMER_KEY }} --jwt-key-file server.key --username  "${{ secrets.SFDX_USERNAME }}" --alias "salesforce-tools" --set-default-dev-hub
 
       - name: Create Scratch Org and deploy metadata files
         run: sh scripts/initScratchOrg.sh salesforce-tools-test -s
