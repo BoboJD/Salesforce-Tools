@@ -91,7 +91,9 @@ jobs:
         run: npm install -g @salesforce/cli
 
       - name: XMLStarlet in Linux
-        run: sudo apt-get install xmlstarlet
+        run: |
+          sudo apt-get install xmlstarlet
+          xml --version
 
       - name: Authorize DevHub
         run: |
