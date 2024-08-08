@@ -97,10 +97,12 @@ jobs:
 
       - name: Create Scratch Org and deploy metadata files
         run: sh scripts/initScratchOrg.sh salesforce-tools-test -s
+        shell: sh
 
       - name: Run tests
         id: tests
         run: sh scripts/runTests.sh
+        shell: sh
 
       - name: Delete Scratch Org
         run: sf org delete scratch --target-org salesforce-tools-test --no-prompt
