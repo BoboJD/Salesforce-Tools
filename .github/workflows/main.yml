@@ -96,13 +96,11 @@ jobs:
           sf org login jwt --client-id "$SFDX_CONSUMER_KEY" --jwt-key-file server.key --username  "$SFDX_USERNAME" --alias "salesforce-tools" --set-default-dev-hub
 
       - name: Create Scratch Org and deploy metadata files
-        run: sh scripts/initScratchOrg.sh salesforce-tools-test -s
-        shell: sh
+        run: bash scripts/initScratchOrg.sh salesforce-tools-test -s
 
       - name: Run tests
         id: tests
-        run: sh scripts/runTests.sh
-        shell: sh
+        run: bash scripts/runTests.sh
 
       - name: Delete Scratch Org
         run: sf org delete scratch --target-org salesforce-tools-test --no-prompt

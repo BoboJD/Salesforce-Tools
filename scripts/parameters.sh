@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Copy this file in your project in a folder "scripts/" at the root
 # then uncomments things you want to use for the scripts, you can add elements to array

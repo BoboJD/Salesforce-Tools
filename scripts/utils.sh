@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 SECONDS=0
 . "$SCRIPT_DIR/colors.sh"
 

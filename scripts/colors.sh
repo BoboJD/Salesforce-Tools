@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 PREFIX="\033["
 
 # Format
