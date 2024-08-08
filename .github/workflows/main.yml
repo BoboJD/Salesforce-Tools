@@ -1,0 +1,102 @@
+name: check indentation | check apiVersion | run linters | run tests
+run-name: ${{ github.actor }} is sending new lines of code 🚀
+on:
+  pull_request:
+    types: [opened, edited, reopened, synchronize]
+
+jobs:
+  check_files_content:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository code
+        uses: actions/checkout@v4
+
+      - name: Check indentation of Apex classes
+        run: |
+          files_with_issues=$(find force-app -name '*.cls' -exec grep -l -n '^  ' {} + || true)
+          if [ -n "$files_with_issues" ]; then
+            echo "The indentation should be in "tab" for the files:"
+            echo "$files_with_issues"
+            exit 1
+          else
+            echo "Indentation is correct for all Apex files."
+          fi
+
+      - name: Check that the <apiVersion> in metadata files is the latest
+        run: |
+          IFS=$'\n' # Set Internal Field Separator to newline to handle spaces in filenames
+          meta_files=$(find force-app -name '*-meta.xml')
+          files_to_update=()
+
+          for meta_file in "${meta_files[@]}"; do
+            if grep -q '<apiVersion>' "$meta_file"; then
+              if ! grep -q '<apiVersion>61.0</apiVersion>' "$meta_file"; then
+                files_to_update+=("$meta_file")
+              fi
+            fi
+          done
+
+          if [ "${#files_to_update[@]}" -ne 0 ]; then
+            echo "The following files need to be updated to <apiVersion>61.0</apiVersion> :"
+            printf "%s\n" "${files_to_update[@]}"
+            exit 1
+          else
+            echo "No files need to be updated to <apiVersion>61.0</apiVersion> ."
+          fi
+
+      - name: Install dependencies
+        run: npm install --force
+
+      - name: Run linting of js code
+        run: npm run lint
+
+      - name: Install Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+
+      - name: Run linting of apex code
+        uses: pmd/pmd-github-action@v2
+        id: pmd
+        with:
+          sourcePath: 'force-app'
+          rulesets: 'rulesets.xml'
+
+      - name: Fail build if there are violations of apex linter
+        if: steps.pmd.outputs.violations != 0
+        run: exit 1
+  run_tests:
+    name: Create Scratch Org then run tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install SF CLI
+        run: npm install -g @salesforce/cli
+
+      - name: Authorize DevHub
+        uses: svierk/sfdx-login@main
+        with:
+          client-id: ${{ secrets.SFDX_CONSUMER_KEY }}
+          jwt-secret-key: ${{ secrets.SFDX_JWT_SECRET_KEY }}
+          username: ${{ secrets.SFDX_USERNAME }}
+          set-default-dev-hub: true
+          alias: salesforce-tools
+
+      - name: Create Scratch Org and deploy metadata files
+        run: sh scripts/initScratchOrg.sh salesforce-tools-test -s
+
+      - name: Run tests
+        id: tests
+        run: sh scripts/runTests.sh
+
+      - name: Delete Scratch Org
+        run: sf org delete scratch --target-org salesforce-tools-test --no-prompt
+
