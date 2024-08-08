@@ -90,6 +90,9 @@ jobs:
       - name: Install SF CLI
         run: npm install -g @salesforce/cli
 
+      - name: XMLStarlet in Linux
+        run: sudo apt-get install xmlstarlet
+
       - name: Authorize DevHub
         run: |
           echo "$SFDX_JWT_SECRET_KEY" > server.key
