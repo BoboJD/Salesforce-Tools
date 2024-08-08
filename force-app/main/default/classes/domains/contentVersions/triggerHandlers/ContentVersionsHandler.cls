@@ -8,8 +8,4 @@ public inherited sharing virtual class ContentVersionsHandler extends TriggerHan
 	protected ContentVersionsHandler(ContentVersions domain, fflib_ISObjectUnitOfWork uow){
 		super(domain, uow);
 	}
-
-	protected ContentVersion old(ContentVersion contentVersion){
-		return (ContentVersion)super.old(contentVersion);
-	}
 }
