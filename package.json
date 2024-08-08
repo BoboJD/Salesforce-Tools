@@ -1,6 +1,5 @@
 {
   "name": "tlz",
-  "private": true,
   "description": "Salesforce Tools",
   "scripts": {
     "lint": "npm run lint:lwc && npm run lint:aura",
@@ -19,19 +18,19 @@
   },
   "homepage": "https://github.com/BoboJD/Salesforce-Tools#readme",
   "devDependencies": {
-    "@babel/core": "^7.24.9",
-    "@babel/eslint-parser": "^7.24.8",
+    "@babel/core": "^7.25.2",
+    "@babel/eslint-parser": "^7.25.1",
     "@lwc/eslint-plugin-lwc": "^1.8.2",
     "@salesforce/eslint-config-lwc": "^3.6.0",
     "@salesforce/eslint-plugin-aura": "^2.1.0",
     "@salesforce/eslint-plugin-lightning": "^1.0.0",
-    "eslint": "^9.7.0",
+    "eslint": "^9.8.0",
     "eslint-plugin-import": "^2.29.1",
-    "eslint-plugin-jest": "^28.6.0",
+    "eslint-plugin-jest": "^28.7.0",
     "jest": "^29.7.0",
     "prettier": "^3.3.3"
   },
   "dependencies": {
-    "globals": "^15.8.0"
+    "globals": "^15.9.0"
   }
 }
