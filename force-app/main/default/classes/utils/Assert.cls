@@ -72,4 +72,15 @@ public with sharing class Assert{
 		Boolean searchedTermFound = message.contains(searchedTerm);
 		System.Assert.isTrue(searchedTermFound, 'Text not found in the message : '+message);
 	}
+
+	public static void listContains(List<Object> listToSearch, Object searchedObj){
+		System.Assert.isNotNull(listToSearch, 'List to search is null.');
+		System.Assert.isNotNull(searchedObj, 'Given object to search is null.');
+		Boolean objectFound = false;
+		for(Object listElement : listToSearch){
+			if(listElement == searchedObj)
+				objectFound = true;
+		}
+		System.Assert.isTrue(objectFound, 'Value in list not found');
+	}
 }
