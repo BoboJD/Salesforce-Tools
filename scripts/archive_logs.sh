@@ -1,7 +1,7 @@
 #!/bin/sh
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-source "$SCRIPT_DIR/utils.sh"
-source ./scripts/parameters.sh
+."$SCRIPT_DIR/utils.sh"
+. ./scripts/parameters.sh
 
 main(){
 	display_start_time
