@@ -94,7 +94,6 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y xmlstarlet
-          xmlstarlet --version
 
       - name: Authorize DevHub
         run: |

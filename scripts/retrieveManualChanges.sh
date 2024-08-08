@@ -142,15 +142,15 @@ configuration_directories=(
 
 remove_traduction_of_weblinks(){
 	for file in ${project_directory}objectTranslations/*/*.objectTranslation-meta.xml; do
-		xml ed -L -N x="$xml_namespace" -d "//x:webLinks[starts-with(x:name, \"pi__\")]" "$file"
-		xml fo --indent-spaces 4 "$file" > "${file}.tmp" && mv "${file}.tmp" "$file"
+		xmlstarlet ed -L -N x="$xml_namespace" -d "//x:webLinks[starts-with(x:name, \"pi__\")]" "$file"
+		xmlstarlet fo --indent-spaces 4 "$file" > "${file}.tmp" && mv "${file}.tmp" "$file"
 	done
 }
 
 remove_esconnect_rule_from_lead_matching_rules(){
 	lead_matching_rule_file="${project_directory}matchingRules/Lead.matchingRule-meta.xml";
-	xml ed -L -N x="$xml_namespace" -d "//x:matchingRules[starts-with(x:fullName, \"ESCONNECT__Ellisphere_SIRET\")]" "${lead_matching_rule_file}"
-	xml fo --indent-spaces 4 "$lead_matching_rule_file" > "${lead_matching_rule_file}.tmp" && mv "${lead_matching_rule_file}.tmp" "$lead_matching_rule_file"
+	xmlstarlet ed -L -N x="$xml_namespace" -d "//x:matchingRules[starts-with(x:fullName, \"ESCONNECT__Ellisphere_SIRET\")]" "${lead_matching_rule_file}"
+	xmlstarlet fo --indent-spaces 4 "$lead_matching_rule_file" > "${lead_matching_rule_file}.tmp" && mv "${lead_matching_rule_file}.tmp" "$lead_matching_rule_file"
 }
 
 retrieve_territories(){
@@ -212,15 +212,15 @@ retrieve_profiles(){
 	echo -ne "Removing unnecessary permissions... "
 	for profile in ${project_directory}profiles/*.profile-meta.xml; do
 		for unused_layout in "${unused_standard_layouts[@]}"; do
-			xml ed -L -N x="$xml_namespace" -d "//x:layoutAssignments[starts-with(x:layout, \"${unused_layout}-\")]" "$profile"
+			xmlstarlet ed -L -N x="$xml_namespace" -d "//x:layoutAssignments[starts-with(x:layout, \"${unused_layout}-\")]" "$profile"
 		done
 		for user_permission_name in "${user_permissions_to_delete[@]}"; do
-			xml ed -L -N x="$xml_namespace" -d "//x:userPermissions[x:name = \"$user_permission_name\"]" "$profile"
+			xmlstarlet ed -L -N x="$xml_namespace" -d "//x:userPermissions[x:name = \"$user_permission_name\"]" "$profile"
 		done
 		for unnecessary_permission in "${unnecessary_permissions_to_delete[@]}"; do
-			xml ed -L -N x="$xml_namespace" -d "//*/x:$unnecessary_permission" "$profile"
+			xmlstarlet ed -L -N x="$xml_namespace" -d "//*/x:$unnecessary_permission" "$profile"
 		done
-		xml fo --indent-spaces 4 "$profile" > "${profile}.tmp" && mv "${profile}.tmp" "$profile"
+		xmlstarlet fo --indent-spaces 4 "$profile" > "${profile}.tmp" && mv "${profile}.tmp" "$profile"
 	done
 	echo "Done."
 }
