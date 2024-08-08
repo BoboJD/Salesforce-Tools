@@ -6,6 +6,7 @@ on:
 
 jobs:
   check_files_content:
+    name: Check files content
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository code
@@ -68,6 +69,7 @@ jobs:
         run: exit 1
   run_tests:
     name: Create Scratch Org then run tests
+    needs: check_files_content
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
