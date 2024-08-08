@@ -70,7 +70,7 @@ export default class FileUploaderAddFileModal extends LightningElement{
 	}
 
 	handleSuccess(e){
-		const { files }  = e.detail;
+		const { files } = e.detail;
 		const contentDocumentIds = files.map(file => file.documentId);
 		displaySuccessToast(this, label.File_sAdded);
 		this.dispatchEvent(new CustomEvent('fileupload', { detail: { contentDocumentIds, files } }));

@@ -1,5 +1,5 @@
 import { notifyRecordUpdateAvailable } from 'lightning/uiRecordApi';
-import { generateUrl } from "lightning/fileDownload";
+import { generateUrl } from 'lightning/fileDownload';
 
 const downloadFile = fileId => {
 	window.open(generateUrl(fileId));

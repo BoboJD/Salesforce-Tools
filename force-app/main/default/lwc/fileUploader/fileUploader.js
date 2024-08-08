@@ -3,7 +3,7 @@ import { displaySpinner, hideSpinner, displaySuccessToast, downloadFile, display
 import { loadStyle } from 'lightning/platformResourceLoader';
 import { IsConsoleNavigation, getFocusedTabInfo, openSubtab } from 'lightning/platformWorkspaceApi';
 import { NavigationMixin } from 'lightning/navigation';
-import { RefreshEvent, registerRefreshContainer, unregisterRefreshContainer } from "lightning/refresh";
+import { RefreshEvent, registerRefreshContainer, unregisterRefreshContainer } from 'lightning/refresh';
 import { FilterOption } from 'c/filter';
 import fileUploaderCss from '@salesforce/resourceUrl/fileUploaderCss';
 import apex from './apex';
@@ -80,11 +80,11 @@ export default class FileUploader extends NavigationMixin(LightningElement){
 		});
 	}
 
-	disconnectedCallback() {
+	disconnectedCallback(){
 		unregisterRefreshContainer(this.refreshContainerId);
 	}
 
-	refreshContainer() {
+	refreshContainer(){
 		displaySpinner(this);
 		apex.getFiles(this, { recordId: this.recordId }, files => {
 			this.utilityData.files = files;
@@ -165,14 +165,14 @@ export default class FileUploader extends NavigationMixin(LightningElement){
 
 	navigateToCombinedAttachments(){
 		this.openSubtab({
-            type: 'standard__recordRelationshipPage',
-            attributes: {
-                recordId: this.recordId,
-                objectApiName: this.objectApiName,
-                relationshipApiName: 'CombinedAttachments',
-                actionName: 'view'
-            },
-        });
+			type: 'standard__recordRelationshipPage',
+			attributes: {
+				recordId: this.recordId,
+				objectApiName: this.objectApiName,
+				relationshipApiName: 'CombinedAttachments',
+				actionName: 'view'
+			}
+		});
 	}
 
 	async openSubtab(pageReference){
