@@ -1,5 +1,7 @@
 #!/bin/sh
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+echo "Script directory is $SCRIPT_DIR"
+ls -la "$SCRIPT_DIR"
 ."$SCRIPT_DIR/utils.sh"
 . ./scripts/parameters.sh
 
