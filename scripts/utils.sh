@@ -473,6 +473,14 @@ rename_api_name_of_standard_metadata(){
 	fi
 }
 
+## activate_debug_mode_for_lightning_components
+activate_debug_mode_for_lightning_components(){
+	local org_alias=$1
+	echo -ne "\nActivation of ${RBlue}Debug Mode${NC} for Lightning components... "
+	sf texei debug lwc enable --target-org $org_alias > /dev/null
+	echo "Done."
+}
+
 ## import_data_from_production
 import_data_from_production(){
 	local org_alias=$1
