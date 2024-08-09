@@ -180,7 +180,7 @@ find_metadata_type_by_folder_name(){
 ## remove_unsupported_setting_for_lightning_experience
 remove_unsupported_setting_for_lightning_experience(){
 	echo -ne "- Removing ${RBlue}unsupported setting${NC} for lightning experience... "
-	xmlstarlet ed -L -N x="$xml_namespace" -d "//*/x:enableInAppLearning" "${project_directory}settings/LightningExperience.settings-meta.xml"
+	xml ed -L -N x="$xml_namespace" -d "//*/x:enableInAppLearning" "${project_directory}settings/LightningExperience.settings-meta.xml"
 	echo "Done."
 }
 
@@ -189,7 +189,7 @@ remove_components_on_dashboards(){
 	if [ "${#dashboards[@]}" -gt 0 ]; then
 		echo -ne "- Removing ${RBlue}untracked reports${NC} on dashboards... "
 		for dashboard in ${dashboards[@]}; do
-			xmlstarlet ed -L -N x="$xml_namespace" -d "//*/x:dashboardGridComponents" "${project_directory}dashboards/$dashboard.dashboard-meta.xml"
+			xml ed -L -N x="$xml_namespace" -d "//*/x:dashboardGridComponents" "${project_directory}dashboards/$dashboard.dashboard-meta.xml"
 		done
 		echo "Done."
 	fi
@@ -202,8 +202,8 @@ remove_controlling_field_on_picklists(){
 			sobject=$(echo "$concatenation" | cut -d "." -f 1)
 			picklist_api_name=$(echo "$concatenation" | cut -d "." -f 2)
 			echo -ne "- Removing ${RBlue}picklist controlling values${NC} on ${sobject} picklist ${picklist_api_name}... "
-			xmlstarlet ed -L -N x="$xml_namespace" -d "//*/x:valueSettings" "${project_directory}objects/${sobject}/fields/${picklist_api_name}.field-meta.xml"
-			xmlstarlet ed -L -N x="$xml_namespace" -d "//*/x:controllingField" "${project_directory}objects/${sobject}/fields/${picklist_api_name}.field-meta.xml"
+			xml ed -L -N x="$xml_namespace" -d "//*/x:valueSettings" "${project_directory}objects/${sobject}/fields/${picklist_api_name}.field-meta.xml"
+			xml ed -L -N x="$xml_namespace" -d "//*/x:controllingField" "${project_directory}objects/${sobject}/fields/${picklist_api_name}.field-meta.xml"
 			echo "Done."
 		done
 	fi
@@ -213,7 +213,7 @@ remove_controlling_field_on_picklists(){
 remove_consumer_key_on_each_connected_app(){
 	echo -ne "- Removing ${RBlue}consumer key${NC} on connected apps... "
 	for filename in ${project_directory}connectedApps/*.connectedApp-meta.xml; do
-		xmlstarlet ed -L -N x="$xml_namespace" -d "//*/x:consumerKey" "$filename"
+		xml ed -L -N x="$xml_namespace" -d "//*/x:consumerKey" "$filename"
 	done
 	echo "Done."
 }
@@ -222,7 +222,7 @@ remove_consumer_key_on_each_connected_app(){
 remove_domain_on_each_site(){
 	echo -ne "- Removing ${RBlue}custom domain${NC} on sites... "
 	for filename in ${project_directory}sites/*.site-meta.xml; do
-		xmlstarlet ed -L -N x="$xml_namespace" -d "//*/x:customWebAddresses" "$filename"
+		xml ed -L -N x="$xml_namespace" -d "//*/x:customWebAddresses" "$filename"
 	done
 	echo "Done."
 }
@@ -240,7 +240,7 @@ replace_sender_email_in_case_autoresponse_rule(){
 	else
 		local current_user_email=$MY_EMAIL
 	fi
-	xmlstarlet ed -L -N x="$xml_namespace" -u "//*/x:senderEmail" -v "$current_user_email" "${project_directory}autoResponseRules/Case.autoResponseRules-meta.xml"
+	xml ed -L -N x="$xml_namespace" -u "//*/x:senderEmail" -v "$current_user_email" "${project_directory}autoResponseRules/Case.autoResponseRules-meta.xml"
 	echo "Done."
 }
 
@@ -262,7 +262,7 @@ remove_missing_sobjects_from_viewallrecords_permission_sets(){
 
 	for viewallrecords_permissionset in "${viewallrecords_permissionsets[@]}"; do
 		for missing_sobject in "${missing_sobjects[@]}"; do
-			xmlstarlet ed -L -N x="$xml_namespace" -d "//*/x:objectPermissions[starts-with(x:object, \"$missing_sobject\")]" "${project_directory}permissionsets/${viewallrecords_permissionset}.permissionset-meta.xml"
+			xml ed -L -N x="$xml_namespace" -d "//*/x:objectPermissions[starts-with(x:object, \"$missing_sobject\")]" "${project_directory}permissionsets/${viewallrecords_permissionset}.permissionset-meta.xml"
 		done
 	done
 	echo "Done."
@@ -316,15 +316,15 @@ add_missing_sobjects_in_viewallrecords_permission_sets(){
 
 		for sobject in "${order_to_add_missing_sobjects[@]}"; do
 			missing_sobject="${missing_sobjects[$sobject]}"
-			xmlstarlet ed -L -N x="$xml_namespace" -a "//*/x:objectPermissions[x:object=\"$sobject\"]" -t elem -n temporaryNode -v "" "$filename"
-			xmlstarlet ed -L -N x="$xml_namespace" -s "//*/x:temporaryNode" -t elem -n allowCreate -v "false" "$filename"
-			xmlstarlet ed -L -N x="$xml_namespace" -s "//*/x:temporaryNode" -t elem -n allowDelete -v "false" "$filename"
-			xmlstarlet ed -L -N x="$xml_namespace" -s "//*/x:temporaryNode" -t elem -n allowEdit -v "false" "$filename"
-			xmlstarlet ed -L -N x="$xml_namespace" -s "//*/x:temporaryNode" -t elem -n allowRead -v "true" "$filename"
-			xmlstarlet ed -L -N x="$xml_namespace" -s "//*/x:temporaryNode" -t elem -n modifyAllRecords -v "false" "$filename"
-			xmlstarlet ed -L -N x="$xml_namespace" -s "//*/x:temporaryNode" -t elem -n object -v "$missing_sobject" "$filename"
-			xmlstarlet ed -L -N x="$xml_namespace" -s "//*/x:temporaryNode" -t elem -n viewAllRecords -v "true" "$filename"
-			xmlstarlet ed -L -N x="$xml_namespace" -r "//*/x:temporaryNode" -v "objectPermissions" "$filename"
+			xml ed -L -N x="$xml_namespace" -a "//*/x:objectPermissions[x:object=\"$sobject\"]" -t elem -n temporaryNode -v "" "$filename"
+			xml ed -L -N x="$xml_namespace" -s "//*/x:temporaryNode" -t elem -n allowCreate -v "false" "$filename"
+			xml ed -L -N x="$xml_namespace" -s "//*/x:temporaryNode" -t elem -n allowDelete -v "false" "$filename"
+			xml ed -L -N x="$xml_namespace" -s "//*/x:temporaryNode" -t elem -n allowEdit -v "false" "$filename"
+			xml ed -L -N x="$xml_namespace" -s "//*/x:temporaryNode" -t elem -n allowRead -v "true" "$filename"
+			xml ed -L -N x="$xml_namespace" -s "//*/x:temporaryNode" -t elem -n modifyAllRecords -v "false" "$filename"
+			xml ed -L -N x="$xml_namespace" -s "//*/x:temporaryNode" -t elem -n object -v "$missing_sobject" "$filename"
+			xml ed -L -N x="$xml_namespace" -s "//*/x:temporaryNode" -t elem -n viewAllRecords -v "true" "$filename"
+			xml ed -L -N x="$xml_namespace" -r "//*/x:temporaryNode" -v "objectPermissions" "$filename"
 		done
 	done
 	echo "Done."
