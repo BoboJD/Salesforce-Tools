@@ -256,8 +256,6 @@ remove_missing_sobjects_from_viewallrecords_permission_sets(){
 			"CalculationProcedure" "CalculationProcedureStep" "CalculationProcedureVariable" "CalculationProcedureVersion" "Employee" "ExpressionSet" "ExpressionSetObjectAlias"
 			"ExpressionSetVersion" "InternalOrganizationUnit" "SharingRecordCollection" "SvcCatalogReqRelatedItem" "SvcCatalogRequest"
 		)
-	else
-		missing_sobjects+=("pi__")
 	fi
 
 	for viewallrecords_permissionset in "${viewallrecords_permissionsets[@]}"; do
