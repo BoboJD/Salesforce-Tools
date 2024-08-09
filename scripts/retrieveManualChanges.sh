@@ -175,8 +175,9 @@ retrieve_experiences(){
 		rm -rf "${project_directory}${dir}"
 	done
 	sf project retrieve start -x manifest/communities.xml --ignore-conflicts > /dev/null
-	git restore ${project_directory}siteDotComSites/Engie1.site
-	git restore ${project_directory}siteDotComSites/Gazel1.site
+	for file in ${project_directory}siteDotComSites/*; do
+		git restore "$file" > /dev/null
+	done
 }
 
 experiences_directories=(
