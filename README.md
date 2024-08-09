@@ -48,10 +48,10 @@ To update the fflib libraries, use the following commands :
 
   ```sh
   # Update fflib-apex-mocks
-  git subtree pull --prefix=fflib-apex-mocks git@github.com:apex-enterprise-patterns/fflib-apex-mocks.git master
+  git subtree pull --prefix=force-app/fflib-apex-mocks git@github.com:apex-enterprise-patterns/fflib-apex-mocks.git master
 
   # Update fflib-apex-common
-  git subtree pull --prefix=fflib-apex-common git@github.com:apex-enterprise-patterns/fflib-apex-common.git master
+  git subtree pull --prefix=force-app/fflib-apex-common git@github.com:apex-enterprise-patterns/fflib-apex-common.git master
   ```
 
 ### Managing Package Versions

@@ -473,6 +473,21 @@ rename_api_name_of_standard_metadata(){
 	fi
 }
 
+## deploy
+deploy(){
+	local org_alias=$1
+	local label=$2
+	local source=$3
+	echo -e "- Deploying ${RBlue}${label}${NC}..."
+	local deploy_result=$(sf project deploy start --source-dir $source --ignore-conflicts --ignore-warnings --json --target-org $org_alias)
+	local deploy_status=$(echo "$deploy_result" | jq -r '.status')
+	if [ "$deploy_status" -eq 0 ]; then
+		echo -e "${RGreen}Deployment successful.${NC}"
+	else
+		error_exit "Deployment failed. Fix the errors then relaunch the script."
+	fi
+}
+
 ## activate_debug_mode_for_lightning_components
 activate_debug_mode_for_lightning_components(){
 	local org_alias=$1
