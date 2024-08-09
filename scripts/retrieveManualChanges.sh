@@ -100,7 +100,6 @@ retrieve_configuration(){
 	done
 	sf project retrieve start -x manifest/configuration.xml --ignore-conflicts > /dev/null
 	remove_traduction_of_weblinks
-	remove_esconnect_rule_from_lead_matching_rules
 }
 
 configuration_directories=(
@@ -148,12 +147,6 @@ remove_traduction_of_weblinks(){
 		xml ed -L -N x="$xml_namespace" -d "//x:webLinks[starts-with(x:name, \"pi__\")]" "$file"
 		xml fo --indent-spaces 4 "$file" > "${file}.tmp" && mv "${file}.tmp" "$file"
 	done
-}
-
-remove_esconnect_rule_from_lead_matching_rules(){
-	lead_matching_rule_file="${project_directory}matchingRules/Lead.matchingRule-meta.xml";
-	xml ed -L -N x="$xml_namespace" -d "//x:matchingRules[starts-with(x:fullName, \"ESCONNECT__Ellisphere_SIRET\")]" "${lead_matching_rule_file}"
-	xml fo --indent-spaces 4 "$lead_matching_rule_file" > "${lead_matching_rule_file}.tmp" && mv "${lead_matching_rule_file}.tmp" "$lead_matching_rule_file"
 }
 
 retrieve_territories(){
