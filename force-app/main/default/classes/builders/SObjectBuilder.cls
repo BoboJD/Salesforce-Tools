@@ -13,7 +13,7 @@ global inherited sharing abstract class SObjectBuilder{
 		withRecordType(recordTypeDeveloperName);
 	}
 
-	abstract SObjectType getSObjectType();
+	global abstract SObjectType getSObjectType();
 
 	private SObjectBuilder withRecordType(String recordTypeDeveloperName){
 		setFieldValue('RecordTypeId', RecordTypeSingleton.getRecordTypeId(getSObjectType(), recordTypeDeveloperName));

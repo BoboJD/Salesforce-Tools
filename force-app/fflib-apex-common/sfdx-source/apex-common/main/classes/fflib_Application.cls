@@ -29,12 +29,12 @@
  * of the Apex Enterprise Patterns, Service, Unit Of Work, Selector and Domain.
  *   See the sample applications Application.cls file for an example
  **/
-virtual class fflib_Application
+global virtual class fflib_Application
 {
 	/**
 	 * Class implements a Unit of Work factory
 	 **/
-	virtual class UnitOfWorkFactory implements fflib_IUnitOfWorkFactory
+	global virtual class UnitOfWorkFactory implements fflib_IUnitOfWorkFactory
 	{
 		protected List<SObjectType> m_objectTypes;
 		protected fflib_ISObjectUnitOfWork m_mockUow;
@@ -42,14 +42,14 @@ virtual class fflib_Application
 		/**
 		 * Constructs a Unit Of Work factory
 		 **/
-		UnitOfWorkFactory() { }
+		global UnitOfWorkFactory() { }
 
 		/**
 		 * Constructs a Unit Of Work factory
 		 *
 		 * @param objectTypes List of SObjectTypes in dependency order
 		 **/
-		UnitOfWorkFactory(List<SObjectType> objectTypes)
+		global UnitOfWorkFactory(List<SObjectType> objectTypes)
 		{
 			m_objectTypes = objectTypes.clone();
 		}
@@ -59,7 +59,7 @@ virtual class fflib_Application
 		 *   SObjectType list provided in the constructor, returns a Mock implementation
 		 *   if set via the setMock method
 		 **/
-		virtual fflib_ISObjectUnitOfWork newInstance()
+		global virtual fflib_ISObjectUnitOfWork newInstance()
 		{
 			// Mock?
 			if(m_mockUow!=null)
@@ -72,7 +72,7 @@ virtual class fflib_Application
 		 *   SObjectType list provided in the constructor, returns a Mock implementation
 		 *   if set via the setMock method
 		 **/
-		virtual fflib_ISObjectUnitOfWork newInstance(fflib_SObjectUnitOfWork.IDML dml)
+		global virtual fflib_ISObjectUnitOfWork newInstance(fflib_SObjectUnitOfWork.IDML dml)
 		{
 			// Mock?
 			if(m_mockUow!=null)
@@ -88,7 +88,7 @@ virtual class fflib_Application
 		 * @remark If mock is set, the list of SObjectType in the mock could be different
 		 *         then the list of SObjectType specified in this method call
 		 **/
-		virtual fflib_ISObjectUnitOfWork newInstance(List<SObjectType> objectTypes)
+		global virtual fflib_ISObjectUnitOfWork newInstance(List<SObjectType> objectTypes)
 		{
 			// Mock?
 			if(m_mockUow!=null)
@@ -104,7 +104,7 @@ virtual class fflib_Application
 		 * @remark If mock is set, the list of SObjectType in the mock could be different
 		 *         then the list of SObjectType specified in this method call
 		 **/
-		virtual fflib_ISObjectUnitOfWork newInstance(List<SObjectType> objectTypes, fflib_SObjectUnitOfWork.IDML dml)
+		global virtual fflib_ISObjectUnitOfWork newInstance(List<SObjectType> objectTypes, fflib_SObjectUnitOfWork.IDML dml)
 		{
 			// Mock?
 			if(m_mockUow!=null)
@@ -122,7 +122,7 @@ virtual class fflib_Application
 	/**
 	 * Simple Service Factory implementation
 	 **/
-	virtual class ServiceFactory implements fflib_IServiceFactory
+	global virtual class ServiceFactory implements fflib_IServiceFactory
 	{
 		protected Map<Type, Type> m_serviceInterfaceTypeByServiceImplType;
 
@@ -131,7 +131,7 @@ virtual class fflib_Application
 		/**
 		 * Constructs a simple Service Factory
 		 **/
-		ServiceFactory() { }
+		global ServiceFactory() { }
 
 		/**
 		 * Constructs a simple Service Factory,
@@ -141,7 +141,7 @@ virtual class fflib_Application
 		 *
 		 * @param serviceInterfaceTypeByServiceImplType Map ofi interfaces to classes
 		 **/
-		ServiceFactory(Map<Type, Type> serviceInterfaceTypeByServiceImplType)
+		global ServiceFactory(Map<Type, Type> serviceInterfaceTypeByServiceImplType)
 		{
 			m_serviceInterfaceTypeByServiceImplType = serviceInterfaceTypeByServiceImplType;
 			m_serviceInterfaceTypeByMockService = new Map<Type, Object>();
@@ -155,7 +155,7 @@ virtual class fflib_Application
 		 * @param serviceInterfaceType Apex interface type
 		 * @exception Is thrown if there is no registered Apex class for the interface type
 		 **/
-		virtual Object newInstance(Type serviceInterfaceType)
+		global virtual Object newInstance(Type serviceInterfaceType)
 		{
 			// Mock implementation?
 			if(m_serviceInterfaceTypeByMockService.containsKey(serviceInterfaceType))
@@ -178,7 +178,7 @@ virtual class fflib_Application
 	/**
 	 * Class implements a Selector class factory
 	 **/
-	virtual class SelectorFactory implements fflib_ISelectorFactory
+	global virtual class SelectorFactory implements fflib_ISelectorFactory
 	{
 		protected Map<SObjectType, Type> m_sObjectBySelectorType;
 		protected Map<SObjectType, fflib_ISObjectSelector> m_sObjectByMockSelector;
@@ -186,7 +186,7 @@ virtual class fflib_Application
 		/**
 		 * Constructs a simple Selector Factory
 		 **/
-		SelectorFactory() { }
+		global SelectorFactory() { }
 
 		/**
 		 * Consturcts a Selector Factory linking SObjectType's with Apex Classes implement the fflib_ISObjectSelector interface
@@ -195,7 +195,7 @@ virtual class fflib_Application
 		 *
 		 * @Param sObjectBySelectorType Map of SObjectType's to Selector Apex Classes
 		 **/
-		SelectorFactory(Map<SObjectType, Type> sObjectBySelectorType)
+		global SelectorFactory(Map<SObjectType, Type> sObjectBySelectorType)
 		{
 			m_sObjectBySelectorType = sObjectBySelectorType;
 			m_sObjectByMockSelector = new Map<SObjectType, fflib_ISObjectSelector>();
@@ -207,7 +207,7 @@ virtual class fflib_Application
 		 *
 		 * @param sObjectType An SObjectType token, e.g. Account.SObjectType
 		 **/
-		virtual fflib_ISObjectSelector newInstance(SObjectType sObjectType)
+		global virtual fflib_ISObjectSelector newInstance(SObjectType sObjectType)
 		{
 			// Mock implementation?
 			if(m_sObjectByMockSelector.containsKey(sObjectType))
@@ -230,7 +230,7 @@ virtual class fflib_Application
 		 * @param recordIds The SObject record Ids, must be all the same SObjectType
 		 * @exception Is thrown if the record Ids are not all the same or the SObjectType is not registered
 		 **/
-		virtual List<SObject> selectById(Set<Id> recordIds)
+		global virtual List<SObject> selectById(Set<Id> recordIds)
 		{
 			// No point creating an empty Domain class, nor can we determine the SObjectType anyway
 			if(recordIds==null || recordIds.size()==0)
@@ -258,7 +258,7 @@ virtual class fflib_Application
 		 * @param relatedRecords used to extract the related record Ids, e.g. Opportunity records
 		 * @param relationshipField field in the passed records that contains the relationship records to query, e.g. Opportunity.AccountId
 		 **/
-		virtual List<SObject> selectByRelationship(List<SObject> relatedRecords, SObjectField relationshipField)
+		global virtual List<SObject> selectByRelationship(List<SObject> relatedRecords, SObjectField relationshipField)
 		{
 			Set<Id> relatedIds = new Set<Id>();
 			for(SObject relatedRecord : relatedRecords)
@@ -280,7 +280,7 @@ virtual class fflib_Application
 	/**
 	 * Class implements a Domain class factory
 	 **/
-	virtual class DomainFactory implements fflib_IDomainFactory
+	global virtual class DomainFactory implements fflib_IDomainFactory
 	{
 		protected fflib_Application.SelectorFactory m_selectorFactory;
 
@@ -291,7 +291,7 @@ virtual class fflib_Application
         /**
 		 * Constructs a Domain factory
 		 **/
-		DomainFactory() { }
+		global DomainFactory() { }
 
 		/**
 		 * Constructs a Domain factory, using an instance of the Selector Factory
@@ -302,7 +302,7 @@ virtual class fflib_Application
 		 * @param selectorFactory , e.g. Application.Selector
 		 * @param constructorTypeByObject Map of Domain classes by ObjectType
 		 **/
-		DomainFactory(fflib_Application.SelectorFactory selectorFactory,
+		global DomainFactory(fflib_Application.SelectorFactory selectorFactory,
 			Map<Object, Type> constructorTypeByObject)
 		{
 			m_selectorFactory = selectorFactory;
@@ -319,7 +319,7 @@ virtual class fflib_Application
 		 * @param selectorFactory, e.g. Application.Selector
 		 * @param sObjectByDomainConstructorType Map of Apex classes by SObjectType
 		 **/
-		DomainFactory(fflib_Application.SelectorFactory selectorFactory,
+		global DomainFactory(fflib_Application.SelectorFactory selectorFactory,
 			Map<SObjectType, Type> sObjectByDomainConstructorType)
 		{
 			m_selectorFactory = selectorFactory;
@@ -335,7 +335,7 @@ virtual class fflib_Application
 		 * @param recordIds A list of Id's of the same type
 		 * @exception Throws an exception via the Selector Factory if the Ids are not all of the same SObjectType
 		 **/
-		virtual fflib_IDomain newInstance(Set<Id> recordIds)
+		global virtual fflib_IDomain newInstance(Set<Id> recordIds)
 		{
 			return newInstance(m_selectorFactory.selectById(recordIds));
 
@@ -349,7 +349,7 @@ virtual class fflib_Application
 		 * @exception Throws an exception if the SObjectType cannot be determined from the list
 		 *              or the constructor for Domain class was not registered for the SObjectType
 		 **/
-		virtual fflib_IDomain newInstance(List<SObject> records)
+		global virtual fflib_IDomain newInstance(List<SObject> records)
 		{
 			SObjectType domainSObjectType = records.getSObjectType();
 			if(domainSObjectType==null)
@@ -358,7 +358,7 @@ virtual class fflib_Application
 			return newInstance((List<Object>) records, (Object) domainSObjectType);
 		}
 
-		virtual fflib_IDomain newInstance(List<Object> objects, Object objectType)
+		global virtual fflib_IDomain newInstance(List<Object> objects, Object objectType)
 		{
 			// Mock implementation?
 			if (mockDomainByObject.containsKey(objectType))
@@ -401,7 +401,7 @@ virtual class fflib_Application
 		 * @remark Will support List<SObject> but all records in the list will be assumed to be of
 		 *         the type specified in sObjectType
 		 **/
-		virtual fflib_IDomain newInstance(List<SObject> records, SObjectType domainSObjectType)
+		global virtual fflib_IDomain newInstance(List<SObject> records, SObjectType domainSObjectType)
 		{
 			if(domainSObjectType==null)
 				throw new DeveloperException('Must specify sObjectType');
@@ -438,10 +438,10 @@ virtual class fflib_Application
 		}
 	}
 
-	class ApplicationException extends Exception { }
+	global class ApplicationException extends Exception { }
 
 	/**
 	 * Exception representing a developer coding error, not intended for end user eyes
 	 **/
-	class DeveloperException extends Exception { }
+	global class DeveloperException extends Exception { }
 }
