@@ -6,6 +6,7 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 # Parameters (not mandatory)
 # you can provide the id of a test to display test results, ex: 707G500000RSZs7
 # you can provide the name of the test class, ex: DateUtilsTest
+# you can add '--output-file' to create a file that contains the output of each command
 option=$1
 
 # Search for coverage of a class
@@ -17,6 +18,9 @@ main(){
 		test_run_id="${option:0:15}"
 	else
 		run_test_and_store_id
+	fi
+	if [ "$option" = "--output-file" ]; then
+		output_file="test_output.txt" > $output_file
 	fi
 	extract_test_result
 	display_org_wide_coverage
@@ -32,7 +36,7 @@ main(){
 
 run_test_and_store_id(){
 	echo -n "Starting to run "
-	if [ -z "$option" ]; then
+	if [[ -z "$option" || "$option" = "--output-file" ]]; then
 		echo "all apex tests..."
 		test_option="--test-level RunLocalTests"
 	else
@@ -82,6 +86,10 @@ display_classes_with_coverage_issue(){
 	if [ -n "$classes_with_coverage_issue" ]; then
 		echo -e "\nClass with coverage less than 95% :"
 		echo "$classes_with_coverage_issue" | sort
+		if [ "$option" = "--output-file" ]; then
+			echo -e "\nClass with coverage less than 95% :" >> $output_file
+			echo "$classes_with_coverage_issue" | sort >> $output_file
+		fi
 	fi
 }
 
@@ -90,6 +98,10 @@ display_classes_without_coverage(){
 	if [ -n "$classes_without_coverage" ]; then
 		echo -e "\nClass without coverage :"
 		echo "$classes_without_coverage" | sort
+		if [ "$option" = "--output-file" ]; then
+			echo -e "\nClass without coverage :" >> $output_file
+			echo "$classes_without_coverage" | sort >> $output_file
+		fi
 	fi
 }
 
@@ -100,6 +112,10 @@ display_failed_tests(){
 		failing_number=$(jq -r '.summary.failing' "$test_file")
 		echo -e "\n${RRed}${failing_number} tests have failed :${NC}"
 		echo -e "$failed_tests"
+		if [ "$option" = "--output-file" ]; then
+			echo -e "\n${RRed}${failing_number} tests have failed :${NC}" >> $output_file
+			echo -e "$failed_tests" >> $output_file
+		fi
 	else
 		echo "Done."
 	fi

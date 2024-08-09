@@ -94,6 +94,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y xmlstarlet
+          sudo ln -s /usr/bin/xmlstarlet /usr/bin/xml
 
       - name: Authorize DevHub
         run: |
@@ -105,8 +106,21 @@ jobs:
 
       - name: Run tests
         id: tests
-        run: bash scripts/runTests.sh
+        run: bash scripts/runTests.sh --output-file
 
       - name: Delete Scratch Org
         run: sf org delete scratch --target-org salesforce-tools-test --no-prompt
+
+      - name: Analyze test output
+        run: |
+          test_output=$(cat test_output.txt)
+          echo "$test_output"
+
+          # Check for issues in the test output
+          if echo "$test_output" | grep -q -e "Class with coverage less than" -e "Class without coverage" -e "Checking if tests have failed"; then
+            echo "Issues found in test coverage or failed tests."
+            exit 1
+          else
+            echo "All tests passed and coverage is sufficient."
+          fi
 
