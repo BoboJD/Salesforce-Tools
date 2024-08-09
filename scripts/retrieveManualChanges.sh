@@ -99,7 +99,6 @@ retrieve_configuration(){
 		rm -rf "${project_directory}${dir}"
 	done
 	sf project retrieve start -x manifest/configuration.xml --ignore-conflicts > /dev/null
-	remove_traduction_of_weblinks
 }
 
 configuration_directories=(
@@ -141,13 +140,6 @@ configuration_directories=(
 	"tabs"
 	"workflows"
 )
-
-remove_traduction_of_weblinks(){
-	for file in ${project_directory}objectTranslations/*/*.objectTranslation-meta.xml; do
-		xml ed -L -N x="$xml_namespace" -d "//x:webLinks[starts-with(x:name, \"pi__\")]" "$file"
-		xml fo --indent-spaces 4 "$file" > "${file}.tmp" && mv "${file}.tmp" "$file"
-	done
-}
 
 retrieve_territories(){
 	echo -e "\nRetrieving ${RYellow}territories${NC}..."
