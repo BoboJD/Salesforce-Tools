@@ -1,10 +1,10 @@
-public inherited sharing class SObjectUtils{
+global inherited sharing class SObjectUtils{
 
-	public static Boolean fieldValueHasChanged(SObject sObjectAfter, SObject sObjectBefore, Set<SObjectField> fieldsToVerify){
+	global static Boolean fieldValueHasChanged(SObject sObjectAfter, SObject sObjectBefore, Set<SObjectField> fieldsToVerify){
 		return fieldValueHasChanged(sObjectAfter, sObjectBefore, new List<SObjectField>(fieldsToVerify));
 	}
 
-	public static Boolean fieldValueHasChanged(SObject sObjectAfter, SObject sObjectBefore, List<SObjectField> fieldsToVerify){
+	global static Boolean fieldValueHasChanged(SObject sObjectAfter, SObject sObjectBefore, List<SObjectField> fieldsToVerify){
 		if(sObjectAfter == null || sObjectBefore == null || fieldsToVerify == null || fieldsToVerify.isEmpty())
 			return false;
 		for(SObjectField sObjectfield : fieldsToVerify)
@@ -13,11 +13,11 @@ public inherited sharing class SObjectUtils{
 		return false;
 	}
 
-	public static Boolean fieldValueHasChanged(SObject sObjectAfter, SObject sObjectBefore, Set<String> fieldsToVerify){
+	global static Boolean fieldValueHasChanged(SObject sObjectAfter, SObject sObjectBefore, Set<String> fieldsToVerify){
 		return fieldValueHasChanged(sObjectAfter, sObjectBefore, new List<String>(fieldsToVerify));
 	}
 
-	public static Boolean fieldValueHasChanged(SObject sObjectAfter, SObject sObjectBefore, List<String> fieldsToVerify){
+	global static Boolean fieldValueHasChanged(SObject sObjectAfter, SObject sObjectBefore, List<String> fieldsToVerify){
 		if(sObjectAfter == null || sObjectBefore == null || fieldsToVerify == null || fieldsToVerify.isEmpty())
 			return false;
 		for(String sObjectfield : fieldsToVerify)
@@ -26,7 +26,7 @@ public inherited sharing class SObjectUtils{
 		return false;
 	}
 
-	public static Set<String> getCreatableFields(SObjectType objType){
+	global static Set<String> getCreatableFields(SObjectType objType){
 		Set<String> fields = new Set<String>();
 		Map<String, SObjectField> fMap = objType.getDescribe(SObjectDescribeOptions.DEFERRED).fields.getMap();
 		if(fMap != null){
@@ -39,7 +39,7 @@ public inherited sharing class SObjectUtils{
 		return fields;
 	}
 
-	public static SObject setReadableFields(SObject sObj, Map<SObjectField, Object> valueBysObjField){
+	global static SObject setReadableFields(SObject sObj, Map<SObjectField, Object> valueBysObjField){
 		Map<String, Object> dataMap = (Map<String, Object>)JSON.deserializeUntyped(JSON.serialize(sObj));
 		for(SObjectField field : valueBysObjField.keySet()){
 			String fieldName = field.getDescribe(FieldDescribeOptions.DEFAULT).getName();
@@ -48,11 +48,11 @@ public inherited sharing class SObjectUtils{
 		return (SObject)JSON.deserialize(JSON.serialize(dataMap), SObject.class);
 	}
 
-	public static String getRecordViewPage(Id recordId){
+	global static String getRecordViewPage(Id recordId){
 		return recordId != null ? '/lightning/r/'+recordId.getSObjectType().getDescribe(SObjectDescribeOptions.DEFERRED).getName()+'/'+recordId+'/view' : null;
 	}
 
-	public static String getExternalUrl(Id recordId){
+	global static String getExternalUrl(Id recordId){
 		return URL.getOrgDomainUrl().toExternalForm() + getRecordViewPage(recordId);
 	}
 }

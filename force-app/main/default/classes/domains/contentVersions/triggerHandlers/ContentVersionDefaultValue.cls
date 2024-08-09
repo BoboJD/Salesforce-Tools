@@ -1,14 +1,14 @@
-public with sharing class ContentVersionDefaultValue extends ContentVersionsHandler{
+global with sharing class ContentVersionDefaultValue extends ContentVersionsHandler{
 
 	private ContentVersionDefaultValue(ContentVersions domain){
 		super(domain);
 	}
 
-	public static ContentVersionDefaultValue handleInsert(ContentVersions domain){
+	global static ContentVersionDefaultValue handleInsert(ContentVersions domain){
 		return new ContentVersionDefaultValue(domain);
 	}
 
-	public void setDefaultFieldValueBasedOnJSON(){
+	global void setDefaultFieldValueBasedOnJSON(){
 		for(ContentVersion contentVersion : contentVersions){
 			if(String.isNotBlank(contentVersion.JSON_fileupload__c))
 				setFieldsValueFromJSON(contentVersion);

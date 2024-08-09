@@ -1,5 +1,5 @@
-public with sharing class ContentDocumentLinkShareType extends ContentDocumentLinksHandler{
-	public static Map<Id, ContentDocument> storedContentDocumentById;
+global with sharing class ContentDocumentLinkShareType extends ContentDocumentLinksHandler{
+	global static Map<Id, ContentDocument> storedContentDocumentById;
 
 	private static List<String> sObjectsWithShareTypeI{
 		get{
@@ -24,11 +24,11 @@ public with sharing class ContentDocumentLinkShareType extends ContentDocumentLi
 		super(domain);
 	}
 
-	public static ContentDocumentLinkShareType handleInsert(ContentDocumentLinks domain){
+	global static ContentDocumentLinkShareType handleInsert(ContentDocumentLinks domain){
 		return new ContentDocumentLinkShareType(domain);
 	}
 
-	public void setShareTypeIAndVisiblityAll(){
+	global void setShareTypeIAndVisiblityAll(){
 		for(ContentDocumentLink contentDocumentLink : contentDocumentLinks){
 			if(isNotPrivate(contentDocumentLink) && shareTypeNeedsToBeSet(contentDocumentLink)){
 				contentDocumentLink.ShareType = ContentDocumentLinkConstants.SHARETYPE_I;

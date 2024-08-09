@@ -1,1 +1,1 @@
-public interface IUsers extends fflib_ISObjectDomain{}
+global interface IUsers extends fflib_ISObjectDomain{}

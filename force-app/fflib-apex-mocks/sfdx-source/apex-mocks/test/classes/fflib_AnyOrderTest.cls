@@ -1179,7 +1179,7 @@ private class fflib_AnyOrderTest
 
 	private class isOdd implements fflib_IMatcher
 	{
-		public Boolean matches(Object arg)
+		global Boolean matches(Object arg)
 		{
 			return arg instanceof Integer ? Math.mod((Integer)arg, 2) == 1: false;
 		}
@@ -1187,7 +1187,7 @@ private class fflib_AnyOrderTest
 
 	private class isEven implements fflib_IMatcher
 	{
-		public Boolean matches(Object arg)
+		global Boolean matches(Object arg)
 		{
 			return arg instanceof Integer ? Math.mod((Integer)arg, 2) == 0: false;
 		}

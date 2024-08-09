@@ -1,21 +1,21 @@
-public inherited sharing class UserRecordAccessesSelector extends fflib_SObjectSelector implements IUserRecordAccessesSelector{
+global inherited sharing class UserRecordAccessesSelector extends fflib_SObjectSelector implements IUserRecordAccessesSelector{
 	
-	public static IUserRecordAccessesSelector newInstance(){
+	global static IUserRecordAccessesSelector newInstance(){
 		return (IUserRecordAccessesSelector)Application.Selector.newInstance(UserRecordAccess.SObjectType);
 	}
 
-	public List<SObjectField> getSObjectFieldList(){
+	global List<SObjectField> getSObjectFieldList(){
 		return new List<SObjectField>{
 			UserRecordAccess.HasEditAccess,
 			UserRecordAccess.RecordId
 		};
 	}
 
-	public SObjectType getSObjectType(){
+	global SObjectType getSObjectType(){
 		return UserRecordAccess.SObjectType;
 	}
 
-	public Boolean canEditRecord(Id userId, Id recordId){
+	global Boolean canEditRecord(Id userId, Id recordId){
 		Boolean canEditRecord = false;
 		if(userId != null && recordId != null){
 			List<UserRecordAccess> accesses = Database.query(newQueryFactory()
@@ -27,7 +27,7 @@ public inherited sharing class UserRecordAccessesSelector extends fflib_SObjectS
 		return canEditRecord;
 	}
 
-	public Map<Id, Boolean> canEditRecords(Id userId, Set<Id> recordIds){
+	global Map<Id, Boolean> canEditRecords(Id userId, Set<Id> recordIds){
 		Map<Id, Boolean> editRightByRecordId = new Map<Id, Boolean>();
 		if(userId != null && !recordIds.isEmpty()){
 			fflib_QueryFactory queryFactory = newQueryFactory()

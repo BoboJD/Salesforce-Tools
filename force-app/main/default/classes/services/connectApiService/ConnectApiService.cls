@@ -1,30 +1,30 @@
-public inherited sharing class ConnectApiService{
+global inherited sharing class ConnectApiService{
 
-	public static ConnectApi.FeedElement postFeedItemWithMentions(String communityId, String subjectId, String textWithMentions){
+	global static ConnectApi.FeedElement postFeedItemWithMentions(String communityId, String subjectId, String textWithMentions){
 		return service().postFeedItemWithMentions(communityId, subjectId, textWithMentions);
 	}
 
-	public static ConnectApi.FeedElement postFeedItemWithRichText(String communityId, String subjectId, String textWithMentionsAndRichText){
+	global static ConnectApi.FeedElement postFeedItemWithRichText(String communityId, String subjectId, String textWithMentionsAndRichText){
 		return service().postFeedItemWithRichText(communityId, subjectId, textWithMentionsAndRichText);
 	}
 
-	public static ConnectApi.Comment postCommentWithMentions(String communityId, String feedItemId, String textWithMentions){
+	global static ConnectApi.Comment postCommentWithMentions(String communityId, String feedItemId, String textWithMentions){
 		return service().postCommentWithMentions(communityId, feedItemId, textWithMentions);
 	}
 
-	public static List<ConnectApi.MessageSegmentInput> getMessageSegmentInputs(String inputText){
+	global static List<ConnectApi.MessageSegmentInput> getMessageSegmentInputs(String inputText){
 		return service().getMessageSegmentInputs(inputText);
 	}
 
-	public static ConnectApi.MessageBodyInput createInputFromBody(ConnectApi.FeedBody body){
+	global static ConnectApi.MessageBodyInput createInputFromBody(ConnectApi.FeedBody body){
 		return service().createInputFromBody(body);
 	}
 
-	public static ConnectApi.FeedItemInput createFeedItemInputFromBody(ConnectApi.FeedBody body){
+	global static ConnectApi.FeedItemInput createFeedItemInputFromBody(ConnectApi.FeedBody body){
 		return service().createFeedItemInputFromBody(body);
 	}
 
-	public static ConnectApi.CommentInput createCommentInputFromBody(ConnectApi.FeedBody body){
+	global static ConnectApi.CommentInput createCommentInputFromBody(ConnectApi.FeedBody body){
 		return service().createCommentInputFromBody(body);
 	}
 	

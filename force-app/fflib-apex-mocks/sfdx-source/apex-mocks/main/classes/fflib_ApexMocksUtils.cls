@@ -23,7 +23,7 @@
  * OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-public class fflib_ApexMocksUtils
+global class fflib_ApexMocksUtils
 {
 	/**
 	 * This is taken from https://gist.github.com/afawcett/8dbfc0e1d8c43c982881.
@@ -64,7 +64,7 @@ public class fflib_ApexMocksUtils
 	 *		        }
 	 * 		]
 	 */
-	public static Object makeRelationship(Type parentsType, List<SObject> parents, SObjectField relationshipField, List<List<SObject>> children) {
+	global static Object makeRelationship(Type parentsType, List<SObject> parents, SObjectField relationshipField, List<List<SObject>> children) {
 
 		// Find out more about this relationship...
 		String relationshipFieldName = relationshipField.getDescribe().getName();
@@ -76,7 +76,7 @@ public class fflib_ApexMocksUtils
 	 * Generic overload to makeRelationship. Enables creation of
 	 * relationships in a loosely-coupled manner. 
 	 */
-	public static Object makeRelationship(
+	global static Object makeRelationship(
 			String parentTypeName,
 			String childTypeName,
 			List<SObject> parents,
@@ -95,7 +95,7 @@ public class fflib_ApexMocksUtils
 	 * Gives the ability to set test values on formula
 	 * and other read-only fields of mock SObjects
 	 */
-	public static Object setReadOnlyFields(SObject objInstance, Type deserializeType, Map<SObjectField, Object> properties) {
+	global static Object setReadOnlyFields(SObject objInstance, Type deserializeType, Map<SObjectField, Object> properties) {
 
 		Map<String, Object> fieldNameMap = new Map<String, Object>();
 		for (SObjectField field : properties.keySet()) {
@@ -109,7 +109,7 @@ public class fflib_ApexMocksUtils
 	 * Generic overload to setReadOnlyFields. Enables setting test
 	 * values on read-only fields by their name
 	 */
-	public static Object setReadOnlyFields(SObject objInstance, Type deserializeType, Map<String, Object> properties) {
+	global static Object setReadOnlyFields(SObject objInstance, Type deserializeType, Map<String, Object> properties) {
 
 		Map<String, Object> mergedMap = new Map<String, Object>(objInstance.getPopulatedFieldsAsMap());
 		// Merge the values from the properties map into the fields already set on the object
@@ -160,14 +160,14 @@ public class fflib_ApexMocksUtils
 		private List<List<SObject>> children;
 		private Integer childListIdx = 0;
 
-		public InjectChildrenEventHandler(JSONParser childrenParser, String relationshipName, List<List<SObject>> children) {
+		global InjectChildrenEventHandler(JSONParser childrenParser, String relationshipName, List<List<SObject>> children) {
 			this.childrenParser = childrenParser;
 			this.relationshipName = relationshipName;
 			this.children = children;
 			this.childrenParser.nextToken(); // Consume the outer array token
 		}
 
-		public void nextToken(JSONParser fromStream, Integer depth, JSONGenerator toStream) {
+		global void nextToken(JSONParser fromStream, Integer depth, JSONGenerator toStream) {
 			// Inject children?
 			JSONToken currentToken = fromStream.getCurrentToken();
 			if(depth == 2 && currentToken == JSONToken.END_OBJECT ) {

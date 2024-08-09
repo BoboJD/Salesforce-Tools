@@ -1,4 +1,4 @@
-public inherited sharing virtual class ContentDocumentLinksHandler extends TriggerHandler{
+global inherited sharing virtual class ContentDocumentLinksHandler extends TriggerHandler{
 	protected List<ContentDocumentLink> contentDocumentLinks { get { return (List<ContentDocumentLink>)domain.Records; } }
 
 	protected ContentDocumentLinksHandler(ContentDocumentLinks domain){

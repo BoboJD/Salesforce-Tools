@@ -1,4 +1,4 @@
-public interface IConnectApiService {
+global interface IConnectApiService {
 	ConnectApi.FeedElement postFeedItemWithMentions(String communityId, String subjectId, String textWithMentions);
 	ConnectApi.FeedElement postFeedItemWithRichText(String communityId, String subjectId, String textWithMentionsAndRichText);
 	ConnectApi.Comment postCommentWithMentions(String communityId, String feedItemId, String textWithMentions);

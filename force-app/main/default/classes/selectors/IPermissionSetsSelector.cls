@@ -1,3 +1,3 @@
-public interface IPermissionSetsSelector extends fflib_ISObjectSelector{
+global interface IPermissionSetsSelector extends fflib_ISObjectSelector{
 	Map<String, Id> mapIdByName();
 }

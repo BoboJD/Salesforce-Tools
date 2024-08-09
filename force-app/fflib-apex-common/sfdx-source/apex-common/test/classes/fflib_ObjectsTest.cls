@@ -175,12 +175,12 @@ private class fflib_ObjectsTest
 
 	private class Domain extends fflib_Objects
 	{
-		public Domain(List<Object> objects)
+		Domain(List<Object> objects)
 		{
 			super(objects);
 		}
 
-		public override Object getType()
+		override Object getType()
 		{
 			return DataTransferObject.class;
 		}
@@ -188,9 +188,9 @@ private class fflib_ObjectsTest
 
 	private class DataTransferObject
 	{
-		public String MyProperty { get; set; }
+		String MyProperty { get; set; }
 
-		public DataTransferObject(String property)
+		DataTransferObject(String property)
 		{
 			this.MyProperty = property;
 		}

@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 @isTest
-public with sharing class fflib_MethodArgValuesTest
+global with sharing class fflib_MethodArgValuesTest
 {
 	@isTest
 	private static void equalsReturnsExpectedResults()

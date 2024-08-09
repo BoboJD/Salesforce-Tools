@@ -1,10 +1,10 @@
-public inherited sharing class ContentDocumentLinksSelector extends fflib_SObjectSelector implements IContentDocumentLinksSelector{
+global inherited sharing class ContentDocumentLinksSelector extends fflib_SObjectSelector implements IContentDocumentLinksSelector{
 
-	public static IContentDocumentLinksSelector newInstance(){
+	global static IContentDocumentLinksSelector newInstance(){
 		return (IContentDocumentLinksSelector)Application.Selector.newInstance(ContentDocumentLink.SObjectType);
 	}
 
-	public List<SObjectField> getSObjectFieldList(){
+	global List<SObjectField> getSObjectFieldList(){
 		return new List<SObjectField> {
 			ContentDocumentLink.Id,
 			ContentDocumentLink.ContentDocumentId,
@@ -12,11 +12,11 @@ public inherited sharing class ContentDocumentLinksSelector extends fflib_SObjec
 		};
 	}
 
-	public SObjectType getSObjectType(){
+	global SObjectType getSObjectType(){
 		return ContentDocumentLink.SObjectType;
 	}
 
-	public List<ContentDocumentLink> selectByLinkedEntityIds(Set<Id> linkedEntityIds){
+	global List<ContentDocumentLink> selectByLinkedEntityIds(Set<Id> linkedEntityIds){
 		List<ContentDocumentLink> contentDocumentLinks = new List<ContentDocumentLink>();
 		if(!linkedEntityIds.isEmpty()){
 			fflib_QueryFactory query = newQueryFactory()
@@ -27,7 +27,7 @@ public inherited sharing class ContentDocumentLinksSelector extends fflib_SObjec
 		return contentDocumentLinks;
 	}
 
-	public Map<Id, List<ContentDocumentLink>> mapByContentDocumentId(Set<Id> contentDocumentIds){
+	global Map<Id, List<ContentDocumentLink>> mapByContentDocumentId(Set<Id> contentDocumentIds){
 		Map<Id, List<ContentDocumentLink>> contentDocumentLinksByContentDocumentId = new Map<Id, List<ContentDocumentLink>>();
 		if(!contentDocumentIds.isEmpty()){
 			for(ContentDocumentLink cdl : Database.query(newQueryFactory().setCondition('ContentDocumentId = :contentDocumentIds').toSOQL())){

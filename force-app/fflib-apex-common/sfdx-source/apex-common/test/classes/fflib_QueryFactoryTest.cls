@@ -2,22 +2,22 @@
  * Copyright (c), FinancialForce.com, inc
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification, 
+ * Redistribution and use in source and binary forms, with or without modification,
  *   are permitted provided that the following conditions are met:
  *
- * - Redistributions of source code must retain the above copyright notice, 
+ * - Redistributions of source code must retain the above copyright notice,
  *      this list of conditions and the following disclaimer.
- * - Redistributions in binary form must reproduce the above copyright notice, 
- *      this list of conditions and the following disclaimer in the documentation 
+ * - Redistributions in binary form must reproduce the above copyright notice,
+ *      this list of conditions and the following disclaimer in the documentation
  *      and/or other materials provided with the distribution.
- * - Neither the name of the FinancialForce.com, inc nor the names of its contributors 
- *      may be used to endorse or promote products derived from this software without 
+ * - Neither the name of the FinancialForce.com, inc nor the names of its contributors
+ *      may be used to endorse or promote products derived from this software without
  *      specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
- *  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES 
- *  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL 
- *  THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ *  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ *  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
+ *  THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
  *  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
  *  OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY
  *  OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
@@ -66,7 +66,7 @@ private class fflib_QueryFactoryTest {
 		qf.selectField('name');
 		qf.selectField('email');
 		qf.setCondition( whereClause );
-		System.assertEquals(whereClause,qf.getCondition()); 
+		System.assertEquals(whereClause,qf.getCondition());
 		String query = qf.toSOQL();
 		System.assert(query.endsWith('WHERE name = \'test\''),'Query should have ended with a filter on name, got: '+query);
 	}
@@ -156,7 +156,7 @@ private class fflib_QueryFactoryTest {
 		System.assertEquals('Name',qf.getOrderings()[0].getField() );
 		System.assertEquals(fflib_QueryFactory.SortOrder.DESCENDING,qf.getOrderings()[1].getDirection() );
 
-		
+
 		System.assert( Pattern.matches('SELECT.*Name.*FROM.*',query), 'Expected Name field in query, got '+query);
 		System.assert( Pattern.matches('SELECT.*Email.*FROM.*',query), 'Expected Name field in query, got '+query);
 	}
@@ -222,7 +222,7 @@ private class fflib_QueryFactoryTest {
 	static void invalidFields_string(){
 		fflib_QueryFactory qf = new fflib_QueryFactory(Contact.SObjectType);
 		qf.selectField('name');
-		Exception e; 
+		Exception e;
 		try{
 			qf.selectFields( new List<String>{'not_a__field'} );
 		}catch(fflib_QueryFactory.InvalidFieldException ex){
@@ -266,7 +266,7 @@ private class fflib_QueryFactoryTest {
 		try {
 			String path = fflib_QueryFactory.getFieldTokenPath(null);
 			System.assert(false,'Expected InvalidFieldException; none was thrown');
-		} 
+		}
 		catch (fflib_QueryFactory.InvalidFieldException ife) {
 			//Expected
 		}
@@ -279,7 +279,7 @@ private class fflib_QueryFactoryTest {
 	static void queryFieldsNotEquals(){
 		String qfld = fflib_QueryFactory.getFieldTokenPath(Contact.Name);
 		String qfld2 = fflib_QueryFactory.getFieldTokenPath(Contact.LastName);
-		System.assert(!qfld.equals(qfld2));	
+		System.assert(!qfld.equals(qfld2));
 	}
 
 	@isTest
@@ -318,11 +318,11 @@ private class fflib_QueryFactoryTest {
 		Schema.DescribeSObjectResult descResult = Contact.SObjectType.getDescribe();
 		Schema.ChildRelationship relationship;
 		for (Schema.ChildRelationship childRow : descResult.getChildRelationships()){
-        	//occasionally on some standard objects (Like Contact child of Contact) do not have a relationship name.  
+        	//occasionally on some standard objects (Like Contact child of Contact) do not have a relationship name.
         	//if there is no relationship name, we cannot query on it, so throw an exception.
-            if (childRow.getRelationshipName() == 'Tasks'){ 
+            if (childRow.getRelationshipName() == 'Tasks'){
                 relationship = childRow;
-            }   
+            }
         }
        	//explicitly assert object accessibility when creating the subselect
 		qf.subselectQuery(relationship, true).selectField('Id').selectField('Subject').setCondition(' IsDeleted = false ');
@@ -341,11 +341,11 @@ private class fflib_QueryFactoryTest {
 		Schema.DescribeSObjectResult descResult = Contact.SObjectType.getDescribe();
 		Schema.ChildRelationship relationship;
 		for (Schema.ChildRelationship childRow : descResult.getChildRelationships()){
-        	//occasionally on some standard objects (Like Contact child of Contact) do not have a relationship name.  
+        	//occasionally on some standard objects (Like Contact child of Contact) do not have a relationship name.
         	//if there is no relationship name, we cannot query on it, so throw an exception.
-            if (childRow.getRelationshipName() == 'Tasks'){ 
+            if (childRow.getRelationshipName() == 'Tasks'){
                 relationship = childRow;
-            }   
+            }
         }
        	//explicitly assert object accessibility when creating the subselect
 		qf.subselectQuery(relationship).selectField('Id').selectField('Subject').setCondition(' IsDeleted = false ');
@@ -368,8 +368,8 @@ private class fflib_QueryFactoryTest {
 		try {
 			qf.subselectQuery('Tas').selectField('Id').selectField('Subject').setCondition(' IsDeleted = false ');
 		} catch (fflib_QueryFactory.InvalidSubqueryRelationshipException ex) {
-			e = ex;   
-		}	
+			e = ex;
+		}
 		System.assertNotEquals(e, null);
 	}
 
@@ -428,7 +428,7 @@ private class fflib_QueryFactoryTest {
 			childQf.selectField('Id');
 		} catch (fflib_QueryFactory.InvalidSubqueryRelationshipException ex) {
 			e = ex;
-		}	
+		}
 		System.assertNotEquals(e, null);
 	}
 
@@ -440,7 +440,7 @@ private class fflib_QueryFactoryTest {
 		qf.setCondition( 'name like \'%test%\'' );
 		qf.addOrdering( new fflib_QueryFactory.Ordering('Contact','name',fflib_QueryFactory.SortOrder.ASCENDING) ).addOrdering('CreatedDATE',fflib_QueryFactory.SortOrder.DESCENDING);
 		Schema.DescribeSObjectResult descResult = Contact.SObjectType.getDescribe();
-  
+
 		fflib_QueryFactory childQf = qf.subselectQuery(Task.SObjectType);
 		childQf.selectField('Id');
 		childQf.selectField('Subject');
@@ -448,8 +448,8 @@ private class fflib_QueryFactoryTest {
 		try {
 			fflib_QueryFactory subChildQf = childQf.subselectQuery(Task.SObjectType);
 		} catch (fflib_QueryFactory.InvalidSubqueryRelationshipException ex) {
-			e = ex;   
-		}	
+			e = ex;
+		}
 		System.assertNotEquals(e, null);
 	}
 
@@ -491,7 +491,7 @@ private class fflib_QueryFactoryTest {
 		User usr = createTestUser_noAccess();
 		if (usr != null){
 			System.runAs(usr){
-				//create a query factory object for Account.  
+				//create a query factory object for Account.
 				fflib_QueryFactory qf = new fflib_QueryFactory(Account.SObjectType);
 				Boolean excThrown = false;
 				try {
@@ -499,30 +499,30 @@ private class fflib_QueryFactoryTest {
 					qf.assertIsAccessible();
 				} catch (fflib_SecurityUtils.CrudException e) {
 					excThrown = true;
-				}	
+				}
 				System.assert(excThrown);
-			}	
-		}	
-	}  
+			}
+		}
+	}
 
 	@isTest
-	static void checkFieldRead_fail(){		
+	static void checkFieldRead_fail(){
 		User usr = createTestUser_noAccess();
 		if (usr != null){
 			System.runAs(usr){
-				//create a query factory object for Account. 
+				//create a query factory object for Account.
 				fflib_QueryFactory qf = new fflib_QueryFactory(Account.SObjectType);
 				Boolean excThrown = false;
 				try {
-					//set field to enforce FLS, then try to add a field.  
+					//set field to enforce FLS, then try to add a field.
 					qf.setEnforceFLS(true);
 					qf.selectField('Name');
 				} catch (fflib_SecurityUtils.FlsException e) {
 					excThrown = true;
-				}	
+				}
 				System.assert(excThrown);
-			}	
-		}	
+			}
+		}
 	}
 
 	@isTest
@@ -531,7 +531,7 @@ private class fflib_QueryFactoryTest {
 		qf.assertIsAccessible().setEnforceFLS(true).setCondition( 'name like \'%test%\'' ).addOrdering('CreatedDate',fflib_QueryFactory.SortOrder.DESCENDING);
 		String query = qf.toSOQL();
 		System.assert(query.containsIgnoreCase('SELECT Id FROM Contact'),'Expected \'SELECT Id FROM Contact\' in the SOQL, found: ' + query);
-	}  
+	}
 
 	@isTest
 	static void deterministic_toSOQL(){
@@ -547,7 +547,7 @@ private class fflib_QueryFactoryTest {
 				'LastModifiedBy.Email'
 			});
 		}
-		String expectedQuery = 
+		String expectedQuery =
 			'SELECT CreatedBy.ManagerId, CreatedBy.Name, '
 			+'FirstName, Id, LastModifiedBy.Email, LastName '
 			+'FROM User';
@@ -558,7 +558,7 @@ private class fflib_QueryFactoryTest {
 
 	@isTest
 	static void deepCloneBasicNoChanges() {
-		fflib_QueryFactory qf = new fflib_QueryFactory(Contact.SObjectType)	
+		fflib_QueryFactory qf = new fflib_QueryFactory(Contact.SObjectType)
 		.setLimit(10)
 		.setCondition('id=12345')
 		.selectField('Description')
@@ -578,7 +578,7 @@ private class fflib_QueryFactoryTest {
 
 	@isTest
 	static void deepCloneSubqueryNoChanges() {
-		fflib_QueryFactory qf = new fflib_QueryFactory(Account.SObjectType)	
+		fflib_QueryFactory qf = new fflib_QueryFactory(Account.SObjectType)
 		.setLimit(10)
 		.setCondition('id=12345')
 		.selectField('Description')
@@ -586,7 +586,7 @@ private class fflib_QueryFactoryTest {
 		.addOrdering( new fflib_QueryFactory.Ordering('Account','Description',fflib_QueryFactory.SortOrder.DESCENDING))
 		.setEnforceFLS(true);
 
-		qf.subselectQuery('Contacts', true);	
+		qf.subselectQuery('Contacts', true);
 
 		fflib_QueryFactory qf2 = qf.deepClone();
 
@@ -601,7 +601,7 @@ private class fflib_QueryFactoryTest {
 
 	@isTest
 	static void deepCloneBasic() {
-		fflib_QueryFactory qf = new fflib_QueryFactory(Contact.SObjectType)	
+		fflib_QueryFactory qf = new fflib_QueryFactory(Contact.SObjectType)
 		.setLimit(10)
 		.setCondition('id=12345')
 		.selectField('Description')
@@ -664,7 +664,7 @@ private class fflib_QueryFactoryTest {
 		System.assert(qf.getSubselectQueries().get(0).getOrderings().size() == 0);
 		System.assert(qf2.getSubselectQueries().get(0).getOrderings().size() == 1);
 	}
-	
+
 	@isTest
 	static void testSoql_unsortedSelectFields(){
 		//Given
@@ -689,7 +689,7 @@ private class fflib_QueryFactoryTest {
 		//When
 		String actualSoql = qf.toSOQL();
 
-		//Then		
+		//Then
 		System.assertNotEquals(orderedQuery, actualSoql);
 	}
 
@@ -708,15 +708,15 @@ private class fflib_QueryFactoryTest {
 		//When
 		String actualSoql = qf.toSOQL();
 
-		//Then		
+		//Then
 		System.assertEquals(allRowsQuery, actualSoql);
 	}
 
-	public static User createTestUser_noAccess(){
+	static User createTestUser_noAccess(){
 		User usr;
 		try {
 			//look for a profile that does not have access to the Account object
-			PermissionSet ps = 
+			PermissionSet ps =
 			[SELECT Profile.Id, profile.name
 				FROM PermissionSet
 				WHERE IsOwnedByProfile = true
@@ -726,7 +726,7 @@ private class fflib_QueryFactoryTest {
 				               WHERE SObjectType = 'Account'
 				               AND PermissionsRead = true)
 				LIMIT 1];
-			
+
 			if (ps != null){
 				//create a user with the profile found that doesn't have access to the Account object
 				usr = new User(
@@ -747,7 +747,7 @@ private class fflib_QueryFactoryTest {
 		} catch (Exception e) {
 			//do nothing, just return null User because this test case won't work in this org.
 			return null;
-		}	
-		return usr;	
+		}
+		return usr;
 	}
 }

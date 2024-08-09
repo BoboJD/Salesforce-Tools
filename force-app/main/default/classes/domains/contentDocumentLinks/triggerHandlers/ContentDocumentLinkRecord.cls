@@ -1,4 +1,4 @@
-public with sharing class ContentDocumentLinkRecord extends ContentDocumentLinksHandler{
+global with sharing class ContentDocumentLinkRecord extends ContentDocumentLinksHandler{
 
 	private Map<Id, ContentDocument> contentDocumentById{
 		get{
@@ -12,11 +12,11 @@ public with sharing class ContentDocumentLinkRecord extends ContentDocumentLinks
 		super(domain, uow);
 	}
 
-	public static ContentDocumentLinkRecord handleInsert(ContentDocumentLinks domain, fflib_ISObjectUnitOfWork uow){
+	global static ContentDocumentLinkRecord handleInsert(ContentDocumentLinks domain, fflib_ISObjectUnitOfWork uow){
 		return new ContentDocumentLinkRecord(domain, uow);
 	}
 
-	public void updateRecordIdIfEmpty(){
+	global void updateRecordIdIfEmpty(){
 		for(ContentDocumentLink contentDocumentLink : contentDocumentLinks){
 			if(relatedToRecord(contentDocumentLink) && recordIdIsEmpty(contentDocumentLink)){
 				ContentDocument cd = contentDocumentById.get(contentDocumentLink.ContentDocumentId);

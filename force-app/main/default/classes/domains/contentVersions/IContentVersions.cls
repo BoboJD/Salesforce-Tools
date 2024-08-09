@@ -1,1 +1,1 @@
-public interface IContentVersions extends fflib_ISObjectDomain{}
+global interface IContentVersions extends fflib_ISObjectDomain{}

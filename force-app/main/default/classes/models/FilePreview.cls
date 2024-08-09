@@ -1,17 +1,17 @@
-public class FilePreview{
-	@AuraEnabled public Id id;
-	@AuraEnabled public Id documentId;
-	@AuraEnabled public Id contentDocumentLinkId;
-	@AuraEnabled public String title;
-	@AuraEnabled public String type;
-	@AuraEnabled public String createdDate;
-	@AuraEnabled public Decimal size;
-	@AuraEnabled public String sizeUnit;
-	@AuraEnabled public String extension;
-	@AuraEnabled public String previewLink;
-	@AuraEnabled public Boolean selected;
+global class FilePreview{
+	@AuraEnabled global Id id;
+	@AuraEnabled global Id documentId;
+	@AuraEnabled global Id contentDocumentLinkId;
+	@AuraEnabled global String title;
+	@AuraEnabled global String type;
+	@AuraEnabled global String createdDate;
+	@AuraEnabled global Decimal size;
+	@AuraEnabled global String sizeUnit;
+	@AuraEnabled global String extension;
+	@AuraEnabled global String previewLink;
+	@AuraEnabled global Boolean selected;
 
-	public FilePreview(ContentVersion contentVersion, Id contentDocumentLinkId){
+	global FilePreview(ContentVersion contentVersion, Id contentDocumentLinkId){
 		id = contentVersion.Id;
 		documentId = contentVersion.ContentDocumentId;
 		this.contentDocumentLinkId = contentDocumentLinkId;

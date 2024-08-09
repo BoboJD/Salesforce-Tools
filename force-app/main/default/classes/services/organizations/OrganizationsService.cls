@@ -1,6 +1,6 @@
-public inherited sharing class OrganizationsService{
+global inherited sharing class OrganizationsService{
 
-	public static String retrieveOrganizationName(){
+	global static String retrieveOrganizationName(){
 		return service().retrieveOrganizationName();
 	}
 

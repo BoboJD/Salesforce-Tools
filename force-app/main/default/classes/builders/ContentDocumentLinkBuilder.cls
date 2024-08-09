@@ -1,5 +1,5 @@
 @IsTest
-public inherited sharing class ContentDocumentLinkBuilder extends SObjectBuilder{
+global inherited sharing class ContentDocumentLinkBuilder extends SObjectBuilder{
 
 	private ContentDocumentLinkBuilder(){
 		super();
@@ -9,22 +9,22 @@ public inherited sharing class ContentDocumentLinkBuilder extends SObjectBuilder
 		return ContentDocumentLink.SObjectType;
 	}
 
-	public ContentDocumentLink build(){
+	global ContentDocumentLink build(){
 		return (ContentDocumentLink)buildRecord();
 	}
 
-	public static ContentDocumentLinkBuilder newContentDocumentLink(ContentVersion contentVersion, SObject sObj){
+	global static ContentDocumentLinkBuilder newContentDocumentLink(ContentVersion contentVersion, SObject sObj){
 		return new ContentDocumentLinkBuilder()
 			.withContentDocument(contentVersion)
 			.withLinkedEntity(sObj);
 	}
 
-	public ContentDocumentLinkBuilder withContentDocument(ContentVersion contentVersion){
+	global ContentDocumentLinkBuilder withContentDocument(ContentVersion contentVersion){
 		setFieldValue(ContentDocumentLink.ContentDocumentId, contentVersion.ContentDocumentId);
 		return this;
 	}
 
-	public ContentDocumentLinkBuilder withLinkedEntity(SObject sObj){
+	global ContentDocumentLinkBuilder withLinkedEntity(SObject sObj){
 		setFieldValue(ContentDocumentLink.LinkedEntityId, sObj.Id);
 		return this;
 	}

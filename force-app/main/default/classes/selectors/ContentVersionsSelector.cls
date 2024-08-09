@@ -1,10 +1,10 @@
-public inherited sharing class ContentVersionsSelector extends fflib_SObjectSelector implements IContentVersionsSelector{
+global inherited sharing class ContentVersionsSelector extends fflib_SObjectSelector implements IContentVersionsSelector{
 
-	public static IContentVersionsSelector newInstance(){
+	global static IContentVersionsSelector newInstance(){
 		return (IContentVersionsSelector)Application.Selector.newInstance(ContentVersion.SObjectType);
 	}
 
-	public List<SObjectField> getSObjectFieldList(){
+	global List<SObjectField> getSObjectFieldList(){
 		return new List<SObjectField>{
 			ContentVersion.Id,
 			ContentVersion.ContentDocumentId,
@@ -17,11 +17,11 @@ public inherited sharing class ContentVersionsSelector extends fflib_SObjectSele
 		};
 	}
 
-	public SObjectType getSObjectType(){
+	global SObjectType getSObjectType(){
 		return ContentVersion.SObjectType;
 	}
 
-	public List<ContentVersion> selectLatestByContentDocumentIds(Set<Id> contentDocumentIds){
+	global List<ContentVersion> selectLatestByContentDocumentIds(Set<Id> contentDocumentIds){
 		List<ContentVersion> contentVersions = new List<ContentVersion>();
 		if(!contentDocumentIds.isEmpty()){
 			fflib_QueryFactory query = newQueryFactory()

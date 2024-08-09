@@ -1,6 +1,6 @@
-public inherited sharing class FeatureManagementService{
+global inherited sharing class FeatureManagementService{
 
-	public static Boolean checkPermission(String permissionName){
+	global static Boolean checkPermission(String permissionName){
 		return service().checkPermission(permissionName);
 	}
 

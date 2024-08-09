@@ -27,11 +27,11 @@
 /**
  * @group Core
  */
-public with sharing class fflib_MethodReturnValueRecorder
+global with sharing class fflib_MethodReturnValueRecorder
 {
-	public Boolean Stubbing { get; set; }
+	global Boolean Stubbing { get; set; }
 
-	public List<Exception> DoThrowWhenExceptions { get; set; }
+	global List<Exception> DoThrowWhenExceptions { get; set; }
 
 	/**
 	 * Map of matchers by method.
@@ -42,9 +42,9 @@ public with sharing class fflib_MethodReturnValueRecorder
 
 	private Map<fflib_QualifiedMethod, List<fflib_MatchersReturnValue>> matcherReturnValuesByMethod;
 
-	public fflib_MethodReturnValue MethodReturnValue { get; private set; }
+	global fflib_MethodReturnValue MethodReturnValue { get; private set; }
 
-	public fflib_MethodReturnValueRecorder()
+	global fflib_MethodReturnValueRecorder()
 	{
 		matcherReturnValuesByMethod = new Map<fflib_QualifiedMethod, List<fflib_MatchersReturnValue>>();
 
@@ -56,7 +56,7 @@ public with sharing class fflib_MethodReturnValueRecorder
 	 * @param invocation The object holding all the data of the invocation, like the method and arguments and the mock instance.
 	 * @return The MethodReturnValue instance.
 	 */
-	public fflib_MethodReturnValue prepareMethodReturnValue(fflib_InvocationOnMock invocation)
+	global fflib_MethodReturnValue prepareMethodReturnValue(fflib_InvocationOnMock invocation)
 	{
 		MethodReturnValue = new fflib_MethodReturnValue();
 
@@ -92,7 +92,7 @@ public with sharing class fflib_MethodReturnValueRecorder
 	 * @param invocation The object holding all the data of the invocation, like the method and arguments and the mock instance.
 	 * @return The MethodReturnValue instance.
 	 */
-	public fflib_MethodReturnValue getMethodReturnValue(fflib_InvocationOnMock invocation)
+	global fflib_MethodReturnValue getMethodReturnValue(fflib_InvocationOnMock invocation)
 	{
 		List<fflib_MatchersReturnValue> matchersForMethods = matcherReturnValuesByMethod.get(invocation.getMethod());
 		if (matchersForMethods != null)
@@ -114,7 +114,7 @@ public with sharing class fflib_MethodReturnValueRecorder
 	 * Prepare a stubbed exceptions for a void method.
 	 * @param exps The list of exception to throw.
 	 */
-	public void prepareDoThrowWhenExceptions(List<Exception> exps)
+	global void prepareDoThrowWhenExceptions(List<Exception> exps)
 	{
 		DoThrowWhenExceptions = exps;
 	}

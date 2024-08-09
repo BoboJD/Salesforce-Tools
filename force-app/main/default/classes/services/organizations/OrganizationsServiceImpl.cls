@@ -1,7 +1,7 @@
-public inherited sharing class OrganizationsServiceImpl implements IOrganizationsService{
+global inherited sharing class OrganizationsServiceImpl implements IOrganizationsService{
 	private static String organizationName;
 
-	public String retrieveOrganizationName(){
+	global String retrieveOrganizationName(){
 		if(organizationName == null){
 			List<Organization> orgs = OrganizationsSelector.newInstance().selectAll();
 			if(!orgs.isEmpty() && !orgs[0].IsSandbox){

@@ -1,10 +1,10 @@
-public inherited sharing class WebserviceUtils{
+global inherited sharing class WebserviceUtils{
 
-	public static HttpResponse send(HttpRequest request){
+	global static HttpResponse send(HttpRequest request){
 		return send(request, false);
 	}
 
-	public static HttpResponse sendAndHandleError(HttpRequest request){
+	global static HttpResponse sendAndHandleError(HttpRequest request){
 		return send(request, true);
 	}
 
@@ -21,7 +21,7 @@ public inherited sharing class WebserviceUtils{
 		return response;
 	}
 
-	public static Boolean apiHasError(HttpResponse response){
+	global static Boolean apiHasError(HttpResponse response){
 		return response.getStatusCode() != 200 && response.getStatusCode() != 201;
 	}
 

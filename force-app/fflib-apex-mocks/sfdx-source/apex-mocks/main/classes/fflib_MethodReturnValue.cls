@@ -29,7 +29,7 @@
  * Class defining a method return value.
  */
 @isTest
-public with sharing class fflib_MethodReturnValue
+global with sharing class fflib_MethodReturnValue
 {
 	private StandardAnswer basicAnswer = new StandardAnswer();
 
@@ -37,14 +37,14 @@ public with sharing class fflib_MethodReturnValue
 	 * Instance of the implementation of the Answer interface that implements the answer,
 	 * if an answer isn't explicitly set the standard answer will be used, which just returns the stubbed return value.
 	 */
-	public fflib_Answer Answer { get; set; }
+	global fflib_Answer Answer { get; set; }
 
 	/**
 	 * Setup a stubbed return value.
 	 * @param value The value to return from the stubbed method call.
 	 * @return The fflib_MethodReturnValue instance to allow you to chain the methods.
 	 */
-	public fflib_MethodReturnValue thenReturn(Object value)
+	global fflib_MethodReturnValue thenReturn(Object value)
 	{
 		thenAnswer(this.basicAnswer.setValue(value));
 		return this;
@@ -55,7 +55,7 @@ public with sharing class fflib_MethodReturnValue
 	 * @param e The exception to throw from the stubbed method call.
 	 * @return The fflib_MethodReturnValue instance to allow you to chain the methods.
 	 */
-	public fflib_MethodReturnValue thenThrow(Exception e)
+	global fflib_MethodReturnValue thenThrow(Exception e)
 	{
 		thenAnswer(this.basicAnswer.setValue(e));
 		return this;
@@ -65,7 +65,7 @@ public with sharing class fflib_MethodReturnValue
 	 * Setup a stubbed answer.
 	 * @param answer The answer to run from the stubbed method call.
 	 */
-	public void thenAnswer(fflib_Answer answer)
+	global void thenAnswer(fflib_Answer answer)
 	{
 		this.Answer = answer;
 	}
@@ -75,7 +75,7 @@ public with sharing class fflib_MethodReturnValue
 	 * @param values The values to return from the stubbed method call in consecutive calls.
 	 * @return The fflib_MethodReturnValue instance to allow you to chain the methods.
 	 */
-	public fflib_MethodReturnValue thenReturnMulti(List<Object> values)
+	global fflib_MethodReturnValue thenReturnMulti(List<Object> values)
 	{
 		thenAnswer(this.basicAnswer.setValues(values));
 		return this;
@@ -86,7 +86,7 @@ public with sharing class fflib_MethodReturnValue
 	 * @param es The exceptions to throw from the stubbed method call in consecutive calls.
 	 * @return The fflib_MethodReturnValue instance to allow you to chain the methods.
 	 */
-	public fflib_MethodReturnValue thenThrowMulti(List<Exception> es)
+	global fflib_MethodReturnValue thenThrowMulti(List<Exception> es)
 	{
 		thenAnswer(this.basicAnswer.setValues(es));
 		return this;
@@ -97,7 +97,7 @@ public with sharing class fflib_MethodReturnValue
 	 * Inner class to handle all the stubs that do not use the thenAnswer method directly.
 	 * For internal use only.
 	 */
-	public class StandardAnswer implements fflib_Answer
+	global class StandardAnswer implements fflib_Answer
 	{
 		private Integer whichStubReturnIndex = 0;
 		/*
@@ -111,7 +111,7 @@ public with sharing class fflib_MethodReturnValue
 		 * @param value The value to be set as return value for the StandardAnswer object.
 		 * @return The StandardAnswer instance.
 		 */
-		public StandardAnswer setValue(Object value)
+		global StandardAnswer setValue(Object value)
 		{
 			ReturnValues.add(value);
 			return this;
@@ -122,7 +122,7 @@ public with sharing class fflib_MethodReturnValue
 		 * @param value The value to be set as return value for the StandardAnswer object.
 		 * @return the StandardAnswer instance.
 		 */
-		public StandardAnswer setValues(List<Object> values)
+		global StandardAnswer setValues(List<Object> values)
 		{
 			if(values == null || values.size() == 0)
 			{
@@ -139,7 +139,7 @@ public with sharing class fflib_MethodReturnValue
 		 * @param invocation The invocation to answer for.
 		 * @return The ReturnValue for the method stubbed.
 		 */
-		public Object answer(fflib_InvocationOnMock invocation)
+		global Object answer(fflib_InvocationOnMock invocation)
 		{
 			if(ReturnValues == null || ReturnValues.size() == 0)
 			{

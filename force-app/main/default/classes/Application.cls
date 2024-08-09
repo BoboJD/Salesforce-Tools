@@ -1,10 +1,10 @@
-public inherited sharing class Application{
+global inherited sharing class Application{
 
-	public static final fflib_Application.UnitOfWorkFactory UnitOfWork =
+	global static final fflib_Application.UnitOfWorkFactory UnitOfWork =
 		new fflib_Application.UnitOfWorkFactory(
 			new List<SObjectType>{});
 
-	public static final fflib_Application.ServiceFactory Service =
+	global static final fflib_Application.ServiceFactory Service =
 		new fflib_Application.ServiceFactory(
 			new Map<Type, Type>{
 				IConnectApiService.class => ConnectApiServiceImpl.class,
@@ -16,7 +16,7 @@ public inherited sharing class Application{
 				IMessagingService.class => MessagingServiceImpl.class,
 				IOrganizationsService.class => OrganizationsServiceImpl.class});
 
-	public static final fflib_Application.SelectorFactory Selector =
+	global static final fflib_Application.SelectorFactory Selector =
 		new fflib_Application.SelectorFactory(
 			new Map<SObjectType, Type>{
 				ContentDocument.SObjectType => ContentDocumentsSelector.class,
@@ -29,7 +29,7 @@ public inherited sharing class Application{
 				User.SObjectType => UsersSelector.class,
 				UserRecordAccess.SObjectType => UserRecordAccessesSelector.class});
 
-	public static final fflib_Application.DomainFactory Domain =
+	global static final fflib_Application.DomainFactory Domain =
 		new fflib_Application.DomainFactory(
 			Application.Selector,
 				new Map<SObjectType, Type>{

@@ -1,8 +1,8 @@
-public class LogConstants{
-	public static final String RT_ERROR = 'Error';
-	public static final String RT_INFO = 'Info';
-	public static final String TYPE_APEX = 'Apex class';
-	public static final String TYPE_LNG_CMP = 'Lightning component';
-	public static final String TYPE_WEBSERVICE = 'Webservice';
+global class LogConstants{
+	global static final String RT_ERROR = 'Error';
+	global static final String RT_INFO = 'Info';
+	global static final String TYPE_APEX = 'Apex class';
+	global static final String TYPE_LNG_CMP = 'Lightning component';
+	global static final String TYPE_WEBSERVICE = 'Webservice';
 	@TestVisible private LogConstants(){} // Fix for coverage
 }

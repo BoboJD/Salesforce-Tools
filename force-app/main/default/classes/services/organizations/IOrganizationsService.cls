@@ -1,3 +1,3 @@
-public interface IOrganizationsService{
+global interface IOrganizationsService{
 	String retrieveOrganizationName();
 }

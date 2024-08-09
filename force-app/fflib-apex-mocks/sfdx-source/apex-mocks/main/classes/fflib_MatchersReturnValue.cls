@@ -23,12 +23,12 @@
  * OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-public with sharing class fflib_MatchersReturnValue
+global with sharing class fflib_MatchersReturnValue
 {
-	public List<fflib_IMatcher> matchers;
-	public fflib_MethodReturnValue returnValue;
+	global List<fflib_IMatcher> matchers;
+	global fflib_MethodReturnValue returnValue;
 	
-	public fflib_MatchersReturnValue(List<fflib_IMatcher> matchers, fflib_MethodReturnValue returnValue)
+	global fflib_MatchersReturnValue(List<fflib_IMatcher> matchers, fflib_MethodReturnValue returnValue)
 	{
 		this.matchers = matchers;
 		this.returnValue = returnValue;

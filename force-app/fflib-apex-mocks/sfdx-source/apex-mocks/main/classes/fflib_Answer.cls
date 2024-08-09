@@ -7,7 +7,7 @@
  *	This interface must be implemented inside the test class and implement the call back method answer.
  *	@group Core
  */
-public interface fflib_Answer
+global interface fflib_Answer
 {
 	/**
 	 *	Method to be implemented in the test class to implement the call back method.

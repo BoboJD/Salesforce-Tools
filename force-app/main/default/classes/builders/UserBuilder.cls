@@ -1,5 +1,5 @@
 @IsTest
-public inherited sharing class UserBuilder extends SObjectBuilder{
+global inherited sharing class UserBuilder extends SObjectBuilder{
 
 	private static Map<String, Profile> profileByName{
 		get{
@@ -20,11 +20,11 @@ public inherited sharing class UserBuilder extends SObjectBuilder{
 		return User.SObjectType;
 	}
 
-	public User build(){
+	global User build(){
 		return (User)buildRecord();
 	}
 
-	public static UserBuilder newUser(){
+	global static UserBuilder newUser(){
 		String orgId = UserInfo.getOrganizationId();
 		String uniqueName = orgId + TestUtils.generateUniqueName();
 		return new UserBuilder()
@@ -37,7 +37,7 @@ public inherited sharing class UserBuilder extends SObjectBuilder{
 			.withLanguageLocaleKey('fr');
 	}
 
-	public static UserBuilder newChatterFreeUser(){
+	global static UserBuilder newChatterFreeUser(){
 		return newUser()
 			.withProfile(profileByName.get(ProfileConstants.CHATTER_FREE_USER))
 			.withFirstName('Chatter Free')
@@ -45,64 +45,64 @@ public inherited sharing class UserBuilder extends SObjectBuilder{
 	}
 
 
-	public static UserBuilder newStandardUser(){
+	global static UserBuilder newStandardUser(){
 		return newUser()
 			.withProfile(profileByName.get(ProfileConstants.STANDARD_USER))
 			.withFirstName('Standard')
 			.withLastName('User');
 	}
 
-	public UserBuilder withAdmin(Boolean admin){
+	global UserBuilder withAdmin(Boolean admin){
 		setFieldValue(User.Admin__c, admin);
 		return this;
 	}
 
-	public UserBuilder withAlias(String alias){
+	global UserBuilder withAlias(String alias){
 		setFieldValue(User.Alias, alias);
 		return this;
 	}
 
-	public UserBuilder withEmail(String email){
+	global UserBuilder withEmail(String email){
 		setFieldValue(User.Email, email);
 		return this;
 	}
 
-	public UserBuilder withEmailEncodingKey(String emailEncodingKey){
+	global UserBuilder withEmailEncodingKey(String emailEncodingKey){
 		setFieldValue(User.EmailEncodingKey, emailEncodingKey);
 		return this;
 	}
 
-	public UserBuilder withFirstName(String firstName){
+	global UserBuilder withFirstName(String firstName){
 		setFieldValue(User.FirstName, firstName);
 		return this;
 	}
 
-	public UserBuilder withLanguageLocaleKey(String languageLocaleKey){
+	global UserBuilder withLanguageLocaleKey(String languageLocaleKey){
 		setFieldValue(User.LanguageLocaleKey, languageLocaleKey);
 		return this;
 	}
 
-	public UserBuilder withLastName(String lastName){
+	global UserBuilder withLastName(String lastName){
 		setFieldValue(User.LastName, lastName);
 		return this;
 	}
 
-	public UserBuilder withLocaleSidKey(String localeSidKey){
+	global UserBuilder withLocaleSidKey(String localeSidKey){
 		setFieldValue(User.LocaleSidKey, localeSidKey);
 		return this;
 	}
 
-	public UserBuilder withProfile(Profile profile){
+	global UserBuilder withProfile(Profile profile){
 		setFieldValue(User.ProfileId, profile.Id);
 		return this;
 	}
 
-	public UserBuilder withTimeZoneSidKey(String timeZoneSidKey){
+	global UserBuilder withTimeZoneSidKey(String timeZoneSidKey){
 		setFieldValue(User.TimeZoneSidKey, timeZoneSidKey);
 		return this;
 	}
 
-	public UserBuilder withUsername(String username){
+	global UserBuilder withUsername(String username){
 		setFieldValue(User.Username, username);
 		return this;
 	}

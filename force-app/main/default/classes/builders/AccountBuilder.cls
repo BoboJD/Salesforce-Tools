@@ -1,5 +1,5 @@
 @IsTest
-public inherited sharing class AccountBuilder extends SObjectBuilder{
+global inherited sharing class AccountBuilder extends SObjectBuilder{
 
 	private AccountBuilder(){
 		super();
@@ -9,20 +9,20 @@ public inherited sharing class AccountBuilder extends SObjectBuilder{
 		return Account.SObjectType;
 	}
 
-	public Account build(){
+	global Account build(){
 		return (Account)buildRecord();
 	}
 
-	public static AccountBuilder newAccount(String name){
+	global static AccountBuilder newAccount(String name){
 		return new AccountBuilder()
 			.withName(name);
 	}
 
-	public static AccountBuilder newAccount(){
+	global static AccountBuilder newAccount(){
 		return newAccount('TestAccount');
 	}
 
-	public AccountBuilder withName(String name){
+	global AccountBuilder withName(String name){
 		setFieldValue(Account.Name, name);
 		return this;
 	}

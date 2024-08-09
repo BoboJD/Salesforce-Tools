@@ -696,7 +696,7 @@ private class fflib_ArgumentCaptorTest
 
 	private class TestInnerClass
 	{
-		public Integer i;
-		public String s;
+		global Integer i;
+		global String s;
 	}
 }

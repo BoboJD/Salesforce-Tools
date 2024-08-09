@@ -1,7 +1,7 @@
-public with sharing class LookupController{
+global with sharing class LookupController{
 
 	@AuraEnabled
-	public static List<DecoratedPicklistEntry> search(String criteriaJSON){
+	global static List<DecoratedPicklistEntry> search(String criteriaJSON){
 		List<DecoratedPicklistEntry> searchResults = new List<DecoratedPicklistEntry>();
 		Criteria criteria = (Criteria)JSON.deserialize(criteriaJSON, Criteria.class);
 		for(SObject sObj : Database.query(criteria.toSOQL())){
@@ -55,17 +55,17 @@ public with sharing class LookupController{
 		mapValueByAttribute((Map<String, Object>)valueByAttribute.get(crossReferenceField), crossReferenceSObject, fieldNameSplitted[1]);
 	}
 
-	public class Criteria{
-		public String sObjectApiName;
-		public String searchFieldApiName;
-		public String searchedTerm;
-		public Integer nbResultMax;
-		public String valueFieldApiName;
-		public String mainFieldDisplayed;
-		public String additionalFieldsDisplayed;
-		public String additionalFields;
-		public String additionalSearchFieldsApiName;
-		public String additionalCondition;
+	global class Criteria{
+		global String sObjectApiName;
+		global String searchFieldApiName;
+		global String searchedTerm;
+		global Integer nbResultMax;
+		global String valueFieldApiName;
+		global String mainFieldDisplayed;
+		global String additionalFieldsDisplayed;
+		global String additionalFields;
+		global String additionalSearchFieldsApiName;
+		global String additionalCondition;
 
 		private Set<String> otherFields{
 			get{

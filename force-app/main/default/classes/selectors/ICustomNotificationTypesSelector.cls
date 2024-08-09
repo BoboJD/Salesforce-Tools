@@ -1,3 +1,3 @@
-public interface ICustomNotificationTypesSelector extends fflib_ISObjectSelector{
+global interface ICustomNotificationTypesSelector extends fflib_ISObjectSelector{
 	CustomNotificationType selectByDeveloperName(String developerName);
 }

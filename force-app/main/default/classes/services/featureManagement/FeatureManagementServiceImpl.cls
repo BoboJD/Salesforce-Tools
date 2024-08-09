@@ -1,6 +1,6 @@
-public inherited sharing class FeatureManagementServiceImpl implements IFeatureManagementService{
+global inherited sharing class FeatureManagementServiceImpl implements IFeatureManagementService{
 
-	public Boolean checkPermission(String permissionName){
+	global Boolean checkPermission(String permissionName){
 		return FeatureManagement.checkPermission(permissionName);
 	}
 }

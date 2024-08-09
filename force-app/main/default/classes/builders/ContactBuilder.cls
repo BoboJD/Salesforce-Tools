@@ -1,5 +1,5 @@
 @IsTest
-public inherited sharing class ContactBuilder extends SObjectBuilder{
+global inherited sharing class ContactBuilder extends SObjectBuilder{
 
 	private ContactBuilder(){
 		super();
@@ -9,11 +9,11 @@ public inherited sharing class ContactBuilder extends SObjectBuilder{
 		return Contact.SObjectType;
 	}
 
-	public Contact build(){
+	global Contact build(){
 		return (Contact)buildRecord();
 	}
 
-	public static ContactBuilder newContact(){
+	global static ContactBuilder newContact(){
 		return new ContactBuilder()
 			.withFirstName('Contact')
 			.withLastName('Test')
@@ -21,22 +21,22 @@ public inherited sharing class ContactBuilder extends SObjectBuilder{
 			.withEmail('toto@toto.fr');
 	}
 
-	public ContactBuilder withEmail(String email){
+	global ContactBuilder withEmail(String email){
 		setFieldValue(Contact.Email, email);
 		return this;
 	}
 
-	public ContactBuilder withFirstName(String firstName){
+	global ContactBuilder withFirstName(String firstName){
 		setFieldValue(Contact.FirstName, firstName);
 		return this;
 	}
 
-	public ContactBuilder withLastName(String lastName){
+	global ContactBuilder withLastName(String lastName){
 		setFieldValue(Contact.LastName, lastName);
 		return this;
 	}
 
-	public ContactBuilder withMobilePhone(String mobilePhone){
+	global ContactBuilder withMobilePhone(String mobilePhone){
 		setFieldValue(Contact.MobilePhone, mobilePhone);
 		return this;
 	}

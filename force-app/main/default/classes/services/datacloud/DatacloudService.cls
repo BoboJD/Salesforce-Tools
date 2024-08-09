@@ -1,6 +1,6 @@
-public without sharing class DatacloudService{
+global without sharing class DatacloudService{
 
-	public static List<SObject> findDuplicates(SObject record){
+	global static List<SObject> findDuplicates(SObject record){
 		return service().findDuplicates(record);
 	}
 

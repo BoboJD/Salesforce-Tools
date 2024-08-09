@@ -1,7 +1,7 @@
 @SuppressWarnings('PMD.ExcessiveParameterList')
-public inherited sharing class CustomNotificationsService{
+global inherited sharing class CustomNotificationsService{
 
-	public static void notifyUsers(String targetId, Set<String> recipientsIds, String title, String body){
+	global static void notifyUsers(String targetId, Set<String> recipientsIds, String title, String body){
 		service().notifyUsers(targetId, recipientsIds, title, body);
 	}
 

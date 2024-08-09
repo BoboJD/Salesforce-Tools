@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
  @isTest
-public class fflib_MatcherDefinitionsTest
+global class fflib_MatcherDefinitionsTest
 {
 	private static final List<fflib_IMatcher> INTERNAL_MATCHERS = new List<fflib_IMatcher>{
 																new fflib_MatcherDefinitions.StringContains('bob'),
@@ -1616,17 +1616,17 @@ public class fflib_MatcherDefinitionsTest
 	{
 		private final String value;
 
-		public StringMatcher(String value)
+		global StringMatcher(String value)
 		{
 			this.value = value;
 		}
 
-		public Boolean matches(Object arg)
+		global Boolean matches(Object arg)
 		{
 			return true;
 		}
 
-		public override String toString()
+		global override String toString()
 		{
 			return '"' + value + '"';
 		}

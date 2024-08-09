@@ -1,7 +1,7 @@
-public inherited sharing class DatacloudServiceImpl implements IDatacloudService{
+global inherited sharing class DatacloudServiceImpl implements IDatacloudService{
 
 	@SuppressWarnings('PMD.CognitiveComplexity')
-	public List<SObject> findDuplicates(SObject record){
+	global List<SObject> findDuplicates(SObject record){
 		List<SObject> duplicates = new List<SObject>();
 		for(Datacloud.FindDuplicatesResult findDuplicatesResult : Datacloud.FindDuplicates.findDuplicates(new List<SObject>{record})){
 			for(Datacloud.DuplicateResult duplicateResult : findDuplicatesResult.getDuplicateResults()){

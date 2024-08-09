@@ -1,14 +1,14 @@
-public with sharing class ContentVersionRecordRelation extends ContentVersionsHandler{
+global with sharing class ContentVersionRecordRelation extends ContentVersionsHandler{
 
 	private ContentVersionRecordRelation(ContentVersions domain, fflib_ISObjectUnitOfWork uow){
 		super(domain, uow);
 	}
 
-	public static ContentVersionRecordRelation handleInsert(ContentVersions domain, fflib_ISObjectUnitOfWork uow){
+	global static ContentVersionRecordRelation handleInsert(ContentVersions domain, fflib_ISObjectUnitOfWork uow){
 		return new ContentVersionRecordRelation(domain, uow);
 	}
 
-	public void handleRecordIdIfFilled(){
+	global void handleRecordIdIfFilled(){
 		for(ContentVersion contentVersion : contentVersions){
 			if(String.isNotBlank(contentVersion.RecordId__c) && !contentVersion.RelatedToRecord__c){
 				uow.registerNew(new ContentDocumentLink(

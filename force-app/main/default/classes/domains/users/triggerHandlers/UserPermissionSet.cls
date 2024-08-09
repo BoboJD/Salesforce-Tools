@@ -1,4 +1,4 @@
-public with sharing class UserPermissionSet extends UsersHandler{
+global with sharing class UserPermissionSet extends UsersHandler{
 	private Set<Id> userIds = new Set<Id>();
 	private static Set<String> automaticallyAssignedPermissionSets;
 
@@ -50,15 +50,15 @@ public with sharing class UserPermissionSet extends UsersHandler{
 		super(domain, oldRecordById, uow);
 	}
 
-	public static UserPermissionSet handleInsert(Users domain, fflib_ISObjectUnitOfWork uow){
+	global static UserPermissionSet handleInsert(Users domain, fflib_ISObjectUnitOfWork uow){
 		return new UserPermissionSet(domain, uow);
 	}
 
-	public static UserPermissionSet handleUpdate(Users domain, Map<Id, SObject> oldRecordById, fflib_ISObjectUnitOfWork uow){
+	global static UserPermissionSet handleUpdate(Users domain, Map<Id, SObject> oldRecordById, fflib_ISObjectUnitOfWork uow){
 		return new UserPermissionSet(domain, oldRecordById, uow);
 	}
 
-	public void assignPermissionSets(){
+	global void assignPermissionSets(){
 		for(User user : getUsersWhereItsNewOrProfileHasChanged()){
 			String profileName = userById.get(user.Id).Profile.Name;
 			if(permissionSetsByProfileName.containsKey(profileName)){

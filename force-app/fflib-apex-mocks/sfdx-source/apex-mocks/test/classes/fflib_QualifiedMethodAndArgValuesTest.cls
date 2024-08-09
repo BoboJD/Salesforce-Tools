@@ -1,5 +1,5 @@
 @isTest
-public class fflib_QualifiedMethodAndArgValuesTest
+global class fflib_QualifiedMethodAndArgValuesTest
 {
     @isTest
     private static void equalsReturnsExpectedResults()

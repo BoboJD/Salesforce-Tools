@@ -1,6 +1,6 @@
-public inherited sharing class TimeUtils{
+global inherited sharing class TimeUtils{
 
-	public static Boolean currentTimeIsInferiorTo(Time startTime){
+	global static Boolean currentTimeIsInferiorTo(Time startTime){
 		Boolean isBeforeMinTime = false;
 		if(startTime != null){
 			Integer nowHour = Test.isRunningTest() ? 7 : Datetime.now().hour();
@@ -11,7 +11,7 @@ public inherited sharing class TimeUtils{
 		return isBeforeMinTime;
 	}
 
-	public static Boolean currentTimeIsSuperiorTo(Time finishTime){
+	global static Boolean currentTimeIsSuperiorTo(Time finishTime){
 		Boolean isAfterMaxTime = false;
 		if(finishTime != null){
 			Integer nowHour = Test.isRunningTest() ? 22 : Datetime.now().hour();
@@ -22,7 +22,7 @@ public inherited sharing class TimeUtils{
 		return isAfterMaxTime;
 	}
 
-	public static String format(Time timeToFormat){
+	global static String format(Time timeToFormat){
 		if(timeToFormat != null){
 			String formatMinute = timeToFormat.minute() == 00 ? '' : String.valueOf(timeToFormat.minute());
 			return timeToFormat.hour()+'H'+formatMinute;

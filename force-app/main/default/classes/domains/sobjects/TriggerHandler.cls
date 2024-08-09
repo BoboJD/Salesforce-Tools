@@ -1,4 +1,4 @@
-public inherited sharing virtual class TriggerHandler{
+global inherited sharing virtual class TriggerHandler{
 	protected fflib_SObjectDomain domain;
 	private Map<Id, SObject> oldRecordById;
 	protected fflib_ISObjectUnitOfWork uow;

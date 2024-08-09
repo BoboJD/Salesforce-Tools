@@ -1,4 +1,4 @@
-public class CurrentUser{
+global class CurrentUser{
 	private static CurrentUser instance;
 	private User user;
 
@@ -11,19 +11,19 @@ public class CurrentUser{
 		return instance;
 	}
 
-	public static User data(){
+	global static User data(){
 		return getInstance().user;
 	}
 
-	public static Boolean isAdmin(){
+	global static Boolean isAdmin(){
 		return data().Profile.Name == Label.ProfileSystemAdministrator || data().Admin__c;
 	}
 
-	public static Boolean canEditRecord(Id recordId){
+	global static Boolean canEditRecord(Id recordId){
 		return UserRecordAccessesSelector.newInstance().canEditRecord(UserInfo.getUserId(), recordId);
 	}
 
-	public static Map<Id, Boolean> canEditRecords(Set<Id> recordIds){
+	global static Map<Id, Boolean> canEditRecords(Set<Id> recordIds){
 		return UserRecordAccessesSelector.newInstance().canEditRecords(UserInfo.getUserId(), recordIds);
 	}
 }

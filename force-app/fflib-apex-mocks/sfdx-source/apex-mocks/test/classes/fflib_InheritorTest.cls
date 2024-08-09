@@ -2,10 +2,10 @@
  * Copyright (c) 2016-2017 FinancialForce.com, inc.  All rights reserved.
  */
 @isTest
-public class fflib_InheritorTest
+global class fflib_InheritorTest
 {
  	@isTest
-    public static void canInstantiateMultipleInterfaceInheritor()
+    global static void canInstantiateMultipleInterfaceInheritor()
     {
         fflib_ApexMocks mocks = new fflib_ApexMocks();
         Object inheritor = mocks.mock(fflib_Inheritor.class);
@@ -15,7 +15,7 @@ public class fflib_InheritorTest
     }
 
  	@isTest
-    public static void canStubMultipleInterfaceInheritor()
+    global static void canStubMultipleInterfaceInheritor()
     {
         fflib_ApexMocks mocks = new fflib_ApexMocks();
         fflib_Inheritor inheritor = (fflib_Inheritor)mocks.mock(fflib_Inheritor.class);

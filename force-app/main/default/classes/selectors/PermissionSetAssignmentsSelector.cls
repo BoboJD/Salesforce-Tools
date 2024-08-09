@@ -1,21 +1,21 @@
-public inherited sharing class PermissionSetAssignmentsSelector extends fflib_SObjectSelector implements IPermissionSetAssignmentsSelector{
+global inherited sharing class PermissionSetAssignmentsSelector extends fflib_SObjectSelector implements IPermissionSetAssignmentsSelector{
 
-	public static PermissionSetAssignmentsSelector newInstance(){
+	global static PermissionSetAssignmentsSelector newInstance(){
 		return (PermissionSetAssignmentsSelector)Application.Selector.newInstance(PermissionSetAssignment.SObjectType);
 	}
 
-	public List<SObjectField> getSObjectFieldList(){
+	global List<SObjectField> getSObjectFieldList(){
 		return new List<SObjectField>{
 			PermissionSetAssignment.Id,
 			PermissionSetAssignment.AssigneeId
 		};
 	}
 
-	public SObjectType getSObjectType(){
+	global SObjectType getSObjectType(){
 		return PermissionSetAssignment.SObjectType;
 	}
 
-	public Map<Id, List<PermissionSetAssignment>> mapByUserId(Set<Id> userIds){
+	global Map<Id, List<PermissionSetAssignment>> mapByUserId(Set<Id> userIds){
 		Map<Id, List<PermissionSetAssignment>> permissionSetAssignmentsByUserId = new Map<Id, List<PermissionSetAssignment>>();
 		if(!userIds.isEmpty()){
 			fflib_QueryFactory queryFactory = newQueryFactory();

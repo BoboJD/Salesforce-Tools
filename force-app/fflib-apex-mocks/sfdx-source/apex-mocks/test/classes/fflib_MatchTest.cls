@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 @isTest
-public with sharing class fflib_MatchTest
+global with sharing class fflib_MatchTest
 {
 	@isTest
 	private static void whenMatchesAllArgsWithOneMatchReturnsTrue()
@@ -491,7 +491,7 @@ public with sharing class fflib_MatchTest
 	}
 
 	@isTest
-	public static void eqBooleanRegistersCorrectMatcherType()
+	global static void eqBooleanRegistersCorrectMatcherType()
 	{
 		//Given/When
 		Object x = fflib_Match.eqBoolean(true);
@@ -504,7 +504,7 @@ public with sharing class fflib_MatchTest
 	}
 
 	@isTest
-	public static void eqDateRegistersCorrectMatcherType()
+	global static void eqDateRegistersCorrectMatcherType()
 	{
 		//Given/When
 		Object x = fflib_Match.eqDate(Date.today());
@@ -517,7 +517,7 @@ public with sharing class fflib_MatchTest
 	}
 
 	@isTest
-	public static void eqDatetimeRegistersCorrectMatcherType()
+	global static void eqDatetimeRegistersCorrectMatcherType()
 	{
 		//Given/When
 		Object x = fflib_Match.eqDatetime(System.now());
@@ -530,7 +530,7 @@ public with sharing class fflib_MatchTest
 	}
 
 	@isTest
-	public static void eqDecimalRegistersCorrectMatcherType()
+	global static void eqDecimalRegistersCorrectMatcherType()
 	{
 		//Given/When
 		Object x = fflib_Match.eqDecimal(123);
@@ -543,7 +543,7 @@ public with sharing class fflib_MatchTest
 	}
 
 	@isTest
-	public static void eqDoubleRegistersCorrectMatcherType()
+	global static void eqDoubleRegistersCorrectMatcherType()
 	{
 		//Given/When
 		Object x = fflib_Match.eqDouble(123);
@@ -556,7 +556,7 @@ public with sharing class fflib_MatchTest
 	}
 
 	@isTest
-	public static void eqIdRegistersCorrectMatcherType()
+	global static void eqIdRegistersCorrectMatcherType()
 	{
 		//Given/When
 		Object x = fflib_Match.eqId('001000000000001AAA');
@@ -569,7 +569,7 @@ public with sharing class fflib_MatchTest
 	}
 
 	@isTest
-	public static void eqIntegerRegistersCorrectMatcherType()
+	global static void eqIntegerRegistersCorrectMatcherType()
 	{
 		//Given/When
 		Object x = fflib_Match.eqInteger(123);
@@ -582,7 +582,7 @@ public with sharing class fflib_MatchTest
 	}
 
 	@isTest
-	public static void eqListRegistersCorrectMatcherType()
+	global static void eqListRegistersCorrectMatcherType()
 	{
 		//Given/When
 		Object x = fflib_Match.eqList(new List<String>{ 'hello' });
@@ -595,7 +595,7 @@ public with sharing class fflib_MatchTest
 	}
 
 	@isTest
-	public static void eqLongRegistersCorrectMatcherType()
+	global static void eqLongRegistersCorrectMatcherType()
 	{
 		//Given/When
 		Object x = fflib_Match.eqLong(123);
@@ -608,7 +608,7 @@ public with sharing class fflib_MatchTest
 	}
 
 	@isTest
-	public static void eqSObjectFieldRegistersCorrectMatcherType()
+	global static void eqSObjectFieldRegistersCorrectMatcherType()
 	{
 		//Given/When
 		Schema.SObjectField f = Schema.getGlobalDescribe().get('Account').getDescribe().fields.getMap().get('Id');
@@ -622,7 +622,7 @@ public with sharing class fflib_MatchTest
 	}
 
 	@isTest
-	public static void eqSObjectTypeRegistersCorrectMatcherType()
+	global static void eqSObjectTypeRegistersCorrectMatcherType()
 	{
 		//Given/When
 		Schema.SObjectType ot = Schema.getGlobalDescribe().get('Account');
@@ -636,7 +636,7 @@ public with sharing class fflib_MatchTest
 	}
 
 	@isTest
-	public static void eqStringRegistersCorrectMatcherType()
+	global static void eqStringRegistersCorrectMatcherType()
 	{
 		//Given/When
 		Object x = fflib_Match.eqString('hello');
@@ -1371,7 +1371,7 @@ public with sharing class fflib_MatchTest
 
 	private class AlwaysMatch implements fflib_IMatcher
 	{
-		public Boolean matches(Object arg)
+		global Boolean matches(Object arg)
 		{
 			return true;
 		}
@@ -1379,7 +1379,7 @@ public with sharing class fflib_MatchTest
 	
 	private class NeverMatch implements fflib_IMatcher
 	{
-		public Boolean matches(Object arg)
+		global Boolean matches(Object arg)
 		{
 			return false;
 		}

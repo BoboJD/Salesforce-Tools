@@ -310,18 +310,18 @@ private class fflib_AnswerTest
 
 	//Answers
 
-	public class BasicAnswer implements fflib_Answer
+	global class BasicAnswer implements fflib_Answer
 	{
-		public Object answer(fflib_InvocationOnMock invocation)
+		global Object answer(fflib_InvocationOnMock invocation)
 		{
 			actualInvocation = invocation;
 			return null;
 		}
 	}
 
-	public class ExceptionForAnswer implements fflib_Answer
+	global class ExceptionForAnswer implements fflib_Answer
 	{
-		public Object answer(fflib_InvocationOnMock invocation)
+		global Object answer(fflib_InvocationOnMock invocation)
 		{
 			actualInvocation = invocation;
 
@@ -329,9 +329,9 @@ private class fflib_AnswerTest
 		}
 	}
 
-	public class ExceptionForArgumentsOutOfBound implements fflib_Answer
+	global class ExceptionForArgumentsOutOfBound implements fflib_Answer
 	{
-		public Object answer(fflib_InvocationOnMock invocation)
+		global Object answer(fflib_InvocationOnMock invocation)
 		{
 			actualInvocation = invocation;
 
@@ -350,9 +350,9 @@ private class fflib_AnswerTest
 		}
 	}
 
-	public class ExceptionForNegativeArgumentIndex implements fflib_Answer
+	global class ExceptionForNegativeArgumentIndex implements fflib_Answer
 	{
-		public Object answer(fflib_InvocationOnMock invocation)
+		global Object answer(fflib_InvocationOnMock invocation)
 		{
 			actualInvocation = invocation;
 
@@ -371,9 +371,9 @@ private class fflib_AnswerTest
 		}
 	}
 
-	public class ArgumentListEmptyForMethodWithNoArgument implements fflib_Answer
+	global class ArgumentListEmptyForMethodWithNoArgument implements fflib_Answer
 	{
-		public Object answer(fflib_InvocationOnMock invocation)
+		global Object answer(fflib_InvocationOnMock invocation)
 		{
 			actualInvocation = invocation;
 
@@ -385,16 +385,16 @@ private class fflib_AnswerTest
 		}
 	}
 
-	public class FirstAnswer implements fflib_Answer
+	global class FirstAnswer implements fflib_Answer
 	{
 		private String answerMessage;
 
-		public String getMessage()
+		global String getMessage()
 		{
 			return this.answerMessage;
 		}
 
-		public Object answer(fflib_InvocationOnMock invocation)
+		global Object answer(fflib_InvocationOnMock invocation)
 		{
 			actualInvocation = invocation;
 
@@ -404,16 +404,16 @@ private class fflib_AnswerTest
 		}
 	}
 
-	public class SecondAnswer implements fflib_Answer
+	global class SecondAnswer implements fflib_Answer
 	{
 		private String answerMessage;
 
-		public String getMessage()
+		global String getMessage()
 		{
 			return this.answerMessage;
 		}
 
-		public Object answer(fflib_InvocationOnMock invocation)
+		global Object answer(fflib_InvocationOnMock invocation)
 		{
 			actualInvocation = invocation;
 
@@ -423,9 +423,9 @@ private class fflib_AnswerTest
 		}
 	}
 
-	public class ProcessArgumentAnswer implements fflib_Answer
+	global class ProcessArgumentAnswer implements fflib_Answer
 	{
-		public Object answer(fflib_InvocationOnMock invocation)
+		global Object answer(fflib_InvocationOnMock invocation)
 		{
 			actualInvocation = invocation;
 

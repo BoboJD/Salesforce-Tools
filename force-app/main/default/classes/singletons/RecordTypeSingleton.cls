@@ -1,6 +1,6 @@
-public class RecordTypeSingleton{
+global class RecordTypeSingleton{
 	private static RecordTypeSingleton instance;
-	public Map<String, Map<String, Schema.RecordTypeInfo>> recordTypeByObjAndDeveloperName {get;private set;}
+	global Map<String, Map<String, Schema.RecordTypeInfo>> recordTypeByObjAndDeveloperName {get;private set;}
 
 	private RecordTypeSingleton(){
 		recordTypeByObjAndDeveloperName = new Map<String, Map<String, Schema.RecordTypeInfo>>();
@@ -11,7 +11,7 @@ public class RecordTypeSingleton{
 		return instance;
 	}
 
-	public static Schema.RecordTypeInfo getRecordTypeInfo(SObjectType obj, String recordTypeDeveloperName){
+	global static Schema.RecordTypeInfo getRecordTypeInfo(SObjectType obj, String recordTypeDeveloperName){
 		String objName = obj.getDescribe(SObjectDescribeOptions.DEFERRED).getName();
 		if(!getInstance().recordTypeByObjAndDeveloperName.containsKey(objName))
 			setRecordTypesForSObject(obj);
@@ -24,7 +24,7 @@ public class RecordTypeSingleton{
 		getInstance().recordTypeByObjAndDeveloperName.put(objDescribe.getName(), objDescribe.getRecordTypeInfosByDeveloperName());
 	}
 
-	public static Id getRecordTypeId(SObjectType obj, String recordTypeDeveloperName){
+	global static Id getRecordTypeId(SObjectType obj, String recordTypeDeveloperName){
 		Schema.RecordTypeInfo recordTypeInfo = getRecordTypeInfo(obj, recordTypeDeveloperName);
 		return recordTypeInfo != null ? recordTypeInfo.getRecordTypeId() : null;
 	}

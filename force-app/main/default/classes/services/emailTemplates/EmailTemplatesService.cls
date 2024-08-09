@@ -1,6 +1,6 @@
-public inherited sharing class EmailTemplatesService{
+global inherited sharing class EmailTemplatesService{
 
-	public static String replaceFieldReferencesByValue(String content, List<SObject> sObjects){
+	global static String replaceFieldReferencesByValue(String content, List<SObject> sObjects){
 		return service().replaceFieldReferencesByValue(content, sObjects);
 	}
 

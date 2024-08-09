@@ -23,7 +23,7 @@
  * OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-public class fflib_Match
+global class fflib_Match
 {
 	private static List<fflib_IMatcher> matchers = new List<fflib_IMatcher>();
 
@@ -31,7 +31,7 @@ public class fflib_Match
 	 * Matching
 	 * True when comparing method arg values to matchers, false when comparing absolute arg values.
 	 */
-	public static Boolean Matching = false;
+	global static Boolean Matching = false;
 	
 	/**
 	 * Used internally by the mocking framework, you shouldn't need to call this method directly.
@@ -39,7 +39,7 @@ public class fflib_Match
 	 * @param expectedSize The expected number of matchers to be returned. If this does not match the actual value an expection is thrown.
 	 * @return List<fflib_IMatcher> The registered matchers, collected while in matching mode.
 	 */
-	public static List<fflib_IMatcher> getAndClearMatchers(Integer expectedSize)
+	global static List<fflib_IMatcher> getAndClearMatchers(Integer expectedSize)
 	{
 		Matching = false;
 
@@ -65,7 +65,7 @@ public class fflib_Match
 	 * @throws fflib_ApexMocks.ApexMocksException Thrown when methodArgValues is null/empty, targetMatchers is null, or their sizes don't match
 	 * @return Boolean True if all arg values satisfy all of the supplied matchers.
 	 */
-	public static Boolean matchesAllArgs(fflib_MethodArgValues methodArg, List<fflib_IMatcher> targetMatchers)
+	global static Boolean matchesAllArgs(fflib_MethodArgValues methodArg, List<fflib_IMatcher> targetMatchers)
 	{
 		validateArgs(methodArg, targetMatchers);
 		
@@ -115,7 +115,7 @@ public class fflib_Match
 	 * @return Object Always returns null. This can then be cast into the correct arg type
 	 * so that the right method is called on the mock objects.
 	 */
-	public static Object matches(fflib_IMatcher matcher)
+	global static Object matches(fflib_IMatcher matcher)
 	{
 		Matching = true;
 		matchers.add(matcher);
@@ -133,9 +133,9 @@ public class fflib_Match
 	 * Registers a matcher which will check if the method is called with an arg that matches allOf
 	 * @param o1 A dummy object returned by registering another matcher 
 	 * @param o2 A dummy object returned by registering another matcher
-	 * @return Object A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked. (You may need to cast down to your specific object type)public static Object allOf(Object o1, Object o2)
+	 * @return Object A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked. (You may need to cast down to your specific object type)global static Object allOf(Object o1, Object o2)
 	 */
-    public static Object allOf(Object o1, Object o2)
+    global static Object allOf(Object o1, Object o2)
 	{
 		return allOf(new Object[]{ o1, o2 });
 	}
@@ -147,7 +147,7 @@ public class fflib_Match
 	 * @param o3 A dummy object returned by registering another matcher
 	 * @return Object A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked. (You may need to cast down to your specific object type)
 	 */
-	public static Object allOf(Object o1, Object o2, Object o3)
+	global static Object allOf(Object o1, Object o2, Object o3)
 	{
 		return allOf(new Object[]{ o1, o2, o3 });
 	}
@@ -160,7 +160,7 @@ public class fflib_Match
 	 * @param o4 A dummy object returned by registering another matcher
 	 * @return Object A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked. (You may need to cast down to your specific object type)
 	 */
-	public static Object allOf(Object o1, Object o2, Object o3, Object o4)
+	global static Object allOf(Object o1, Object o2, Object o3, Object o4)
 	{
 		return allOf(new Object[]{ o1, o2, o3, o4 });
 	}
@@ -170,7 +170,7 @@ public class fflib_Match
 	 * @param o A list of dummy objects returned by registering other matchers
 	 * @return Object A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked. (You may need to cast down to your specific object type)
 	 */
-	public static Object allOf(List<Object> o)
+	global static Object allOf(List<Object> o)
 	{
 		return combined(fflib_MatcherDefinitions.Connective.ALL, o);
 	}
@@ -181,7 +181,7 @@ public class fflib_Match
 	 * @param o2 A dummy object returned by registering another matcher
 	 * @return Object A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked. (You may need to cast down to your specific object type)
 	 */
-	public static Object anyOf(Object o1, Object o2)
+	global static Object anyOf(Object o1, Object o2)
 	{
 		return anyOf(new Object[]{ o1, o2 });
 	}
@@ -193,7 +193,7 @@ public class fflib_Match
 	 * @param o3 A dummy object returned by registering another matcher
 	 * @return Object A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked. (You may need to cast down to your specific object type)
 	 */
-	public static Object anyOf(Object o1, Object o2, Object o3)
+	global static Object anyOf(Object o1, Object o2, Object o3)
 	{
 		return anyOf(new Object[]{ o1, o2, o3 });
 	}
@@ -206,7 +206,7 @@ public class fflib_Match
 	 * @param o4 A dummy object returned by registering another matcher
 	 * @return Object A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked. (You may need to cast down to your specific object type)
 	 */
-	public static Object anyOf(Object o1, Object o2, Object o3, Object o4)
+	global static Object anyOf(Object o1, Object o2, Object o3, Object o4)
 	{
 		return anyOf(new Object[]{ o1, o2, o3, o4 });
 	}
@@ -216,7 +216,7 @@ public class fflib_Match
 	 * @param o A list of dummy objects returned by registering other matchers
 	 * @return Object A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked. (You may need to cast down to your specific object type)
 	 */
-	public static Object anyOf(List<Object> o)
+	global static Object anyOf(List<Object> o)
 	{
 		return combined(fflib_MatcherDefinitions.Connective.AT_LEAST_ONE, o);
 	}
@@ -226,7 +226,7 @@ public class fflib_Match
 	 * @param o1 A dummy object returned by registering another matcher
 	 * @return Object A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked. (You may need to cast down to your specific object type)
 	 */
-	public static Object isNot(Object o1)
+	global static Object isNot(Object o1)
 	{
 		return noneOf(new Object[]{ o1 });
 	}
@@ -237,7 +237,7 @@ public class fflib_Match
 	 * @param o2 A dummy object returned by registering another matcher
 	 * @return Object A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked. (You may need to cast down to your specific object type)
 	 */
-	public static Object noneOf(Object o1, Object o2)
+	global static Object noneOf(Object o1, Object o2)
 	{
 		return noneOf(new Object[]{ o1, o2 });
 	}
@@ -249,7 +249,7 @@ public class fflib_Match
 	 * @param o3 A dummy object returned by registering another matcher
 	 * @return Object A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked. (You may need to cast down to your specific object type)
 	 */
-	public static Object noneOf(Object o1, Object o2, Object o3)
+	global static Object noneOf(Object o1, Object o2, Object o3)
 	{
 		return noneOf(new Object[]{ o1, o2, o3 });
 	}
@@ -262,7 +262,7 @@ public class fflib_Match
 	 * @param o4 A dummy object returned by registering another matcher
 	 * @return Object A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked. (You may need to cast down to your specific object type)
 	 */
-	public static Object noneOf(Object o1, Object o2, Object o3, Object o4)
+	global static Object noneOf(Object o1, Object o2, Object o3, Object o4)
 	{
 		return noneOf(new Object[]{ o1, o2, o3, o4 });
 	}
@@ -272,7 +272,7 @@ public class fflib_Match
 	 * @param o A list of dummy objects returned by registering other matchers
 	 * @return Object A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked. (You may need to cast down to your specific object type)
 	 */
-	public static Object noneOf(List<Object> o)
+	global static Object noneOf(List<Object> o)
 	{
 		return combined(fflib_MatcherDefinitions.Connective.NONE, o);
 	}
@@ -328,7 +328,7 @@ public class fflib_Match
 	 * @param toMatch The Object to be compared
 	 * @return Object A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked. (You may need to cast down to your specific object type)
 	 */
-	public static Object eq(Object toMatch)
+	global static Object eq(Object toMatch)
 	{
 		return matches(new fflib_MatcherDefinitions.Eq(toMatch));
 	}
@@ -338,7 +338,7 @@ public class fflib_Match
 	 * @param toMatch The Boolean to be compared
 	 * @return Boolean A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static Boolean eqBoolean(Boolean toMatch)
+	global static Boolean eqBoolean(Boolean toMatch)
 	{
 		return (Boolean)matches(new fflib_MatcherDefinitions.Eq(toMatch));
 	}
@@ -348,7 +348,7 @@ public class fflib_Match
 	 * @param toMatch The Date to be compared
 	 * @return Date A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static Date eqDate(Date toMatch)
+	global static Date eqDate(Date toMatch)
 	{
 		return (Date)matches(new fflib_MatcherDefinitions.Eq(toMatch));
 	}
@@ -358,7 +358,7 @@ public class fflib_Match
 	 * @param toMatch The Datetime to be compared
 	 * @return Datetime A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static Datetime eqDatetime(Datetime toMatch)
+	global static Datetime eqDatetime(Datetime toMatch)
 	{
 		return (Datetime)matches(new fflib_MatcherDefinitions.Eq(toMatch));
 	}
@@ -368,7 +368,7 @@ public class fflib_Match
 	 * @param toMatch The Decimal to be compared
 	 * @return Decimal A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static Decimal eqDecimal(Decimal toMatch)
+	global static Decimal eqDecimal(Decimal toMatch)
 	{
 		return (Decimal)matches(new fflib_MatcherDefinitions.Eq(toMatch));
 	}
@@ -378,7 +378,7 @@ public class fflib_Match
 	 * @param toMatch The Double to be compared
 	 * @return Double A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static Double eqDouble(Double toMatch)
+	global static Double eqDouble(Double toMatch)
 	{
 		return (Double)matches(new fflib_MatcherDefinitions.Eq(toMatch));
 	}
@@ -388,7 +388,7 @@ public class fflib_Match
 	 * @param toMatch The Id to be compared
 	 * @return Id A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static Id eqId(Id toMatch)
+	global static Id eqId(Id toMatch)
 	{
 		return (Id)matches(new fflib_MatcherDefinitions.Eq(toMatch));
 	}
@@ -398,7 +398,7 @@ public class fflib_Match
 	 * @param toMatch The Integer to be compared
 	 * @return Integer A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static Integer eqInteger(Integer toMatch)
+	global static Integer eqInteger(Integer toMatch)
 	{
 		return (Integer)matches(new fflib_MatcherDefinitions.Eq(toMatch));
 	}
@@ -408,7 +408,7 @@ public class fflib_Match
 	 * @param toMatch The List to be compared
 	 * @return List A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static List<Object> eqList(List<Object> toMatch)
+	global static List<Object> eqList(List<Object> toMatch)
 	{
 		return (List<Object>)matches(new fflib_MatcherDefinitions.Eq(toMatch));
 	}
@@ -418,7 +418,7 @@ public class fflib_Match
 	 * @param toMatch The Long to be compared
 	 * @return Long A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static Long eqLong(Long toMatch)
+	global static Long eqLong(Long toMatch)
 	{
 		return (Long)matches(new fflib_MatcherDefinitions.Eq(toMatch));
 	}
@@ -428,7 +428,7 @@ public class fflib_Match
 	 * @param toMatch The SObjectField to be compared
 	 * @return SObjectField A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static SObjectField eqSObjectField(SObjectField toMatch)
+	global static SObjectField eqSObjectField(SObjectField toMatch)
 	{
 		return (SObjectField)matches(new fflib_MatcherDefinitions.Eq(toMatch));
 	}
@@ -438,7 +438,7 @@ public class fflib_Match
 	 * @param toMatch The SObjectType to be compared
 	 * @return SObjectType A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static SObjectType eqSObjectType(SObjectType toMatch)
+	global static SObjectType eqSObjectType(SObjectType toMatch)
 	{
 		return (SObjectType)matches(new fflib_MatcherDefinitions.Eq(toMatch));
 	}
@@ -448,7 +448,7 @@ public class fflib_Match
 	 * @param toMatch The String to be compared
 	 * @return String A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static String eqString(String toMatch)
+	global static String eqString(String toMatch)
 	{
 		return (String)matches(new fflib_MatcherDefinitions.Eq(toMatch));
 	}
@@ -458,7 +458,7 @@ public class fflib_Match
 	 * @param toMatch The Object to be compared
 	 * @return Object A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked. (You may need to cast down to your specific object type)
 	 */
-	public static Object refEq(Object toMatch)
+	global static Object refEq(Object toMatch)
 	{
 		return matches(new fflib_MatcherDefinitions.RefEq(toMatch));
 	}
@@ -467,7 +467,7 @@ public class fflib_Match
 	 * Registers a matcher which will check if the method is called with an arg that matches anyBoolean
 	 * @return Boolean A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static Boolean anyBoolean()
+	global static Boolean anyBoolean()
 	{
 		return (Boolean)matches(new fflib_MatcherDefinitions.AnyBoolean());
 	}
@@ -476,7 +476,7 @@ public class fflib_Match
 	 * Registers a matcher which will check if the method is called with an arg that matches anyDate
 	 * @return Date A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static Date anyDate()
+	global static Date anyDate()
 	{
 		return (Date)matches(new fflib_MatcherDefinitions.AnyDate());
 	}
@@ -485,7 +485,7 @@ public class fflib_Match
 	 * Registers a matcher which will check if the method is called with an arg that matches anyDatetime
 	 * @return Datetime A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static Datetime anyDatetime()
+	global static Datetime anyDatetime()
 	{
 		return (Datetime)matches(new fflib_MatcherDefinitions.AnyDatetime());
 	}
@@ -494,7 +494,7 @@ public class fflib_Match
 	 * Registers a matcher which will check if the method is called with an arg that matches anyDecimal
 	 * @return Decimal A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static Decimal anyDecimal()
+	global static Decimal anyDecimal()
 	{
 		return (Decimal)matches(new fflib_MatcherDefinitions.AnyDecimal());
 	}
@@ -503,7 +503,7 @@ public class fflib_Match
 	 * Registers a matcher which will check if the method is called with an arg that matches anyDouble
 	 * @return Double A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static Double anyDouble()
+	global static Double anyDouble()
 	{
 		return (Double)matches(new fflib_MatcherDefinitions.AnyDouble());
 	}
@@ -512,7 +512,7 @@ public class fflib_Match
 	 * Registers a matcher which will check if the method is called with an arg that matches anyFieldSet
 	 * @return Schema.FieldSet A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static Schema.FieldSet anyFieldSet()
+	global static Schema.FieldSet anyFieldSet()
 	{
 		return (Schema.FieldSet)matches(new fflib_MatcherDefinitions.AnyFieldSet());
 	}
@@ -521,7 +521,7 @@ public class fflib_Match
 	 * Registers a matcher which will check if the method is called with an arg that matches anyId
 	 * @return Id A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static Id anyId()
+	global static Id anyId()
 	{
 		return (Id)matches(new fflib_MatcherDefinitions.AnyId());
 	}
@@ -530,7 +530,7 @@ public class fflib_Match
 	 * Registers a matcher which will check if the method is called with an arg that matches anyInteger
 	 * @return Integer A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static Integer anyInteger()
+	global static Integer anyInteger()
 	{
 		return (Integer)matches(new fflib_MatcherDefinitions.AnyInteger());
 	}
@@ -539,7 +539,7 @@ public class fflib_Match
 	 * Registers a matcher which will check if the method is called with an arg that matches anyList
 	 * @return List A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static List<Object> anyList()
+	global static List<Object> anyList()
 	{
 		return (List<Object>)matches(new fflib_MatcherDefinitions.AnyList());
 	}
@@ -548,7 +548,7 @@ public class fflib_Match
 	 * Registers a matcher which will check if the method is called with an arg that matches anyLong
 	 * @return Long A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static Long anyLong()
+	global static Long anyLong()
 	{
 		return (Long)matches(new fflib_MatcherDefinitions.AnyLong());
 	}
@@ -557,7 +557,7 @@ public class fflib_Match
 	 * Registers a matcher which will check if the method is called with an arg that matches anyObject
 	 * @return Object A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked. (You may need to cast down to your specific object type)
 	 */
-	public static Object anyObject()
+	global static Object anyObject()
 	{
 		return matches(new fflib_MatcherDefinitions.AnyObject());
 	}
@@ -566,7 +566,7 @@ public class fflib_Match
 	 * Registers a matcher which will check if the method is called with an arg that matches anyString
 	 * @return String A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static String anyString()
+	global static String anyString()
 	{
 		return (String)matches(new fflib_MatcherDefinitions.AnyString());
 	}
@@ -575,7 +575,7 @@ public class fflib_Match
 	 * Registers a matcher which will check if the method is called with an arg that matches anySObject
 	 * @return SObject A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static SObject anySObject()
+	global static SObject anySObject()
 	{
 		return (SObject)matches(new fflib_MatcherDefinitions.AnySObject());
 	}
@@ -584,7 +584,7 @@ public class fflib_Match
 	 * Registers a matcher which will check if the method is called with an arg that matches anySObjectField
 	 * @return SObjectField A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static SObjectField anySObjectField()
+	global static SObjectField anySObjectField()
 	{
 		return (SObjectField)matches(new fflib_MatcherDefinitions.AnySObjectField());
 	}
@@ -593,7 +593,7 @@ public class fflib_Match
 	 * Registers a matcher which will check if the method is called with an arg that matches anySObjectType
 	 * @return SObjectType A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static SObjectType anySObjectType()
+	global static SObjectType anySObjectType()
 	{
 		return (SObjectType)matches(new fflib_MatcherDefinitions.AnySObjectType());
 	}
@@ -603,7 +603,7 @@ public class fflib_Match
 	 * @param fromDate The Date to be compared
 	 * @return Date A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static Date dateAfter(Date fromDate)
+	global static Date dateAfter(Date fromDate)
 	{
 		return dateAfter(fromDate, false);
 	}
@@ -614,7 +614,7 @@ public class fflib_Match
 	 * @param inclusive Whether or not a Date equal to fromDate should be considered a match
 	 * @return Date A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static Date dateAfter(Date fromDate, Boolean inclusive)
+	global static Date dateAfter(Date fromDate, Boolean inclusive)
 	{
 		return (Date)matches(new fflib_MatcherDefinitions.DatetimeAfter(fromDate, inclusive));
 	}
@@ -624,7 +624,7 @@ public class fflib_Match
 	 * @param toDate The Date to be compared
 	 * @return Date A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static Date dateBefore(Date toDate)
+	global static Date dateBefore(Date toDate)
 	{
 		return dateBefore(toDate, false);
 	}
@@ -635,7 +635,7 @@ public class fflib_Match
 	 * @param inclusive Whether or not a Date equal to toDate should be considered a match
 	 * @return Date A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static Date dateBefore(Date toDate, Boolean inclusive)
+	global static Date dateBefore(Date toDate, Boolean inclusive)
 	{
 		return (Date)matches(new fflib_MatcherDefinitions.DatetimeBefore(toDate, inclusive));
 	}
@@ -646,7 +646,7 @@ public class fflib_Match
 	 * @param toDate The upper bound Date to be compared
 	 * @return Date A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static Date dateBetween(Date fromDate, Date toDate)
+	global static Date dateBetween(Date fromDate, Date toDate)
 	{
 		return dateBetween(fromDate, false, toDate, false);
 	}
@@ -659,7 +659,7 @@ public class fflib_Match
 	 * @param inclusiveTo Whether or not a Date equal to toDate should be considered a match
 	 * @return Date A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static Date dateBetween(Date fromDate, Boolean inclusiveFrom, Date toDate, Boolean inclusiveTo)
+	global static Date dateBetween(Date fromDate, Boolean inclusiveFrom, Date toDate, Boolean inclusiveTo)
 	{
 		return (Date)matches(new fflib_MatcherDefinitions.DatetimeBetween(fromDate, inclusiveFrom, toDate, inclusiveTo));
 	}
@@ -669,7 +669,7 @@ public class fflib_Match
 	 * @param fromDate The Datetime to be compared
 	 * @return Datetime A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static Datetime datetimeAfter(Datetime fromDate)
+	global static Datetime datetimeAfter(Datetime fromDate)
 	{
 		return datetimeAfter(fromDate, false);
 	}
@@ -680,7 +680,7 @@ public class fflib_Match
 	 * @param inclusive Whether or not a Datetime equal to fromDate should be considered a match
 	 * @return Datetime A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static Datetime datetimeAfter(Datetime fromDate, Boolean inclusive)
+	global static Datetime datetimeAfter(Datetime fromDate, Boolean inclusive)
 	{
 		return (Datetime)matches(new fflib_MatcherDefinitions.DatetimeAfter(fromDate, inclusive));
 	}
@@ -690,7 +690,7 @@ public class fflib_Match
 	 * @param toDate The Datetime to be compared
 	 * @return Datetime A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static Datetime datetimeBefore(Datetime toDate)
+	global static Datetime datetimeBefore(Datetime toDate)
 	{
 		return datetimeBefore(toDate, false);
 	}
@@ -701,7 +701,7 @@ public class fflib_Match
 	 * @param inclusive Whether or not a Datetime equal to toDate should be considered a match
 	 * @return Datetime A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static Datetime datetimeBefore(Datetime toDate, Boolean inclusive)
+	global static Datetime datetimeBefore(Datetime toDate, Boolean inclusive)
 	{
 		return (Datetime)matches(new fflib_MatcherDefinitions.DatetimeBefore(toDate, inclusive));
 	}
@@ -712,7 +712,7 @@ public class fflib_Match
 	 * @param toDate The upper bound Datetime to be compared
 	 * @return Datetime A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static Datetime datetimeBetween(Datetime fromDate, Datetime toDate)
+	global static Datetime datetimeBetween(Datetime fromDate, Datetime toDate)
 	{
 		return datetimeBetween(fromDate, false, toDate, false);
 	}
@@ -725,7 +725,7 @@ public class fflib_Match
 	 * @param inclusiveTo Whether or not a Datetime equal to toDate should be considered a match
 	 * @return Datetime A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static Datetime datetimeBetween(Datetime fromDate, Boolean inclusiveFrom, Datetime toDate, Boolean inclusiveTo)
+	global static Datetime datetimeBetween(Datetime fromDate, Boolean inclusiveFrom, Datetime toDate, Boolean inclusiveTo)
 	{
 		return (Datetime)matches(new fflib_MatcherDefinitions.DatetimeBetween(fromDate, inclusiveFrom, toDate, inclusiveTo));
 	}
@@ -736,7 +736,7 @@ public class fflib_Match
 	 * @param upper The upper number to be compared
 	 * @return Decimal A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static Decimal decimalBetween(Decimal lower, Decimal upper)
+	global static Decimal decimalBetween(Decimal lower, Decimal upper)
 	{
 		return decimalBetween(lower, false, upper, false);
 	}
@@ -749,7 +749,7 @@ public class fflib_Match
 	 * @param inclusiveUpper Whether or not a number equal to the upper bound should be considered a match
 	 * @return Decimal A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static Decimal decimalBetween(Decimal lower, Boolean inclusiveLower, Decimal upper, Boolean inclusiveUpper)
+	global static Decimal decimalBetween(Decimal lower, Boolean inclusiveLower, Decimal upper, Boolean inclusiveUpper)
 	{
 		return (Decimal)matches(new fflib_MatcherDefinitions.DecimalBetween(lower, inclusiveLower, upper, inclusiveUpper));
 	}
@@ -759,7 +759,7 @@ public class fflib_Match
 	 * @param toMatch The number to be compared
 	 * @return Decimal A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static Decimal decimalLessThan(Decimal toMatch)
+	global static Decimal decimalLessThan(Decimal toMatch)
 	{
 		return decimalLessThan(toMatch, false);
 	}
@@ -770,7 +770,7 @@ public class fflib_Match
 	 * @param inclusive Whether or not a number equal to toMatch should be considered a match
 	 * @return Decimal A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static Decimal decimalLessThan(Decimal toMatch, Boolean inclusive)
+	global static Decimal decimalLessThan(Decimal toMatch, Boolean inclusive)
 	{
 		return (Decimal)matches(new fflib_MatcherDefinitions.DecimalLessThan(toMatch, inclusive));
 	}
@@ -780,7 +780,7 @@ public class fflib_Match
 	 * @param toMatch The number to be compared
 	 * @return Decimal A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static Decimal decimalMoreThan(Decimal toMatch)
+	global static Decimal decimalMoreThan(Decimal toMatch)
 	{
 		return decimalMoreThan(toMatch, false);
 	}
@@ -791,7 +791,7 @@ public class fflib_Match
 	 * @param inclusive Whether or not a number equal to toMatch should be considered a match
 	 * @return Decimal A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static Decimal decimalMoreThan(Decimal toMatch, Boolean inclusive)
+	global static Decimal decimalMoreThan(Decimal toMatch, Boolean inclusive)
 	{
 		return (Decimal)matches(new fflib_MatcherDefinitions.DecimalMoreThan(toMatch, inclusive));
 	}
@@ -802,7 +802,7 @@ public class fflib_Match
 	 * @param upper The upper number to be compared
 	 * @return Double A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static Double doubleBetween(Double lower, Double upper)
+	global static Double doubleBetween(Double lower, Double upper)
 	{
 		return doubleBetween(lower, false, upper, false);
 	}
@@ -815,7 +815,7 @@ public class fflib_Match
 	 * @param inclusiveUpper Whether or not a number equal to the upper bound should be considered a match
 	 * @return Double A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static Double doubleBetween(Double lower, Boolean inclusiveLower, Double upper, Boolean inclusiveUpper)
+	global static Double doubleBetween(Double lower, Boolean inclusiveLower, Double upper, Boolean inclusiveUpper)
 	{
 		return (Double)matches(new fflib_MatcherDefinitions.DecimalBetween(lower, inclusiveLower, upper, inclusiveUpper));
 	}
@@ -825,7 +825,7 @@ public class fflib_Match
 	 * @param toMatch The number to be compared
 	 * @return Double A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static Double doubleLessThan(Double toMatch)
+	global static Double doubleLessThan(Double toMatch)
 	{
 		return doubleLessThan(toMatch, false);
 	}
@@ -836,7 +836,7 @@ public class fflib_Match
 	 * @param inclusive Whether or not a number equal to toMatch should be considered a match
 	 * @return Double A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static Double doubleLessThan(Double toMatch, Boolean inclusive)
+	global static Double doubleLessThan(Double toMatch, Boolean inclusive)
 	{
 		return (Double)matches(new fflib_MatcherDefinitions.DecimalLessThan(toMatch, inclusive));
 	}
@@ -846,7 +846,7 @@ public class fflib_Match
 	 * @param toMatch The number to be compared
 	 * @return Double A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static Double doubleMoreThan(Double toMatch)
+	global static Double doubleMoreThan(Double toMatch)
 	{
 		return doubleMoreThan(toMatch, false);
 	}
@@ -857,7 +857,7 @@ public class fflib_Match
 	 * @param inclusive Whether or not a number equal to toMatch should be considered a match
 	 * @return Double A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static Double doubleMoreThan(Double toMatch, Boolean inclusive)
+	global static Double doubleMoreThan(Double toMatch, Boolean inclusive)
 	{
 		return (Double)matches(new fflib_MatcherDefinitions.DecimalMoreThan(toMatch, inclusive));
 	}
@@ -867,7 +867,7 @@ public class fflib_Match
 	 * @param toMatch The fieldSet to be compared
 	 * @return Schema.FieldSet A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static Schema.FieldSet fieldSetEquivalentTo(Schema.FieldSet toMatch)
+	global static Schema.FieldSet fieldSetEquivalentTo(Schema.FieldSet toMatch)
 	{
 		return (Schema.FieldSet)matches(new fflib_MatcherDefinitions.FieldSetEquivalentTo(toMatch));
 	}
@@ -878,7 +878,7 @@ public class fflib_Match
 	 * @param upper The upper number to be compared
 	 * @return Integer A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static Integer integerBetween(Integer lower, Integer upper)
+	global static Integer integerBetween(Integer lower, Integer upper)
 	{
 		return integerBetween(lower, false, upper, false);
 	}
@@ -891,7 +891,7 @@ public class fflib_Match
 	 * @param inclusiveUpper Whether or not a number equal to the upper bound should be considered a match
 	 * @return Integer A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static Integer integerBetween(Integer lower, Boolean inclusiveLower, Integer upper, Boolean inclusiveUpper)
+	global static Integer integerBetween(Integer lower, Boolean inclusiveLower, Integer upper, Boolean inclusiveUpper)
 	{
 		return (Integer)matches(new fflib_MatcherDefinitions.DecimalBetween(lower, inclusiveLower, upper, inclusiveUpper));
 	}
@@ -901,7 +901,7 @@ public class fflib_Match
 	 * @param toMatch The number to be compared
 	 * @return Integer A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static Integer integerLessThan(Integer toMatch)
+	global static Integer integerLessThan(Integer toMatch)
 	{
 		return integerLessThan(toMatch, false);
 	}
@@ -912,7 +912,7 @@ public class fflib_Match
 	 * @param inclusive Whether or not a number equal to toMatch should be considered a match
 	 * @return Integer A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static Integer integerLessThan(Integer toMatch, Boolean inclusive)
+	global static Integer integerLessThan(Integer toMatch, Boolean inclusive)
 	{
 		return (Integer)matches(new fflib_MatcherDefinitions.DecimalLessThan(toMatch, inclusive));
 	}
@@ -922,7 +922,7 @@ public class fflib_Match
 	 * @param toMatch The number to be compared
 	 * @return Integer A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static Integer integerMoreThan(Integer toMatch)
+	global static Integer integerMoreThan(Integer toMatch)
 	{
 		return integerMoreThan(toMatch, false);
 	}
@@ -933,7 +933,7 @@ public class fflib_Match
 	 * @param inclusive Whether or not a number equal to toMatch should be considered a match
 	 * @return Integer A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static Integer integerMoreThan(Integer toMatch, Boolean inclusive)
+	global static Integer integerMoreThan(Integer toMatch, Boolean inclusive)
 	{
 		return (Integer)matches(new fflib_MatcherDefinitions.DecimalMoreThan(toMatch, inclusive));
 	}
@@ -942,7 +942,7 @@ public class fflib_Match
 	 * Registers a matcher which will check if the method is called with an arg that matches isNotNull
 	 * @return Object A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked. (You may need to cast down to your specific object type)
 	 */
-	public static Object isNotNull()
+	global static Object isNotNull()
 	{
 		return matches(new fflib_MatcherDefinitions.IsNotNull());
 	}
@@ -951,7 +951,7 @@ public class fflib_Match
 	 * Registers a matcher which will check if the method is called with an arg that matches isNull
 	 * @return Object A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked. (You may need to cast down to your specific object type)
 	 */
-	public static Object isNull()
+	global static Object isNull()
 	{
 		return matches(new fflib_MatcherDefinitions.IsNull());
 	}
@@ -961,7 +961,7 @@ public class fflib_Match
 	 * @param toMatch The list to be compared
 	 * @return Object A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked. (You may need to cast down to your specific object type)
 	 */
-	public static Object listContains(Object toMatch)
+	global static Object listContains(Object toMatch)
 	{
 		return matches(new fflib_MatcherDefinitions.ListContains(toMatch));
 	}
@@ -970,7 +970,7 @@ public class fflib_Match
 	 * Registers a matcher which will check if the method is called with an arg that matches listIsEmpty
 	 * @return Object A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked. (You may need to cast down to your specific object type)
 	 */
-	public static Object listIsEmpty()
+	global static Object listIsEmpty()
 	{
 		return matches(new fflib_MatcherDefinitions.ListIsEmpty());
 	}
@@ -981,7 +981,7 @@ public class fflib_Match
 	 * @param upper The upper number to be compared
 	 * @return Long A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static Long longBetween(Long lower, Long upper)
+	global static Long longBetween(Long lower, Long upper)
 	{
 		return longBetween(lower, false, upper, false);
 	}
@@ -994,7 +994,7 @@ public class fflib_Match
 	 * @param inclusiveUpper Whether or not a number equal to the upper bound should be considered a match
 	 * @return Long A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static Long longBetween(Long lower, Boolean inclusiveLower, Long upper, Boolean inclusiveUpper)
+	global static Long longBetween(Long lower, Boolean inclusiveLower, Long upper, Boolean inclusiveUpper)
 	{
 		return (Long)matches(new fflib_MatcherDefinitions.DecimalBetween(lower, inclusiveLower, upper, inclusiveUpper));
 	}
@@ -1004,7 +1004,7 @@ public class fflib_Match
 	 * @param toMatch The number to be compared
 	 * @return Long A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static Long longLessThan(Long toMatch)
+	global static Long longLessThan(Long toMatch)
 	{
 		return longLessThan(toMatch, false);
 	}
@@ -1015,7 +1015,7 @@ public class fflib_Match
 	 * @param inclusive Whether or not a number equal to toMatch should be considered a match
 	 * @return Long A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static Long longLessThan(Long toMatch, Boolean inclusive)
+	global static Long longLessThan(Long toMatch, Boolean inclusive)
 	{
 		return (Long)matches(new fflib_MatcherDefinitions.DecimalLessThan(toMatch, inclusive));
 	}
@@ -1025,7 +1025,7 @@ public class fflib_Match
 	 * @param toMatch The number to be compared
 	 * @return Long A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static Long longMoreThan(Long toMatch)
+	global static Long longMoreThan(Long toMatch)
 	{
 		return longMoreThan(toMatch, false);
 	}
@@ -1036,7 +1036,7 @@ public class fflib_Match
 	 * @param inclusive Whether or not a number equal to toMatch should be considered a match
 	 * @return Long A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static Long longMoreThan(Long toMatch, Boolean inclusive)
+	global static Long longMoreThan(Long toMatch, Boolean inclusive)
 	{
 		return (Long)matches(new fflib_MatcherDefinitions.DecimalMoreThan(toMatch, inclusive));
 	}
@@ -1046,7 +1046,7 @@ public class fflib_Match
 	 * @param objectType The SObjectType to be compared
 	 * @return SObject a dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked
 	 */
-	public static SObject sObjectOfType(Schema.SObjectType objectType)
+	global static SObject sObjectOfType(Schema.SObjectType objectType)
 	{
 		return (SObject)matches(new fflib_MatcherDefinitions.SObjectOfType(objectType));
 	}
@@ -1055,7 +1055,7 @@ public class fflib_Match
 	 * @param toMatch A Map of SObjectFields to required values, to be compared to concrete SObject records
 	 * @return SObject a dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked
 	 */
-	public static SObject sObjectWith(Map<Schema.SObjectField, Object> toMatch)
+	global static SObject sObjectWith(Map<Schema.SObjectField, Object> toMatch)
 	{
 		return (SObject)matches(new fflib_MatcherDefinitions.SObjectWith(toMatch));
 	}
@@ -1064,7 +1064,7 @@ public class fflib_Match
 	 * @param toMatch A list of Map of SObjectFields to required values, to be compared to concrete SObject records
 	 * @return SObject a dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked
 	 */
-	public static SObject[] sObjectsWith(list<Map<Schema.SObjectField, Object>> toMatch)
+	global static SObject[] sObjectsWith(list<Map<Schema.SObjectField, Object>> toMatch)
 	{
 		return (SObject[])matches(new fflib_MatcherDefinitions.SObjectsWith(toMatch,true));
 	}
@@ -1074,7 +1074,7 @@ public class fflib_Match
 	 * @param toMatch A list of Map of SObjectFields to required values, to be compared to concrete SObject records. Comparison can be order dependent
 	 * @return SObject a dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked
 	 */
-	public static SObject[] sObjectsWith(list<Map<Schema.SObjectField, Object>> toMatch, Boolean matchInOrder)
+	global static SObject[] sObjectsWith(list<Map<Schema.SObjectField, Object>> toMatch, Boolean matchInOrder)
 	{
 		return (SObject[])matches(new fflib_MatcherDefinitions.SObjectsWith(toMatch,matchInOrder));
 	}
@@ -1084,7 +1084,7 @@ public class fflib_Match
 	 * @param toMatch The Id to be compared
 	 * @return SObject a dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked
 	 */
-	public static SObject sObjectWithId(Id toMatch)
+	global static SObject sObjectWithId(Id toMatch)
 	{
 		return (SObject)matches(new fflib_MatcherDefinitions.SObjectWithId(toMatch));
 	}
@@ -1093,7 +1093,7 @@ public class fflib_Match
 	 * @param toMatch The name to be compared
 	 * @return SObject a dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked
 	 */
-	public static SObject sObjectWithName(String toMatch)
+	global static SObject sObjectWithName(String toMatch)
 	{
 		return (SObject)matches(new fflib_MatcherDefinitions.SObjectWithName(toMatch));
 	}
@@ -1103,7 +1103,7 @@ public class fflib_Match
 	 * @param toMatch The substring to be compared
 	 * @return String A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static String stringContains(String toMatch)
+	global static String stringContains(String toMatch)
 	{
 		return (String)matches(new fflib_MatcherDefinitions.StringContains(toMatch));
 	}
@@ -1113,7 +1113,7 @@ public class fflib_Match
 	 * @param toMatch The substring to be compared
 	 * @return String A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static String stringEndsWith(String toMatch)
+	global static String stringEndsWith(String toMatch)
 	{
 		return (String)matches(new fflib_MatcherDefinitions.StringEndsWith(toMatch));
 	}
@@ -1122,7 +1122,7 @@ public class fflib_Match
 	 * Registers a matcher which will check if the method is called with an arg that matches stringIsBlank
 	 * @return String A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static String stringIsBlank()
+	global static String stringIsBlank()
 	{
 		return (String)matches(new fflib_MatcherDefinitions.StringIsBlank());
 	}
@@ -1131,7 +1131,7 @@ public class fflib_Match
 	 * Registers a matcher which will check if the method is called with an arg that matches stringIsNotBlank
 	 * @return String A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static String stringIsNotBlank()
+	global static String stringIsNotBlank()
 	{
 		return (String)matches(new fflib_MatcherDefinitions.StringIsNotBlank());
 	}
@@ -1141,7 +1141,7 @@ public class fflib_Match
 	 * @param regEx The regex String to be compared
 	 * @return String A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static String stringMatches(String regEx)
+	global static String stringMatches(String regEx)
 	{
 		return (String)matches(new fflib_MatcherDefinitions.StringMatches(regEx));
 	}
@@ -1151,7 +1151,7 @@ public class fflib_Match
 	 * @param toMatch The substring to be compared
 	 * @return String A dummy object of the correct type, so that when called inline as part of a method call, the correct method is invoked.
 	 */
-	public static String stringStartsWith(String toMatch)
+	global static String stringStartsWith(String toMatch)
 	{
 		return (String)matches(new fflib_MatcherDefinitions.StringStartsWith(toMatch));
 	}

@@ -1,5 +1,5 @@
 @IsTest
-public class MockHttpResponseGenerator implements HttpCalloutMock{
+global class MockHttpResponseGenerator implements HttpCalloutMock{
 	private String contentType;
 	private String body;
 	private String fileName;
@@ -19,15 +19,15 @@ public class MockHttpResponseGenerator implements HttpCalloutMock{
 		this.statusCode = statusCode;
 	}
 
-	public static MockHttpResponseGenerator initStringResponse(String contentType, Integer statusCode, String body){
+	global static MockHttpResponseGenerator initStringResponse(String contentType, Integer statusCode, String body){
 		return new MockHttpResponseGenerator(contentType, body, statusCode);
 	}
 
-	public static MockHttpResponseGenerator initFileResponse(String contentType, Integer statusCode, String fileName, Blob fileData){
+	global static MockHttpResponseGenerator initFileResponse(String contentType, Integer statusCode, String fileName, Blob fileData){
 		return new MockHttpResponseGenerator(contentType, statusCode, fileName, fileData);
 	}
 
-	public HttpResponse respond(HttpRequest req){
+	global HttpResponse respond(HttpRequest req){
 		HttpResponse res = new HttpResponse();
 		setHeaders(res);
 		res.setStatusCode(statusCode);

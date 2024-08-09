@@ -1,8 +1,8 @@
 @IsTest
-public class TestUtils{
+global class TestUtils{
 	private static final String CHARS = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 
-	public static SObject setReadableFields(SObject sObj, Map<SObjectField, Object> valueBysObjField){
+	global static SObject setReadableFields(SObject sObj, Map<SObjectField, Object> valueBysObjField){
 		Map<String,Object> dataMap = (Map<String,Object>)JSON.deserializeUntyped(JSON.serialize(sObj));
 		for(SObjectField field : valueBysObjField.keySet()){
 			String fieldName = field.getDescribe(FieldDescribeOptions.DEFAULT).getName();
@@ -11,7 +11,7 @@ public class TestUtils{
 		return (SObject)JSON.deserialize(JSON.serialize(dataMap), SObject.class);
 	}
 
-	public static SObject setReadableFields(SObject sObj, Map<String, Object> valueByFieldName){
+	global static SObject setReadableFields(SObject sObj, Map<String, Object> valueByFieldName){
 		Map<String,Object> dataMap = (Map<String,Object>)JSON.deserializeUntyped(JSON.serialize(sObj));
 		for(String fieldName : valueByFieldName.keySet()){
 			Object value = valueByFieldName.get(fieldName);
@@ -29,13 +29,13 @@ public class TestUtils{
 		return (SObject)JSON.deserialize(JSON.serialize(dataMap), SObject.class);
 	}
 
-	public static String generateUniqueName(){
+	global static String generateUniqueName(){
 		String dateString = String.valueOf(Datetime.now()).replace(' ', '').replace(':', '').replace('-', '');
 		Integer randomInt = Integer.valueOf(Math.rint(Math.random() * 1000000));
 		return dateString + randomInt;
 	}
 
-	public static String generateRandomString(Integer numberOfChars) {
+	global static String generateRandomString(Integer numberOfChars) {
 		String randomString = '';
 		while(randomString.length() < numberOfChars){
 			Integer index = Math.mod(Math.abs(Crypto.getRandomInteger()), CHARS.length());
@@ -44,15 +44,15 @@ public class TestUtils{
 		return randomString;
 	}
 
-	public static Account selectAccount(){
+	global static Account selectAccount(){
 		return [SELECT Id FROM Account WHERE Name = 'TestAccount' LIMIT 1];
 	}
 
-	public static User selectChatterFreeUser(){
+	global static User selectChatterFreeUser(){
 		return [SELECT Id FROM User WHERE Name = 'Chatter Free User' LIMIT 1];
 	}
 
-	public static User selectStandardUser(){
+	global static User selectStandardUser(){
 		return [SELECT Id FROM User WHERE Name = 'Standard User' LIMIT 1];
 	}
 }

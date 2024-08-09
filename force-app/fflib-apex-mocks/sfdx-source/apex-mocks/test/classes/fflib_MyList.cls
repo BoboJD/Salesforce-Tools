@@ -6,9 +6,9 @@
  * @nodoc
  */
 @isTest
-public with sharing class fflib_MyList implements IList
+global with sharing class fflib_MyList implements IList
 {
-	public interface IList
+	global interface IList
 	{
 		void add(String value);
 		void add(String value1, String value2, String value3, String value4);
@@ -21,46 +21,46 @@ public with sharing class fflib_MyList implements IList
 		void set(Integer index, Object value);
 	}
 
-	public void add(String[] value)
+	global void add(String[] value)
 	{
 	}
 
-	public void add(String value)
+	global void add(String value)
 	{
 	}
 
-	public void add(String value1, String value2, String value3, String value4)
+	global void add(String value1, String value2, String value3, String value4)
 	{
 	}
 
-	public void addMore(String value)
+	global void addMore(String value)
 	{
 	}
 
-	public String get(Integer index)
+	global String get(Integer index)
 	{
 		return 'fred';
 	}
 
-	public void clear()
+	global void clear()
 	{
 	}
 
-	public Boolean isEmpty()
+	global Boolean isEmpty()
 	{
 		return true;
 	}
 
-	public void set(Integer index, Object value)
+	global void set(Integer index, Object value)
 	{
 	}
 
-	public String get2(Integer index, String value)
+	global String get2(Integer index, String value)
 	{
 		return 'mary';
 	}
 
-	public static String getStubClassName()
+	global static String getStubClassName()
 	{
 		return fflib_ApexMocks.extractTypeName(new fflib_ApexMocks().mock(fflib_MyList.class));
 	}

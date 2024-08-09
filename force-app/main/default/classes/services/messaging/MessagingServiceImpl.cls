@@ -1,5 +1,5 @@
 @SuppressWarnings('PMD.CognitiveComplexity')
-public inherited sharing class MessagingServiceImpl implements IMessagingService{
+global inherited sharing class MessagingServiceImpl implements IMessagingService{
 
 	@TestVisible
 	private static List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
@@ -8,78 +8,78 @@ public inherited sharing class MessagingServiceImpl implements IMessagingService
 		return !emails.isEmpty() ? emails[emails.size() - 1] : null;
 	}
 
-	public Messaging.EmailFileAttachment prepareFileAttachment(String fileName, Blob body){
+	global Messaging.EmailFileAttachment prepareFileAttachment(String fileName, Blob body){
 		Messaging.EmailFileAttachment fileAttachment = new Messaging.EmailFileAttachment();
 		fileAttachment.setFileName(fileName);
 		fileAttachment.setBody(body);
 		return fileAttachment;
 	}
 
-	public void newSingleEmailMessage(){
+	global void newSingleEmailMessage(){
 		emails.add(new Messaging.SingleEmailMessage());
 	}
 
-	public void setTargetObjectId(Id targetObjectId){
+	global void setTargetObjectId(Id targetObjectId){
 		lastEmail()?.setTargetObjectId(targetObjectId);
 	}
 
-	public void setWhatId(Id whatId){
+	global void setWhatId(Id whatId){
 		lastEmail()?.setWhatId(whatId);
 	}
 
-	public void setToAddress(String toAddress){
+	global void setToAddress(String toAddress){
 		setToAddresses(new List<String>{toAddress});
 	}
 
-	public void setToAddresses(Set<String> toAddresses){
+	global void setToAddresses(Set<String> toAddresses){
 		setToAddresses(new List<String>(toAddresses));
 	}
 
-	public void setToAddresses(List<String> toAddresses){
+	global void setToAddresses(List<String> toAddresses){
 		lastEmail()?.setToAddresses(toAddresses);
 	}
 
-	public void setCcAddresses(List<String> ccAddresses){
+	global void setCcAddresses(List<String> ccAddresses){
 		lastEmail()?.setCcAddresses(ccAddresses);
 	}
 
-	public void setBccAddress(String bccAddress){
+	global void setBccAddress(String bccAddress){
 		setBccAddresses(new List<String>{bccAddress});
 	}
 
-	public void setBccAddresses(List<String> bccAddresses){
+	global void setBccAddresses(List<String> bccAddresses){
 		lastEmail()?.setBccAddresses(bccAddresses);
 	}
 
-	public void setSubject(String subject){
+	global void setSubject(String subject){
 		lastEmail()?.setSubject(subject);
 	}
 
-	public void setHtmlBody(String htmlBody){
+	global void setHtmlBody(String htmlBody){
 		lastEmail()?.setHtmlBody(htmlBody);
 	}
 
-	public void setSaveAsActivity(Boolean saveAsActivity){
+	global void setSaveAsActivity(Boolean saveAsActivity){
 		lastEmail()?.setSaveAsActivity(saveAsActivity);
 	}
 
-	public void setUseSignature(Boolean useSignature){
+	global void setUseSignature(Boolean useSignature){
 		lastEmail()?.setUseSignature(useSignature);
 	}
 
-	public void setFileAttachments(List<Messaging.EmailFileAttachment> emailFileAttachments){
+	global void setFileAttachments(List<Messaging.EmailFileAttachment> emailFileAttachments){
 		lastEmail()?.setFileAttachments(emailFileAttachments);
 	}
 
-	public void setSenderDisplayName(String senderDisplayName){
+	global void setSenderDisplayName(String senderDisplayName){
 		lastEmail()?.setSenderDisplayName(senderDisplayName);
 	}
 
-	public void setReplyTo(String replyTo){
+	global void setReplyTo(String replyTo){
 		lastEmail()?.setReplyTo(replyTo);
 	}
 
-	public List<Messaging.SendEmailResult> sendEmails(){
+	global List<Messaging.SendEmailResult> sendEmails(){
 		List<Messaging.SendEmailResult> sendEmailResults;
 		if(!emails.isEmpty())
 			sendEmailResults = Test.isRunningTest() ? new List<Messaging.SendEmailResult>() : Messaging.sendEmail(emails);

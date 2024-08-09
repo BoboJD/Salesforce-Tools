@@ -7,7 +7,7 @@
  *	A place holder for mock, the method that was called and the arguments that were passed.
  *	@group Core
  */
-public with sharing class fflib_InvocationOnMock
+global with sharing class fflib_InvocationOnMock
 {
 	private fflib_QualifiedMethod qm;
 	private fflib_MethodArgValues methodArg;
@@ -19,7 +19,7 @@ public with sharing class fflib_InvocationOnMock
 	 *  @param args The fflib_MethodArgValues instance to be stored.
 	 *  @param mockInstance The mock instance to be stored.
 	 */
-	public fflib_InvocationOnMock(fflib_QualifiedMethod qm, fflib_MethodArgValues args, Object mockInstance)
+	global fflib_InvocationOnMock(fflib_QualifiedMethod qm, fflib_MethodArgValues args, Object mockInstance)
 	{
 		this.qm = qm;
 		this.methodArg = args;
@@ -32,7 +32,7 @@ public with sharing class fflib_InvocationOnMock
 	 *  @throws ApexMocksException in case the index is out of range.
 	 *  @return The argument at the given index.
 	 */
-	public Object getArgument(Integer index)
+	global Object getArgument(Integer index)
 	{
 		validateIndex(index);
 		return methodArg.argValues[index];
@@ -42,7 +42,7 @@ public with sharing class fflib_InvocationOnMock
 	 *	Returns the list of arguments passed to the method.
 	 *  @return The list of arguments.
 	 */
-	public List<Object> getArguments()
+	global List<Object> getArguments()
 	{
 		return methodArg.argValues;
 	}
@@ -51,7 +51,7 @@ public with sharing class fflib_InvocationOnMock
 	 *	Returns fflib_MethodArgValues instance that represents the arguments passed to the method.
 	 *  @return The fflib_MethodArgValues instance that represents the arguments passed to the method.
 	 */
-	public fflib_MethodArgValues getMethodArgValues()
+	global fflib_MethodArgValues getMethodArgValues()
 	{
 		return methodArg;
 	}
@@ -60,7 +60,7 @@ public with sharing class fflib_InvocationOnMock
 	 *	Returns the fflib_QualifiedMethod instance that represent the fully qualified method called within the invocation.
 	 *	@return The method stored in the invocation.
 	 */
-	public fflib_QualifiedMethod getMethod()
+	global fflib_QualifiedMethod getMethod()
 	{
 		return qm;
 	}
@@ -69,7 +69,7 @@ public with sharing class fflib_InvocationOnMock
 	 *	Returns the mock object on which the invocation occurs.
 	 *	@return The mock object on which the invocation occurs.
 	 */
-	public Object getMock()
+	global Object getMock()
 	{
 		return mockInstance;
 	}

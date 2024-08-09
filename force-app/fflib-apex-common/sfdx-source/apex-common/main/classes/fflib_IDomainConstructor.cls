@@ -23,7 +23,7 @@
  *  OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 **/
-public interface fflib_IDomainConstructor
+interface fflib_IDomainConstructor
 {
 	fflib_IDomain construct(List<Object> objects);
 }

@@ -23,41 +23,41 @@
  *  OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 **/
-public virtual class fflib_Objects implements fflib_IObjects
+virtual class fflib_Objects implements fflib_IObjects
 {
 	protected List<Object> objects { get; private set;} { objects = new List<Object>(); }
 
 	/**
 	 * Class constructor
 	 */
-	public fflib_Objects(List<Object> objects)
+	fflib_Objects(List<Object> objects)
 	{
 		this.objects = objects.clone();
 	}
 
-	public virtual Object getType()
+	virtual Object getType()
 	{
 		return Object.class;
 	}
 
-	public List<Object> getObjects()
+	List<Object> getObjects()
 	{
 		return this.objects;
 	}
 
-	public Boolean contains(Object value)
+	Boolean contains(Object value)
 	{
 		return getObjects()?.contains(value);
 	}
 
-	public Boolean containsAll(List<Object> values)
+	Boolean containsAll(List<Object> values)
 	{
 		if (values == null) return false;
 
 		return containsAll(new Set<Object>(values));
 	}
 
-	public Boolean containsAll(Set<Object> values)
+	Boolean containsAll(Set<Object> values)
 	{
 		if (values == null) return false;
 
@@ -68,19 +68,19 @@ public virtual class fflib_Objects implements fflib_IObjects
 		return true;
 	}
 
-	public Boolean containsNot(Object value)
+	Boolean containsNot(Object value)
 	{
 		return !contains(value);
 	}
 
-	public Boolean containsNot(List<Object> values)
+	Boolean containsNot(List<Object> values)
 	{
 		if (values == null) return true;
 
 		return containsNot(new Set<Object>(values));
 	}
 
-	public Boolean containsNot(Set<Object> values)
+	Boolean containsNot(Set<Object> values)
 	{
 		if (values == null) return true;
 
@@ -91,17 +91,17 @@ public virtual class fflib_Objects implements fflib_IObjects
 		return true;
 	}
 
-	public Boolean isEmpty()
+	Boolean isEmpty()
 	{
 		return (getObjects() == null || getObjects().isEmpty());
 	}
 
-	public Boolean isNotEmpty()
+	Boolean isNotEmpty()
 	{
 		return !isEmpty();
 	}
 
-	public Integer size()
+	Integer size()
 	{
 		return getObjects().size();
 	}

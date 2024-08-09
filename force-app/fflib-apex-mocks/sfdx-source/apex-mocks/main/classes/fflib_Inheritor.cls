@@ -2,13 +2,13 @@
  * Copyright (c) 2016-2017 FinancialForce.com, inc.  All rights reserved.
  */
 @isTest
-public class fflib_Inheritor implements IA, IB, IC
+global class fflib_Inheritor implements IA, IB, IC
 {
-	public interface IA {String doA();}
-    public interface IB {String doB();}
-    public interface IC {String doC();}
+	global interface IA {String doA();}
+    global interface IB {String doB();}
+    global interface IC {String doC();}
     
-    public String doA(){return 'Did A';}
-    public String doB(){return 'Did B';}
-    public String doC(){return 'Did C';}
+    global String doA(){return 'Did A';}
+    global String doB(){return 'Did B';}
+    global String doC(){return 'Did C';}
 }

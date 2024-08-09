@@ -1,6 +1,6 @@
-public inherited sharing class EmailTemplatesServiceImpl implements IEmailTemplatesService{
+global inherited sharing class EmailTemplatesServiceImpl implements IEmailTemplatesService{
 
-	public String replaceFieldReferencesByValue(String content, List<SObject> sObjects){
+	global String replaceFieldReferencesByValue(String content, List<SObject> sObjects){
 		if(String.isBlank(content)) return '';
 		content = removeCDataTags(content);
 		for(SObject sObj : sObjects){

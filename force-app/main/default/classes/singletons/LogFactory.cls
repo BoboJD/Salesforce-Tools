@@ -1,5 +1,5 @@
 @SuppressWarnings('PMD.ExcessiveParameterList')
-public without sharing class LogFactory{
+global without sharing class LogFactory{
 	private static LogFactory instance;
 	@TestVisible private List<Log__c> logs;
 
@@ -7,16 +7,16 @@ public without sharing class LogFactory{
 		logs = new List<Log__c>();
 	}
 
-	public static LogFactory instance(){
+	global static LogFactory instance(){
 		if(instance == null) instance = new LogFactory();
 		return instance;
 	}
 
-	public static void commitError(Type classApex, String methodName, List<Object> parameters, Exception e){
+	global static void commitError(Type classApex, String methodName, List<Object> parameters, Exception e){
 		instance().logError(classApex, methodName, parameters, e).commitWork();
 	}
 
-	public LogFactory logError(Type classApex, String methodName, List<Object> parameters, Exception e){
+	global LogFactory logError(Type classApex, String methodName, List<Object> parameters, Exception e){
 		String message = e != null ? e.getMessage() : null;
 		if(errorCanBeLogged(message)){
 			logs.add(new Log__c(
@@ -37,7 +37,7 @@ public without sharing class LogFactory{
 			|| !StringUtils.containsAtLeastOneOfTheTerms(message, new List<String>{ExceptionConstants.UNABLE_TO_LOCK_ROW, ExceptionConstants.ENTITY_IS_DELETED});
 	}
 
-	public LogFactory logComponentError(String url, String formFactor, String componentName, String methodName, String details){
+	global LogFactory logComponentError(String url, String formFactor, String componentName, String methodName, String details){
 		if(errorCanBeLogged(details)){
 			logs.add(new Log__c(
 				RecordTypeId = RecordTypeSingleton.getRecordTypeId(Log__c.SObjectType, LogConstants.RT_ERROR),
@@ -52,7 +52,7 @@ public without sharing class LogFactory{
 		return instance;
 	}
 
-	public LogFactory logWebserviceError(Type classApex, HttpRequest request, HttpResponse response){
+	global LogFactory logWebserviceError(Type classApex, HttpRequest request, HttpResponse response){
 		String endpoint = request.getEndpoint();
 		String parameters = request.getBody();
 		if(String.isNotBlank(endpoint) && endpoint.contains('?')){
@@ -72,7 +72,7 @@ public without sharing class LogFactory{
 		return instance;
 	}
 
-	public LogFactory logWebserviceResponse(Type classApex, HttpRequest request, HttpResponse response){
+	global LogFactory logWebserviceResponse(Type classApex, HttpRequest request, HttpResponse response){
 		String endpoint = request.getEndpoint();
 		String parameters = request.getBody();
 		if(String.isNotBlank(endpoint) && endpoint.contains('?')){
@@ -91,7 +91,7 @@ public without sharing class LogFactory{
 		return instance;
 	}
 
-	public LogFactory logWebserviceResponse(Type classApex, String endpoint, String parameters, String body){
+	global LogFactory logWebserviceResponse(Type classApex, String endpoint, String parameters, String body){
 		logs.add(new Log__c(
 			RecordTypeId = RecordTypeSingleton.getRecordTypeId(Log__c.SObjectType, LogConstants.RT_INFO),
 			Type__c = LogConstants.TYPE_WEBSERVICE,
@@ -124,7 +124,7 @@ public without sharing class LogFactory{
 		return parameter instanceof String || parameter instanceof Id;
 	}
 
-	public void commitWork(){
+	global void commitWork(){
 		if(AuthorizationUtil.isCreateable(Log__c.SObjectType))
 			insert logs;
 		logs.clear();

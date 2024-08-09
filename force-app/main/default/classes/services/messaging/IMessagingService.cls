@@ -1,4 +1,4 @@
-public interface IMessagingService{
+global interface IMessagingService{
 	Messaging.EmailFileAttachment prepareFileAttachment(String fileName, Blob body);
 	void newSingleEmailMessage();
 	void setTargetObjectId(Id targetObjectId);

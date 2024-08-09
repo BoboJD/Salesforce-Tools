@@ -1,18 +1,18 @@
 @SuppressWarnings('PMD.ExcessiveParameterList, PMD.CognitiveComplexity')
-public inherited sharing class DateUtils{
+global inherited sharing class DateUtils{
 	@TestVisible private static Datetime nowDate;
 
-	public static Datetime now(){
+	global static Datetime now(){
 		if(nowDate == null)
 			nowDate = System.now();
 		return nowDate;
 	}
 
-	public static Decimal getNumberOfMonthsBetweenTwoDates(Datetime startDate, Datetime endDate){
+	global static Decimal getNumberOfMonthsBetweenTwoDates(Datetime startDate, Datetime endDate){
 		return getNumberOfMonthsBetweenTwoDates(startDate?.date(), endDate?.date());
 	}
 
-	public static Decimal getNumberOfMonthsBetweenTwoDates(Date startDate, Date endDate){
+	global static Decimal getNumberOfMonthsBetweenTwoDates(Date startDate, Date endDate){
 		Decimal monthDiff = 0;
 		if(startDate != null && endDate != null){
 			monthDiff = startDate.monthsBetween(endDate);
@@ -21,7 +21,7 @@ public inherited sharing class DateUtils{
 		return monthDiff;
 	}
 
-	public static List<String> getYearsBetweenTwoDates(Date startDate, Date endDate){
+	global static List<String> getYearsBetweenTwoDates(Date startDate, Date endDate){
 		List<String> years = new List<String>();
 		Integer year = startDate.year();
 		do{
@@ -31,7 +31,7 @@ public inherited sharing class DateUtils{
 		return years;
 	}
 
-	public static Datetime convertEnedisDatetimeToSalesforceFormat(String datetimeStr){
+	global static Datetime convertEnedisDatetimeToSalesforceFormat(String datetimeStr){
 		Datetime dt;
 		if(String.isNotBlank(datetimeStr)){
 			Date d = Date.valueOf(datetimeStr.split('T')[0]);
@@ -40,11 +40,11 @@ public inherited sharing class DateUtils{
 		return dt;
 	}
 
-	public static String formatDate(Date theDate){
+	global static String formatDate(Date theDate){
 		return formatDate(theDate, 'dd/MM/yyyy');
 	}
 
-	public static String formatDate(Date theDate, String format){
+	global static String formatDate(Date theDate, String format){
 		String formattedDate;
 		if(theDate != null){
 			Datetime theDatetime = Datetime.newInstance(theDate.year(), theDate.month(), theDate.day(), 0, 0, 0);
@@ -53,7 +53,7 @@ public inherited sharing class DateUtils{
 		return formattedDate;
 	}
 
-	public static Integer businessDaysBetween(Date startDate, Date endDate){
+	global static Integer businessDaysBetween(Date startDate, Date endDate){
 		Integer numberOfBusinessDays = 0;
 		Date dateToCheck = startDate;
 		while(dateToCheck < endDate){
@@ -65,7 +65,7 @@ public inherited sharing class DateUtils{
 		return numberOfBusinessDays;
 	}
 
-	public static Date addBusinessDays(Date startDate, Integer businessDaysToAdd){
+	global static Date addBusinessDays(Date startDate, Integer businessDaysToAdd){
 		Date finalDate = startDate;
 		if(finalDate != null){
 			Integer direction = businessDaysToAdd < 0 ? -1 : 1;
@@ -78,29 +78,29 @@ public inherited sharing class DateUtils{
 		return finalDate;
 	}
 
-	public static Boolean isWeekendDay(Date dateParam){
+	global static Boolean isWeekendDay(Date dateParam){
 		Datetime dateT = Datetime.newInstance(dateParam, Time.newInstance(0, 0, 0, 0));
 		return (dateT.format('E') == 'Sun' || dateT.format('E') == 'Sat');
 	}
 
 	// Dimanche = 0, Lundi = 1, ..., Samedi = 6
-	public static Integer dayOfWeek(Datetime theDate){
+	global static Integer dayOfWeek(Datetime theDate){
 		return theDate != null ? dayOfWeek(theDate.date()) : null;
 	}
 
-	public static Integer dayOfWeek(Date theDate){
+	global static Integer dayOfWeek(Date theDate){
 		return theDate != null ? Math.mod(Date.newInstance(1900, 1, 7).daysBetween(theDate),7) : null;
 	}
 
-	public static Boolean isFriday(Date theDate){
+	global static Boolean isFriday(Date theDate){
 		return dayOfWeek(theDate) == 5;
 	}
 
-	public static Boolean isSunday(Datetime theDate){
+	global static Boolean isSunday(Datetime theDate){
 		return dayOfWeek(theDate) == 0;
 	}
 
-	public static Boolean periodOverlap(Date startDateToCompare, Date endDateToCompare, Date referenceStartDate, Date referenceEndDate){
+	global static Boolean periodOverlap(Date startDateToCompare, Date endDateToCompare, Date referenceStartDate, Date referenceEndDate){
 		return (referenceStartDate <= startDateToCompare && startDateToCompare < referenceEndDate)
 			|| (referenceStartDate < endDateToCompare && endDateToCompare <= referenceEndDate)
 			|| (startDateToCompare < referenceStartDate && referenceEndDate < endDateToCompare);

@@ -23,9 +23,9 @@
  * OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-public with sharing class fflib_MethodArgValues
+global with sharing class fflib_MethodArgValues
 {
-	public List<Object> argValues;
+	global List<Object> argValues;
 	
 	/**
 	 * Wrapper object which encapsulates the argument values
@@ -33,7 +33,7 @@ public with sharing class fflib_MethodArgValues
 	 * @param argValues The
 	 * @return fflib_MethodArgValues The method argument wrapper object
 	 */
-	public fflib_MethodArgValues(List<Object> argValues)
+	global fflib_MethodArgValues(List<Object> argValues)
 	{
 		this.argValues = argValues;
 	}
@@ -43,7 +43,7 @@ public with sharing class fflib_MethodArgValues
 	 * @param other The object whose equality we are verifying
 	 * @return Boolean True if meaningfully equivalent, false otherwise.
 	 */
-	public Boolean equals(Object other)
+	global Boolean equals(Object other)
 	{
 		if (this === other)
 		{
@@ -58,7 +58,7 @@ public with sharing class fflib_MethodArgValues
 	 * Standard hashCode override.
 	 * @return Integer The generated hashCode
 	 */
-	public Integer hashCode()
+	global Integer hashCode()
 	{
 		Integer prime = 31;
 		Integer result = 1;

@@ -2,22 +2,22 @@
  * Copyright (c), FinancialForce.com, inc
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification, 
+ * Redistribution and use in source and binary forms, with or without modification,
  *   are permitted provided that the following conditions are met:
  *
- * - Redistributions of source code must retain the above copyright notice, 
+ * - Redistributions of source code must retain the above copyright notice,
  *      this list of conditions and the following disclaimer.
- * - Redistributions in binary form must reproduce the above copyright notice, 
- *      this list of conditions and the following disclaimer in the documentation 
+ * - Redistributions in binary form must reproduce the above copyright notice,
+ *      this list of conditions and the following disclaimer in the documentation
  *      and/or other materials provided with the distribution.
- * - Neither the name of the FinancialForce.com, inc nor the names of its contributors 
- *      may be used to endorse or promote products derived from this software without 
+ * - Neither the name of the FinancialForce.com, inc nor the names of its contributors
+ *      may be used to endorse or promote products derived from this software without
  *      specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
- *  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES 
- *  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL 
- *  THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ *  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ *  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
+ *  THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
  *  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
  *  OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY
  *  OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
@@ -563,7 +563,7 @@ private with sharing class fflib_SObjectUnitOfWorkTest
                 Name = 'test name B',
                 StageName = 'Open',
                 CloseDate = System.today())
-        ); 
+        );
         uow.commitWork();
 
         // THEN only the first record should be registered with both changed values for Amount and StageName and the second should be the original
@@ -667,7 +667,7 @@ private with sharing class fflib_SObjectUnitOfWorkTest
      */
     private class FailDoingWork implements fflib_SObjectUnitOfWork.IDoWork
     {
-        public void doWork()
+        void doWork()
         {
             throw new FailDoingWorkException('Work failed.');
         }
@@ -681,22 +681,22 @@ private with sharing class fflib_SObjectUnitOfWorkTest
         private List<String> m_commitWorkEventsFired = new List<String>();
         private Set<Schema.SObjectType> m_registeredTypes = new Set<Schema.SObjectType>();
 
-        public List<String> getCommitWorkEventsFired()
+        List<String> getCommitWorkEventsFired()
         {
             return m_commitWorkEventsFired.clone();
         }
 
-        public Set<Schema.SObjectType> getRegisteredTypes()
+        Set<Schema.SObjectType> getRegisteredTypes()
         {
             return m_registeredTypes.clone();
         }
 
-        public DerivedUnitOfWork(List<Schema.SObjectType> sObjectTypes)
+        DerivedUnitOfWork(List<Schema.SObjectType> sObjectTypes)
         {
             super(sObjectTypes);
         }
 
-        public DerivedUnitOfWork(List<Schema.SObjectType> sObjectTypes, IDML dml)
+        DerivedUnitOfWork(List<Schema.SObjectType> sObjectTypes, IDML dml)
         {
             super(sObjectTypes, dml);
         }
@@ -715,7 +715,7 @@ private with sharing class fflib_SObjectUnitOfWorkTest
             m_commitWorkEventsFired.add(event);
         }
 
-        public override void onRegisterType(Schema.SObjectType sObjectType)
+        override void onRegisterType(Schema.SObjectType sObjectType)
         {
             if (m_registeredTypes.contains(sObjectType))
             {
@@ -724,67 +724,67 @@ private with sharing class fflib_SObjectUnitOfWorkTest
             m_registeredTypes.add(sObjectType);
         }
 
-        public override void onCommitWorkStarting()
+        override void onCommitWorkStarting()
         {
             addEvent('onCommitWorkStarting');
         }
 
-        public override void onPublishBeforeEventsStarting()
+        override void onPublishBeforeEventsStarting()
         {
             addEvent('onPublishBeforeEventsStarting');
         }
 
-        public override void onPublishBeforeEventsFinished()
+        override void onPublishBeforeEventsFinished()
         {
             addEvent('onPublishBeforeEventsFinished');
         }
 
-        public override void onDMLStarting()
+        override void onDMLStarting()
         {
             addEvent('onDMLStarting');
         }
 
-        public override void onDMLFinished()
+        override void onDMLFinished()
         {
             addEvent('onDMLFinished');
         }
 
-        public override void onDoWorkStarting()
+        override void onDoWorkStarting()
         {
             addEvent('onDoWorkStarting');
         }
 
-        public override void onDoWorkFinished()
+        override void onDoWorkFinished()
         {
             addEvent('onDoWorkFinished');
         }
 
-        public override void onCommitWorkFinishing()
+        override void onCommitWorkFinishing()
         {
             addEvent('onCommitWorkFinishing');
         }
 
-        public override void onPublishAfterSuccessEventsStarting()
+        override void onPublishAfterSuccessEventsStarting()
         {
             addEvent('onPublishAfterSuccessEventsStarting');
         }
 
-        public override void onPublishAfterSuccessEventsFinished()
+        override void onPublishAfterSuccessEventsFinished()
         {
             addEvent('onPublishAfterSuccessEventsFinished');
         }
 
-        public override void onPublishAfterFailureEventsStarting()
+        override void onPublishAfterFailureEventsStarting()
         {
             addEvent('onPublishAfterFailureEventsStarting');
         }
 
-        public override void onPublishAfterFailureEventsFinished()
+        override void onPublishAfterFailureEventsFinished()
         {
             addEvent('onPublishAfterFailureEventsFinished');
         }
 
-        public override void onCommitWorkFinished(Boolean wasSuccessful)
+        override void onCommitWorkFinished(Boolean wasSuccessful)
         {
             addEvent('onCommitWorkFinished - ' + wasSuccessful);
         }
@@ -795,15 +795,15 @@ private with sharing class fflib_SObjectUnitOfWorkTest
      **/
     private class Mock_SendEmailWork implements fflib_SObjectUnitOfWork.IEmailWork
     {
-        public Mock_SendEmailWork()
+        Mock_SendEmailWork()
         {
         }
 
-        public void registerEmail(Messaging.Email email)
+        void registerEmail(Messaging.Email email)
         {
         }
 
-        public void doWork()
+        void doWork()
         {
             doWorkWasCalled = true;
             // The code in the fflib_SObjectUnitOfWork class
@@ -816,38 +816,38 @@ private with sharing class fflib_SObjectUnitOfWorkTest
 
     private class MockDML implements fflib_SObjectUnitOfWork.IDML
     {
-        public List<SObject> recordsForInsert = new List<SObject>();
-        public List<SObject> recordsForUpdate = new List<SObject>();
-        public List<SObject> recordsForDelete = new List<SObject>();
-        public List<SObject> recordsForRecycleBin = new List<SObject>();
-        public List<SObject> recordsForEventPublish = new List<SObject>();
+        List<SObject> recordsForInsert = new List<SObject>();
+        List<SObject> recordsForUpdate = new List<SObject>();
+        List<SObject> recordsForDelete = new List<SObject>();
+        List<SObject> recordsForRecycleBin = new List<SObject>();
+        List<SObject> recordsForEventPublish = new List<SObject>();
 
-        public void dmlInsert(List<SObject> objList)
+        void dmlInsert(List<SObject> objList)
         {
             this.recordsForInsert.addAll(objList);
         }
 
-        public void dmlUpdate(List<SObject> objList)
+        void dmlUpdate(List<SObject> objList)
         {
             this.recordsForUpdate.addAll(objList);
         }
 
-        public void dmlDelete(List<SObject> objList)
+        void dmlDelete(List<SObject> objList)
         {
             this.recordsForDelete.addAll(objList);
         }
 
-        public void eventPublish(List<SObject> objList)
+        void eventPublish(List<SObject> objList)
         {
             this.recordsForEventPublish.addAll(objList);
         }
 
-        public void emptyRecycleBin(List<SObject> objList)
+        void emptyRecycleBin(List<SObject> objList)
         {
             this.recordsForRecycleBin.addAll(objList);
         }
     }
 
-    public class DerivedUnitOfWorkException extends Exception {}
-    public class FailDoingWorkException extends Exception {}
+    class DerivedUnitOfWorkException extends Exception {}
+    class FailDoingWorkException extends Exception {}
 }

@@ -43,7 +43,7 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
 @SuppressWarnings('PMD')
-public inherited sharing class ConnectApiServiceImpl implements IConnectApiService{
+global inherited sharing class ConnectApiServiceImpl implements IConnectApiService{
 
 	private static final Map<String, ConnectApi.MarkupType> SUPPORTED_MARKUP = new Map<String, ConnectApi.MarkupType> {
 		'b' => ConnectApi.MarkupType.Bold,
@@ -56,7 +56,7 @@ public inherited sharing class ConnectApiServiceImpl implements IConnectApiServi
 		'ul' => ConnectApi.MarkupType.UnorderedList
 	};
 
-	public class InvalidParameterException extends Exception {}
+	global class InvalidParameterException extends Exception {}
 
 	/**
 	 * Posts a feed item with @-mentions using an @-mention formatting syntax.
@@ -69,7 +69,7 @@ public inherited sharing class ConnectApiServiceImpl implements IConnectApiServi
 	 *                         automatically parsed if provided.
 	 * @return The posted feed item.
 	 */
-	public ConnectApi.FeedElement postFeedItemWithMentions(String communityId, String subjectId, String textWithMentions) {
+	global ConnectApi.FeedElement postFeedItemWithMentions(String communityId, String subjectId, String textWithMentions) {
 		return postFeedItemWithSpecialFormatting(communityId, subjectId, textWithMentions, 'textWithMentions');
 	}
 
@@ -89,7 +89,7 @@ public inherited sharing class ConnectApiServiceImpl implements IConnectApiServi
 	 *                         Links and hashtags will be automatically parsed if provided.
 	 * @return The posted feed item.
 	 */
-	public ConnectApi.FeedElement postFeedItemWithRichText(String communityId, String subjectId, String textWithMentionsAndRichText) {
+	global ConnectApi.FeedElement postFeedItemWithRichText(String communityId, String subjectId, String textWithMentionsAndRichText) {
 		return postFeedItemWithSpecialFormatting(communityId, subjectId, textWithMentionsAndRichText, 'textWithMentionsAndRichText');
 	}
 
@@ -119,7 +119,7 @@ public inherited sharing class ConnectApiServiceImpl implements IConnectApiServi
 	 *                         automatically parsed if provided.
 	 * @return The posted comment.
 	 */
-	public ConnectApi.Comment postCommentWithMentions(String communityId, String feedItemId, String textWithMentions) {
+	global ConnectApi.Comment postCommentWithMentions(String communityId, String feedItemId, String textWithMentions) {
 		Boolean notificationCanBeSent = !FeatureManagementService.checkPermission(PermissionConstants.BYPASS_CHATTER_NOTIFICATION);
 		if(!notificationCanBeSent)
 			return null;
@@ -133,7 +133,7 @@ public inherited sharing class ConnectApiServiceImpl implements IConnectApiServi
 		return ConnectApi.ChatterFeeds.postCommentToFeedElement(communityId, feedItemId, input, null);
 	}
 
-	public List<ConnectApi.MessageSegmentInput> getMessageSegmentInputs(String inputText) {
+	global List<ConnectApi.MessageSegmentInput> getMessageSegmentInputs(String inputText) {
 		if (inputText == null) {
 			throw new InvalidParameterException('The inputText parameter cannot be null.');
 		}
@@ -270,7 +270,7 @@ public inherited sharing class ConnectApiServiceImpl implements IConnectApiServi
 	 * Takes an output feed body and returns a message body input that matches it.
 	 * This is useful for when you retrieve a feed item or comment and want to either re-post or edit it.
 	 */
-	public ConnectApi.MessageBodyInput createInputFromBody(ConnectApi.FeedBody body) {
+	global ConnectApi.MessageBodyInput createInputFromBody(ConnectApi.FeedBody body) {
 		ConnectApi.MessageBodyInput input = new ConnectApi.MessageBodyInput();
 		input.messageSegments = new List<ConnectApi.MessageSegmentInput>();
 		for (ConnectApi.MessageSegment segment : body.messageSegments) {
@@ -328,7 +328,7 @@ public inherited sharing class ConnectApiServiceImpl implements IConnectApiServi
 	 * Takes an output body and returns a feed item input body that matches it.
 	 * This is useful for when you retrieve a feed item and want to either re-post or edit it.
 	 */
-	public ConnectApi.FeedItemInput createFeedItemInputFromBody(ConnectApi.FeedBody body) {
+	global ConnectApi.FeedItemInput createFeedItemInputFromBody(ConnectApi.FeedBody body) {
 		ConnectApi.MessageBodyInput bodyInput = createInputFromBody(body);
 		ConnectApi.FeedItemInput input = new ConnectApi.FeedItemInput();
 		input.body = bodyInput;
@@ -339,7 +339,7 @@ public inherited sharing class ConnectApiServiceImpl implements IConnectApiServi
 	 * Takes an output body and returns a comment input body that matches it.
 	 * This is useful for when you retrieve a comment and want to either re-post or edit it.
 	 */
-	public ConnectApi.CommentInput createCommentInputFromBody(ConnectApi.FeedBody body) {
+	global ConnectApi.CommentInput createCommentInputFromBody(ConnectApi.FeedBody body) {
 		ConnectApi.MessageBodyInput bodyInput = createInputFromBody(body);
 		ConnectApi.CommentInput input = new ConnectApi.CommentInput();
 		input.body = bodyInput;

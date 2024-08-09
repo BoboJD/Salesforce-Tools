@@ -2,7 +2,7 @@
  * Copyright (c) 2016-2017 FinancialForce.com, inc.  All rights reserved.
  */
 @isTest
-public with sharing class fflib_QualifiedMethodTest
+global with sharing class fflib_QualifiedMethodTest
 {
 	@isTest
 	private static void equalsReturnsExpectedResults()
@@ -85,7 +85,7 @@ public with sharing class fflib_QualifiedMethodTest
 	}
 
 	@isTest
-	public static void toStringReturnsExpectedResult()
+	global static void toStringReturnsExpectedResult()
 	{
 		System.Assert.areEqual('MyClass.MyMethod(Integer)', new fflib_QualifiedMethod('MyClass', 'MyMethod', new List<Type>{ Integer.class }).toString());
 	}

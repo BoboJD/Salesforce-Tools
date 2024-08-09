@@ -1,7 +1,7 @@
-public with sharing class FileUploaderController{
+global with sharing class FileUploaderController{
 
 	@AuraEnabled
-	public static Map<String, Object> getUtilityData(Id recordId){
+	global static Map<String, Object> getUtilityData(Id recordId){
 		Map<String, Object> utilityData = new Map<String, Object>();
 		utilityData.put('files', getFiles(recordId));
 		utilityData.put('fileTypes', SObjectFieldUtils.getPicklistValues(Schema.ContentVersion.Type__c));
@@ -14,7 +14,7 @@ public with sharing class FileUploaderController{
 	}
 
 	@AuraEnabled
-	public static List<FilePreview> getFiles(Id recordId){
+	global static List<FilePreview> getFiles(Id recordId){
 		Map<Id, Id> contentDocumentLinkIdByContentDocumentId = mapContentDocumentLinkIdByContentDocumentId(new Set<Id>{ recordId });
 		Set<Id> contentDocumentIds = contentDocumentLinkIdByContentDocumentId.keySet();
 		List<FilePreview> files = new List<FilePreview>();
@@ -33,7 +33,7 @@ public with sharing class FileUploaderController{
 	}
 
 	@AuraEnabled
-	public static Map<String, Object> deleteFiles(String filesToDeleteJSON){
+	global static Map<String, Object> deleteFiles(String filesToDeleteJSON){
 		Map<String, Object> result = new Map<String, Object>();
 		try{
 			List<FilePreview> filePreviews = (List<FilePreview>)JSON.deserialize(filesToDeleteJSON, List<FilePreview>.class);
@@ -80,7 +80,7 @@ public with sharing class FileUploaderController{
 	}
 
 	@AuraEnabled
-	public static Map<String, Object> deleteFile(Id contentDocumentId){
+	global static Map<String, Object> deleteFile(Id contentDocumentId){
 		Map<String, Object> result = new Map<String, Object>();
 		try{
 			fflib_ISObjectUnitOfWork uow = Application.UnitOfWork.newInstance(new List<SObjectType>{ ContentDocument.SObjectType });

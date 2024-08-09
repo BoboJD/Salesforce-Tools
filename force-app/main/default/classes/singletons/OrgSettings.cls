@@ -1,8 +1,8 @@
-public without sharing class OrgSettings{
+global without sharing class OrgSettings{
 	private static OrgSettings instance;
 	private OrgSetting__mdt orgSetting;
 
-	public enum Setting{
+	global enum Setting{
 		TEST_URL,
 		TEST_PASSWORD
 	}
@@ -37,7 +37,7 @@ public without sharing class OrgSettings{
 			+ ' WHERE DeveloperName = \''+organizationName+'\'';
 	}
 
-	public static String get(Setting setting){
+	global static String get(Setting setting){
 		String value = (String)getInstance().orgSetting?.get(FIELD_BY_SETTING.get(setting));
 		if(CRYPTED_FIELDS.contains(setting))
 			return decrypt(value);

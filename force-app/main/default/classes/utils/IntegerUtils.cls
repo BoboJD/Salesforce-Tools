@@ -1,6 +1,6 @@
-public class IntegerUtils{
+global class IntegerUtils{
 
-	public static Integer returnsZeroIfNull(Integer value){
+	global static Integer returnsZeroIfNull(Integer value){
 		return value != null ? value : 0;
 	}
 }

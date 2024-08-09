@@ -1,8 +1,8 @@
 @SuppressWarnings('PMD.ExcessiveParameterList')
-public inherited sharing class CustomNotificationsServiceImpl implements ICustomNotificationsService{
+global inherited sharing class CustomNotificationsServiceImpl implements ICustomNotificationsService{
 	@TestVisible private static Messaging.CustomNotification notification;
 
-	public void notifyUsers(String targetId, Set<String> recipientsIds, String title, String body){
+	global void notifyUsers(String targetId, Set<String> recipientsIds, String title, String body){
 		CustomNotificationType notificationType = CustomNotificationTypesSelector.newInstance().selectByDeveloperName(CustomNotificationConstants.CUSTOM_NOTIFICATION);
 		notification = new Messaging.CustomNotification();
 		if(String.isNotBlank(title))

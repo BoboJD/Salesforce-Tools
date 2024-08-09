@@ -1,4 +1,4 @@
-public inherited sharing virtual class UsersHandler extends TriggerHandler{
+global inherited sharing virtual class UsersHandler extends TriggerHandler{
 	protected List<User> users { get { return (List<User>)domain.Records; } }
 
 	protected UsersHandler(Users domain, fflib_ISObjectUnitOfWork uow){

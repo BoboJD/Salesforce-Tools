@@ -1,15 +1,15 @@
-public inherited sharing class ContentDocumentLinks extends fflib_SObjectDomain implements IContentDocumentLinks{
+global inherited sharing class ContentDocumentLinks extends fflib_SObjectDomain implements IContentDocumentLinks{
 
-	public ContentDocumentLinks(List<ContentDocumentLink> contentDocumentLinks){
+	global ContentDocumentLinks(List<ContentDocumentLink> contentDocumentLinks){
 		super(contentDocumentLinks);
 	}
 
-	public override void onBeforeInsert(){
+	global override void onBeforeInsert(){
 		resetStoredData();
 		ContentDocumentLinkShareType.handleInsert(this).setShareTypeIAndVisiblityAll();
 	}
 
-	public override void onAfterInsert(){
+	global override void onAfterInsert(){
 		fflib_ISObjectUnitOfWork uow = Application.UnitOfWork.newInstance(new List<SObjectType>{ ContentVersion.SObjectType });
 		ContentDocumentLinkRecord.handleInsert(this, uow).updateRecordIdIfEmpty();
 		uow.commitWork();
@@ -19,8 +19,8 @@ public inherited sharing class ContentDocumentLinks extends fflib_SObjectDomain 
 		ContentDocumentLinkShareType.storedContentDocumentById = null;
 	}
 
-	public class Constructor implements fflib_SObjectDomain.IConstructable{
-		public fflib_SObjectDomain construct(List<SObject> sObjects){
+	global class Constructor implements fflib_SObjectDomain.IConstructable{
+		global fflib_SObjectDomain construct(List<SObject> sObjects){
 			return new ContentDocumentLinks(sObjects);
 		}
 	}

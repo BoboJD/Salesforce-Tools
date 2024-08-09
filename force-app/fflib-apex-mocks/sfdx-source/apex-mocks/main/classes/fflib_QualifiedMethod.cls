@@ -1,19 +1,19 @@
 /*
  * Copyright (c) 2016-2017 FinancialForce.com, inc.  All rights reserved.
  */
-public with sharing class fflib_QualifiedMethod
+global with sharing class fflib_QualifiedMethod
 {
-	public final Object mockInstance;
-	public final String typeName;
-	public final String methodName;
-	public final List<Type> methodArgTypes;
+	global final Object mockInstance;
+	global final String typeName;
+	global final String methodName;
+	global final List<Type> methodArgTypes;
 	
-	public fflib_QualifiedMethod(String typeName, String methodName, List<Type> methodArgTypes)
+	global fflib_QualifiedMethod(String typeName, String methodName, List<Type> methodArgTypes)
 	{
 		this(typeName, methodName, methodArgTypes, null);
 	}
 
-	public fflib_QualifiedMethod(String typeName, String methodName, List<Type> methodArgTypes, Object mockInstance)
+	global fflib_QualifiedMethod(String typeName, String methodName, List<Type> methodArgTypes, Object mockInstance)
 	{
 		this.mockInstance = mockInstance;
 		this.typeName = typeName;
@@ -26,7 +26,7 @@ public with sharing class fflib_QualifiedMethod
 	 * @param other The object whose equality we are verifying
 	 * @return Boolean True if meaningfully equivalent, false otherwise.
 	 */
-	public Boolean equals(Object other)
+	global Boolean equals(Object other)
 	{
 		if (this === other)
 		{
@@ -46,7 +46,7 @@ public with sharing class fflib_QualifiedMethod
 	 * Standard hashCode override.
 	 * @return Integer The generated hashCode
 	 */
-	public Integer hashCode()
+	global Integer hashCode()
 	{
 		Integer prime = 31;
 		Integer result = 1;
@@ -66,7 +66,7 @@ public with sharing class fflib_QualifiedMethod
 	 * Standard toString override.
 	 * @return String The human friendly description of the method.
 	 */
-	public override String toString()
+	global override String toString()
 	{
 		return typeName + '.' + methodName + methodArgTypes;
 	}
@@ -75,7 +75,7 @@ public with sharing class fflib_QualifiedMethod
 	 * Predicate describing whether the qualified method accepts arguments or not.
 	 * @return True if the method accepts arguments.
 	 */
-	public Boolean hasArguments()
+	global Boolean hasArguments()
 	{
 		return this.methodArgTypes != null && !this.methodArgTypes.isEmpty();
 	}

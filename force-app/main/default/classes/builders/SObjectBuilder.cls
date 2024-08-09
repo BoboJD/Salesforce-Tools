@@ -1,14 +1,14 @@
 @SuppressWarnings('PMD.ApexCRUDViolation')
-public inherited sharing abstract class SObjectBuilder{
+global inherited sharing abstract class SObjectBuilder{
 	private Map<String, Object> valueByFieldName;
 	private Map<SObjectField, Object> valueBySObjectField;
 
-	public SObjectBuilder(){
+	global SObjectBuilder(){
 		valueByFieldName = new Map<String, Object>();
 		valueBySObjectField = new Map<SObjectField, Object>();
 	}
 
-	public SObjectBuilder(String recordTypeDeveloperName){
+	global SObjectBuilder(String recordTypeDeveloperName){
 		this();
 		withRecordType(recordTypeDeveloperName);
 	}
@@ -20,21 +20,21 @@ public inherited sharing abstract class SObjectBuilder{
 		return this;
 	}
 
-	public SObjectBuilder setFieldValue(SObjectField sObjectField, Object value){
+	global SObjectBuilder setFieldValue(SObjectField sObjectField, Object value){
 		valueBySObjectField.put(sObjectField, value);
 		return this;
 	}
 
-	public SObjectBuilder setFieldValue(String fieldName, Object value){
+	global SObjectBuilder setFieldValue(String fieldName, Object value){
 		valueByFieldName.put(fieldName, value);
 		return this;
 	}
 
-	public SObject buildRecord(){
+	global SObject buildRecord(){
 		return buildRecord(true);
 	}
 
-	public SObject buildRecordWithoutCommit(){
+	global SObject buildRecordWithoutCommit(){
 		return buildRecord(false);
 	}
 
@@ -49,7 +49,7 @@ public inherited sharing abstract class SObjectBuilder{
 		return record;
 	}
 
-	public static List<SObject> build(List<SObjectBuilder> sObjectBuilders){
+	global static List<SObject> build(List<SObjectBuilder> sObjectBuilders){
 		List<SObject> records = new List<SObject>();
 		for(SObjectBuilder sObjectBuilder : sObjectBuilders){
 			if(AuthorizationUtil.isCreateable(sObjectBuilder.getSObjectType()))
@@ -59,7 +59,7 @@ public inherited sharing abstract class SObjectBuilder{
 		return records;
 	}
 
-	public static Map<String, SObject> buildRecords(Map<String, SObjectBuilder> sObjectBuilders){
+	global static Map<String, SObject> buildRecords(Map<String, SObjectBuilder> sObjectBuilders){
 		Map<String, SObject> records = new Map<String, SObject>();
 		for(String friendlyName : sObjectBuilders.keySet()){
 			SObjectBuilder sObjectBuilder = sObjectBuilders.get(friendlyName);

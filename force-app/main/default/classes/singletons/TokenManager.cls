@@ -1,4 +1,4 @@
-public without sharing class TokenManager{
+global without sharing class TokenManager{
 	private static final Integer MAX_DURATION_OF_TRANSACTION = 1; // in minutes
 	private static TokenManager instance;
 	@TestVisible private Map<String, String> tokenByService = new Map<String, String>();
@@ -11,22 +11,22 @@ public without sharing class TokenManager{
 		}set;
 	}
 
-	public static Boolean tokenIsExpiredFor(String serviceName){
+	global static Boolean tokenIsExpiredFor(String serviceName){
 		return !getInstance().orgPartition.contains(serviceName+'Token');
 	}
 
-	public static String getToken(String serviceName){
+	global static String getToken(String serviceName){
 		TokenManager instance = getInstance();
 		if(!instance.tokenByService.containsKey(serviceName))
 			instance.tokenByService.put(serviceName, (String)instance.orgPartition.get(serviceName+'Token'));
 		return instance.tokenByService.get(serviceName);
 	}
 
-	public static void setToken(String serviceName, String accessToken){
+	global static void setToken(String serviceName, String accessToken){
 		setToken(serviceName, accessToken, null);
 	}
 
-	public static void setToken(String serviceName, String accessToken, Integer durationOfTokenInMinutes){
+	global static void setToken(String serviceName, String accessToken, Integer durationOfTokenInMinutes){
 		if(durationOfTokenInMinutes == null){
 			TokenManager__mdt tokenSetting = TokenManager__mdt.getInstance(serviceName);
 			if(tokenSetting == null)

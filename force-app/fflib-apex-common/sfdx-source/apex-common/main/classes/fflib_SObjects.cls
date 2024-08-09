@@ -23,17 +23,17 @@
  *  OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 **/
-public virtual class fflib_SObjects
+virtual class fflib_SObjects
 		extends fflib_Objects
 		implements fflib_ISObjects
 {
 
-	public Schema.DescribeSObjectResult SObjectDescribe {get; private set;}
+	Schema.DescribeSObjectResult SObjectDescribe {get; private set;}
 
 	/**
 	 * Useful during unit testing to assert at a more granular and robust level for errors raised during the various trigger events
 	 **/
-	public static ErrorFactory Errors  {get; private set;}
+	static ErrorFactory Errors  {get; private set;}
 
 	static
 	{
@@ -43,33 +43,33 @@ public virtual class fflib_SObjects
 	/**
 	 * Class constructor
 	 */
-	public fflib_SObjects(List<SObject> records)
+	fflib_SObjects(List<SObject> records)
 	{
 		super(records);
 	}
 
-	public fflib_SObjects(List<SObject> records, Schema.SObjectType sObjectType)
+	fflib_SObjects(List<SObject> records, Schema.SObjectType sObjectType)
 	{
 		super(records);
 		SObjectDescribe = sObjectType.getDescribe();
 	}
 
-	public virtual List<SObject> getRecords()
+	virtual List<SObject> getRecords()
 	{
 		return (List<SObject>) getObjects();
 	}
 
-	public virtual Set<Id> getRecordIds()
+	virtual Set<Id> getRecordIds()
 	{
 		return new Map<Id, SObject>(getRecords()).keySet();
 	}
 
-	public virtual override Object getType()
+	virtual override Object getType()
 	{
 		return getSObjectType();
 	}
 
-	public virtual SObjectType getSObjectType()
+	virtual SObjectType getSObjectType()
 	{
 		return SObjectDescribe.getSObjectType();
 	}
@@ -385,18 +385,18 @@ public virtual class fflib_SObjects
 	/**
      * Ensures logging of errors in the Domain context for later assertions in tests
      **/
-	public virtual class ErrorFactory
+	virtual class ErrorFactory
 	{
 		private List<Error> errorList = new List<Error>();
 
 		private ErrorFactory() {	}
 
-		public String error(String message, SObject record)
+		String error(String message, SObject record)
 		{
 			return error(null, message, record);
 		}
 
-		public String error(fflib_SObjects domain, String message, SObject record)
+		String error(fflib_SObjects domain, String message, SObject record)
 		{
 			ObjectError objectError = new ObjectError();
 			objectError.domain = domain;
@@ -406,12 +406,12 @@ public virtual class fflib_SObjects
 			return message;
 		}
 
-		public String error(String message, SObject record, SObjectField field)
+		String error(String message, SObject record, SObjectField field)
 		{
 			return error(null, message, record, field);
 		}
 
-		public String error(fflib_ISObjects domain, String message, SObject record, SObjectField field)
+		String error(fflib_ISObjects domain, String message, SObject record, SObjectField field)
 		{
 			FieldError fieldError = new FieldError();
 			fieldError.domain = domain;
@@ -422,12 +422,12 @@ public virtual class fflib_SObjects
 			return message;
 		}
 
-		public List<Error> getAll()
+		List<Error> getAll()
 		{
 			return errorList.clone();
 		}
 
-		public void clearAll()
+		void clearAll()
 		{
 			errorList.clear();
 		}
@@ -436,29 +436,29 @@ public virtual class fflib_SObjects
 	/**
 	 * Ensures logging of errors in the Domain context for later assertions in tests
 	 **/
-	public virtual class FieldError extends ObjectError
+	virtual class FieldError extends ObjectError
 	{
-		public SObjectField field;
+		SObjectField field;
 
-		public FieldError()	{ }
+		FieldError()	{ }
 	}
 
 	/**
 	 * Ensures logging of errors in the Domain context for later assertions in tests
 	 **/
-	public virtual class ObjectError extends Error
+	virtual class ObjectError extends Error
 	{
-		public SObject record;
+		SObject record;
 
-		public ObjectError() { }
+		ObjectError() { }
 	}
 
 	/**
 	 * Ensures logging of errors in the Domain context for later assertions in tests
 	 **/
-	public abstract class Error
+	abstract class Error
 	{
-		public String message;
-		public fflib_ISObjects domain;
+		String message;
+		fflib_ISObjects domain;
 	}
 }

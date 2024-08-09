@@ -1,4 +1,4 @@
-public interface IUsersSelector extends fflib_ISObjectSelector{
+global interface IUsersSelector extends fflib_ISObjectSelector{
 	User selectById(Id userId);
 	List<User> selectByIds(Set<Id> userIds);
 }

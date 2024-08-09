@@ -1,10 +1,10 @@
-public inherited sharing class StringUtils{
+global inherited sharing class StringUtils{
 
-	public static String convertNullToEmpty(String value){
+	global static String convertNullToEmpty(String value){
 		return String.isBlank(value) ? Constants.EMPTY : value;
 	}
 
-	public static String formatNumber(Decimal nb){
+	global static String formatNumber(Decimal nb){
 		if(nb == null) return null;
 		String str = String.valueOf(nb);
 		str = str.replace('.', ',');
@@ -23,19 +23,19 @@ public inherited sharing class StringUtils{
 		return strToReturn;
 	}
 
-	public static String formatCurrency(Decimal nb){
+	global static String formatCurrency(Decimal nb){
 		return nb == null ? null : formatNumber(nb) + ' €';
 	}
 
-	public static String formatPercent(Decimal nb){
+	global static String formatPercent(Decimal nb){
 		return nb == null ? null : formatNumber(nb) + ' %';
 	}
 
-	public static Boolean isMobilePhone(String phoneNumber){
+	global static Boolean isMobilePhone(String phoneNumber){
 		return phoneNumber.startsWith('06') || phoneNumber.startsWith('07') || phoneNumber.startsWith('+336') || phoneNumber.startsWith('+337') || phoneNumber.startsWith('336') || phoneNumber.startsWith('337');
 	}
 
-	public static String setMobilePhoneInternational(String mobilePhone){
+	global static String setMobilePhoneInternational(String mobilePhone){
 		if(String.isNotBlank(mobilePhone)){
 			mobilePhone = mobilePhone.replace('+', '');
 			if(mobilePhone.startsWith('00'))
@@ -49,7 +49,7 @@ public inherited sharing class StringUtils{
 		return null;
 	}
 
-	public static Boolean containsAtLeastOneOfTheTerms(String textToVerify, List<String> terms){
+	global static Boolean containsAtLeastOneOfTheTerms(String textToVerify, List<String> terms){
 		if(String.isBlank(textToVerify) || terms == null) return false;
 		for(String term : terms){
 			if(String.isBlank(term)) continue;

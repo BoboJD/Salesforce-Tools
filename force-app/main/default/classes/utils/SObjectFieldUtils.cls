@@ -1,29 +1,29 @@
 @SuppressWarnings('PMD.CognitiveComplexity')
-public inherited sharing class SObjectFieldUtils{
+global inherited sharing class SObjectFieldUtils{
 
 	private static final String BASE64MAP = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 
-	public static List<String> getValuesOfPicklist(SObjectField field){
+	global static List<String> getValuesOfPicklist(SObjectField field){
 		List<String> values = new List<String>();
 		for(Schema.PicklistEntry entry : field.getDescribe(FieldDescribeOptions.DEFAULT).getPicklistValues())
 			if(entry.isActive()) values.add(entry.getValue());
 		return values;
 	}
 
-	public static List<DecoratedPicklistEntry> getPicklistValues(SObjectField field){
+	global static List<DecoratedPicklistEntry> getPicklistValues(SObjectField field){
 		List<DecoratedPicklistEntry> picklistEntries = new List<DecoratedPicklistEntry>();
 		for(Schema.PicklistEntry entry : field.getDescribe(FieldDescribeOptions.DEFAULT).getPicklistValues())
 			if(entry.isActive()) picklistEntries.add(DecoratedPicklistEntry.newInstanceFromPicklistEntry(entry));
 		return picklistEntries;
 	}
 
-	public static List<DecoratedPicklistEntry> getPicklistValuesWithNoneOption(SObjectField field){
+	global static List<DecoratedPicklistEntry> getPicklistValuesWithNoneOption(SObjectField field){
 		List<DecoratedPicklistEntry> picklistEntries = new List<DecoratedPicklistEntry>{ DecoratedPicklistEntry.newNoneOption() };
 		picklistEntries.addAll(getPicklistValues(field));
 		return picklistEntries;
 	}
 
-	public static Map<String, List<DecoratedPicklistEntry>> getDependentPicklistValues(Schema.sObjectField dependPicklist){
+	global static Map<String, List<DecoratedPicklistEntry>> getDependentPicklistValues(Schema.sObjectField dependPicklist){
 		List<Schema.PicklistEntry> controlEntries = dependPicklist.getDescribe(FieldDescribeOptions.DEFAULT).getController().getDescribe(FieldDescribeOptions.DEFAULT).getPicklistValues();
 		Map<String,List<DecoratedPicklistEntry>> dependentPicklistValues = new Map<String,List<DecoratedPicklistEntry>>();
 		for(Schema.PicklistEntry entry : dependPicklist.getDescribe(FieldDescribeOptions.DEFAULT).getPicklistValues()){
@@ -45,12 +45,12 @@ public inherited sharing class SObjectFieldUtils{
 		return dependentPicklistValues;
 	}
 
-	public static String getLabelOfPicklistValue(SObject sObj, SObjectField field){
+	global static String getLabelOfPicklistValue(SObject sObj, SObjectField field){
 		String value = (String)sObj.get(field.getDescribe().getName());
 		return getLabelOfPicklistValue(field, value);
 	}
 
-	public static String getLabelOfPicklistValue(SObjectField field, String value){
+	global static String getLabelOfPicklistValue(SObjectField field, String value){
 		String label = value;
 		if(String.isNotBlank(value)){
 			for(Schema.PicklistEntry ple : field.getDescribe().getPicklistValues()){
@@ -63,21 +63,21 @@ public inherited sharing class SObjectFieldUtils{
 		return label;
 	}
 
-	public static String getFieldApiName(SObjectField field){
+	global static String getFieldApiName(SObjectField field){
 		return field.getDescribe().getName();
 	}
 
-	public static List<String> multipicklistValues(String concatenedValues){
+	global static List<String> multipicklistValues(String concatenedValues){
 		return String.isBlank(concatenedValues) ? new List<String>() : concatenedValues.split(';');
 	}
 
-	public static List<String> orderedMultipicklistValues(String concatenedValues){
+	global static List<String> orderedMultipicklistValues(String concatenedValues){
 		List<String> values = multipicklistValues(concatenedValues);
 		values.sort();
 		return values;
 	}
 
-	public static List<String> multipicklistLabels(SObject sObj, SObjectField field){
+	global static List<String> multipicklistLabels(SObject sObj, SObjectField field){
 		List<String> labels = new List<String>();
 		String concatenedValues = (String)sObj?.get(field);
 		if(String.isNotBlank(concatenedValues)){
@@ -87,15 +87,15 @@ public inherited sharing class SObjectFieldUtils{
 		return labels;
 	}
 
-	public static String multipicklistLabels(SObject sObj, SObjectField field, String separator){
+	global static String multipicklistLabels(SObject sObj, SObjectField field, String separator){
 		return String.join(multipicklistLabels(sObj, field), separator);
 	}
 
-	public static SObjectField getByApiName(SObjectType sObjectType, String apiName){
+	global static SObjectField getByApiName(SObjectType sObjectType, String apiName){
 		return Schema.getGlobalDescribe().get(sObjectType.getDescribe().getName()).getDescribe().fields.getMap().get(apiName);
 	}
 
-	public static void syncFields(SObject targetSObject, SObject sourceSObject, Map<SObjectField, SObjectField> targetFieldBySourceField){
+	global static void syncFields(SObject targetSObject, SObject sourceSObject, Map<SObjectField, SObjectField> targetFieldBySourceField){
 		for(SObjectField sourceField : targetFieldBySourceField.keySet()){
 			SObjectField targetField = targetFieldBySourceField.get(sourceField);
 			targetSObject.put(targetField, sourceSObject.get(sourceField));

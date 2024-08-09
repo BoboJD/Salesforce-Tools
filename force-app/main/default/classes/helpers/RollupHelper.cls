@@ -8,13 +8,13 @@
  * @author Thibault Weber - HARDIS
  */
 @SuppressWarnings('PMD')
-public class RollupHelper{
+global class RollupHelper{
 
 	//Liste des types d'aggregation possibles
-	public Enum Aggregation {COUNT, SUM, MIN, MAX, CONCAT, AVG}
+	global Enum Aggregation {COUNT, SUM, MIN, MAX, CONCAT, AVG}
 
 	//Liste des opérateurs disponibles dans les filtres de Rollup
-	public Enum Operator {
+	global Enum Operator {
 		EQ,
 		NOT_EQ,
 		SUP,
@@ -53,7 +53,7 @@ public class RollupHelper{
 	 *
 	 * @param Schema.sObjectField lookupField: le champ Lookup faisant la liaison entre l'enfant et le parent
 	 */
-	public RollupHelper(Schema.sObjectField lookupField){
+	global RollupHelper(Schema.sObjectField lookupField){
 
 		this(Trigger.isDelete ? Trigger.old : Trigger.new, lookupField);
 
@@ -67,7 +67,7 @@ public class RollupHelper{
 	 * @param List<sObject> records: Liste des objets enfants
 	 * @param Schema.sObjectField lookupField: le champ Lookup faisant la liaison entre l'enfant et le parent
 	 */
-	public RollupHelper(List<sObject> records, Schema.sObjectField lookupField){
+	global RollupHelper(List<sObject> records, Schema.sObjectField lookupField){
 
 		if(Trigger.isExecuting && Trigger.isBefore)
 			return;
@@ -105,7 +105,7 @@ public class RollupHelper{
 	 *
 	 * @param Rollup rollup: Wrapper class de "Rollup"
 	 */
-	public void addRollup(Rollup rollup){
+	global void addRollup(Rollup rollup){
 		this.rollups.add(rollup);
 	}
 
@@ -115,7 +115,7 @@ public class RollupHelper{
 	 * Exectute de recalcul des champs rollups
 	 *
 	 */
-	public void process(){
+	global void process(){
 
 		if(this.parentById.isEmpty())
 			return;
@@ -295,7 +295,7 @@ public class RollupHelper{
 	 * Wrapper class correspondant à un champ à récapituler
 	 *
 	 */
-	public class Rollup{
+	global class Rollup{
 
 		protected Schema.sObjectField rollupField;
 		protected Aggregation aggr;
@@ -310,7 +310,7 @@ public class RollupHelper{
 		/**
 		 * Constructeur pour les Rollup de type COUNT
 		 */
-		public Rollup(Schema.sObjectField rollupField){
+		global Rollup(Schema.sObjectField rollupField){
 			this(rollupField, Aggregation.COUNT, null, null, null);
 		}
 
@@ -318,7 +318,7 @@ public class RollupHelper{
 		/**
 		 * Constructeur pour les Rollup de type SUM, MAX, MIN et AVG
 		 */
-		public Rollup(Schema.sObjectField rollupField, Aggregation aggregation, Schema.sObjectField fieldToRollup){
+		global Rollup(Schema.sObjectField rollupField, Aggregation aggregation, Schema.sObjectField fieldToRollup){
 			this(rollupField, aggregation, fieldToRollup, null, null);
 		}
 
@@ -326,11 +326,11 @@ public class RollupHelper{
 		/**
 		 * Constructeurs pour les Rollup de type CONCAT
 		 */
-		public Rollup(Schema.sObjectField rollupField, Aggregation aggregation, Schema.sObjectField fieldToRollup, String concatSeparator){
+		global Rollup(Schema.sObjectField rollupField, Aggregation aggregation, Schema.sObjectField fieldToRollup, String concatSeparator){
 			this(rollupField, aggregation, fieldToRollup, concatSeparator, null);
 		}
 
-		public Rollup(Schema.sObjectField rollupField, Aggregation aggregation, Schema.sObjectField fieldToRollup, String concatSeparator, String concatOrderBy){
+		global Rollup(Schema.sObjectField rollupField, Aggregation aggregation, Schema.sObjectField fieldToRollup, String concatSeparator, String concatOrderBy){
 			this.rollupField = rollupField;
 			this.aggr = aggregation;
 			this.fieldToRollup = fieldToRollup;
@@ -351,7 +351,7 @@ public class RollupHelper{
 		 * @param Operator operator : L'operateur de la condition (egal, supérieur, contient, ...), Cf. Enum "Operator"
 		 * @param Object value : La valeur du filtre
 		 */
-		public void addFilter(Schema.sObjectField field, Operator operator, Object value){
+		global void addFilter(Schema.sObjectField field, Operator operator, Object value){
 			this.filters.add(new RollupFilter(field, operator, value));
 		}
 

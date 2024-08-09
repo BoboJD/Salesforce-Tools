@@ -1,14 +1,14 @@
-public inherited sharing class ContentVersions extends fflib_SObjectDomain implements IContentVersions{
+global inherited sharing class ContentVersions extends fflib_SObjectDomain implements IContentVersions{
 
-	public ContentVersions(List<ContentVersion> contentVersions){
+	global ContentVersions(List<ContentVersion> contentVersions){
 		super(contentVersions);
 	}
 
-	public override void onBeforeInsert(){
+	global override void onBeforeInsert(){
 		ContentVersionDefaultValue.handleInsert(this).setDefaultFieldValueBasedOnJSON();
 	}
 
-	public override void onAfterInsert(){
+	global override void onAfterInsert(){
 		fflib_ISObjectUnitOfWork uow = Application.UnitOfWork.newInstance(new List<SObjectType>{
 			ContentVersion.SObjectType, ContentDocument.SObjectType, ContentDocumentLink.SObjectType
 		});
@@ -17,8 +17,8 @@ public inherited sharing class ContentVersions extends fflib_SObjectDomain imple
 		uow.commitWork();
 	}
 
-	public class Constructor implements fflib_SObjectDomain.IConstructable{
-		public fflib_SObjectDomain construct(List<SObject> sObjects){
+	global class Constructor implements fflib_SObjectDomain.IConstructable{
+		global fflib_SObjectDomain construct(List<SObject> sObjects){
 			return new ContentVersions(sObjects);
 		}
 	}

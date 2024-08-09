@@ -1,10 +1,10 @@
-public inherited sharing class ContentDocumentsSelector extends fflib_SObjectSelector implements IContentDocumentsSelector{
+global inherited sharing class ContentDocumentsSelector extends fflib_SObjectSelector implements IContentDocumentsSelector{
 
-	public static IContentDocumentsSelector newInstance(){
+	global static IContentDocumentsSelector newInstance(){
 		return (IContentDocumentsSelector)Application.Selector.newInstance(ContentDocument.SObjectType);
 	}
 
-	public List<SObjectField> getSObjectFieldList(){
+	global List<SObjectField> getSObjectFieldList(){
 		return new List<SObjectField>{
 			ContentDocument.Id,
 			ContentDocument.LatestPublishedVersionId,
@@ -12,11 +12,11 @@ public inherited sharing class ContentDocumentsSelector extends fflib_SObjectSel
 		};
 	}
 
-	public SObjectType getSObjectType(){
+	global SObjectType getSObjectType(){
 		return ContentDocument.SObjectType;
 	}
 
-	public List<ContentDocument> selectByIds(Set<Id> contentDocumentIds){
+	global List<ContentDocument> selectByIds(Set<Id> contentDocumentIds){
 		List<ContentDocument> contentDocuments = new List<ContentDocument>();
 		if(!contentDocumentIds.isEmpty()){
 			contentDocuments = Database.query(newQueryFactory()
