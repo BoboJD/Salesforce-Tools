@@ -22,7 +22,7 @@ main(){
 	fi
 	check_org_type
 
-	if [[ -z "$option" && "$is_production_org" = "true" ]]; then
+	if [[ "$is_production_org" = "true" ]]; then
 		if [ $current_branch = "master" ]; then
 			git checkout -b admin master
 		fi
