@@ -161,7 +161,7 @@ retrieve_experiences(){
 	done
 	sf project retrieve start -x manifest/communities.xml --ignore-conflicts > /dev/null
 	for file in ${project_directory}siteDotComSites/*; do
-		git restore "$file" > /dev/null
+		git restore "$file" > /dev/null 2>&1
 	done
 }
 
@@ -302,7 +302,7 @@ restore_files_modified_by_scratch_org(){
 		"standardValueSets"
 	)
 	for dir in "${files_modified_by_scratch_org[@]}"; do
-		git restore "${project_directory}${dir}" > /dev/null
+		git restore "${project_directory}${dir}" > /dev/null 2>&1
 	done
 }
 
