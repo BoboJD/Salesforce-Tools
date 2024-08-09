@@ -9,6 +9,7 @@ current_branch=$(git symbolic-ref --short HEAD)
 # -oc / --only-configuration : only retrieve configuration files
 # -oe / --only-experiences : only retrieve experience files
 # -op / --only-permissions : only retrieve permission files
+# -s / --subtree : only pull subtree changes
 option=$1
 
 main(){
@@ -52,11 +53,13 @@ main(){
 		retrieve_profiles
 	fi
 
-	if [[ -z "$option" && "$is_production_org" = "true" ]]; then
-		retrieve_development
-		create_backup_of_conga_queries
-		if [ "$org_shape_enable" = "true" ]; then
-			recreate_org_shape
+	if [[ "$is_production_org" = "true" && ( -z "$option" || "$option" = "-s" || "$option" = "--subtree" ) ]]; then
+		if [ -z "$option" ]; then
+			retrieve_development
+			create_backup_of_conga_queries
+			if [ "$org_shape_enable" = "true" ]; then
+				recreate_org_shape
+			fi
 		fi
 		check_installed_managed_packages_version
 		updating_salesforce_tools_subtree
