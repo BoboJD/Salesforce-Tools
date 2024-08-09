@@ -289,7 +289,7 @@ private with sharing class fflib_SObjectUnitOfWorkTest
         }
         uow.commitWork();
 
-        // Assert Results
+        // System.Assert Results
         System.assertEquals(175, mockDML.recordsForInsert.size(), 'Incorrect of new records');
 
         assertEvents(new List<String> {
@@ -334,7 +334,7 @@ private with sharing class fflib_SObjectUnitOfWorkTest
             caughtEx = dmlex;
         }
 
-        // Assert Results
+        // System.Assert Results
         System.assertEquals(didFail, true, 'didFail');
         System.assert(caughtEx.getMessage().contains('REQUIRED_FIELD_MISSING'), String.format('Exception message was ', new List<String> { caughtEx.getMessage() }));
 
@@ -385,7 +385,7 @@ private with sharing class fflib_SObjectUnitOfWorkTest
             caughtEx = fdwe;
         }
 
-        // Assert Results
+        // System.Assert Results
         System.assertEquals(didFail, true, 'didFail');
         System.assert(caughtEx.getMessage().contains('Work failed.'), String.format('Exception message was ', new List<String> { caughtEx.getMessage() }));
 
@@ -642,7 +642,7 @@ private with sharing class fflib_SObjectUnitOfWorkTest
     }
 
     /**
-     * Assert that actual events exactly match expected events (size, order and name)
+     * System.Assert that actual events exactly match expected events (size, order and name)
      * and types match expected types
      */
     private static void assertEvents(List<String> expectedEvents, List<String> actualEvents, Set<Schema.SObjectType> expectedTypes, Set<Schema.SObjectType> actualTypes)

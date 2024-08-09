@@ -925,7 +925,7 @@ public virtual with sharing class fflib_SObjectDomain
 		
 		public override void onBeforeInsert()
 		{
-			// Assert this variable is null in the after insert (since this domain class is stateless)
+			// System.Assert this variable is null in the after insert (since this domain class is stateless)
 			someState = 'This should not survice the trigger after phase';
 		}
 		

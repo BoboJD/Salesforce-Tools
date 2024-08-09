@@ -252,7 +252,7 @@ private with sharing class fflib_SObjectSelectorTest
 		// Generate the SOQL string
 		String soql = qf.toSOQL();
 
-		// Assert that the
+		// System.Assert that the
 		Pattern soqlPattern = Pattern.compile('SELECT (.*) FROM Account ORDER BY AccountNumber DESC NULLS FIRST , AnnualRevenue ASC NULLS LAST ');
 		Matcher soqlMatcher = soqlPattern.matcher(soql);
 		system.assert(soqlMatcher.matches(), 'The SOQL should have that expected.');
@@ -383,14 +383,14 @@ private with sharing class fflib_SObjectSelectorTest
 			try{
 				System.debug(sel.newQueryFactory().toSOQL());
 				sel.selectSObjectsById(new Set<Id>{fflib_IDGenerator.generate(Opportunity.SObjectType)});
-				Assert.fail('Expected a QueryException due to read only user not having access to Opportunity');
+				System.Assert.fail('Expected a QueryException due to read only user not having access to Opportunity');
 			}
 			catch(QueryException qe){
 				//If you don't have Read access to the Lead object, the Name field is inaccessible -- so that's what we're verifying
-				Assert.isNotNull(qe.getInaccessibleFields(),'Expected a Map of inaccessible objects; got null');
+				System.Assert.isNotNull(qe.getInaccessibleFields(),'Expected a Map of inaccessible objects; got null');
 				Set<String> inaccessibleFields = qe.getInaccessibleFields().get('Opportunity');
-				Assert.isNotNull(inaccessibleFields,'Expected a Set of inaccessible fields on the Opportunity object; got null');
-				Assert.isTrue(inaccessibleFields.contains('Name'),'Expected Name to be an inaccessible field on Opportunity');
+				System.Assert.isNotNull(inaccessibleFields,'Expected a Set of inaccessible fields on the Opportunity object; got null');
+				System.Assert.isTrue(inaccessibleFields.contains('Name'),'Expected Name to be an inaccessible field on Opportunity');
 			}
 		}
 	}
@@ -415,15 +415,15 @@ private with sharing class fflib_SObjectSelectorTest
 			try{
 				System.debug(sel.newQueryFactory().toSOQL());
 				sel.selectSObjectsById(new Set<Id>{fflib_IDGenerator.generate(Account.SObjectType)});
-				Assert.fail('Expected a QueryException due to read only user not having access to AnnualRevenue');
+				System.Assert.fail('Expected a QueryException due to read only user not having access to AnnualRevenue');
 			}
 			catch(QueryException qe){
 				//If you don't have Read access to the Lead object, the Name field is inaccessible -- so that's what we're verifying
-				Assert.isNotNull(qe.getInaccessibleFields(),'Expected a Map of inaccessible objects; got null');
+				System.Assert.isNotNull(qe.getInaccessibleFields(),'Expected a Map of inaccessible objects; got null');
 				Set<String> inaccessibleFields = qe.getInaccessibleFields().get('Account');
-				Assert.isNotNull(inaccessibleFields,'Expected a Set of inaccessible fields on the Account object; got null');
-				Assert.isFalse(inaccessibleFields.contains('Name'),'Expected Name to be an accessible field on Account');
-				Assert.isTrue(inaccessibleFields.contains('AnnualRevenue'),'Expected AnnualRevenue to be an inaccessible field on Account');
+				System.Assert.isNotNull(inaccessibleFields,'Expected a Set of inaccessible fields on the Account object; got null');
+				System.Assert.isFalse(inaccessibleFields.contains('Name'),'Expected Name to be an accessible field on Account');
+				System.Assert.isTrue(inaccessibleFields.contains('AnnualRevenue'),'Expected AnnualRevenue to be an inaccessible field on Account');
 			}
 		}
 	}
@@ -719,9 +719,9 @@ private with sharing class fflib_SObjectSelectorTest
 
 		List<String> actualSelectFields = soqlMatcher.group(1).deleteWhiteSpace().split(',');
 		Set<String> actualSelectFieldsSet = new Set<String>(actualSelectFields);
-		Assert.areEqual(expectedSelectFields, actualSelectFieldsSet);
+		System.Assert.areEqual(expectedSelectFields, actualSelectFieldsSet);
 		if (unexpectedSelectFields.size() > 0) {
-			Assert.isFalse(
+			System.Assert.isFalse(
 				actualSelectFieldsSet.containsAll(unexpectedSelectFields),
 				String.format('The fields {0} were not expected on actualSelectFieldsSet {1}', new List<Set<String>>{unexpectedSelectFields, actualSelectFieldsSet})
 			);
