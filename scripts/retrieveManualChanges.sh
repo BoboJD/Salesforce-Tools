@@ -211,15 +211,21 @@ retrieve_profiles(){
 
 	echo -ne "Removing unnecessary permissions... "
 	for profile in ${project_directory}profiles/*.profile-meta.xml; do
-		for unused_layout in "${unused_standard_layouts[@]}"; do
-			xmlstarlet ed -L -N x="$xml_namespace" -d "//x:layoutAssignments[starts-with(x:layout, \"${unused_layout}-\")]" "$profile"
-		done
-		for user_permission_name in "${user_permissions_to_delete[@]}"; do
-			xmlstarlet ed -L -N x="$xml_namespace" -d "//x:userPermissions[x:name = \"$user_permission_name\"]" "$profile"
-		done
-		for unnecessary_permission in "${unnecessary_permissions_to_delete[@]}"; do
-			xmlstarlet ed -L -N x="$xml_namespace" -d "//*/x:$unnecessary_permission" "$profile"
-		done
+		if [ "${#unused_standard_layouts[@]}" -gt 0 ]; then
+			for unused_layout in "${unused_standard_layouts[@]}"; do
+				xmlstarlet ed -L -N x="$xml_namespace" -d "//x:layoutAssignments[starts-with(x:layout, \"${unused_layout}-\")]" "$profile"
+			done
+		fi
+		if [ "${#user_permissions_to_delete[@]}" -gt 0 ]; then
+			for user_permission_name in "${user_permissions_to_delete[@]}"; do
+				xmlstarlet ed -L -N x="$xml_namespace" -d "//x:userPermissions[x:name = \"$user_permission_name\"]" "$profile"
+			done
+		fi
+		if [ "${#unnecessary_permissions_to_delete[@]}" -gt 0 ]; then
+			for unnecessary_permission in "${unnecessary_permissions_to_delete[@]}"; do
+				xmlstarlet ed -L -N x="$xml_namespace" -d "//*/x:$unnecessary_permission" "$profile"
+			done
+		fi
 		xmlstarlet fo --indent-spaces 4 "$profile" > "${profile}.tmp" && mv "${profile}.tmp" "$profile"
 	done
 	echo "Done."
