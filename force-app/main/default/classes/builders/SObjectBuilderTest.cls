@@ -1,5 +1,5 @@
 @IsTest
-private class SObjectBuilderTest{
+global class SObjectBuilderTest{
 
 	@IsTest
 	static void logBuilderShouldCreateRecord(){
@@ -22,17 +22,17 @@ private class SObjectBuilderTest{
 		Assert.isNotNull(logsCreatedMap.get('log')?.Id);
 	}
 
-	private class LogBuilder extends SObjectBuilder{
+	global class LogBuilder extends SObjectBuilder{
 
-		private LogBuilder(){
+		global LogBuilder(){
 			super();
 		}
 
-		private LogBuilder(String recordTypeDeveloperName){
+		global LogBuilder(String recordTypeDeveloperName){
 			super(recordTypeDeveloperName);
 		}
 
-		private SObjectType getSObjectType(){
+		global override SObjectType getSObjectType(){
 			return Log__c.SObjectType;
 		}
 	}

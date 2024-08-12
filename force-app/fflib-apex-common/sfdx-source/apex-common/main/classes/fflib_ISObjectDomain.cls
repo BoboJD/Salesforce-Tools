@@ -24,7 +24,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 **/
 
-interface fflib_ISObjectDomain extends fflib_IDomain
+global interface fflib_ISObjectDomain extends fflib_IDomain
 {
     /**
      * Returns the SObjectType this Domain class represents

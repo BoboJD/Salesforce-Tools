@@ -6,14 +6,14 @@ global inherited sharing class CustomNotificationTypesSelector extends fflib_SOb
 		return (ICustomNotificationTypesSelector)Application.Selector.newInstance(CustomNotificationType.SObjectType);
 	}
 
-	global List<SObjectField> getSObjectFieldList(){
+	global override List<SObjectField> getSObjectFieldList(){
 		return new List<SObjectField>{
 			CustomNotificationType.Id,
 			CustomNotificationType.DeveloperName
 		};
 	}
 
-	global SObjectType getSObjectType(){
+	global override SObjectType getSObjectType(){
 		return CustomNotificationType.SObjectType;
 	}
 

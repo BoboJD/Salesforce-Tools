@@ -39,7 +39,7 @@ global class fflib_System
 		{
 			throw new fflib_ApexMocks.ApexMocksException('fflib_System.assertEquals expects you to register exactly 1 fflib_IMatcher (typically through the helpers in fflib_Match).');
 		}
-		
+
 		if (!matcher.matches(value))
 		{
 			throw new fflib_ApexMocks.ApexMocksException(String.format('Expected : {0}, Actual: {1}{2}', new String[]{

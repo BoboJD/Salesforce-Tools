@@ -4,7 +4,7 @@ global inherited sharing class ContentVersionsSelector extends fflib_SObjectSele
 		return (IContentVersionsSelector)Application.Selector.newInstance(ContentVersion.SObjectType);
 	}
 
-	global List<SObjectField> getSObjectFieldList(){
+	global override List<SObjectField> getSObjectFieldList(){
 		return new List<SObjectField>{
 			ContentVersion.Id,
 			ContentVersion.ContentDocumentId,
@@ -17,7 +17,7 @@ global inherited sharing class ContentVersionsSelector extends fflib_SObjectSele
 		};
 	}
 
-	global SObjectType getSObjectType(){
+	global override SObjectType getSObjectType(){
 		return ContentVersion.SObjectType;
 	}
 

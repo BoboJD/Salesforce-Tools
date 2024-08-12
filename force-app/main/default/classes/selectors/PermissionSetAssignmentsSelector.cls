@@ -4,14 +4,14 @@ global inherited sharing class PermissionSetAssignmentsSelector extends fflib_SO
 		return (PermissionSetAssignmentsSelector)Application.Selector.newInstance(PermissionSetAssignment.SObjectType);
 	}
 
-	global List<SObjectField> getSObjectFieldList(){
+	global override List<SObjectField> getSObjectFieldList(){
 		return new List<SObjectField>{
 			PermissionSetAssignment.Id,
 			PermissionSetAssignment.AssigneeId
 		};
 	}
 
-	global SObjectType getSObjectType(){
+	global override SObjectType getSObjectType(){
 		return PermissionSetAssignment.SObjectType;
 	}
 

@@ -5,7 +5,7 @@ global inherited sharing class AccountBuilder extends SObjectBuilder{
 		super();
 	}
 
-	private SObjectType getSObjectType(){
+	global override SObjectType getSObjectType(){
 		return Account.SObjectType;
 	}
 

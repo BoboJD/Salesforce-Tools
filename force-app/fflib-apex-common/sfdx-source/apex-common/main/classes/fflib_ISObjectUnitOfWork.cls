@@ -27,7 +27,7 @@
 /**
  * @see fflib_SObjectUnitOfWork
  **/
-interface fflib_ISObjectUnitOfWork
+global interface fflib_ISObjectUnitOfWork
 {
     /**
      * Register a newly created SObject instance to be inserted when commitWork is called

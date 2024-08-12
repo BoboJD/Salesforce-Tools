@@ -5,14 +5,14 @@ global inherited sharing class UsersSelector extends fflib_SObjectSelector imple
 		return (IUsersSelector)Application.Selector.newInstance(User.SObjectType);
 	}
 
-	global List<SObjectField> getSObjectFieldList(){
+	global override List<SObjectField> getSObjectFieldList(){
 		return new List<SObjectField>{
 			User.Id,
 			User.Admin__c
 		};
 	}
 
-	global SObjectType getSObjectType(){
+	global override SObjectType getSObjectType(){
 		return User.SObjectType;
 	}
 

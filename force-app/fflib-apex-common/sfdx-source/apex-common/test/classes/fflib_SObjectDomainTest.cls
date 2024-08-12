@@ -25,7 +25,7 @@
 **/
 
 @IsTest
-private with sharing class fflib_SObjectDomainTest
+global with sharing class fflib_SObjectDomainTest
 {
 	@IsTest
 	private static void testValidationWithoutDML()
@@ -494,9 +494,9 @@ private with sharing class fflib_SObjectDomainTest
 
 
 
-	private class Accounts extends fflib_SObjectDomain
+	global class Accounts extends fflib_SObjectDomain
 	{
-		Accounts(List<SObject> records)
+		global Accounts(List<SObject> records)
 		{
 			super(records);
 		}

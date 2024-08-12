@@ -5,7 +5,7 @@
  * @nodoc
  */
 @isTest
-private class fflib_ArgumentCaptorTest
+global class fflib_ArgumentCaptorTest
 {
 	@isTest
 	static void thatArgumentValueIsCaptured()
@@ -694,7 +694,7 @@ private class fflib_ArgumentCaptorTest
 	}
 
 
-	private class TestInnerClass
+	global class TestInnerClass
 	{
 		global Integer i;
 		global String s;

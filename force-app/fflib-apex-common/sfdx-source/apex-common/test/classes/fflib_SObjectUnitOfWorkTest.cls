@@ -25,7 +25,7 @@
 **/
 
 @IsTest(IsParallel=true)
-private with sharing class fflib_SObjectUnitOfWorkTest
+global with sharing class fflib_SObjectUnitOfWorkTest
 {
     // SObjects (in order of dependency) used by UnitOfWork in tests bellow
     private static List<Schema.SObjectType> MY_SOBJECTS =
@@ -665,9 +665,9 @@ private with sharing class fflib_SObjectUnitOfWorkTest
     /**
      * DoWork implementation that throws exception during processing
      */
-    private class FailDoingWork implements fflib_SObjectUnitOfWork.IDoWork
+    global class FailDoingWork implements fflib_SObjectUnitOfWork.IDoWork
     {
-        void doWork()
+        global void doWork()
         {
             throw new FailDoingWorkException('Work failed.');
         }
@@ -676,27 +676,27 @@ private with sharing class fflib_SObjectUnitOfWorkTest
     /**
      * Derived unit of work that tracks event notifications and handle registration of type
      */
-    private class DerivedUnitOfWork extends fflib_SObjectUnitOfWork
+    global class DerivedUnitOfWork extends fflib_SObjectUnitOfWork
     {
         private List<String> m_commitWorkEventsFired = new List<String>();
         private Set<Schema.SObjectType> m_registeredTypes = new Set<Schema.SObjectType>();
 
-        List<String> getCommitWorkEventsFired()
+        global List<String> getCommitWorkEventsFired()
         {
             return m_commitWorkEventsFired.clone();
         }
 
-        Set<Schema.SObjectType> getRegisteredTypes()
+        global Set<Schema.SObjectType> getRegisteredTypes()
         {
             return m_registeredTypes.clone();
         }
 
-        DerivedUnitOfWork(List<Schema.SObjectType> sObjectTypes)
+        global DerivedUnitOfWork(List<Schema.SObjectType> sObjectTypes)
         {
             super(sObjectTypes);
         }
 
-        DerivedUnitOfWork(List<Schema.SObjectType> sObjectTypes, IDML dml)
+        global DerivedUnitOfWork(List<Schema.SObjectType> sObjectTypes, IDML dml)
         {
             super(sObjectTypes, dml);
         }
@@ -715,7 +715,7 @@ private with sharing class fflib_SObjectUnitOfWorkTest
             m_commitWorkEventsFired.add(event);
         }
 
-        override void onRegisterType(Schema.SObjectType sObjectType)
+        global override void onRegisterType(Schema.SObjectType sObjectType)
         {
             if (m_registeredTypes.contains(sObjectType))
             {
@@ -724,67 +724,67 @@ private with sharing class fflib_SObjectUnitOfWorkTest
             m_registeredTypes.add(sObjectType);
         }
 
-        override void onCommitWorkStarting()
+        global override void onCommitWorkStarting()
         {
             addEvent('onCommitWorkStarting');
         }
 
-        override void onPublishBeforeEventsStarting()
+        global override void onPublishBeforeEventsStarting()
         {
             addEvent('onPublishBeforeEventsStarting');
         }
 
-        override void onPublishBeforeEventsFinished()
+        global override void onPublishBeforeEventsFinished()
         {
             addEvent('onPublishBeforeEventsFinished');
         }
 
-        override void onDMLStarting()
+        global override void onDMLStarting()
         {
             addEvent('onDMLStarting');
         }
 
-        override void onDMLFinished()
+        global override void onDMLFinished()
         {
             addEvent('onDMLFinished');
         }
 
-        override void onDoWorkStarting()
+        global override void onDoWorkStarting()
         {
             addEvent('onDoWorkStarting');
         }
 
-        override void onDoWorkFinished()
+        global override void onDoWorkFinished()
         {
             addEvent('onDoWorkFinished');
         }
 
-        override void onCommitWorkFinishing()
+        global override void onCommitWorkFinishing()
         {
             addEvent('onCommitWorkFinishing');
         }
 
-        override void onPublishAfterSuccessEventsStarting()
+        global override void onPublishAfterSuccessEventsStarting()
         {
             addEvent('onPublishAfterSuccessEventsStarting');
         }
 
-        override void onPublishAfterSuccessEventsFinished()
+        global override void onPublishAfterSuccessEventsFinished()
         {
             addEvent('onPublishAfterSuccessEventsFinished');
         }
 
-        override void onPublishAfterFailureEventsStarting()
+        global override void onPublishAfterFailureEventsStarting()
         {
             addEvent('onPublishAfterFailureEventsStarting');
         }
 
-        override void onPublishAfterFailureEventsFinished()
+        global override void onPublishAfterFailureEventsFinished()
         {
             addEvent('onPublishAfterFailureEventsFinished');
         }
 
-        override void onCommitWorkFinished(Boolean wasSuccessful)
+        global override void onCommitWorkFinished(Boolean wasSuccessful)
         {
             addEvent('onCommitWorkFinished - ' + wasSuccessful);
         }
@@ -793,17 +793,17 @@ private with sharing class fflib_SObjectUnitOfWorkTest
     /**
      * Mock implementation of fflib_SObjectUnitOfWork.SendEmailWork
      **/
-    private class Mock_SendEmailWork implements fflib_SObjectUnitOfWork.IEmailWork
+    global class Mock_SendEmailWork implements fflib_SObjectUnitOfWork.IEmailWork
     {
-        Mock_SendEmailWork()
+        global Mock_SendEmailWork()
         {
         }
 
-        void registerEmail(Messaging.Email email)
+        global void registerEmail(Messaging.Email email)
         {
         }
 
-        void doWork()
+        global void doWork()
         {
             doWorkWasCalled = true;
             // The code in the fflib_SObjectUnitOfWork class
@@ -814,40 +814,40 @@ private with sharing class fflib_SObjectUnitOfWorkTest
         private Boolean doWorkWasCalled = false;
     }
 
-    private class MockDML implements fflib_SObjectUnitOfWork.IDML
+    global class MockDML implements fflib_SObjectUnitOfWork.IDML
     {
-        List<SObject> recordsForInsert = new List<SObject>();
-        List<SObject> recordsForUpdate = new List<SObject>();
-        List<SObject> recordsForDelete = new List<SObject>();
-        List<SObject> recordsForRecycleBin = new List<SObject>();
-        List<SObject> recordsForEventPublish = new List<SObject>();
+        global List<SObject> recordsForInsert = new List<SObject>();
+        global List<SObject> recordsForUpdate = new List<SObject>();
+        global List<SObject> recordsForDelete = new List<SObject>();
+        global List<SObject> recordsForRecycleBin = new List<SObject>();
+        global List<SObject> recordsForEventPublish = new List<SObject>();
 
-        void dmlInsert(List<SObject> objList)
+        global void dmlInsert(List<SObject> objList)
         {
             this.recordsForInsert.addAll(objList);
         }
 
-        void dmlUpdate(List<SObject> objList)
+        global void dmlUpdate(List<SObject> objList)
         {
             this.recordsForUpdate.addAll(objList);
         }
 
-        void dmlDelete(List<SObject> objList)
+        global void dmlDelete(List<SObject> objList)
         {
             this.recordsForDelete.addAll(objList);
         }
 
-        void eventPublish(List<SObject> objList)
+        global void eventPublish(List<SObject> objList)
         {
             this.recordsForEventPublish.addAll(objList);
         }
 
-        void emptyRecycleBin(List<SObject> objList)
+        global void emptyRecycleBin(List<SObject> objList)
         {
             this.recordsForRecycleBin.addAll(objList);
         }
     }
 
-    class DerivedUnitOfWorkException extends Exception {}
-    class FailDoingWorkException extends Exception {}
+    global class DerivedUnitOfWorkException extends Exception {}
+    global class FailDoingWorkException extends Exception {}
 }

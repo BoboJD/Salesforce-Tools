@@ -25,7 +25,7 @@
 **/
 
 @isTest( isParallel = true )
-private class fflib_QueryFactoryTest {
+global class fflib_QueryFactoryTest {
 
 	@isTest
 	static void fieldSelections(){
@@ -712,7 +712,7 @@ private class fflib_QueryFactoryTest {
 		System.assertEquals(allRowsQuery, actualSoql);
 	}
 
-	static User createTestUser_noAccess(){
+	global static User createTestUser_noAccess(){
 		User usr;
 		try {
 			//look for a profile that does not have access to the Account object

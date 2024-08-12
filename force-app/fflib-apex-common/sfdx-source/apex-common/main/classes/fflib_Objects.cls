@@ -23,41 +23,41 @@
  *  OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 **/
-virtual class fflib_Objects implements fflib_IObjects
+global virtual class fflib_Objects implements fflib_IObjects
 {
 	protected List<Object> objects { get; private set;} { objects = new List<Object>(); }
 
 	/**
 	 * Class constructor
 	 */
-	fflib_Objects(List<Object> objects)
+	global fflib_Objects(List<Object> objects)
 	{
 		this.objects = objects.clone();
 	}
 
-	virtual Object getType()
+	global virtual Object getType()
 	{
 		return Object.class;
 	}
 
-	List<Object> getObjects()
+	global List<Object> getObjects()
 	{
 		return this.objects;
 	}
 
-	Boolean contains(Object value)
+	global Boolean contains(Object value)
 	{
 		return getObjects()?.contains(value);
 	}
 
-	Boolean containsAll(List<Object> values)
+	global Boolean containsAll(List<Object> values)
 	{
 		if (values == null) return false;
 
 		return containsAll(new Set<Object>(values));
 	}
 
-	Boolean containsAll(Set<Object> values)
+	global Boolean containsAll(Set<Object> values)
 	{
 		if (values == null) return false;
 
@@ -68,19 +68,19 @@ virtual class fflib_Objects implements fflib_IObjects
 		return true;
 	}
 
-	Boolean containsNot(Object value)
+	global Boolean containsNot(Object value)
 	{
 		return !contains(value);
 	}
 
-	Boolean containsNot(List<Object> values)
+	global Boolean containsNot(List<Object> values)
 	{
 		if (values == null) return true;
 
 		return containsNot(new Set<Object>(values));
 	}
 
-	Boolean containsNot(Set<Object> values)
+	global Boolean containsNot(Set<Object> values)
 	{
 		if (values == null) return true;
 
@@ -91,17 +91,17 @@ virtual class fflib_Objects implements fflib_IObjects
 		return true;
 	}
 
-	Boolean isEmpty()
+	global Boolean isEmpty()
 	{
 		return (getObjects() == null || getObjects().isEmpty());
 	}
 
-	Boolean isNotEmpty()
+	global Boolean isNotEmpty()
 	{
 		return !isEmpty();
 	}
 
-	Integer size()
+	global Integer size()
 	{
 		return getObjects().size();
 	}

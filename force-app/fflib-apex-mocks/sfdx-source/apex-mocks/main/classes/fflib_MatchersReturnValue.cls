@@ -27,7 +27,7 @@ global with sharing class fflib_MatchersReturnValue
 {
 	global List<fflib_IMatcher> matchers;
 	global fflib_MethodReturnValue returnValue;
-	
+
 	global fflib_MatchersReturnValue(List<fflib_IMatcher> matchers, fflib_MethodReturnValue returnValue)
 	{
 		this.matchers = matchers;

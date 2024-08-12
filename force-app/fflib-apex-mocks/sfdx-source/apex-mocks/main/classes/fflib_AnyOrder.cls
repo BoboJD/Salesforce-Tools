@@ -15,7 +15,7 @@ global class fflib_AnyOrder extends fflib_MethodVerifier
 	 * @param methodArg The arguments of the method that needs to be verified.
 	 * @param verificationMode The verification mode that holds the setting about how the verification should be performed.
 	 */
-	protected override void verify(
+	global override void verify(
 		fflib_QualifiedMethod qm,
 		fflib_MethodArgValues expectedArguments,
 		fflib_VerificationMode verificationMode)
@@ -94,7 +94,7 @@ global class fflib_AnyOrder extends fflib_MethodVerifier
 	 * @param verificationMode The verification mode that have to been verified.
 	 * @throws Exception with message for the fflib_VerificationMode not implemented.
 	 */
-	protected override void validateMode(fflib_VerificationMode verificationMode)
+	global override void validateMode(fflib_VerificationMode verificationMode)
 	{
 		if(verificationMode.Method == fflib_VerificationMode.ModeName.CALLS)
 		{

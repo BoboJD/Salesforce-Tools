@@ -103,7 +103,7 @@ global with sharing class fflib_QualifiedMethodTest
 
 		//When/thens
 		fflib_ApexMocksConfig.HasIndependentMocks = false;
-		
+
 		System.Assert.areEqual(qm1, qm2);
 		System.Assert.areEqual(qm1, qm3);
 		System.Assert.areEqual(qm1, qm4);
@@ -133,7 +133,7 @@ global with sharing class fflib_QualifiedMethodTest
 
 		//When/thens
 		fflib_ApexMocksConfig.HasIndependentMocks = false;
-		
+
 		System.Assert.areEqual(qm1.hashCode(), qm2.hashCode());
 		System.Assert.areEqual(qm1.hashCode(), qm3.hashCode());
 		System.Assert.areEqual(qm1.hashCode(), qm4.hashCode());

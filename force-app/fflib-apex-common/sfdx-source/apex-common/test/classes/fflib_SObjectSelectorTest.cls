@@ -25,7 +25,7 @@
 **/
 
 @IsTest
-private with sharing class fflib_SObjectSelectorTest
+global with sharing class fflib_SObjectSelectorTest
 {
 	@TestSetup
 	static void testSetup(){
@@ -466,19 +466,19 @@ private with sharing class fflib_SObjectSelectorTest
 	}
 
 
-	private class Testfflib_SObjectSelector extends fflib_SObjectSelector
+	global class Testfflib_SObjectSelector extends fflib_SObjectSelector
 	{
-		Testfflib_SObjectSelector()
+		global Testfflib_SObjectSelector()
 		{
 			super();
 		}
 
-		Testfflib_SObjectSelector(Boolean includeFieldSetFields, Boolean enforceCRUD, Boolean enforceFLS, Boolean sortSelectFields)
+		global Testfflib_SObjectSelector(Boolean includeFieldSetFields, Boolean enforceCRUD, Boolean enforceFLS, Boolean sortSelectFields)
 		{
 			super(includeFieldSetFields, enforceCRUD, enforceFLS, sortSelectFields);
 		}
 
-		List<Schema.SObjectField> getSObjectFieldList()
+		global override List<Schema.SObjectField> getSObjectFieldList()
 		{
 			return new List<Schema.SObjectField> {
 				Account.Name,
@@ -488,25 +488,25 @@ private with sharing class fflib_SObjectSelectorTest
 			};
 		}
 
-		Schema.SObjectType getSObjectType()
+		global override Schema.SObjectType getSObjectType()
 		{
 			return Account.sObjectType;
 		}
 
-		override String getOrderBy()
+		global override String getOrderBy()
 		{
 			return 'AccountNumber DESC, AnnualRevenue ASC NULLS LAST';
 		}
 	}
 
-	private class Testfflib_UserSObjectSelector extends fflib_SObjectSelector
+	global class Testfflib_UserSObjectSelector extends fflib_SObjectSelector
 	{
-		Testfflib_UserSObjectSelector()
+		global Testfflib_UserSObjectSelector()
 		{
 			super();
 		}
 
-		List<Schema.SObjectField> getSObjectFieldList()
+		global override List<Schema.SObjectField> getSObjectFieldList()
 		{
 			return new List<Schema.SObjectField> {
 				User.Name,
@@ -516,21 +516,21 @@ private with sharing class fflib_SObjectSelectorTest
 			};
 		}
 
-		Schema.SObjectType getSObjectType()
+		global override Schema.SObjectType getSObjectType()
 		{
 			return User.SObjectType;
 		}
 
 	}
 
-	private class Testfflib_SObjectSelectorDefaultSorting extends fflib_SObjectSelector
+	global class Testfflib_SObjectSelectorDefaultSorting extends fflib_SObjectSelector
 	{
-		Testfflib_SObjectSelectorDefaultSorting(Boolean includeFieldSetFields)
+		global Testfflib_SObjectSelectorDefaultSorting(Boolean includeFieldSetFields)
 		{
 			super(includeFieldSetFields);
 		}
 
-		List<Schema.SObjectField> getSObjectFieldList()
+		global override List<Schema.SObjectField> getSObjectFieldList()
 		{
 			return new List<Schema.SObjectField> {
 				Account.Name,
@@ -540,26 +540,26 @@ private with sharing class fflib_SObjectSelectorTest
 			};
 		}
 
-		Schema.SObjectType getSObjectType()
+		global override Schema.SObjectType getSObjectType()
 		{
 			return Account.sObjectType;
 		}
 	}
 
-	private class AccessLevelOpportunitySelector extends fflib_SObjectSelector{
-		AccessLevelOpportunitySelector(){
+	global class AccessLevelOpportunitySelector extends fflib_SObjectSelector{
+		global AccessLevelOpportunitySelector(){
 			this(DataAccess.USER_MODE);
 		}
 
-		AccessLevelOpportunitySelector(DataAccess access){
+		global AccessLevelOpportunitySelector(DataAccess access){
 			super(false, access);
 		}
 
-		Schema.SObjectType getSObjectType(){
+		global override Schema.SObjectType getSObjectType(){
 			return Opportunity.sObjectType;
 		}
 
-		List<Schema.SObjectField> getSObjectFieldList(){
+		global override List<Schema.SObjectField> getSObjectFieldList(){
 			return new List<Schema.SObjectField> {
 					Opportunity.Name,
 					Opportunity.Id,
@@ -586,25 +586,25 @@ private with sharing class fflib_SObjectSelectorTest
 			return qf.toSOQL();
 		}
 
-		List<Opportunity> selectAllWithAccount(){
+		global List<Opportunity> selectAllWithAccount(){
 			return Database.query(createSelectAllWithAccountSOQL());
 		}
 	}
 
-	private class AccessLevelAccountSelector extends fflib_SObjectSelector{
-		AccessLevelAccountSelector(){
+	global class AccessLevelAccountSelector extends fflib_SObjectSelector{
+		global AccessLevelAccountSelector(){
 			this(DataAccess.USER_MODE);
 		}
 
-		AccessLevelAccountSelector(DataAccess access){
+		global AccessLevelAccountSelector(DataAccess access){
 			super(false, access);
 		}
 
-		Schema.SObjectType getSObjectType(){
+		global override Schema.SObjectType getSObjectType(){
 			return Account.sObjectType;
 		}
 
-		List<Schema.SObjectField> getSObjectFieldList(){
+		global override List<Schema.SObjectField> getSObjectFieldList(){
 			return new List<Schema.SObjectField> {
 					Account.Name,
 					Account.Id,
@@ -624,7 +624,7 @@ private with sharing class fflib_SObjectSelectorTest
 			return qf.toSOQL();
 		}
 
-		List<Account> selectAccountWithOpportunities(){
+		global List<Account> selectAccountWithOpportunities(){
 			return Database.query(createSelectAccountWithOpportunitiesSOQL());
 		}
 	}
@@ -762,69 +762,69 @@ private with sharing class fflib_SObjectSelectorTest
 		System.assertEquals(expectedSOQL, actualSOQL);
 	}
 
-	private class CampaignMemberSelector extends fflib_SObjectSelector {
-		CampaignMemberSelector(DataAccess access) {
+	global class CampaignMemberSelector extends fflib_SObjectSelector {
+		global CampaignMemberSelector(DataAccess access) {
 			super(false, access);
 		}
 
-		List<Schema.SObjectField> getSObjectFieldList() {
+		global override List<Schema.SObjectField> getSObjectFieldList() {
 			return new List<Schema.SObjectField>{
 					CampaignMember.Id,
 					CampaignMember.Status
 			};
 		}
 
-		Schema.SObjectType getSObjectType() {
+		global override Schema.SObjectType getSObjectType() {
 			return CampaignMember.sObjectType;
 		}
 	}
 
-	private class UserSelector extends fflib_SObjectSelector {
-		UserSelector() {
+	global class UserSelector extends fflib_SObjectSelector {
+		global UserSelector() {
 			super();
 		}
 
-		List<Schema.SObjectField> getSObjectFieldList() {
+		global override List<Schema.SObjectField> getSObjectFieldList() {
 			return new List<Schema.SObjectField>{
 					User.UserRoleId,
 					User.Id
 			};
 		}
 
-		Schema.SObjectType getSObjectType() {
+		global override Schema.SObjectType getSObjectType() {
 			return User.sObjectType;
 		}
 	}
 
-	private class GroupSelector extends fflib_SObjectSelector {
-		GroupSelector() {
+	global class GroupSelector extends fflib_SObjectSelector {
+		global GroupSelector() {
 			super();
 		}
 
-		List<Schema.SObjectField> getSObjectFieldList() {
+		global override List<Schema.SObjectField> getSObjectFieldList() {
 			return new List<Schema.SObjectField>{
 				Group.Id
 			};
 		}
 
-		Schema.SObjectType getSObjectType() {
+		global override Schema.SObjectType getSObjectType() {
 			return Group.sObjectType;
 		}
 	}
 
-	private class LeadSelector extends fflib_SObjectSelector {
-		LeadSelector() {
+	global class LeadSelector extends fflib_SObjectSelector {
+		global LeadSelector() {
 			super();
 		}
 
-		List<Schema.SObjectField> getSObjectFieldList() {
+		global override List<Schema.SObjectField> getSObjectFieldList() {
 			return new List<Schema.SObjectField>{
 					Lead.OwnerId,
 					Lead.Id
 			};
 		}
 
-		Schema.SObjectType getSObjectType() {
+		global override Schema.SObjectType getSObjectType() {
 			return Lead.sObjectType;
 		}
 	}

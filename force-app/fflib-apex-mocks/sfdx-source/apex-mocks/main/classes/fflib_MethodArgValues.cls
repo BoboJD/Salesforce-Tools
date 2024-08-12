@@ -26,7 +26,7 @@
 global with sharing class fflib_MethodArgValues
 {
 	global List<Object> argValues;
-	
+
 	/**
 	 * Wrapper object which encapsulates the argument values
 	 * supplied during a given method call.
@@ -37,7 +37,7 @@ global with sharing class fflib_MethodArgValues
 	{
 		this.argValues = argValues;
 	}
-	
+
 	/**
 	 * Standard equals override.
 	 * @param other The object whose equality we are verifying
@@ -49,11 +49,11 @@ global with sharing class fflib_MethodArgValues
 		{
 			return true;
 		}
-		
+
 		fflib_MethodArgValues that = other instanceof fflib_MethodArgValues ? (fflib_MethodArgValues)other : null;
 		return that != null && this.argValues == that.argValues;
 	}
-	
+
 	/**
 	 * Standard hashCode override.
 	 * @return Integer The generated hashCode
@@ -62,9 +62,9 @@ global with sharing class fflib_MethodArgValues
 	{
 		Integer prime = 31;
 		Integer result = 1;
-		
+
 		result = prime * result + ((argValues == null) ? 0 : argValues.hashCode());
-		
+
 		return result;
 	}
 }

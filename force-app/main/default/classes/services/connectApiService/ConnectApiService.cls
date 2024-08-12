@@ -27,7 +27,7 @@ global inherited sharing class ConnectApiService{
 	global static ConnectApi.CommentInput createCommentInputFromBody(ConnectApi.FeedBody body){
 		return service().createCommentInputFromBody(body);
 	}
-	
+
 	private static IConnectApiService service(){
 		return (IConnectApiService)Application.Service.newInstance(IConnectApiService.class);
 	}

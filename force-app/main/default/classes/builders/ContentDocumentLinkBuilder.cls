@@ -5,7 +5,7 @@ global inherited sharing class ContentDocumentLinkBuilder extends SObjectBuilder
 		super();
 	}
 
-	private SObjectType getSObjectType(){
+	global override SObjectType getSObjectType(){
 		return ContentDocumentLink.SObjectType;
 	}
 

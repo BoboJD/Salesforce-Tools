@@ -32,14 +32,14 @@ global with sharing class fflib_MatchTest
 		//Given
 		fflib_MethodArgValues argValues = new fflib_MethodArgValues(new List<Object>{ null });
 		List<fflib_IMatcher> targetMatchers = new List<fflib_IMatcher>{ new AlwaysMatch() };
-		
+
 		//When
 		Boolean match = fflib_Match.matchesAllArgs(argValues, targetMatchers);
 
 		//Then
 		System.Assert.isTrue(match);
 	}
-	
+
 	@isTest
 	private static void whenMatchesAllArgsWithManyMatchesReturnsTrue()
 	{
@@ -50,35 +50,35 @@ global with sharing class fflib_MatchTest
 			null,
 			null
 		});
-		
+
 		List<fflib_IMatcher> targetMatchers = new List<fflib_IMatcher>{
 			new AlwaysMatch(),
 			new AlwaysMatch(),
 			new AlwaysMatch(),
 			new AlwaysMatch()
 		};
-		
+
 		//When
 		Boolean match = fflib_Match.matchesAllArgs(argValues, targetMatchers);
 
 		//Then
 		System.Assert.isTrue(match);
 	}
-	
+
 	@isTest
 	private static void whenMatchesAllArgsWithOneMismatchReturnsFalse()
 	{
 		//Given
 		fflib_MethodArgValues argValues = new fflib_MethodArgValues(new List<Object>{ null });
 		List<fflib_IMatcher> targetMatchers = new List<fflib_IMatcher>{ new NeverMatch() };
-		
+
 		//When
 		Boolean match = fflib_Match.matchesAllArgs(argValues, targetMatchers);
 
 		//Then
 		System.Assert.isFalse(match);
 	}
-	
+
 	@isTest
 	private static void whenMatchesAllArgsWithManyMismatchesReturnsFalse()
 	{
@@ -89,21 +89,21 @@ global with sharing class fflib_MatchTest
 			null,
 			null
 		});
-		
+
 		List<fflib_IMatcher> targetMatchers = new List<fflib_IMatcher>{
 			new NeverMatch(),
 			new NeverMatch(),
 			new NeverMatch(),
 			new NeverMatch()
 		};
-		
+
 		//When
 		Boolean match = fflib_Match.matchesAllArgs(argValues, targetMatchers);
 
 		//Then
 		System.Assert.isFalse(match);
 	}
-	
+
 	@isTest
 	private static void whenMatchesAllArgsWithMatchesAndMismatchesReturnsFalse()
 	{
@@ -114,28 +114,28 @@ global with sharing class fflib_MatchTest
 			null,
 			null
 		});
-		
+
 		List<fflib_IMatcher> targetMatchers = new List<fflib_IMatcher>{
 			new AlwaysMatch(),
 			new AlwaysMatch(),
 			new NeverMatch(),
 			new AlwaysMatch()
 		};
-		
+
 		//When
 		Boolean match = fflib_Match.matchesAllArgs(argValues, targetMatchers);
 
 		//Then
 		System.Assert.isFalse(match);
 	}
-	
+
 	@isTest
 	private static void whenMatchesAllArgsWithNullMethodArgsThrowsException()
 	{
 		//Given
 		fflib_MethodArgValues methodArg = null;
 		List<fflib_IMatcher> targetMatchers = new List<fflib_IMatcher>{ new AlwaysMatch() };
-		
+
 		//When
 		try
 		{
@@ -148,14 +148,14 @@ global with sharing class fflib_MatchTest
 			System.Assert.areEqual('MethodArgs cannot be null', e.getMessage());
 		}
 	}
-	
+
 	@isTest
 	private static void whenMatchesAllArgsWithNullMethodArgsArgValuesThrowsException()
 	{
 		//Given
 		fflib_MethodArgValues methodArg = new fflib_MethodArgValues(null);
 		List<fflib_IMatcher> targetMatchers = new List<fflib_IMatcher>{ new AlwaysMatch() };
-		
+
 		//When
 		try
 		{
@@ -168,14 +168,14 @@ global with sharing class fflib_MatchTest
 			System.Assert.areEqual('MethodArgs.argValues cannot be null', e.getMessage());
 		}
 	}
-	
+
 	@isTest
 	private static void whenMatchesAllArgsWithNullMatchersThrowsException()
 	{
 		//Given
 		fflib_MethodArgValues methodArg = new fflib_MethodArgValues(new List<Object>{ 'Test' });
 		List<fflib_IMatcher> targetMatchers = null;
-		
+
 		//When
 		try
 		{
@@ -188,14 +188,14 @@ global with sharing class fflib_MatchTest
 			System.Assert.areEqual('Matchers cannot be null', e.getMessage());
 		}
 	}
-	
+
 	@isTest
 	private static void whenMatchesAllArgsWithDifferentSizeArgValuesAndMatchersThrowsException()
 	{
 		//Given
 		fflib_MethodArgValues methodArg = new fflib_MethodArgValues(new List<Object>{ 'Test' });
 		List<fflib_IMatcher> targetMatchers = new List<fflib_IMatcher>{ new AlwaysMatch(), new AlwaysMatch() };
-		
+
 		//When
 		try
 		{
@@ -212,46 +212,46 @@ global with sharing class fflib_MatchTest
 			System.Assert.areEqual(expectedMessage, e.getMessage());
 		}
 	}
-	
+
 	@isTest
 	private static void whenMatchesWithOneMatcherSetsMatchingToTrue()
 	{
 		//Given
 		fflib_IMatcher matcher = new AlwaysMatch();
-		
+
 		//When
 		fflib_Match.matches(matcher);
-		
+
 		//Then
 		System.Assert.isTrue(fflib_Match.Matching);
 	}
-	
+
 	@isTest
 	private static void whenMatchesWithOneMatcherRegistersMatcher()
 	{
 		//Given
 		fflib_IMatcher matcher = new AlwaysMatch();
-		
+
 		//When
 		fflib_Match.matches(matcher);
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
-		
+
 		System.Assert.areNotEqual(null, registeredMatchers);
 		System.Assert.areEqual(1, registeredMatchers.size());
 		System.Assert.areEqual(matcher, registeredMatchers[0]);
 	}
-	
+
 	@isTest
 	private static void whenMatchesWithOneMatcherReturnsNull()
 	{
 		//Given
 		fflib_IMatcher matcher = new AlwaysMatch();
-		
+
 		//When
 		Object retval = fflib_Match.matches(matcher);
-		
+
 		//Then
 		System.Assert.areEqual(null, retval);
 	}
@@ -307,13 +307,13 @@ global with sharing class fflib_MatchTest
 			System.Assert.areEqual(expectedMessage, e.getMessage());
 		}
 	}
-	
+
 	@isTest
 	private static void allOfWith2ArgsRegistersCorrectMatcherType()
 	{
 		//Given/When
 		Object x = fflib_Match.allOf(fflib_Match.eq('hello1'), fflib_Match.eq('hello2'));
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -326,7 +326,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		Object x = fflib_Match.allOf(fflib_Match.eq('hello1'), fflib_Match.eq('hello2'), fflib_Match.eq('hello3'));
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -339,7 +339,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		Object x = fflib_Match.allOf(fflib_Match.eq('hello1'), fflib_Match.eq('hello2'), fflib_Match.eq('hello3'), fflib_Match.eq('hello4'));
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -352,7 +352,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		Object x = fflib_Match.allOf(new List<Object>{ fflib_Match.eq('hello') });
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -365,7 +365,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		Object x = fflib_Match.anyOf(fflib_Match.eq('hello1'), fflib_Match.eq('hello2'));
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -378,7 +378,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		Object x = fflib_Match.anyOf(fflib_Match.eq('hello1'), fflib_Match.eq('hello2'), fflib_Match.eq('hello3'));
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -391,7 +391,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		Object x = fflib_Match.anyOf(fflib_Match.eq('hello1'), fflib_Match.eq('hello2'), fflib_Match.eq('hello3'), fflib_Match.eq('hello4'));
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -404,7 +404,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		Object x = fflib_Match.anyOf(new List<Object>{ fflib_Match.eq('hello') });
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -417,7 +417,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		Object x = fflib_Match.isNot(fflib_Match.eq('hello1'));
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -430,7 +430,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		Object x = fflib_Match.noneOf(fflib_Match.eq('hello1'), fflib_Match.eq('hello2'));
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -443,7 +443,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		Object x = fflib_Match.noneOf(fflib_Match.eq('hello1'), fflib_Match.eq('hello2'), fflib_Match.eq('hello3'));
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -456,7 +456,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		Object x = fflib_Match.noneOf(fflib_Match.eq('hello1'), fflib_Match.eq('hello2'), fflib_Match.eq('hello3'), fflib_Match.eq('hello4'));
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -469,7 +469,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		Object x = fflib_Match.noneOf(new List<Object>{ fflib_Match.eq('hello') });
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -482,7 +482,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		Object x = fflib_Match.eq('hello');
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -495,7 +495,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		Object x = fflib_Match.eqBoolean(true);
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -508,7 +508,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		Object x = fflib_Match.eqDate(Date.today());
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -521,7 +521,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		Object x = fflib_Match.eqDatetime(System.now());
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -534,7 +534,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		Object x = fflib_Match.eqDecimal(123);
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -547,7 +547,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		Object x = fflib_Match.eqDouble(123);
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -560,7 +560,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		Object x = fflib_Match.eqId('001000000000001AAA');
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -573,7 +573,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		Object x = fflib_Match.eqInteger(123);
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -586,7 +586,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		Object x = fflib_Match.eqList(new List<String>{ 'hello' });
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -599,7 +599,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		Object x = fflib_Match.eqLong(123);
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -613,7 +613,7 @@ global with sharing class fflib_MatchTest
 		//Given/When
 		Schema.SObjectField f = Schema.getGlobalDescribe().get('Account').getDescribe().fields.getMap().get('Id');
 		Object x = fflib_Match.eqSObjectField(f);
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -627,7 +627,7 @@ global with sharing class fflib_MatchTest
 		//Given/When
 		Schema.SObjectType ot = Schema.getGlobalDescribe().get('Account');
 		Object x = fflib_Match.eqSObjectType(ot);
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -640,7 +640,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		Object x = fflib_Match.eqString('hello');
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -653,7 +653,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		Object x = fflib_Match.refEq('hello');
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -666,7 +666,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		Boolean x = fflib_Match.anyBoolean();
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -679,7 +679,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		Date x = fflib_Match.anyDate();
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -692,7 +692,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		Datetime x = fflib_Match.anyDatetime();
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -705,7 +705,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		Decimal x = fflib_Match.anyDecimal();
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -718,7 +718,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		Double x = fflib_Match.anyDouble();
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -731,7 +731,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		Schema.FieldSet x = fflib_Match.anyFieldSet();
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -744,7 +744,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		Id x = fflib_Match.anyId();
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -757,7 +757,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		Integer x = fflib_Match.anyInteger();
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -770,7 +770,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		List<Object> x = fflib_Match.anyList();
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -783,7 +783,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		Long x = fflib_Match.anyLong();
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -796,7 +796,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		Object x = fflib_Match.anyObject();
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -809,7 +809,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		String x = fflib_Match.anyString();
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -822,7 +822,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		SObject x = fflib_Match.anySObject();
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -835,7 +835,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		SObjectField x = fflib_Match.anySObjectField();
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -848,7 +848,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		SObjectType x = fflib_Match.anySObjectType();
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -939,7 +939,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		Decimal x = fflib_Match.decimalBetween(0, 10);
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -952,7 +952,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		Decimal x = fflib_Match.decimalLessThan(0);
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -965,7 +965,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		Decimal x = fflib_Match.decimalMoreThan(0);
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -978,7 +978,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		Double x = fflib_Match.doubleBetween(0, 10);
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -991,7 +991,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		Double x = fflib_Match.doubleLessThan(0);
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -1004,7 +1004,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		Double x = fflib_Match.doubleMoreThan(0);
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -1037,7 +1037,7 @@ global with sharing class fflib_MatchTest
 
 		//Given/When
 		Schema.FieldSet x = fflib_Match.fieldSetEquivalentTo(anyFieldSet);
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -1050,7 +1050,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		Integer x = fflib_Match.integerBetween(0, 10);
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -1063,7 +1063,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		Integer x = fflib_Match.integerLessThan(0);
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -1076,7 +1076,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		Integer x = fflib_Match.integerMoreThan(0);
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -1089,7 +1089,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		Object x = fflib_Match.isNotNull();
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -1102,7 +1102,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		Object x = fflib_Match.isNull();
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -1115,7 +1115,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		Object x = fflib_Match.listContains('fred');
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -1128,7 +1128,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		Object x = fflib_Match.listIsEmpty();
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -1141,7 +1141,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		Long x = fflib_Match.longBetween(0, 10);
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -1154,7 +1154,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		Long x = fflib_Match.longLessThan(0);
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -1167,7 +1167,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		Long x = fflib_Match.longMoreThan(0);
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -1230,7 +1230,7 @@ global with sharing class fflib_MatchTest
 		Schema.SObjectField f = ot.getDescribe().fields.getMap().get('Id');
 
 		//When
-		SObject[] x = fflib_Match.sObjectsWith(new list<Map<Schema.SObjectField, Object>>{ 
+		SObject[] x = fflib_Match.sObjectsWith(new list<Map<Schema.SObjectField, Object>>{
             new map<Schema.SObjectField,Object> {f=>null}
         	});
 
@@ -1254,7 +1254,7 @@ global with sharing class fflib_MatchTest
 		Schema.SObjectField f = ot.getDescribe().fields.getMap().get('Id');
 
 		//When
-		SObject[] x = fflib_Match.sObjectsWith(new list<Map<Schema.SObjectField, Object>>{ 
+		SObject[] x = fflib_Match.sObjectsWith(new list<Map<Schema.SObjectField, Object>>{
             new map<Schema.SObjectField,Object> {f=>null}
         	}, false);
 
@@ -1264,7 +1264,7 @@ global with sharing class fflib_MatchTest
 		System.Assert.areEqual(1, registeredMatchers.size());
 		System.Assert.isInstanceOfType(registeredMatchers[0], fflib_MatcherDefinitions.SObjectsWith.class, String.valueOf(registeredMatchers));
 	}
-    
+
 	@isTest
 	private static void sObjectWithIdRegistersCorrectMatcherType()
 	{
@@ -1296,7 +1296,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		String x = fflib_Match.stringContains('hello');
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -1309,7 +1309,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		String x = fflib_Match.stringEndsWith('hello');
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -1322,7 +1322,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		String x = fflib_Match.stringIsBlank();
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -1335,7 +1335,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		String x = fflib_Match.stringIsNotBlank();
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -1348,7 +1348,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		String x = fflib_Match.stringMatches('[a-z]*');
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -1361,7 +1361,7 @@ global with sharing class fflib_MatchTest
 	{
 		//Given/When
 		String x = fflib_Match.stringStartsWith('hello');
-		
+
 		//Then
 		List<fflib_IMatcher> registeredMatchers = fflib_Match.getAndClearMatchers(1);
 		System.Assert.areNotEqual(null, registeredMatchers);
@@ -1369,15 +1369,15 @@ global with sharing class fflib_MatchTest
 		System.Assert.isInstanceOfType(registeredMatchers[0], fflib_MatcherDefinitions.StringStartsWith.class);
 	}
 
-	private class AlwaysMatch implements fflib_IMatcher
+	global class AlwaysMatch implements fflib_IMatcher
 	{
 		global Boolean matches(Object arg)
 		{
 			return true;
 		}
 	}
-	
-	private class NeverMatch implements fflib_IMatcher
+
+	global class NeverMatch implements fflib_IMatcher
 	{
 		global Boolean matches(Object arg)
 		{

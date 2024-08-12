@@ -3,7 +3,7 @@ global inherited sharing class DecimalUtils{
 	global static Decimal round(Decimal theNumber){
 		return round(theNumber, 2);
 	}
-	
+
 	global static Decimal round(Decimal theNumber, Integer decimalPlaces){
 		return returnsZeroIfNull(theNumber).setScale(decimalPlaces, RoundingMode.HALF_UP);
 	}

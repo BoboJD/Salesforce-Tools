@@ -25,7 +25,7 @@
 **/
 
 @IsTest
-private class fflib_ObjectsTest
+global class fflib_ObjectsTest
 {
 	private static final fflib_ObjectsTest.DataTransferObject TRANSFER_OBJECT_A = new DataTransferObject('Test A');
 	private static final fflib_ObjectsTest.DataTransferObject TRANSFER_OBJECT_B = new DataTransferObject('Test B');
@@ -173,24 +173,24 @@ private class fflib_ObjectsTest
 		};
 	}
 
-	private class Domain extends fflib_Objects
+	global class Domain extends fflib_Objects
 	{
-		Domain(List<Object> objects)
+		global Domain(List<Object> objects)
 		{
 			super(objects);
 		}
 
-		override Object getType()
+		global override Object getType()
 		{
 			return DataTransferObject.class;
 		}
 	}
 
-	private class DataTransferObject
+	global class DataTransferObject
 	{
-		String MyProperty { get; set; }
+		global String MyProperty { get; set; }
 
-		DataTransferObject(String property)
+		global DataTransferObject(String property)
 		{
 			this.MyProperty = property;
 		}

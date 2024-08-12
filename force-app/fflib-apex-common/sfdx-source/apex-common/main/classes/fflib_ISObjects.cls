@@ -23,7 +23,7 @@
  *  OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 **/
-interface fflib_ISObjects extends fflib_IObjects
+global interface fflib_ISObjects extends fflib_IObjects
 {
 	/**
 	 * @return Return the SObject records contained in the domain

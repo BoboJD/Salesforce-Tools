@@ -25,7 +25,7 @@
 **/
 
 @IsTest
-private class fflib_ApplicationTest
+global class fflib_ApplicationTest
 {
 	@IsTest
 	private static void callingDomainFactoryShouldGiveRegisteredImplsAndMocks()
@@ -444,42 +444,42 @@ private class fflib_ApplicationTest
 		System.assert(!customDML.isInsertCalled, 'Oops, custom DML was called');
 	}
 
-	class CustomDML implements fflib_SObjectUnitOfWork.IDML
+	global class CustomDML implements fflib_SObjectUnitOfWork.IDML
 	{
-		boolean isInsertCalled = false;
-		boolean isUpdateCalled = false;
-		boolean isDeleteCalled = false;
-		boolean isPublishCalled = false;
-		Boolean isEmptyRecycleBinCalled = false;
+		global boolean isInsertCalled = false;
+		global boolean isUpdateCalled = false;
+		global boolean isDeleteCalled = false;
+		global boolean isPublishCalled = false;
+		global Boolean isEmptyRecycleBinCalled = false;
 
-		void dmlInsert(List<SObject> objList){
+		global void dmlInsert(List<SObject> objList){
 			this.isInsertCalled = true;
 		}
-		void dmlUpdate(List<SObject> objList){
+		global void dmlUpdate(List<SObject> objList){
 			this.isUpdateCalled = true;
 		}
-		void dmlDelete(List<SObject> objList){
+		global void dmlDelete(List<SObject> objList){
 			this.isDeleteCalled = true;
 		}
-		void eventPublish(List<SObject> objList)
+		global void eventPublish(List<SObject> objList)
 		{
 			this.isPublishCalled = true;
 		}
-		void emptyRecycleBin(List<SObject> objList)
+		global void emptyRecycleBin(List<SObject> objList)
 		{
 			this.isEmptyRecycleBinCalled = true;
 		}
 	}
 
 	// Configure and create the ServiceFactory for this Application
-	static final fflib_Application.ServiceFactory Service =
+	global static final fflib_Application.ServiceFactory Service =
 		new fflib_Application.ServiceFactory(
 			new Map<Type, Type> {
 					IOpportunitiesService.class => OpportunitiesServiceImpl.class,
 					IAccountService.class => AccountsServiceImpl.class });
 
 	// Configure and create the UnitOfWorkFactory for this Application
-	static final fflib_Application.UnitOfWorkFactory UnitOfWork =
+	global static final fflib_Application.UnitOfWorkFactory UnitOfWork =
 		new fflib_Application.UnitOfWorkFactory(
 				new List<SObjectType> {
 					Account.SObjectType,
@@ -487,14 +487,14 @@ private class fflib_ApplicationTest
 					OpportunityLineItem.SObjectType });
 
 	// Configure and create the SelectorFactory for this Application
-	static final fflib_Application.SelectorFactory Selector =
+	global static final fflib_Application.SelectorFactory Selector =
 		new fflib_Application.SelectorFactory(
 			new Map<SObjectType, Type> {
 					Account.SObjectType => AccountsSelector.class,
 					Opportunity.SObjectType => OpportuntiesSelector.class });
 
 	// Configure and create the DomainFactory for this Application
-	static final fflib_Application.DomainFactory Domain =
+	global static final fflib_Application.DomainFactory Domain =
 		new fflib_Application.DomainFactory(
 			fflib_ApplicationTest.Selector,
 			new Map<SObjectType, Type> {
@@ -502,80 +502,80 @@ private class fflib_ApplicationTest
 					Opportunity.SObjectType => OpportuntiesConstructor.class,
 					Contact.SObjectType => ContactsConstructor.class });
 
-	class AccountsDomain extends fflib_SObjectDomain
+	global class AccountsDomain extends fflib_SObjectDomain
 	{
-		AccountsDomain(List<Account> sObjectList)
+		global AccountsDomain(List<Account> sObjectList)
 		{
 			super(sObjectList);
 		}
 
-		AccountsDomain(List<SObject> sObjectList, SObjectType sObjectType)
+		global AccountsDomain(List<SObject> sObjectList, SObjectType sObjectType)
 		{
 			super(sObjectList, sObjectType);
 		}
 	}
 
-	class AccountsConstructor implements fflib_SObjectDomain.IConstructable2
+	global class AccountsConstructor implements fflib_SObjectDomain.IConstructable2
 	{
-		fflib_SObjectDomain construct(List<SObject> sObjectList)
+		global fflib_SObjectDomain construct(List<SObject> sObjectList)
 		{
 			return new AccountsDomain(sObjectList);
 		}
 
-		fflib_SObjectDomain construct(List<SObject> sObjectList, SObjectType sObjectType)
+		global fflib_SObjectDomain construct(List<SObject> sObjectList, SObjectType sObjectType)
 		{
 			return new AccountsDomain(sObjectList, sObjectType);
 		}
 	}
 
-	class OpportuntiesDomain extends fflib_SObjectDomain
+	global class OpportuntiesDomain extends fflib_SObjectDomain
 	{
-		OpportuntiesDomain(List<Opportunity> sObjectList)
+		global OpportuntiesDomain(List<Opportunity> sObjectList)
 		{
 			super(sObjectList);
 		}
 
-		OpportuntiesDomain(List<SObject> sObjectList, SObjectType sObjectType)
+		global OpportuntiesDomain(List<SObject> sObjectList, SObjectType sObjectType)
 		{
 			super(sObjectList, sObjectType);
 		}
 	}
 
-	class OpportuntiesConstructor implements fflib_SObjectDomain.IConstructable2
+	global class OpportuntiesConstructor implements fflib_SObjectDomain.IConstructable2
 	{
-		fflib_SObjectDomain construct(List<SObject> sObjectList)
+		global fflib_SObjectDomain construct(List<SObject> sObjectList)
 		{
 			return new OpportuntiesDomain(sObjectList);
 		}
 
-		fflib_SObjectDomain construct(List<SObject> sObjectList, SObjectType sObjectType)
+		global fflib_SObjectDomain construct(List<SObject> sObjectList, SObjectType sObjectType)
 		{
 			return new OpportuntiesDomain(sObjectList, sObjectType);
 		}
 	}
 
-	class ContactsDomain extends fflib_SObjectDomain
+	global class ContactsDomain extends fflib_SObjectDomain
 	{
-		ContactsDomain(List<Opportunity> sObjectList)
+		global ContactsDomain(List<Opportunity> sObjectList)
 		{
 			super(sObjectList);
 		}
 
-		ContactsDomain(List<SObject> sObjectList, SObjectType sObjectType)
+		global ContactsDomain(List<SObject> sObjectList, SObjectType sObjectType)
 		{
 			super(sObjectList, sObjectType);
 		}
 	}
 
 	// Intentionally does not support IConstructable or IConstructable2 interfaces in order to support testing
-	class ContactsConstructor
+	global class ContactsConstructor
 	{
 
 	}
 
-	class OpportuntiesSelector extends fflib_SObjectSelector
+	global class OpportuntiesSelector extends fflib_SObjectSelector
 	{
-		List<Schema.SObjectField> getSObjectFieldList()
+		global override List<Schema.SObjectField> getSObjectFieldList()
 		{
 			return new List<Schema.SObjectField> {
 				Opportunity.Name,
@@ -583,15 +583,15 @@ private class fflib_ApplicationTest
 			};
 		}
 
-		Schema.SObjectType getSObjectType()
+		global override Schema.SObjectType getSObjectType()
 		{
 			return Opportunity.sObjectType;
 		}
 	}
 
-	class AccountsSelector extends fflib_SObjectSelector
+	global class AccountsSelector extends fflib_SObjectSelector
 	{
-		List<Schema.SObjectField> getSObjectFieldList()
+		global override List<Schema.SObjectField> getSObjectFieldList()
 		{
 			return new List<Schema.SObjectField> {
 				Account.Name,
@@ -601,21 +601,21 @@ private class fflib_ApplicationTest
 			};
 		}
 
-		Schema.SObjectType getSObjectType()
+		global override Schema.SObjectType getSObjectType()
 		{
 			return Account.sObjectType;
 		}
 	}
 
-	interface IContactService { }
+	global interface IContactService { }
 
-	interface IOpportunitiesService { }
+	global interface IOpportunitiesService { }
 
-	interface IAccountService { }
+	global interface IAccountService { }
 
-	class OpportunitiesServiceImpl implements IOpportunitiesService { }
+	global class OpportunitiesServiceImpl implements IOpportunitiesService { }
 
-	class AccountsServiceImpl implements IAccountService { }
+	global class AccountsServiceImpl implements IAccountService { }
 
-	class AccountsServiceMock implements IAccountService { }
+	global class AccountsServiceMock implements IAccountService { }
 }

@@ -23,17 +23,17 @@
  *  OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 **/
-virtual class fflib_SObjects
+global virtual class fflib_SObjects
 		extends fflib_Objects
 		implements fflib_ISObjects
 {
 
-	Schema.DescribeSObjectResult SObjectDescribe {get; private set;}
+	global Schema.DescribeSObjectResult SObjectDescribe {get; private set;}
 
 	/**
 	 * Useful during unit testing to assert at a more granular and robust level for errors raised during the various trigger events
 	 **/
-	static ErrorFactory Errors  {get; private set;}
+	global static ErrorFactory Errors  {get; private set;}
 
 	static
 	{
@@ -43,33 +43,33 @@ virtual class fflib_SObjects
 	/**
 	 * Class constructor
 	 */
-	fflib_SObjects(List<SObject> records)
+	global fflib_SObjects(List<SObject> records)
 	{
 		super(records);
 	}
 
-	fflib_SObjects(List<SObject> records, Schema.SObjectType sObjectType)
+	global fflib_SObjects(List<SObject> records, Schema.SObjectType sObjectType)
 	{
 		super(records);
 		SObjectDescribe = sObjectType.getDescribe();
 	}
 
-	virtual List<SObject> getRecords()
+	global virtual List<SObject> getRecords()
 	{
 		return (List<SObject>) getObjects();
 	}
 
-	virtual Set<Id> getRecordIds()
+	global virtual Set<Id> getRecordIds()
 	{
 		return new Map<Id, SObject>(getRecords()).keySet();
 	}
 
-	virtual override Object getType()
+	global virtual override Object getType()
 	{
 		return getSObjectType();
 	}
 
-	virtual SObjectType getSObjectType()
+	global virtual SObjectType getSObjectType()
 	{
 		return SObjectDescribe.getSObjectType();
 	}
@@ -385,18 +385,18 @@ virtual class fflib_SObjects
 	/**
      * Ensures logging of errors in the Domain context for later assertions in tests
      **/
-	virtual class ErrorFactory
+	global virtual class ErrorFactory
 	{
 		private List<Error> errorList = new List<Error>();
 
 		private ErrorFactory() {	}
 
-		String error(String message, SObject record)
+		global String error(String message, SObject record)
 		{
 			return error(null, message, record);
 		}
 
-		String error(fflib_SObjects domain, String message, SObject record)
+		global String error(fflib_SObjects domain, String message, SObject record)
 		{
 			ObjectError objectError = new ObjectError();
 			objectError.domain = domain;
@@ -406,12 +406,12 @@ virtual class fflib_SObjects
 			return message;
 		}
 
-		String error(String message, SObject record, SObjectField field)
+		global String error(String message, SObject record, SObjectField field)
 		{
 			return error(null, message, record, field);
 		}
 
-		String error(fflib_ISObjects domain, String message, SObject record, SObjectField field)
+		global String error(fflib_ISObjects domain, String message, SObject record, SObjectField field)
 		{
 			FieldError fieldError = new FieldError();
 			fieldError.domain = domain;
@@ -422,12 +422,12 @@ virtual class fflib_SObjects
 			return message;
 		}
 
-		List<Error> getAll()
+		global List<Error> getAll()
 		{
 			return errorList.clone();
 		}
 
-		void clearAll()
+		global void clearAll()
 		{
 			errorList.clear();
 		}
@@ -436,29 +436,29 @@ virtual class fflib_SObjects
 	/**
 	 * Ensures logging of errors in the Domain context for later assertions in tests
 	 **/
-	virtual class FieldError extends ObjectError
+	global virtual class FieldError extends ObjectError
 	{
-		SObjectField field;
+		global SObjectField field;
 
-		FieldError()	{ }
+		global FieldError()	{ }
 	}
 
 	/**
 	 * Ensures logging of errors in the Domain context for later assertions in tests
 	 **/
-	virtual class ObjectError extends Error
+	global virtual class ObjectError extends Error
 	{
-		SObject record;
+		global SObject record;
 
-		ObjectError() { }
+		global ObjectError() { }
 	}
 
 	/**
 	 * Ensures logging of errors in the Domain context for later assertions in tests
 	 **/
-	abstract class Error
+	global abstract class Error
 	{
-		String message;
-		fflib_ISObjects domain;
+		global String message;
+		global fflib_ISObjects domain;
 	}
 }

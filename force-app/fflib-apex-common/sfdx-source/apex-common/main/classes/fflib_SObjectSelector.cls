@@ -27,10 +27,10 @@
 /**
  * Class providing common database query support for abstracting and encapsulating query logic
  **/
-abstract with sharing class fflib_SObjectSelector
+global abstract with sharing class fflib_SObjectSelector
 	implements fflib_ISObjectSelector
 {
-    enum DataAccess{LEGACY, USER_MODE, SYSTEM_MODE}
+    global enum DataAccess{LEGACY, USER_MODE, SYSTEM_MODE}
 
     /**
      * Indicates whether the sObject has the currency ISO code field for organisations which have multi-currency
@@ -94,29 +94,29 @@ abstract with sharing class fflib_SObjectSelector
     /**
      * Implement this method to inform the base class of the SObject (custom or standard) to be queried
      **/
-    abstract Schema.SObjectType getSObjectType();
+    global abstract Schema.SObjectType getSObjectType();
 
     /**
      * Implement this method to inform the base class of the common fields to be queried or listed by the base class methods
      **/
-    abstract List<Schema.SObjectField> getSObjectFieldList();
+    global abstract List<Schema.SObjectField> getSObjectFieldList();
 
     /**
      * Constructs the Selector with the default settings
      **/
-    fflib_SObjectSelector() { }
+    global fflib_SObjectSelector() { }
 
     /**
      * Constructs the Selector
      *
      * @param includeFieldSetFields Set to true if the Selector queries are to include Fieldset fields as well
      **/
-    fflib_SObjectSelector(Boolean includeFieldSetFields)
+    global fflib_SObjectSelector(Boolean includeFieldSetFields)
     {
         this(includeFieldSetFields, true, false);
     }
 
-    fflib_SObjectSelector(Boolean includeFieldSetFields, DataAccess dataAccess)
+    global fflib_SObjectSelector(Boolean includeFieldSetFields, DataAccess dataAccess)
     {
         this(includeFieldSetFields, false, false, false, dataAccess);
     }
@@ -127,7 +127,7 @@ abstract with sharing class fflib_SObjectSelector
      * @param includeFieldSetFields Set to true if the Selector queries are to include Fieldset fields as well
      * @deprecated - consider using dataAccess for native platform enforcement of CRUD and FLS
      **/
-    fflib_SObjectSelector(Boolean includeFieldSetFields, Boolean enforceCRUD, Boolean enforceFLS)
+    global fflib_SObjectSelector(Boolean includeFieldSetFields, Boolean enforceCRUD, Boolean enforceFLS)
     {
         this(includeFieldSetFields, enforceCRUD, enforceFLS, true);
     }
@@ -141,7 +141,7 @@ abstract with sharing class fflib_SObjectSelector
      * @param sortSelectFields Set to false if selecting many columns to skip sorting select fields and improve performance
      * @deprecated - consider using dataAccess for native platform enforcement of CRUD and FLS
      **/
-    fflib_SObjectSelector(Boolean includeFieldSetFields, Boolean enforceCRUD, Boolean enforceFLS, Boolean sortSelectFields)
+    global fflib_SObjectSelector(Boolean includeFieldSetFields, Boolean enforceCRUD, Boolean enforceFLS, Boolean sortSelectFields)
     {
         this(includeFieldSetFields,enforceCRUD,enforceFLS,sortSelectFields,DataAccess.LEGACY);
     }
@@ -159,7 +159,7 @@ abstract with sharing class fflib_SObjectSelector
     /**
      * Override this method to provide a list of Fieldsets that can optionally drive inclusion of additional fields in the base queries
      **/
-    virtual List<Schema.FieldSet> getSObjectFieldSetList()
+    global virtual List<Schema.FieldSet> getSObjectFieldSetList()
     {
         return null;
     }
@@ -168,7 +168,7 @@ abstract with sharing class fflib_SObjectSelector
       * Override this method to control the default ordering of records returned by the base queries,
       * defaults to the name field of the object if it is not encrypted or CreatedDate if there the object has createdDated or Id
       **/
-     virtual String getOrderBy()
+     global virtual String getOrderBy()
      {
         if (m_orderBy == null)
         {
@@ -199,7 +199,7 @@ abstract with sharing class fflib_SObjectSelector
      * @description Set the selector to enforce FLS Security
      * @deprecated -- consider using setDataAccess to enforce native Apex User Mode Operations instead
      **/
-    fflib_SObjectSelector enforceFLS()
+    global fflib_SObjectSelector enforceFLS()
     {
         m_enforceFLS = true;
         return this;
@@ -208,7 +208,7 @@ abstract with sharing class fflib_SObjectSelector
     /**
      * @description Set the selector to automatically include the FieldSet fields when building queries
      **/
-    fflib_SObjectSelector includeFieldSetFields()
+    global fflib_SObjectSelector includeFieldSetFields()
     {
         this.m_includeFieldSetFields = true;
         return this;
@@ -218,19 +218,19 @@ abstract with sharing class fflib_SObjectSelector
      * @description Set the selector to ignore CRUD security
      * @return
      */
-    fflib_SObjectSelector ignoreCRUD()
+    global fflib_SObjectSelector ignoreCRUD()
     {
         this.m_enforceCRUD = false;
         return this;
     }
 
-    fflib_SObjectSelector unsortedSelectFields()
+    global fflib_SObjectSelector unsortedSelectFields()
     {
         this.m_sortSelectFields = false;
         return this;
     }
 
-    fflib_SObjectSelector setDataAccess(DataAccess access){
+    global fflib_SObjectSelector setDataAccess(DataAccess access){
         this.m_dataAccess = access;
 
         //You can't mix and match the legacy enforceFls and assertCRUD with the SYSTEM_MODE or USER_MODE
@@ -245,7 +245,7 @@ abstract with sharing class fflib_SObjectSelector
     /**
      * Returns True if this Selector instance has been instructed by the caller to include Field Set fields
      **/
-    Boolean isIncludeFieldSetFields()
+    global Boolean isIncludeFieldSetFields()
     {
         return m_includeFieldSetFields;
     }
@@ -253,7 +253,7 @@ abstract with sharing class fflib_SObjectSelector
     /**
      * Returns True if this Selector is enforcing FLS
      **/
-    Boolean isEnforcingFLS()
+    global Boolean isEnforcingFLS()
     {
     	return m_enforceFLS;
     }
@@ -261,12 +261,12 @@ abstract with sharing class fflib_SObjectSelector
     /**
      * Returns True if this Selector is enforcing CRUD Security
      **/
-    Boolean isEnforcingCRUD()
+    global Boolean isEnforcingCRUD()
     {
     	return m_enforceCRUD;
     }
 
-    DataAccess getDataAccess(){
+    global DataAccess getDataAccess(){
         return m_dataAccess;
     }
 
@@ -276,7 +276,7 @@ abstract with sharing class fflib_SObjectSelector
      *
      * @depricated See newQueryFactory
      **/
-    fflib_StringBuilder.CommaDelimitedListBuilder getFieldListBuilder()
+    global fflib_StringBuilder.CommaDelimitedListBuilder getFieldListBuilder()
     {
         return
             new fflib_StringBuilder.CommaDelimitedListBuilder(
@@ -289,7 +289,7 @@ abstract with sharing class fflib_SObjectSelector
      *
      * @depricated See newQueryFactory
      **/
-    void setFieldListBuilder(fflib_StringBuilder.FieldListBuilder fieldListBuilder)
+    global void setFieldListBuilder(fflib_StringBuilder.FieldListBuilder fieldListBuilder)
     {
         // TODO: Consider if given the known use cases for this (dynamic selector optimisation) if it's OK to leave this as a null operation
     }
@@ -299,7 +299,7 @@ abstract with sharing class fflib_SObjectSelector
      *
      * @deprecated See newQueryFactory
      **/
-    String getFieldListString()
+    global String getFieldListString()
     {
         return getFieldListBuilder().getStringValue();
     }
@@ -310,7 +310,7 @@ abstract with sharing class fflib_SObjectSelector
      *
      * @depricated See newQueryFactory
      **/
-    String getRelatedFieldListString(String relation)
+    global String getRelatedFieldListString(String relation)
     {
         return getFieldListBuilder().getStringValue(relation + '.');
     }
@@ -318,7 +318,7 @@ abstract with sharing class fflib_SObjectSelector
     /**
      * Returns the string representation of the SObject this selector represents
      **/
-    String getSObjectName()
+    global String getSObjectName()
     {
         return describeWrapper.getDescribe().getName();
     }
@@ -331,7 +331,7 @@ abstract with sharing class fflib_SObjectSelector
      *   - Ordered by the fields returned via getOrderBy
      * @returns A list of SObject's
      **/
-    virtual List<SObject> selectSObjectsById(Set<Id> idSet)
+    global virtual List<SObject> selectSObjectsById(Set<Id> idSet)
     {
         return Database.query(buildQuerySObjectById());
     }
@@ -344,7 +344,7 @@ abstract with sharing class fflib_SObjectSelector
      *   - Ordered by the fields returned via getOrderBy
      * @returns A QueryLocator (typically for use in a Batch Apex job)
      **/
-    virtual Database.QueryLocator queryLocatorById(Set<Id> idSet)
+    global virtual Database.QueryLocator queryLocatorById(Set<Id> idSet)
     {
         return Database.getQueryLocator(buildQuerySObjectById());
     }
@@ -354,7 +354,7 @@ abstract with sharing class fflib_SObjectSelector
      *
      * @deprecated If you utilise the newQueryFactory method this is automatically done for you (unless disabled by the selector)
      **/
-    void assertIsAccessible()
+    global void assertIsAccessible()
     {
         if(!getSObjectType().getDescribe().isAccessible())
            throw new fflib_SObjectDomain.DomainException(
@@ -362,19 +362,19 @@ abstract with sharing class fflib_SObjectSelector
     }
 
     /**
-     * access for the getSObjectType during Mock registration
-     *   (adding to the existing method broken base class API backwards compatibility)
+     * global access for the getSObjectType during Mock registration
+     *   (adding global to the existing method broken base class API backwards compatibility)
      **/
-    SObjectType getSObjectType2()
+    global SObjectType getSObjectType2()
     {
         return getSObjectType();
     }
 
     /**
-     * access for the getSObjectType during Mock registration
-     *   (adding to the existing method broken base class API backwards compatibility1)
+     * global access for the getSObjectType during Mock registration
+     *   (adding global to the existing method broken base class API backwards compatibility1)
      **/
-    SObjectType sObjectType()
+    global SObjectType sObjectType()
     {
         return getSObjectType();
     }
@@ -382,7 +382,7 @@ abstract with sharing class fflib_SObjectSelector
     /**
      * Returns a QueryFactory configured with the Selectors object, fields, fieldsets and default order by
      **/
-    fflib_QueryFactory newQueryFactory()
+    global fflib_QueryFactory newQueryFactory()
     {
         return newQueryFactory(m_enforceCRUD, m_enforceFLS, true, m_DataAccess);
     }
@@ -390,7 +390,7 @@ abstract with sharing class fflib_SObjectSelector
     /**
      * Returns a QueryFactory configured with the Selectors object, fields, fieldsets and default order by
      **/
-    fflib_QueryFactory newQueryFactory(Boolean includeSelectorFields)
+    global fflib_QueryFactory newQueryFactory(Boolean includeSelectorFields)
     {
         return newQueryFactory(m_enforceCRUD, m_enforceFLS, includeSelectorFields, m_DataAccess);
     }
@@ -399,7 +399,7 @@ abstract with sharing class fflib_SObjectSelector
      * Returns a QueryFactory configured with the Selectors object, fields, fieldsets and default order by
      * CRUD and FLS read security will be checked if the corresponding inputs are true (overrides that defined in the selector).
      **/
-    fflib_QueryFactory newQueryFactory(Boolean assertCRUD, Boolean enforceFLS, Boolean includeSelectorFields)
+    global fflib_QueryFactory newQueryFactory(Boolean assertCRUD, Boolean enforceFLS, Boolean includeSelectorFields)
     {
         // Construct QueryFactory around the given SObject
         return newQueryFactory(
@@ -425,7 +425,7 @@ abstract with sharing class fflib_SObjectSelector
       *
       * // TODO: This should be consistent (ideally) with configureQueryFactory below
       **/
-     void configureQueryFactoryFields(fflib_QueryFactory queryFactory, String relationshipFieldPath)
+     global void configureQueryFactoryFields(fflib_QueryFactory queryFactory, String relationshipFieldPath)
      {
 	// Add fields from selector prefixing the relationship path
 		for(SObjectField field : getSObjectFieldList()) {
@@ -440,7 +440,7 @@ abstract with sharing class fflib_SObjectSelector
     /**
      * Adds a subselect QueryFactory based on this selector to the given QueryFactor, returns the child QueryFactory
      **/
-    fflib_QueryFactory addQueryFactorySubselect(fflib_QueryFactory parentQueryFactory)
+    global fflib_QueryFactory addQueryFactorySubselect(fflib_QueryFactory parentQueryFactory)
     {
     	return addQueryFactorySubselect(parentQueryFactory, true);
     }
@@ -448,7 +448,7 @@ abstract with sharing class fflib_SObjectSelector
     /**
      * Adds a subselect QueryFactory based on this selector to the given QueryFactor
      **/
-    fflib_QueryFactory addQueryFactorySubselect(fflib_QueryFactory parentQueryFactory, Boolean includeSelectorFields)
+    global fflib_QueryFactory addQueryFactorySubselect(fflib_QueryFactory parentQueryFactory, Boolean includeSelectorFields)
     {
     	fflib_QueryFactory subSelectQueryFactory =
     		parentQueryFactory.subselectQuery(getSObjectType2());
@@ -463,7 +463,7 @@ abstract with sharing class fflib_SObjectSelector
      /**
       * Adds a subselect QueryFactory based on this selector to the given QueryFactor, returns the child QueryFactory
       **/
-     fflib_QueryFactory addQueryFactorySubselect(fflib_QueryFactory parentQueryFactory, String relationshipName)
+     global fflib_QueryFactory addQueryFactorySubselect(fflib_QueryFactory parentQueryFactory, String relationshipName)
      {
 	return addQueryFactorySubselect(parentQueryFactory, relationshipName, TRUE);
      }
@@ -471,7 +471,7 @@ abstract with sharing class fflib_SObjectSelector
      /**
        * Adds a subselect QueryFactory based on this selector to the given QueryFactor
        **/
-     fflib_QueryFactory addQueryFactorySubselect(fflib_QueryFactory parentQueryFactory, String relationshipName, Boolean includeSelectorFields)
+     global fflib_QueryFactory addQueryFactorySubselect(fflib_QueryFactory parentQueryFactory, String relationshipName, Boolean includeSelectorFields)
      {
         fflib_QueryFactory subSelectQueryFactory = parentQueryFactory.subselectQuery(relationshipName);
         return configureQueryFactory(subSelectQueryFactory, m_enforceCRUD, m_enforceFLS, includeSelectorFields, m_dataAccess);
@@ -480,7 +480,7 @@ abstract with sharing class fflib_SObjectSelector
     /**
      * Constructs the default SOQL query for this selector, see selectSObjectsById and queryLocatorById
      **/
-    protected String buildQuerySObjectById()
+    global String buildQuerySObjectById()
     {
         return newQueryFactory().setCondition('id in :idSet').toSOQL();
     }

@@ -71,7 +71,7 @@ global class fflib_ApexMocksUtilsTest
 		System.Assert.areEqual(acc.Id, accWithRelationships.Id);
 		System.Assert.areEqual(acc.Name, accWithRelationships.Name);
 		System.Assert.areEqual(acc.NumberOfEmployees, accWithRelationships.NumberOfEmployees);
-		
+
 		//Assert relationship fields
 		List<Contact> contacts = accWithRelationships.Contacts;
 		System.Assert.areNotEqual(null, contacts);
@@ -210,7 +210,7 @@ global class fflib_ApexMocksUtilsTest
 
 	@isTest
 	static void setReadOnlyFields_CreatedByIdSetToCurrentUserId_IdFieldSetSuccessfully() {
-		
+
 		Account acc = new Account();
 		Id userId = fflib_IDGenerator.generate((new User()).getSObjectType());
 
@@ -227,7 +227,7 @@ global class fflib_ApexMocksUtilsTest
 
 	@isTest
 	static void setReadOnlyFields_LastReferencedDateSetOnAccount_DateTimeFieldSetSuccessfully() {
-		
+
 		Account acc = new Account();
 		DateTime lastRefDate = DateTime.newInstanceGmt(2020, 1, 7, 23, 30, 0);
 

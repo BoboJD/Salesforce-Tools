@@ -25,7 +25,7 @@
 **/
 
 @IsTest
-private class fflib_SObjectsTest
+global class fflib_SObjectsTest
 {
 
 	@IsTest
@@ -223,14 +223,14 @@ private class fflib_SObjectsTest
 	}
 
 
-	private class DomainAccounts extends fflib_SObjects
+	global class DomainAccounts extends fflib_SObjects
 	{
-		DomainAccounts(List<SObject> records)
+		global DomainAccounts(List<SObject> records)
 		{
 			super(records, Schema.Account.SObjectType);
 		}
 
-		List<Account> selectByShippingCountry(String country)
+		global List<Account> selectByShippingCountry(String country)
 		{
 			return (List<Account>) getRecordsByFieldValues(
 				Schema.Account.ShippingCountry,
@@ -238,7 +238,7 @@ private class fflib_SObjectsTest
 			);
 		}
 
-		List<Account> selectByRating(String rating)
+		global List<Account> selectByRating(String rating)
 		{
 			return (List<Account>) getRecordsByFieldValue(
 				Schema.Account.Rating,
@@ -246,21 +246,21 @@ private class fflib_SObjectsTest
 			);
 		}
 
-		List<Account> selectWithoutShippingCountry()
+		global List<Account> selectWithoutShippingCountry()
 		{
 			return (List<Account>) getRecordsWithBlankFieldValues(
 							Schema.Account.ShippingCountry
 			);
 		}
 
-		List<Account> selectWithShippingCountry()
+		global List<Account> selectWithShippingCountry()
 		{
 			return (List<Account>) getRecordsWithNotBlankFieldValues(
 							Schema.Account.ShippingCountry
 			);
 		}
 
-		List<Account> selectWithEmptyRecord()
+		global List<Account> selectWithEmptyRecord()
 		{
 			return (List<Account>) getRecordsWithAllBlankFieldValues(
 					new Set<Schema.SObjectField>
@@ -271,7 +271,7 @@ private class fflib_SObjectsTest
 			);
 		}
 
-		List<Account> selectPopulatedRecords()
+		global List<Account> selectPopulatedRecords()
 		{
 			return (List<Account>) getRecordsWithAllNotBlankFieldValues(
 					new Set<Schema.SObjectField>
@@ -282,12 +282,12 @@ private class fflib_SObjectsTest
 			);
 		}
 
-		void setShippingCountry(String country)
+		global void setShippingCountry(String country)
 		{
 			setFieldValue(Schema.Account.ShippingCountry, country);
 		}
 
-		void setRatingByShippingCountry(Map<Object, Object> ratingByCountry)
+		global void setRatingByShippingCountry(Map<Object, Object> ratingByCountry)
 		{
 			setFieldValueByMap(
 					Schema.Account.ShippingCountry,
@@ -295,12 +295,12 @@ private class fflib_SObjectsTest
 					ratingByCountry);
 		}
 
-		void addNameError(String message)
+		global void addNameError(String message)
 		{
 			addError(Schema.Account.Name, message);
 		}
 
-		void clearShippingCountry()
+		global void clearShippingCountry()
 		{
 			clearField(Schema.Account.ShippingCountry);
 		}

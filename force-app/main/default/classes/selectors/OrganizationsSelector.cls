@@ -4,13 +4,13 @@ global inherited sharing class OrganizationsSelector extends fflib_SObjectSelect
 		return (IOrganizationsSelector)Application.Selector.newInstance(Organization.SObjectType);
 	}
 
-	global List<SObjectField> getSObjectFieldList() {
+	global override List<SObjectField> getSObjectFieldList() {
 		return new List<SObjectField>{
 			Organization.IsSandbox
 		};
 	}
 
-	global SObjectType getSObjectType(){
+	global override SObjectType getSObjectType(){
 		return Organization.SObjectType;
 	}
 

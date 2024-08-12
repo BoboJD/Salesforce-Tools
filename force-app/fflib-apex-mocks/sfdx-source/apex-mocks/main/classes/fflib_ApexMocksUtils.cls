@@ -30,10 +30,10 @@ global class fflib_ApexMocksUtils
 	 *
 	 * This method works on the principle that serializing and deserialising child records is supported
 	 *
-	 *   System.assertEquals(1, ((List<Master__c>) 
+	 *   System.assertEquals(1, ((List<Master__c>)
 	 *    JSON.deserialize(
 	 *	    JSON.serialize(
-	 *         [select Id, Name, 
+	 *         [select Id, Name,
 	 *            (select Id, Name from Children__r) from Master__c]), List<Master__c>.class))
 	 *               [0].Children__r.size());
 	 *
@@ -74,7 +74,7 @@ global class fflib_ApexMocksUtils
 
 	/**
 	 * Generic overload to makeRelationship. Enables creation of
-	 * relationships in a loosely-coupled manner. 
+	 * relationships in a loosely-coupled manner.
 	 */
 	global static Object makeRelationship(
 			String parentTypeName,
@@ -142,7 +142,7 @@ global class fflib_ApexMocksUtils
 		// Stream the parsed JSON representation of the parent objects back out, injecting children as it goes
 		JSONParser parentsParser = JSON.createParser(JSON.serialize(parents));
 		JSONParser childrenParser = JSON.createParser(JSON.serialize(children));
-		JSONGenerator combinedOutput = JSON.createGenerator(false);		
+		JSONGenerator combinedOutput = JSON.createGenerator(false);
 		streamTokens(parentsParser, combinedOutput, new InjectChildrenEventHandler(childrenParser, relationshipName, children) );
 
 		// Derserialise back into SObject list complete with children
@@ -153,7 +153,7 @@ global class fflib_ApexMocksUtils
 	 * Monitors stream events for end of object for each SObject contained in the parent list
 	 *   then injects the respective childs record list into the stream
 	 */
-	private class InjectChildrenEventHandler implements JSONParserEvents
+	global class InjectChildrenEventHandler implements JSONParserEvents
 	{
 		private JSONParser childrenParser;
 		private String relationshipName;
@@ -221,7 +221,7 @@ global class fflib_ApexMocksUtils
 				depth--;
 			}
 			// Don't continue to stream beyond the initial starting point
-			if(depth==0) 
+			if(depth==0)
 				break;
 		}
 	}

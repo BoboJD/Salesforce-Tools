@@ -5,14 +5,14 @@ global inherited sharing class PermissionSetsSelector extends fflib_SObjectSelec
 		return (PermissionSetsSelector)Application.Selector.newInstance(PermissionSet.SObjectType);
 	}
 
-	global List<SObjectField> getSObjectFieldList(){
+	global override List<SObjectField> getSObjectFieldList(){
 		return new List<SObjectField>{
 			PermissionSet.Id,
 			PermissionSet.Name
 		};
 	}
 
-	global SObjectType getSObjectType(){
+	global override SObjectType getSObjectType(){
 		return PermissionSet.SObjectType;
 	}
 

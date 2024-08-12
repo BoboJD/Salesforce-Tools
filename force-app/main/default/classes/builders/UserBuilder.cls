@@ -16,7 +16,7 @@ global inherited sharing class UserBuilder extends SObjectBuilder{
 		super();
 	}
 
-	private SObjectType getSObjectType(){
+	global override SObjectType getSObjectType(){
 		return User.SObjectType;
 	}
 

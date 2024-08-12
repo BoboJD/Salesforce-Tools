@@ -24,7 +24,7 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 **/
 
-interface fflib_ISObjectSelector
+global interface fflib_ISObjectSelector
 {
 	/**
 	 * Provides the SObjectType for the object the given Selector is providing query logic for

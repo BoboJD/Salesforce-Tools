@@ -1,17 +1,17 @@
 global inherited sharing class UserRecordAccessesSelector extends fflib_SObjectSelector implements IUserRecordAccessesSelector{
-	
+
 	global static IUserRecordAccessesSelector newInstance(){
 		return (IUserRecordAccessesSelector)Application.Selector.newInstance(UserRecordAccess.SObjectType);
 	}
 
-	global List<SObjectField> getSObjectFieldList(){
+	global override List<SObjectField> getSObjectFieldList(){
 		return new List<SObjectField>{
 			UserRecordAccess.HasEditAccess,
 			UserRecordAccess.RecordId
 		};
 	}
 
-	global SObjectType getSObjectType(){
+	global override SObjectType getSObjectType(){
 		return UserRecordAccess.SObjectType;
 	}
 

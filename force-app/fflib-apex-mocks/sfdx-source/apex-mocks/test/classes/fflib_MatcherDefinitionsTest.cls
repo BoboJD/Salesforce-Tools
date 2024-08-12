@@ -40,7 +40,7 @@ global class fflib_MatcherDefinitionsTest
 	private static final Schema.SObjectType OPPORTUNITY_OBJECT_TYPE;
 	private static final Schema.SobjectType GROUP_OBJECT_TYPE;
 	private static final Sobject[] GROUP_RECORDS;
-	
+
 	static
 	{
 		Map<String, Schema.SObjectType> globalDescribe = Schema.getGlobalDescribe();
@@ -48,18 +48,18 @@ global class fflib_MatcherDefinitionsTest
 		ACCOUNT_OBJECT_TYPE = globalDescribe.get('Account');
 		OPPORTUNITY_OBJECT_TYPE = globalDescribe.get('Opportunity');
 		GROUP_OBJECT_TYPE = globalDescribe.get('Group');
-		
+
 		SObject accountRecord = ACCOUNT_OBJECT_TYPE.newSObject();
 		accountRecord.put('Name', 'MatcherDefinitionTestAccount' + System.now());
 		accountRecord.Id = fflib_IDGenerator.generate(Account.SObjectType);
 		ACCOUNT_RECORD = accountRecord;
-        
+
 		GROUP_RECORDS = new list<Group> {
 			new Group(Name = 'MatcherDefnTestGroup0'+System.now(), DeveloperName='MatcherDefnTestGroup0'+System.now().getTime(),Type='Queue'),
 			new Group(Name = 'MatcherDefnTestGroup1'+System.now(), DeveloperName='MatcherDefnTestGroup1'+System.now().getTime(),Type='Queue')
 		};
-		insert GROUP_RECORDS;    
-        
+		insert GROUP_RECORDS;
+
 	}
 
 	@isTest
@@ -165,7 +165,7 @@ global class fflib_MatcherDefinitionsTest
 	{
 		try
 		{
-			new fflib_MatcherDefinitions.Eq(null);	
+			new fflib_MatcherDefinitions.Eq(null);
 			System.Assert.fail('Expected exception');
 		}
 		catch (fflib_ApexMocks.ApexMocksException e)
@@ -197,7 +197,7 @@ global class fflib_MatcherDefinitionsTest
 	{
 		try
 		{
-			new fflib_MatcherDefinitions.RefEq(null);	
+			new fflib_MatcherDefinitions.RefEq(null);
 			System.Assert.fail('Expected exception');
 		}
 		catch (fflib_ApexMocks.ApexMocksException e)
@@ -474,7 +474,7 @@ global class fflib_MatcherDefinitionsTest
 	{
 		try
 		{
-			new fflib_MatcherDefinitions.DatetimeAfter(null, true);	
+			new fflib_MatcherDefinitions.DatetimeAfter(null, true);
 			System.Assert.fail('Expected exception');
 		}
 		catch (fflib_ApexMocks.ApexMocksException e)
@@ -488,7 +488,7 @@ global class fflib_MatcherDefinitionsTest
 	{
 		try
 		{
-			new fflib_MatcherDefinitions.DatetimeAfter(System.now(), null);	
+			new fflib_MatcherDefinitions.DatetimeAfter(System.now(), null);
 			System.Assert.fail('Expected exception');
 		}
 		catch (fflib_ApexMocks.ApexMocksException e)
@@ -552,7 +552,7 @@ global class fflib_MatcherDefinitionsTest
 	{
 		try
 		{
-			new fflib_MatcherDefinitions.DatetimeBefore(null, true);	
+			new fflib_MatcherDefinitions.DatetimeBefore(null, true);
 			System.Assert.fail('Expected exception');
 		}
 		catch (fflib_ApexMocks.ApexMocksException e)
@@ -566,7 +566,7 @@ global class fflib_MatcherDefinitionsTest
 	{
 		try
 		{
-			new fflib_MatcherDefinitions.DatetimeBefore(System.now(), null);	
+			new fflib_MatcherDefinitions.DatetimeBefore(System.now(), null);
 			System.Assert.fail('Expected exception');
 		}
 		catch (fflib_ApexMocks.ApexMocksException e)
@@ -630,7 +630,7 @@ global class fflib_MatcherDefinitionsTest
 	{
 		try
 		{
-			new fflib_MatcherDefinitions.DatetimeBetween(null, true, System.now(), true);	
+			new fflib_MatcherDefinitions.DatetimeBetween(null, true, System.now(), true);
 			System.Assert.fail('Expected exception');
 		}
 		catch (fflib_ApexMocks.ApexMocksException e)
@@ -644,7 +644,7 @@ global class fflib_MatcherDefinitionsTest
 	{
 		try
 		{
-			new fflib_MatcherDefinitions.DatetimeBetween(System.now(), true, null, true);	
+			new fflib_MatcherDefinitions.DatetimeBetween(System.now(), true, null, true);
 			System.Assert.fail('Expected exception');
 		}
 		catch (fflib_ApexMocks.ApexMocksException e)
@@ -658,7 +658,7 @@ global class fflib_MatcherDefinitionsTest
 	{
 		try
 		{
-			new fflib_MatcherDefinitions.DatetimeBetween(System.now(), null, System.now(), true);	
+			new fflib_MatcherDefinitions.DatetimeBetween(System.now(), null, System.now(), true);
 			System.Assert.fail('Expected exception');
 		}
 		catch (fflib_ApexMocks.ApexMocksException e)
@@ -672,7 +672,7 @@ global class fflib_MatcherDefinitionsTest
 	{
 		try
 		{
-			new fflib_MatcherDefinitions.DatetimeBetween(System.now(), true, System.now(), null);	
+			new fflib_MatcherDefinitions.DatetimeBetween(System.now(), true, System.now(), null);
 			System.Assert.fail('Expected exception');
 		}
 		catch (fflib_ApexMocks.ApexMocksException e)
@@ -740,7 +740,7 @@ global class fflib_MatcherDefinitionsTest
 	{
 		try
 		{
-			new fflib_MatcherDefinitions.DecimalBetween(null, true, 123, true);	
+			new fflib_MatcherDefinitions.DecimalBetween(null, true, 123, true);
 			System.Assert.fail('Expected exception');
 		}
 		catch (fflib_ApexMocks.ApexMocksException e)
@@ -754,7 +754,7 @@ global class fflib_MatcherDefinitionsTest
 	{
 		try
 		{
-			new fflib_MatcherDefinitions.DecimalBetween(123, null, 123, true);	
+			new fflib_MatcherDefinitions.DecimalBetween(123, null, 123, true);
 			System.Assert.fail('Expected exception');
 		}
 		catch (fflib_ApexMocks.ApexMocksException e)
@@ -768,7 +768,7 @@ global class fflib_MatcherDefinitionsTest
 	{
 		try
 		{
-			new fflib_MatcherDefinitions.DecimalBetween(123, true, null, true);	
+			new fflib_MatcherDefinitions.DecimalBetween(123, true, null, true);
 			System.Assert.fail('Expected exception');
 		}
 		catch (fflib_ApexMocks.ApexMocksException e)
@@ -782,7 +782,7 @@ global class fflib_MatcherDefinitionsTest
 	{
 		try
 		{
-			new fflib_MatcherDefinitions.DecimalBetween(123, true, 123, null);	
+			new fflib_MatcherDefinitions.DecimalBetween(123, true, 123, null);
 			System.Assert.fail('Expected exception');
 		}
 		catch (fflib_ApexMocks.ApexMocksException e)
@@ -821,7 +821,7 @@ global class fflib_MatcherDefinitionsTest
 		System.Assert.isFalse(exLowerInUpper.matches(upper + 1));
 		System.Assert.isFalse(exLowerInUpper.matches(null));
 		System.Assert.isFalse(exLowerInUpper.matches('NotADecimal'));
-		
+
 		//Inclusive lower, exclusive upper
 		System.Assert.isFalse(inLowerExUpper.matches(lower - 1));
 		System.Assert.isTrue(inLowerExUpper.matches(lower));
@@ -831,7 +831,7 @@ global class fflib_MatcherDefinitionsTest
 		System.Assert.isFalse(inLowerExUpper.matches(upper + 1));
 		System.Assert.isFalse(inLowerExUpper.matches(null));
 		System.Assert.isFalse(inLowerExUpper.matches('NotADecimal'));
-		
+
 		//Inclusive lower, inclusive upper
 		System.Assert.isFalse(inLowerInUpper.matches(lower - 1));
 		System.Assert.isTrue(inLowerInUpper.matches(lower));
@@ -866,7 +866,7 @@ global class fflib_MatcherDefinitionsTest
 	{
 		try
 		{
-			new fflib_MatcherDefinitions.DecimalLessThan(null, true);	
+			new fflib_MatcherDefinitions.DecimalLessThan(null, true);
 			System.Assert.fail('Expected exception');
 		}
 		catch (fflib_ApexMocks.ApexMocksException e)
@@ -880,7 +880,7 @@ global class fflib_MatcherDefinitionsTest
 	{
 		try
 		{
-			new fflib_MatcherDefinitions.DecimalLessThan(123, null);	
+			new fflib_MatcherDefinitions.DecimalLessThan(123, null);
 			System.Assert.fail('Expected exception');
 		}
 		catch (fflib_ApexMocks.ApexMocksException e)
@@ -896,7 +896,7 @@ global class fflib_MatcherDefinitionsTest
 
 		fflib_IMatcher exclusive = new fflib_MatcherDefinitions.DecimalLessThan(toMatch, false);
 		fflib_IMatcher inclusive = new fflib_MatcherDefinitions.DecimalLessThan(toMatch, true);
-		
+
 		//Exclusive
 		System.Assert.isTrue(exclusive.matches(toMatch - 1));
 		System.Assert.isFalse(exclusive.matches(toMatch));
@@ -928,7 +928,7 @@ global class fflib_MatcherDefinitionsTest
 	{
 		try
 		{
-			new fflib_MatcherDefinitions.DecimalMoreThan(null, true);	
+			new fflib_MatcherDefinitions.DecimalMoreThan(null, true);
 			System.Assert.fail('Expected exception');
 		}
 		catch (fflib_ApexMocks.ApexMocksException e)
@@ -936,13 +936,13 @@ global class fflib_MatcherDefinitionsTest
 			System.Assert.areEqual('Arg cannot be null: null', e.getMessage());
 		}
 	}
-		
+
 	@isTest
 	private static void constructDecimalMoreThan_WithNullInclusive_ThrowsException()
 	{
 		try
 		{
-			new fflib_MatcherDefinitions.DecimalMoreThan(123, null);	
+			new fflib_MatcherDefinitions.DecimalMoreThan(123, null);
 			System.Assert.fail('Expected exception');
 		}
 		catch (fflib_ApexMocks.ApexMocksException e)
@@ -950,7 +950,7 @@ global class fflib_MatcherDefinitionsTest
 			System.Assert.areEqual('Arg cannot be null: null', e.getMessage());
 		}
 	}
-		
+
 	@isTest
 	private static void whenDecimalMoreThanMatchesShouldReturnCorrectResults()
 	{
@@ -958,7 +958,7 @@ global class fflib_MatcherDefinitionsTest
 
 		fflib_IMatcher exclusive = new fflib_MatcherDefinitions.DecimalMoreThan(toMatch, false);
 		fflib_IMatcher inclusive = new fflib_MatcherDefinitions.DecimalMoreThan(toMatch, true);
-		
+
 		//Exclusive
 		System.Assert.isFalse(exclusive.matches(toMatch - 1));
 		System.Assert.isFalse(exclusive.matches(toMatch));
@@ -990,7 +990,7 @@ global class fflib_MatcherDefinitionsTest
 	{
 		try
 		{
-			new fflib_MatcherDefinitions.FieldSetEquivalentTo(null);	
+			new fflib_MatcherDefinitions.FieldSetEquivalentTo(null);
 			System.Assert.fail('Expected exception');
 		}
 		catch (fflib_ApexMocks.ApexMocksException e)
@@ -1069,7 +1069,7 @@ global class fflib_MatcherDefinitionsTest
 	{
 		List<String> names = new List<String>{ 'bob', 'tom', 'fred' };
 		List<String> empty = new List<String>();
-		
+
 		System.Assert.isFalse(new fflib_MatcherDefinitions.ListContains('fred').matches(null));
 		System.Assert.isFalse(new fflib_MatcherDefinitions.ListContains('fred').matches(empty));
 		System.Assert.isFalse(new fflib_MatcherDefinitions.ListContains('jack').matches(names));
@@ -1087,10 +1087,10 @@ global class fflib_MatcherDefinitionsTest
 	private static void whenListIsEmptyMatchesShouldReturnCorrectResults()
 	{
 		fflib_IMatcher matcher = new fflib_MatcherDefinitions.ListIsEmpty();
-		
+
 		List<String> names = new List<String>{ 'bob', 'tom', 'fred' };
 		List<String> empty = new List<String>();
-		
+
 		System.Assert.isFalse(matcher.matches(null));
 		System.Assert.isFalse(matcher.matches(names));
 		System.Assert.isTrue(matcher.matches(empty));
@@ -1108,7 +1108,7 @@ global class fflib_MatcherDefinitionsTest
 	{
 		try
 		{
-			new fflib_MatcherDefinitions.SObjectOfType(null);	
+			new fflib_MatcherDefinitions.SObjectOfType(null);
 			System.Assert.fail('Expected exception');
 		}
 		catch (fflib_ApexMocks.ApexMocksException e)
@@ -1141,7 +1141,7 @@ global class fflib_MatcherDefinitionsTest
 	{
 		try
 		{
-			new fflib_MatcherDefinitions.SObjectWith(null);	
+			new fflib_MatcherDefinitions.SObjectWith(null);
 			System.Assert.fail('Expected exception');
 		}
 		catch (fflib_ApexMocks.ApexMocksException e)
@@ -1155,7 +1155,7 @@ global class fflib_MatcherDefinitionsTest
 	{
 		try
 		{
-			new fflib_MatcherDefinitions.SObjectWith(new Map<Schema.SObjectField, Object>());	
+			new fflib_MatcherDefinitions.SObjectWith(new Map<Schema.SObjectField, Object>());
 			System.Assert.fail('Expected exception');
 		}
 		catch (fflib_ApexMocks.ApexMocksException e)
@@ -1171,7 +1171,7 @@ global class fflib_MatcherDefinitionsTest
 		Schema.SObjectField idField = fields.get('Id');
 		Schema.SObjectField nameField = fields.get('Name');
 		Schema.SObjectField createdDateField = fields.get('CreatedDate');
-		
+
 		Map<Schema.SObjectField, Object> queriedFieldValues = new Map<Schema.SObjectField, Object>
 		{
 			idField => ACCOUNT_RECORD.Id,
@@ -1184,7 +1184,7 @@ global class fflib_MatcherDefinitionsTest
 		};
 
 		fflib_IMatcher matcher = new fflib_MatcherDefinitions.SObjectWith(queriedFieldValues);
-		
+
 		System.Assert.isFalse(matcher.matches(null));
 		System.Assert.isFalse(matcher.matches(OPPORTUNITY_OBJECT_TYPE.newSObject()));
 		System.Assert.isFalse(matcher.matches(ACCOUNT_OBJECT_TYPE.newSObject()));
@@ -1211,19 +1211,19 @@ global class fflib_MatcherDefinitionsTest
 		Schema.SObjectField idField = fields.get('Id');
 		Schema.SObjectField nameField = fields.get('Name');
 		Schema.SObjectField createdDateField = fields.get('CreatedDate');
-		
+
 		list<Map<Schema.SObjectField, Object>> queriedFieldValues = new list<Map<Schema.SObjectField, Object>>
 		{
-            new map<Schema.SObjectField,Object> 
+            new map<Schema.SObjectField,Object>
             {
                 idField => GROUP_RECORDS[0].Id,
 				nameField => GROUP_RECORDS[0].get('Name')
             },
-            new map<Schema.SObjectField,Object> 
+            new map<Schema.SObjectField,Object>
             {
                 idField => GROUP_RECORDS[1].Id,
 				nameField => GROUP_RECORDS[1].get('Name')
-            }               
+            }
 		};
 
 		list<Map<Schema.SObjectField, Object>> failingFieldValues = new list<Map<Schema.SObjectField, Object>>
@@ -1242,23 +1242,23 @@ global class fflib_MatcherDefinitionsTest
 
 		list<Map<Schema.SObjectField, Object>> notQueriedFieldValues = new list<Map<Schema.SObjectField, Object>>
 		{
-			new map<Schema.SObjectField,Object> 
+			new map<Schema.SObjectField,Object>
             {
                 createdDateField => System.now()
             },
-            new map<Schema.SObjectField,Object> 
+            new map<Schema.SObjectField,Object>
             {
                 createdDateField => System.now()
-            }    
+            }
 		};
 
 		fflib_IMatcher matcher = new fflib_MatcherDefinitions.SObjectsWith(queriedFieldValues);
-		
+
 		System.Assert.isFalse(matcher.matches(null));
 		System.Assert.isFalse(matcher.matches(new list<SObject>
                                        {
                                            OPPORTUNITY_OBJECT_TYPE.newSObject(),
-                                           OPPORTUNITY_OBJECT_TYPE.newSObject()    
+                                           OPPORTUNITY_OBJECT_TYPE.newSObject()
                                        }
                                       ));
 		System.Assert.isFalse(matcher.matches(new list<SObject>
@@ -1271,8 +1271,8 @@ global class fflib_MatcherDefinitionsTest
 
 		System.Assert.isTrue(matcher.matches(GROUP_RECORDS),'toMatch and args have same arity and in same order');
         System.Assert.isTrue (!matcher.matches(new list<SObject> {GROUP_RECORDS[1],GROUP_RECORDS[0]}),
-                                     'sObjectsWith toMatch and args have same arity but args are in different order than toMatch') ;            
-                      
+                                     'sObjectsWith toMatch and args have same arity but args are in different order than toMatch') ;
+
 
 		System.Assert.isFalse(new fflib_MatcherDefinitions.SObjectsWith(notQueriedFieldValues).matches(GROUP_RECORDS));
 		System.Assert.isFalse(new fflib_MatcherDefinitions.SObjectsWith(failingFieldValues).matches(GROUP_RECORDS));
@@ -1285,40 +1285,40 @@ global class fflib_MatcherDefinitionsTest
 		Schema.SObjectField idField = fields.get('Id');
 		Schema.SObjectField nameField = fields.get('Name');
 		Schema.SObjectField createdDateField = fields.get('CreatedDate');
-		
+
 		list<Map<Schema.SObjectField, Object>> queriedFieldValues = new list<Map<Schema.SObjectField, Object>>
 		{
-            new map<Schema.SObjectField,Object> 
+            new map<Schema.SObjectField,Object>
             {
                 idField => GROUP_RECORDS[0].Id,
 				nameField => GROUP_RECORDS[0].get('Name')
             },
-            new map<Schema.SObjectField,Object> 
+            new map<Schema.SObjectField,Object>
             {
                 idField => GROUP_RECORDS[1].Id,
 				nameField => GROUP_RECORDS[1].get('Name')
-            }               
+            }
 		};
 
 		list<Map<Schema.SObjectField, Object>> notQueriedFieldValues = new list<Map<Schema.SObjectField, Object>>
 		{
-			new map<Schema.SObjectField,Object> 
+			new map<Schema.SObjectField,Object>
             {
                 createdDateField => System.now()
             },
-            new map<Schema.SObjectField,Object> 
+            new map<Schema.SObjectField,Object>
             {
                 createdDateField => System.now()
-            }    
+            }
 		};
 
 		fflib_IMatcher matcher = new fflib_MatcherDefinitions.SObjectsWith(queriedFieldValues,false); // any order
-		
+
 		System.Assert.isFalse(matcher.matches(null));
 		System.Assert.isFalse(matcher.matches(new list<SObject>
                                        {
                                            OPPORTUNITY_OBJECT_TYPE.newSObject(),
-                                           OPPORTUNITY_OBJECT_TYPE.newSObject()    
+                                           OPPORTUNITY_OBJECT_TYPE.newSObject()
                                        }
                                       ));
 		System.Assert.isFalse(matcher.matches(new list<SObject>
@@ -1331,8 +1331,8 @@ global class fflib_MatcherDefinitionsTest
 
 		System.Assert.isTrue(matcher.matches(GROUP_RECORDS),'toMatch and args have same arity and in same order. Match should be OK');
         System.Assert.isTrue (matcher.matches(new list<SObject> {GROUP_RECORDS[1],GROUP_RECORDS[0]}),
-                                     'sObjectsWith toMatch and args have same arity but args are in diff order than matcher. Should be OK') ;            
-                      
+                                     'sObjectsWith toMatch and args have same arity but args are in diff order than matcher. Should be OK') ;
+
 
 		System.Assert.isFalse(new fflib_MatcherDefinitions.SObjectsWith(notQueriedFieldValues,false).matches(GROUP_RECORDS));
 	}
@@ -1380,7 +1380,7 @@ global class fflib_MatcherDefinitionsTest
 	{
 		try
 		{
-			new fflib_MatcherDefinitions.SObjectWithId(null);	
+			new fflib_MatcherDefinitions.SObjectWithId(null);
 			System.Assert.fail('Expected exception');
 		}
 		catch (fflib_ApexMocks.ApexMocksException e)
@@ -1414,7 +1414,7 @@ global class fflib_MatcherDefinitionsTest
 	{
 		try
 		{
-			new fflib_MatcherDefinitions.SObjectWithName(null);	
+			new fflib_MatcherDefinitions.SObjectWithName(null);
 			System.Assert.fail('Expected exception');
 		}
 		catch (fflib_ApexMocks.ApexMocksException e)
@@ -1459,7 +1459,7 @@ global class fflib_MatcherDefinitionsTest
 	{
 		try
 		{
-			new fflib_MatcherDefinitions.StringContains(null);	
+			new fflib_MatcherDefinitions.StringContains(null);
 			System.Assert.fail('Expected exception');
 		}
 		catch (fflib_ApexMocks.ApexMocksException e)
@@ -1491,7 +1491,7 @@ global class fflib_MatcherDefinitionsTest
 	{
 		try
 		{
-			new fflib_MatcherDefinitions.StringEndsWith(null);	
+			new fflib_MatcherDefinitions.StringEndsWith(null);
 			System.Assert.fail('Expected exception');
 		}
 		catch (fflib_ApexMocks.ApexMocksException e)
@@ -1563,7 +1563,7 @@ global class fflib_MatcherDefinitionsTest
 	{
 		try
 		{
-			new fflib_MatcherDefinitions.StringMatches(null);	
+			new fflib_MatcherDefinitions.StringMatches(null);
 			System.Assert.fail('Expected exception');
 		}
 		catch (fflib_ApexMocks.ApexMocksException e)
@@ -1595,7 +1595,7 @@ global class fflib_MatcherDefinitionsTest
 	{
 		try
 		{
-			new fflib_MatcherDefinitions.StringStartsWith(null);	
+			new fflib_MatcherDefinitions.StringStartsWith(null);
 			System.Assert.fail('Expected exception');
 		}
 		catch (fflib_ApexMocks.ApexMocksException e)
@@ -1612,7 +1612,7 @@ global class fflib_MatcherDefinitionsTest
 		System.Assert.areEqual('' + sObjField, fflib_MatcherDefinitions.stringify(sObjField));
 	}
 
-	private class StringMatcher implements fflib_IMatcher
+	global class StringMatcher implements fflib_IMatcher
 	{
 		private final String value;
 

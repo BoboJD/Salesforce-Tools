@@ -2,7 +2,7 @@
  * Copyright (c) 2014-2017 FinancialForce.com, inc.  All rights reserved.
  */
 @isTest
-private class fflib_ApexMocksTest
+global class fflib_ApexMocksTest
 {
 	private static final fflib_ApexMocks MY_MOCKS = new fflib_ApexMocks();
 	private static final fflib_MyList MY_MOCK_LIST = (fflib_MyList)MY_MOCKS.mock(fflib_MyList.class);
@@ -759,7 +759,7 @@ private class fflib_ApexMocksTest
 		fflib_ApexMocks mocks = new fflib_ApexMocks();
 		fflib_MyList first = (fflib_MyList)mocks.mock(fflib_MyList.class);
 		fflib_MyList second = (fflib_MyList)mocks.mock(fflib_MyList.class);
-		
+
 		mocks.startStubbing();
 		mocks.when(first.get(0)).thenReturn('First');
 		mocks.when(second.get(0)).thenReturn('Second');
@@ -783,7 +783,7 @@ private class fflib_ApexMocksTest
 		fflib_ApexMocks mocks = new fflib_ApexMocks();
 		fflib_MyList first = (fflib_MyList)mocks.mock(fflib_MyList.class);
 		fflib_MyList second = (fflib_MyList)mocks.mock(fflib_MyList.class);
-		
+
 		mocks.startStubbing();
 		mocks.when(first.get(0)).thenReturn('First');
 		mocks.when(second.get(0)).thenReturn('Second');
@@ -1598,7 +1598,7 @@ private class fflib_ApexMocksTest
 	{
 		System.Assert.areEqual(expectedValue, MY_MOCK_LIST.get2(2, 'Hello.'), 'the method did not returned the expected value');
 	}
-	
+
 	@isTest
 	static void thatToStringReturnsSimpleStringValue()
 	{
@@ -1609,7 +1609,7 @@ private class fflib_ApexMocksTest
 	{
 	}
 
-	private class isOdd implements fflib_IMatcher
+	global class isOdd implements fflib_IMatcher
 	{
 		global Boolean matches(Object arg)
 		{
@@ -1617,7 +1617,7 @@ private class fflib_ApexMocksTest
 		}
 	}
 
-	private class isEven implements fflib_IMatcher
+	global class isEven implements fflib_IMatcher
 	{
 		global Boolean matches(Object arg)
 		{

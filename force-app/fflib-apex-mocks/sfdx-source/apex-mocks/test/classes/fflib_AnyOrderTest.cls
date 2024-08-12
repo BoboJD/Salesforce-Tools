@@ -6,7 +6,7 @@
  * @nodoc
  */
 @isTest
-private class fflib_AnyOrderTest
+global class fflib_AnyOrderTest
 {
 	/*
 	 *	replicating the apex mocks tests with the new syntax
@@ -1177,7 +1177,7 @@ private class fflib_AnyOrderTest
 	 *	HELPER CLASSES
 	 */
 
-	private class isOdd implements fflib_IMatcher
+	global class isOdd implements fflib_IMatcher
 	{
 		global Boolean matches(Object arg)
 		{
@@ -1185,7 +1185,7 @@ private class fflib_AnyOrderTest
 		}
 	}
 
-	private class isEven implements fflib_IMatcher
+	global class isEven implements fflib_IMatcher
 	{
 		global Boolean matches(Object arg)
 		{

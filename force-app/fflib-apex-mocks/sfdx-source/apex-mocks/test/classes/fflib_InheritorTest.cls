@@ -25,7 +25,7 @@ global class fflib_InheritorTest
         mocks.when(inheritor.doB()).thenReturn('Did not do B');
         mocks.when(inheritor.doC()).thenReturn('Did not do C');
         mocks.stopStubbing();
-        
+
         System.Assert.areEqual('Did not do A', inheritor.doA());
         System.Assert.areEqual('Did not do B', inheritor.doB());
         System.Assert.areEqual('Did not do C', inheritor.doC());

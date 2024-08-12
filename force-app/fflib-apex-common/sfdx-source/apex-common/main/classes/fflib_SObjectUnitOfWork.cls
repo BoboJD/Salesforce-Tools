@@ -51,40 +51,40 @@
  * TODO: Need to add some more test methods for more complex use cases and some unexpected (e.g. registerDirty and then registerDeleted)
  *
  **/
-virtual class fflib_SObjectUnitOfWork
+global virtual class fflib_SObjectUnitOfWork
     implements fflib_ISObjectUnitOfWork
 {
-    protected List<Schema.SObjectType> m_sObjectTypes = new List<Schema.SObjectType>();
+    global List<Schema.SObjectType> m_sObjectTypes = new List<Schema.SObjectType>();
 
-    protected Map<String, List<SObject>> m_newListByType = new Map<String, List<SObject>>();
+    global Map<String, List<SObject>> m_newListByType = new Map<String, List<SObject>>();
 
-    protected Map<String, Map<Id, SObject>> m_dirtyMapByType = new Map<String, Map<Id, SObject>>();
+    global Map<String, Map<Id, SObject>> m_dirtyMapByType = new Map<String, Map<Id, SObject>>();
 
-    protected Map<String, Map<Id, SObject>> m_deletedMapByType = new Map<String, Map<Id, SObject>>();
-    protected Map<String, Map<Id, SObject>> m_emptyRecycleBinMapByType = new Map<String, Map<Id, SObject>>();
+    global Map<String, Map<Id, SObject>> m_deletedMapByType = new Map<String, Map<Id, SObject>>();
+    global Map<String, Map<Id, SObject>> m_emptyRecycleBinMapByType = new Map<String, Map<Id, SObject>>();
 
-    protected Map<String, Relationships> m_relationships = new Map<String, Relationships>();
+    global Map<String, Relationships> m_relationships = new Map<String, Relationships>();
 
-    protected Map<String, List<SObject>> m_publishBeforeListByType = new Map<String, List<SObject>>();
-    protected Map<String, List<SObject>> m_publishAfterSuccessListByType = new Map<String, List<SObject>>();
-    protected Map<String, List<SObject>> m_publishAfterFailureListByType = new Map<String, List<SObject>>();
+    global Map<String, List<SObject>> m_publishBeforeListByType = new Map<String, List<SObject>>();
+    global Map<String, List<SObject>> m_publishAfterSuccessListByType = new Map<String, List<SObject>>();
+    global Map<String, List<SObject>> m_publishAfterFailureListByType = new Map<String, List<SObject>>();
 
-    protected List<IDoWork> m_workList = new List<IDoWork>();
+    global List<IDoWork> m_workList = new List<IDoWork>();
 
     @TestVisible
-    protected IEmailWork m_emailWork = new SendEmailWork();
+    global IEmailWork m_emailWork = new SendEmailWork();
 
-    protected IDML m_dml;
+    global IDML m_dml;
 
     /**
      * Interface describes work to be performed during the commitWork method
      **/
-    interface IDoWork
+    global interface IDoWork
     {
         void doWork();
     }
 
-    interface IDML
+    global interface IDML
     {
         void dmlInsert(List<SObject> objList);
         void dmlUpdate(List<SObject> objList);
@@ -93,21 +93,21 @@ virtual class fflib_SObjectUnitOfWork
 	    void emptyRecycleBin(List<SObject> objList);
     }
 
-    virtual class SimpleDML implements IDML
+    global virtual class SimpleDML implements IDML
     {
-        virtual void dmlInsert(List<SObject> objList)
+        global virtual void dmlInsert(List<SObject> objList)
         {
             insert objList;
         }
-        virtual void dmlUpdate(List<SObject> objList)
+        global virtual void dmlUpdate(List<SObject> objList)
         {
             update objList;
         }
-        virtual void dmlDelete(List<SObject> objList)
+        global virtual void dmlDelete(List<SObject> objList)
         {
             delete objList;
         }
-        virtual void eventPublish(List<SObject> objList)
+        global virtual void eventPublish(List<SObject> objList)
         {
             if (objList.isEmpty())
             {
@@ -116,7 +116,7 @@ virtual class fflib_SObjectUnitOfWork
 
             EventBus.publish(objList);
         }
-		virtual void emptyRecycleBin(List<SObject> objList)
+		global virtual void emptyRecycleBin(List<SObject> objList)
 		{
 			if (objList.isEmpty())
 			{
@@ -127,26 +127,26 @@ virtual class fflib_SObjectUnitOfWork
 		}
     }
 
-	virtual class UserModeDML extends SimpleDML{
+	global virtual class UserModeDML extends SimpleDML{
 		@TestVisible
 		private AccessLevel m_accessLevel;
 
-		UserModeDML(){
+		global UserModeDML(){
 			this(AccessLevel.USER_MODE);
 		}
 
 		/** Supply the AccessLevel explicitly (UserModeDML uses AccessMode.USER_MODE, by default) */
-		UserModeDML(AccessLevel access){
+		global UserModeDML(AccessLevel access){
 			m_accessLevel = access;
 		}
 
-		virtual override void dmlInsert(List<SObject> objList){
+		global virtual override void dmlInsert(List<SObject> objList){
 			Database.insert(objList,m_accessLevel);
 		}
-		virtual override void dmlUpdate(List<SObject> objList){
+		global virtual override void dmlUpdate(List<SObject> objList){
 			Database.update(objList,m_accessLevel);
 		}
-		virtual override void dmlDelete(List<SObject> objList){
+		global virtual override void dmlDelete(List<SObject> objList){
 			Database.delete(objList,m_accessLevel);
 		}
 	}
@@ -157,12 +157,12 @@ virtual class fflib_SObjectUnitOfWork
      *
      * @param sObjectTypes A list of objects given in dependency order (least dependent first)
      */
-    fflib_SObjectUnitOfWork(List<Schema.SObjectType> sObjectTypes)
+    global fflib_SObjectUnitOfWork(List<Schema.SObjectType> sObjectTypes)
     {
         this(sObjectTypes,new SimpleDML());
     }
 
-    fflib_SObjectUnitOfWork(List<Schema.SObjectType> sObjectTypes, IDML dml)
+    global fflib_SObjectUnitOfWork(List<Schema.SObjectType> sObjectTypes, IDML dml)
     {
         m_sObjectTypes = sObjectTypes.clone();
 
@@ -178,26 +178,26 @@ virtual class fflib_SObjectUnitOfWork
     }
 
     // default implementations for commitWork events
-    virtual void onRegisterType(Schema.SObjectType sObjectType) {}
-    virtual void onCommitWorkStarting() {}
+    global virtual void onRegisterType(Schema.SObjectType sObjectType) {}
+    global virtual void onCommitWorkStarting() {}
 
-    virtual void onPublishBeforeEventsStarting() {}
-    virtual void onPublishBeforeEventsFinished() {}
+    global virtual void onPublishBeforeEventsStarting() {}
+    global virtual void onPublishBeforeEventsFinished() {}
 
-    virtual void onDMLStarting() {}
-    virtual void onDMLFinished() {}
+    global virtual void onDMLStarting() {}
+    global virtual void onDMLFinished() {}
 
-    virtual void onDoWorkStarting() {}
-    virtual void onDoWorkFinished() {}
+    global virtual void onDoWorkStarting() {}
+    global virtual void onDoWorkFinished() {}
 
-    virtual void onPublishAfterSuccessEventsStarting() {}
-    virtual void onPublishAfterSuccessEventsFinished() {}
+    global virtual void onPublishAfterSuccessEventsStarting() {}
+    global virtual void onPublishAfterSuccessEventsFinished() {}
 
-    virtual void onPublishAfterFailureEventsStarting() {}
-    virtual void onPublishAfterFailureEventsFinished() {}
+    global virtual void onPublishAfterFailureEventsStarting() {}
+    global virtual void onPublishAfterFailureEventsFinished() {}
 
-    virtual void onCommitWorkFinishing() {}
-    virtual void onCommitWorkFinished(Boolean wasSuccessful) {}
+    global virtual void onCommitWorkFinishing() {}
+    global virtual void onCommitWorkFinished(Boolean wasSuccessful) {}
 
     /**
      * Registers the type to be used for DML operations
@@ -227,7 +227,7 @@ virtual class fflib_SObjectUnitOfWork
     /**
      * Register a generic piece of work to be invoked during the commitWork phase
      **/
-    void registerWork(IDoWork work)
+    global void registerWork(IDoWork work)
     {
         m_workList.add(work);
     }
@@ -235,7 +235,7 @@ virtual class fflib_SObjectUnitOfWork
     /**
      * Registers the given email to be sent during the commitWork
      **/
-    void registerEmail(Messaging.Email email)
+    global void registerEmail(Messaging.Email email)
     {
         m_emailWork.registerEmail(email);
     }
@@ -245,7 +245,7 @@ virtual class fflib_SObjectUnitOfWork
 	 *
 	 * @param record An deleted record
 	 **/
-	void registerEmptyRecycleBin(SObject record)
+	global void registerEmptyRecycleBin(SObject record)
 	{
 		String sObjectType = record.getSObjectType().getDescribe().getName();
 		assertForSupportedSObjectType(m_emptyRecycleBinMapByType, sObjectType);
@@ -258,7 +258,7 @@ virtual class fflib_SObjectUnitOfWork
 	 *
 	 * @param records Deleted records
 	 **/
-	void registerEmptyRecycleBin(List<SObject> records)
+	global void registerEmptyRecycleBin(List<SObject> records)
 	{
 		for (SObject record : records)
 		{
@@ -271,7 +271,7 @@ virtual class fflib_SObjectUnitOfWork
      *
      * @param record A newly created SObject instance to be inserted during commitWork
      **/
-    void registerNew(SObject record)
+    global void registerNew(SObject record)
     {
         registerNew(record, null, null);
     }
@@ -281,7 +281,7 @@ virtual class fflib_SObjectUnitOfWork
      *
      * @param records A list of newly created SObject instances to be inserted during commitWork
      **/
-    void registerNew(List<SObject> records)
+    global void registerNew(List<SObject> records)
     {
         for (SObject record : records)
         {
@@ -297,7 +297,7 @@ virtual class fflib_SObjectUnitOfWork
      * @param relatedToParentField A SObjectField reference to the child field that associates the child record with its parent
      * @param relatedToParentRecord A SObject instance of the parent record (should also be registered as new separately)
      **/
-    void registerNew(SObject record, Schema.SObjectField relatedToParentField, SObject relatedToParentRecord)
+    global void registerNew(SObject record, Schema.SObjectField relatedToParentField, SObject relatedToParentRecord)
     {
         if (record.Id != null)
             throw new UnitOfWorkException('Only new records can be registered as new');
@@ -319,7 +319,7 @@ virtual class fflib_SObjectUnitOfWork
      * @param relatedToField A SObjectField reference to the lookup field that relates the two records together
      * @param relatedTo A SObject instance (yet to be committed to the database)
      */
-    void registerRelationship(SObject record, Schema.SObjectField relatedToField, SObject relatedTo)
+    global void registerRelationship(SObject record, Schema.SObjectField relatedToField, SObject relatedTo)
     {
         String sObjectType = record.getSObjectType().getDescribe().getName();
 
@@ -337,7 +337,7 @@ virtual class fflib_SObjectUnitOfWork
      * @param email a single email message instance
      * @param relatedTo A SObject instance (yet to be committed to the database)
      */
-    void registerRelationship( Messaging.SingleEmailMessage email, SObject relatedTo )
+    global void registerRelationship( Messaging.SingleEmailMessage email, SObject relatedTo )
     {
         m_relationships.get( Messaging.SingleEmailMessage.class.getName() ).add(email, relatedTo);
     }
@@ -355,7 +355,7 @@ virtual class fflib_SObjectUnitOfWork
      *
      * Wraps putSObject, creating a new instance of the lookup sobject using the external id field and value.
      */
-    void registerRelationship(SObject record, Schema.SObjectField relatedToField, Schema.SObjectField externalIdField, Object externalId)
+    global void registerRelationship(SObject record, Schema.SObjectField relatedToField, Schema.SObjectField externalIdField, Object externalId)
     {
         // NOTE: Due to the lack of ExternalID references on Standard Objects, this method can not be provided a standardized Unit Test. - Rick Parker
         String sObjectType = record.getSObjectType().getDescribe().getName();
@@ -369,7 +369,7 @@ virtual class fflib_SObjectUnitOfWork
      *
      * @param record An existing record
      **/
-    void registerDirty(SObject record)
+    global void registerDirty(SObject record)
     {
         registerDirty(record, new List<SObjectField>());
     }
@@ -380,7 +380,7 @@ virtual class fflib_SObjectUnitOfWork
      * @param records SObjects to register as dirty
      * @param dirtyFields A list of modified fields
      */
-    void registerDirty(List<SObject> records, List<SObjectField> dirtyFields)
+    global void registerDirty(List<SObject> records, List<SObjectField> dirtyFields)
     {
 	    for (SObject record : records)
 	    {
@@ -394,7 +394,7 @@ virtual class fflib_SObjectUnitOfWork
 	 * @param record SObject to register as dirty
 	 * @param dirtyFields A list of modified fields
 	 */
-    void registerDirty(SObject record, List<SObjectField> dirtyFields)
+    global void registerDirty(SObject record, List<SObjectField> dirtyFields)
     {
         if (record.Id == null)
             throw new UnitOfWorkException('New records cannot be registered as dirty');
@@ -430,7 +430,7 @@ virtual class fflib_SObjectUnitOfWork
      * @param relatedToParentField A SObjectField reference to the child field that associates the child record with its parent
      * @param relatedToParentRecord A SObject instance of the parent record (should also be registered as new separately)
      **/
-    void registerDirty(SObject record, Schema.SObjectField relatedToParentField, SObject relatedToParentRecord)
+    global void registerDirty(SObject record, Schema.SObjectField relatedToParentField, SObject relatedToParentRecord)
     {
 	    registerDirty(record);
         if (relatedToParentRecord!=null && relatedToParentField!=null)
@@ -442,7 +442,7 @@ virtual class fflib_SObjectUnitOfWork
      *
      * @param records A list of existing records
      **/
-    void registerDirty(List<SObject> records)
+    global void registerDirty(List<SObject> records)
     {
         for (SObject record : records)
         {
@@ -455,7 +455,7 @@ virtual class fflib_SObjectUnitOfWork
      *
      * @param record A new or existing record
      **/
-    void registerUpsert(SObject record)
+    global void registerUpsert(SObject record)
     {
         if (record.Id == null)
         {
@@ -472,7 +472,7 @@ virtual class fflib_SObjectUnitOfWork
      *
      * @param records A list of mix of new and existing records
      **/
-    void registerUpsert(List<SObject> records)
+    global void registerUpsert(List<SObject> records)
     {
         for (SObject record : records)
         {
@@ -485,7 +485,7 @@ virtual class fflib_SObjectUnitOfWork
      *
      * @param record An existing record
      **/
-    void registerDeleted(SObject record)
+    global void registerDeleted(SObject record)
     {
         if (record.Id == null)
             throw new UnitOfWorkException('New records cannot be registered for deletion');
@@ -502,7 +502,7 @@ virtual class fflib_SObjectUnitOfWork
      *
      * @param records A list of existing records
      **/
-    void registerDeleted(List<SObject> records)
+    global void registerDeleted(List<SObject> records)
     {
         for (SObject record : records)
         {
@@ -515,7 +515,7 @@ virtual class fflib_SObjectUnitOfWork
      *
      * @param records A list of existing records
      **/
-    void registerPermanentlyDeleted(List<SObject> records)
+    global void registerPermanentlyDeleted(List<SObject> records)
     {
 	    this.registerEmptyRecycleBin(records);
 	    this.registerDeleted(records);
@@ -526,7 +526,7 @@ virtual class fflib_SObjectUnitOfWork
      *
      * @param record A list of existing records
      **/
-    void registerPermanentlyDeleted(SObject record)
+    global void registerPermanentlyDeleted(SObject record)
     {
 	    this.registerEmptyRecycleBin(record);
         this.registerDeleted(record);
@@ -537,7 +537,7 @@ virtual class fflib_SObjectUnitOfWork
      *
      * @param record A newly created SObject (Platform Event) instance to be inserted during commitWork
      **/
-    void registerPublishBeforeTransaction(SObject record)
+    global void registerPublishBeforeTransaction(SObject record)
     {
         String sObjectType = record.getSObjectType().getDescribe().getName();
 
@@ -552,7 +552,7 @@ virtual class fflib_SObjectUnitOfWork
      *
      * @param records A list of existing records
      **/
-    void registerPublishBeforeTransaction(List<SObject> records)
+    global void registerPublishBeforeTransaction(List<SObject> records)
     {
         for (SObject record : records)
         {
@@ -565,7 +565,7 @@ virtual class fflib_SObjectUnitOfWork
      *
      * @param record A newly created SObject (Platform Event) instance to be inserted during commitWork
      **/
-    void registerPublishAfterSuccessTransaction(SObject record)
+    global void registerPublishAfterSuccessTransaction(SObject record)
     {
         String sObjectType = record.getSObjectType().getDescribe().getName();
 
@@ -580,7 +580,7 @@ virtual class fflib_SObjectUnitOfWork
      *
      * @param records A list of existing records
      **/
-    void registerPublishAfterSuccessTransaction(List<SObject> records)
+    global void registerPublishAfterSuccessTransaction(List<SObject> records)
     {
         for (SObject record : records)
         {
@@ -592,7 +592,7 @@ virtual class fflib_SObjectUnitOfWork
      *
      * @param record A newly created SObject (Platform Event) instance to be inserted during commitWork
      **/
-    void registerPublishAfterFailureTransaction(SObject record)
+    global void registerPublishAfterFailureTransaction(SObject record)
     {
         String sObjectType = record.getSObjectType().getDescribe().getName();
 
@@ -607,7 +607,7 @@ virtual class fflib_SObjectUnitOfWork
      *
      * @param records A list of existing records
      **/
-    void registerPublishAfterFailureTransaction(List<SObject> records)
+    global void registerPublishAfterFailureTransaction(List<SObject> records)
     {
         for (SObject record : records)
         {
@@ -618,7 +618,7 @@ virtual class fflib_SObjectUnitOfWork
     /**
      * Takes all the work that has been registered with the UnitOfWork and commits it to the database
      **/
-	void commitWork()
+	global void commitWork()
 	{
 		Savepoint sp = Database.setSavepoint();
 		Boolean wasSuccessful = false;
@@ -802,11 +802,11 @@ virtual class fflib_SObjectUnitOfWork
 		}
 	}
 
-    private class Relationships
+    global class Relationships
     {
         private List<IRelationship> m_relationships = new List<IRelationship>();
 
-        void resolve()
+        global void resolve()
         {
             // Resolve relationships
             for (IRelationship relationship : m_relationships)
@@ -817,7 +817,7 @@ virtual class fflib_SObjectUnitOfWork
 
         }
 
-        void add(SObject record, Schema.SObjectField relatedToField, Schema.SObjectField externalIdField, Object externalId)
+        global void add(SObject record, Schema.SObjectField relatedToField, Schema.SObjectField externalIdField, Object externalId)
         {
             if (relatedToField == null) {
                 throw new UnitOfWorkException('Invalid argument: relatedToField.');
@@ -853,7 +853,7 @@ virtual class fflib_SObjectUnitOfWork
             m_relationships.add(relationship);
         }
 
-        void add(SObject record, Schema.SObjectField relatedToField, SObject relatedTo)
+        global void add(SObject record, Schema.SObjectField relatedToField, SObject relatedTo)
         {
             // Relationship to resolve
             Relationship relationship = new Relationship();
@@ -863,7 +863,7 @@ virtual class fflib_SObjectUnitOfWork
             m_relationships.add(relationship);
         }
 
-        void add(Messaging.SingleEmailMessage email, SObject relatedTo)
+        global void add(Messaging.SingleEmailMessage email, SObject relatedTo)
         {
             EmailRelationship emailRelationship = new EmailRelationship();
             emailRelationship.email = email;
@@ -877,16 +877,16 @@ virtual class fflib_SObjectUnitOfWork
         void resolve();
     }
 
-    private class RelationshipByExternalId implements IRelationship
+    global class RelationshipByExternalId implements IRelationship
     {
-        SObject Record;
-        Schema.SObjectField RelatedToField;
-        Schema.SObjectType RelatedTo;
-        String RelationshipName;
-        Schema.SObjectField ExternalIdField;
-        Object ExternalId;
+        global SObject Record;
+        global Schema.SObjectField RelatedToField;
+        global Schema.SObjectType RelatedTo;
+        global String RelationshipName;
+        global Schema.SObjectField ExternalIdField;
+        global Object ExternalId;
 
-        void resolve()
+        global void resolve()
         {
             SObject relationshipObject = this.RelatedTo.newSObject();
             relationshipObject.put( ExternalIdField.getDescribe().getName(), this.ExternalId );
@@ -894,24 +894,24 @@ virtual class fflib_SObjectUnitOfWork
         }
     }
 
-    private class Relationship implements IRelationship
+    global class Relationship implements IRelationship
     {
-        SObject Record;
-        Schema.SObjectField RelatedToField;
-        SObject RelatedTo;
+        global SObject Record;
+        global Schema.SObjectField RelatedToField;
+        global SObject RelatedTo;
 
-        void resolve()
+        global void resolve()
         {
             this.Record.put( this.RelatedToField, this.RelatedTo.Id);
         }
     }
 
-    private class EmailRelationship implements IRelationship
+    global class EmailRelationship implements IRelationship
     {
-        Messaging.SingleEmailMessage email;
-        SObject relatedTo;
+        global Messaging.SingleEmailMessage email;
+        global SObject relatedTo;
 
-        void resolve()
+        global void resolve()
         {
             this.email.setWhatId( this.relatedTo.Id );
         }
@@ -920,31 +920,31 @@ virtual class fflib_SObjectUnitOfWork
     /**
      * UnitOfWork Exception
      **/
-    class UnitOfWorkException extends Exception {}
+    global class UnitOfWorkException extends Exception {}
 
     /**
      * Internal implementation of Messaging.sendEmail, see outer class registerEmail method
      **/
-    interface IEmailWork extends IDoWork
+    global interface IEmailWork extends IDoWork
     {
         void registerEmail(Messaging.Email email);
     }
 
-    private class SendEmailWork implements IEmailWork
+    global class SendEmailWork implements IEmailWork
     {
         private List<Messaging.Email> emails;
 
-        SendEmailWork()
+        global SendEmailWork()
         {
             this.emails = new List<Messaging.Email>();
         }
 
-        void registerEmail(Messaging.Email email)
+        global void registerEmail(Messaging.Email email)
         {
             this.emails.add(email);
         }
 
-        void doWork()
+        global void doWork()
         {
             if (emails.size() > 0) Messaging.sendEmail(emails);
         }

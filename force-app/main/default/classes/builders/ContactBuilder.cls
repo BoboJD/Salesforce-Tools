@@ -5,7 +5,7 @@ global inherited sharing class ContactBuilder extends SObjectBuilder{
 		super();
 	}
 
-	private SObjectType getSObjectType(){
+	global override SObjectType getSObjectType(){
 		return Contact.SObjectType;
 	}
 

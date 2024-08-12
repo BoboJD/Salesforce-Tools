@@ -4,7 +4,7 @@ global inherited sharing class ContentDocumentLinksSelector extends fflib_SObjec
 		return (IContentDocumentLinksSelector)Application.Selector.newInstance(ContentDocumentLink.SObjectType);
 	}
 
-	global List<SObjectField> getSObjectFieldList(){
+	global override List<SObjectField> getSObjectFieldList(){
 		return new List<SObjectField> {
 			ContentDocumentLink.Id,
 			ContentDocumentLink.ContentDocumentId,
@@ -12,7 +12,7 @@ global inherited sharing class ContentDocumentLinksSelector extends fflib_SObjec
 		};
 	}
 
-	global SObjectType getSObjectType(){
+	global override SObjectType getSObjectType(){
 		return ContentDocumentLink.SObjectType;
 	}
 

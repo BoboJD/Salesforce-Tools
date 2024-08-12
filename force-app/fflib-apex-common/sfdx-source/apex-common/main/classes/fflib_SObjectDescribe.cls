@@ -36,7 +36,7 @@
  * This allows both upgrading old code to APIv29 by making use of these as a nearly drop in replacement, as well as keeping
  * namespace detection logic encapsulated.
 **/
-class fflib_SObjectDescribe {
+global class fflib_SObjectDescribe {
 	//internal implementation details
 	private Schema.SObjectType token;
 	private Schema.SObjectField nameField;
@@ -81,17 +81,17 @@ class fflib_SObjectDescribe {
 		instanceCache.put( String.valueOf(token).toLowerCase() , this);
 	}
 
-	//instace methods
+	//global instace methods
 	/**
 	 * Returns the Schema.SObjectType this fflib_SObjectDescribe instance is based on.
 	**/
-	Schema.SObjectType getSObjectType(){
+	global Schema.SObjectType getSObjectType(){
 		return token;
 	}
 	/**
 	 * This method is a convenient shorthand for calling getField(name, true)
 	**/
-	Schema.SObjectField getField(String name){
+	global Schema.SObjectField getField(String name){
 		return this.getField(name, true);
 	}
 	/**
@@ -99,7 +99,7 @@ class fflib_SObjectDescribe {
 	 * Additionally it handles finding the correct SObjectField for relationship notation,
 	 * e.g. getting the Account field on Contact would fail without being referenced as AccountId - both work here.
 	**/
-	Schema.SObjectField getField(String fieldName, Boolean implyNamespace){
+	global Schema.SObjectField getField(String fieldName, Boolean implyNamespace){
 		String fieldNameAdjusted = fieldName;
 
 		if ( fieldName.endsWithIgnoreCase('__r') ) //resolve custom field cross-object (__r) syntax
@@ -121,7 +121,7 @@ class fflib_SObjectDescribe {
 	/**
 	* Returns the field where isNameField() is true (if any); otherwise returns null
 	**/
-	Schema.SObjectField getNameField()
+	global Schema.SObjectField getNameField()
 	{
 		if(nameField == null) {
 			for(Schema.SObjectField field : wrappedFields.values()) {
@@ -137,20 +137,20 @@ class fflib_SObjectDescribe {
 	/**
 	 * Returns the raw Schema.DescribeSObjectResult an fflib_SObjectDescribe instance wraps.
 	**/
-	Schema.DescribeSObjectResult getDescribe(){
+	global Schema.DescribeSObjectResult getDescribe(){
 		return describe;
 	}
 	/**
 	 * This method returns the raw data and provides no namespace handling.
 	 * Due to this, __use of this method is discouraged__ in favor of getFields().
 	**/
-	Map<String,Schema.SObjectField> getFieldsMap(){
+	global Map<String,Schema.SObjectField> getFieldsMap(){
 		return fields;
 	}
-	FieldsMap getFields(){
+	global FieldsMap getFields(){
 		return wrappedFields;
 	}
-	Map<String,Schema.FieldSet> getFieldSetsMap(){
+	global Map<String,Schema.FieldSet> getFieldSetsMap(){
 		return fieldSets;
 	}
 
@@ -185,7 +185,7 @@ class fflib_SObjectDescribe {
 		}
 		set;
 	}
-	static fflib_SObjectDescribe getDescribe(String sObjectName){
+	global static fflib_SObjectDescribe getDescribe(String sObjectName){
 		if(String.isBlank(sObjectName))
 			return null;
 		fflib_SObjectDescribe result = instanceCache.get(sObjectName.toLowerCase());
@@ -198,7 +198,7 @@ class fflib_SObjectDescribe {
 		}
 		return result;
 	}
-	static fflib_SObjectDescribe getDescribe(Schema.SObjectType token){
+	global static fflib_SObjectDescribe getDescribe(Schema.SObjectType token){
 		if(token == null)
 			return null;
 		fflib_SObjectDescribe result = instanceCache.get(String.valueOf(token).toLowerCase());
@@ -206,7 +206,7 @@ class fflib_SObjectDescribe {
 			result = new fflib_SObjectDescribe(token);
 		return result;
 	}
-	static fflib_SObjectDescribe getDescribe(Schema.DescribeSObjectResult nativeDescribe){
+	global static fflib_SObjectDescribe getDescribe(Schema.DescribeSObjectResult nativeDescribe){
 		if(nativeDescribe == null)
 			return null;
 		fflib_SObjectDescribe result = instanceCache.get(nativeDescribe.getName().toLowerCase());
@@ -214,22 +214,22 @@ class fflib_SObjectDescribe {
 			result = new fflib_SObjectDescribe(nativeDescribe.getSObjectType());
 		return result;
 	}
-	static fflib_SObjectDescribe getDescribe(SObject instance){
+	global static fflib_SObjectDescribe getDescribe(SObject instance){
 		if(instance == null)
 			return null;
 		return getDescribe(instance.getSObjectType());
 	}
 
 	//returns the same results as the native method, just with caching built in to avoid limits
-	static Map<String,SObjectType> getRawGlobalDescribe(){
+	global static Map<String,SObjectType> getRawGlobalDescribe(){
 		return rawGlobalDescribe;
 	}
-	static GlobalDescribeMap getGlobalDescribe(){
+	global static GlobalDescribeMap getGlobalDescribe(){
 		return wrappedGlobalDescribe;
 	}
 	//Useful when working in heap space constrained environments.
 	//Existing references to SObjectDescribe instances will continue to work.
-	static void flushCache(){
+	global static void flushCache(){
 		rawGlobalDescribe = null;
 		instanceCache = null;
 	}
@@ -243,30 +243,30 @@ class fflib_SObjectDescribe {
 	 * Due to the lack of language support for covariant return types subclasses are responsible for implementing the get methods.
 	 * A minimal implementation of these would be a cast and returning getObject's result.
 	**/
-	private abstract class NamespacedAttributeMap{
+	global abstract class NamespacedAttributeMap{
 		@TestVisible
-		protected String currentNamespace;
-		protected Map<String,Object> values;
+		global String currentNamespace;
+		global Map<String,Object> values;
 
-		protected NamespacedAttributeMap(Map<String,Object> values){
+		global NamespacedAttributeMap(Map<String,Object> values){
 			//namespace detection courtesy http://salesforce.stackexchange.com/a/28977/60
 			currentNamespace = fflib_SObjectDescribe.class.getName().substringBefore('fflib_SObjectDescribe').removeEnd('.').toLowerCase();
 			this.values = values;
 		}
 		//A no-args constructor to allow subclasses with different constructor signatures
-		protected NamespacedAttributeMap(){
+		global NamespacedAttributeMap(){
 			this(new Map<String,Object>());
 		}
 		/**
 		 * A convenient shortcut for invoking #getObject(name, true)
 		**/
-		protected virtual Object getObject(String name){
+		global virtual Object getObject(String name){
 			return this.getObject(name, true);
 		}
 		/**
 		 *
 		**/
-		protected virtual Object getObject(String name, Boolean implyNamespace){
+		global virtual Object getObject(String name, Boolean implyNamespace){
 			if(name == null) //short-circuit lookup logic since null can't possibly be a valid field name, and it saves us null checking
 				return null;
 			String preferredValue = ((implyNamespace ? currentNamespace+'__' : '') + name).toLowerCase();
@@ -278,10 +278,10 @@ class fflib_SObjectDescribe {
 				return null;
 			}
 		}
-		virtual Boolean containsKey(String name){
+		global virtual Boolean containsKey(String name){
 			return this.containsKey(name, true);
 		}
-		virtual Boolean containsKey(String name, Boolean implyNamespace){
+		global virtual Boolean containsKey(String name, Boolean implyNamespace){
 			if(name == null) //short-circuit lookup logic since null can't possibly be a valid field name, and it saves us null checking
 				return null;
 			String preferredValue = ((implyNamespace ? currentNamespace+'__' : '') + name).toLowerCase();
@@ -290,17 +290,17 @@ class fflib_SObjectDescribe {
 				implyNamespace && values.containsKey(name.toLowerCase())
 			);
 		}
-		virtual Integer size(){
+		global virtual Integer size(){
 			return values.size();
 		}
 		/**
 		 * Returns the key set of the map.
 		 * Note: unlike other NamespacedAttributeMap methods keySet defaults implyNamespace to false if not specified.
 		**/
-		virtual Set<String> keySet(){
+		global virtual Set<String> keySet(){
 			return this.keySet(false);
 		}
-		virtual Set<String> keySet(Boolean implyNamespace){
+		global virtual Set<String> keySet(Boolean implyNamespace){
 			if(implyNamespace){
 				Set<String> result = new Set<String>();
 				for(String key:values.keySet()){
@@ -318,20 +318,20 @@ class fflib_SObjectDescribe {
 	/**
 	 * A subclass of NamespacedAttributeMap for handling the data returned by #Schema.DescribeSObjectResult.fields.getMap
 	**/
-	class FieldsMap extends NamespacedAttributeMap{
+	global class FieldsMap extends NamespacedAttributeMap{
 
 		@TestVisible
 		private FieldsMap(Map<String,Schema.SObjectField> values){
 			super(values);
 		}
 
-		Schema.SObjectField get(String name){
+		global Schema.SObjectField get(String name){
 			return this.get(name, true);
 		}
-		Schema.SObjectField get(String name, Boolean implyNamespace){
+		global Schema.SObjectField get(String name, Boolean implyNamespace){
 			return (Schema.SObjectField) this.getObject(name, implyNamespace);
 		}
-		List<Schema.SObjectField> values(){
+		global List<Schema.SObjectField> values(){
 			return (List<Schema.SObjectField>) values.values();
 		}
 
@@ -339,25 +339,25 @@ class fflib_SObjectDescribe {
 	/**
 	 * A subclass of NamespacedAttributeMap for handling the data returned by #Schema.getGlobalDescribe
 	**/
-	class GlobalDescribeMap extends NamespacedAttributeMap{
+	global class GlobalDescribeMap extends NamespacedAttributeMap{
 		@TestVisible
 		private GlobalDescribeMap(Map<String,Schema.SObjectType> values){
 			super(values);
 		}
 
-		Schema.SObjectType get(String name){
+		global Schema.SObjectType get(String name){
 			return this.get(name, true);
 		}
-		Schema.SObjectType get(String name, Boolean implyNamespace){
+		global Schema.SObjectType get(String name, Boolean implyNamespace){
 			return (Schema.SObjectType) this.getObject(name, implyNamespace);
 		}
-		List<Schema.SObjectType> values(){
+		global List<Schema.SObjectType> values(){
 			return (List<Schema.SObjectType>) values.values();
 		}
 	}
 
 
-	abstract class DescribeException extends Exception{}
-	class DuplicateDescribeException extends DescribeException{} //Test coverage for this requires APIv28's @testVisible annotation to force exception cases.
-	class InvalidDescribeException extends DescribeException{}
+	global abstract class DescribeException extends Exception{}
+	global class DuplicateDescribeException extends DescribeException{} //Test coverage for this requires APIv28's @testVisible annotation to force exception cases.
+	global class InvalidDescribeException extends DescribeException{}
 }

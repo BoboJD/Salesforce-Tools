@@ -23,7 +23,7 @@
  *  OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 **/
-interface fflib_IUnitOfWorkFactory
+global interface fflib_IUnitOfWorkFactory
 {
 	fflib_ISObjectUnitOfWork newInstance();
 	fflib_ISObjectUnitOfWork newInstance(fflib_SObjectUnitOfWork.IDML dml);
