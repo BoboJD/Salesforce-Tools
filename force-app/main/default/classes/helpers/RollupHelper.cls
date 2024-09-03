@@ -8,7 +8,7 @@
  * @author Thibault Weber - HARDIS
  */
 @SuppressWarnings('PMD')
-global class RollupHelper{
+global without sharing class RollupHelper{
 
 	//Liste des types d'aggregation possibles
 	global Enum Aggregation {COUNT, SUM, MIN, MAX, CONCAT, AVG}
