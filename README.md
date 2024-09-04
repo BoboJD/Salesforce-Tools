@@ -59,7 +59,7 @@ To update the fflib libraries, use the following commands :
 To create a new version of the package, use :
 
   ```sh
-  sf package version create --package "Salesforce Tools" --wait 30 --installation-key-bypass --code-coverage
+  sf package version create --package "Salesforce Tools" --wait 30 --installation-key-bypass --code-coverage –-language en_US
   ```
 
 * `--package "Salesforce Tools"`: Replace with the name of your package.
