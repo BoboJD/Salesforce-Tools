@@ -4,6 +4,10 @@
   "language": "en_US",
   "features": ["EnableSetPasswordInApi", "PlatformCache"],
   "settings": {
+	"languageSettings": {
+		"enableTranslationWorkbench": true,
+		"enableEndUserLanguages": true
+    },
     "lightningExperienceSettings": {
       "enableS1DesktopEnabled": true
     },

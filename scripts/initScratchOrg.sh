@@ -25,9 +25,7 @@ main(){
 
 deploy_project(){
 	echo -e "\nStarting deployment of project :"
-	deploy $scratch_org_name "Apex Mocks" "force-app/fflib-apex-mocks/sfdx-source"
-	deploy $scratch_org_name "Apex Common" "force-app/fflib-apex-common/sfdx-source"
-	deploy $scratch_org_name "Project metadata files" "$project_directory"
+	deploy $scratch_org_name "Project metadata files" "force-app"
 }
 
 assign_permissionsets_to_current_user(){

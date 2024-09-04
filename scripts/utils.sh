@@ -406,7 +406,8 @@ create_scratch_org(){
 		if [ "$status" -eq 0 ]; then
 			echo -e "${RGreen}Scratch org has been created.${NC}"
 		else
-			error_exit "Scratch org creation failed. Relaunch the script."
+			local message=$(echo "$scratch_org_creation_result" | jq -r '.message')
+			error_exit "Scratch org creation failed : $message"
 		fi
 
 		sleep 3 # Fix for unfound org
