@@ -7,9 +7,9 @@ private class OrgSettingsTest{
 			OrgSettings.get(setting);
 	}
 
-	@SuppressWarnings('PMD.ApexUnitTestShouldNotUseSeeAllDataTrue')
-	@IsTest(SeeAllData=true)
+	@IsTest
 	static void getCryptedValueWithRealDataShouldDecryptValue(){
+		insert new EncryptionKey__c(Value__c = 'xLNSoRbaMiEVrCOppUkj2ITiyTIWRmJuxpcBT2VR5+0=');
 		Test.startTest();
 		String password = OrgSettings.get(OrgSettings.Setting.TEST_PASSWORD);
 		Test.stopTest();
