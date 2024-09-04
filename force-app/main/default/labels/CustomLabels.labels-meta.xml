@@ -328,4 +328,36 @@
         <shortDescription>SetTheFileAsPrivate</shortDescription>
         <value>Set the file as private</value>
     </labels>
+    <labels>
+        <fullName>ProfileChatterFreeUser</fullName>
+        <categories>profile</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ProfileChatterFreeUser</shortDescription>
+        <value>Chatter Free User</value>
+    </labels>
+    <labels>
+        <fullName>ProfileContractManager</fullName>
+        <categories>profile</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ProfileContractManager</shortDescription>
+        <value>Contract Manager</value>
+    </labels>
+    <labels>
+        <fullName>ProfileMarketingUser</fullName>
+        <categories>profile</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ProfileMarketingUser</shortDescription>
+        <value>Marketing User</value>
+    </labels>
+    <labels>
+        <fullName>ProfileStandardUser</fullName>
+        <categories>profile</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ProfileStandardUser</shortDescription>
+        <value>Standard User</value>
+    </labels>
 </CustomLabels>
