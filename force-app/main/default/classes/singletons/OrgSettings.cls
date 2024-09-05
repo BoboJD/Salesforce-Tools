@@ -2,20 +2,6 @@ global without sharing class OrgSettings{
 	private static OrgSettings instance;
 	private OrgSetting__mdt orgSetting;
 
-	global enum Setting{
-		TEST_URL,
-		TEST_PASSWORD
-	}
-
-	private static final List<Setting> CRYPTED_FIELDS = new List<Setting>{
-		Setting.TEST_PASSWORD
-	};
-
-	private static final Map<Setting, SObjectField> FIELD_BY_SETTING = new Map<Setting, SObjectField>{
-		Setting.TEST_URL => OrgSetting__mdt.TestUrl__c,
-		Setting.TEST_PASSWORD => OrgSetting__mdt.TestPassword__c
-	};
-
 	private OrgSettings(){
 		orgSetting = retrieveOrgSettingFromOrgName();
 	}
@@ -30,16 +16,24 @@ global without sharing class OrgSettings{
 
 	private String constructSoqlQuery(String organizationName){
 		List<String> fields = new List<String>();
-		for(SObjectField sObjectField : FIELD_BY_SETTING.values())
+		for(SObjectField sObjectField : OrgSetting__mdt.SObjectType.getDescribe(SObjectDescribeOptions.DEFERRED).fields.getMap().values())
 			fields.add(sObjectField.getDescribe(FieldDescribeOptions.DEFAULT).getName());
-		return 'SELECT Id, '+String.join(fields, ', ')
+		return 'SELECT '+String.join(fields, ', ')
 			+ ' FROM tlz__OrgSetting__mdt'
 			+ ' WHERE DeveloperName = \''+organizationName+'\'';
 	}
 
-	global static String get(Setting setting){
-		String value = (String)getInstance().orgSetting?.get(FIELD_BY_SETTING.get(setting));
-		if(CRYPTED_FIELDS.contains(setting))
+	global static String get(SObjectField sObjectField){
+		return get(sObjectField, false);
+	}
+
+	global static String decrypt(SObjectField sObjectField){
+		return get(sObjectField, true);
+	}
+
+	private static String get(SObjectField sObjectField, Boolean isCrypted){
+		String value = (String)getInstance().orgSetting?.get(sObjectField);
+		if(isCrypted)
 			return decrypt(value);
 		return value;
 	}

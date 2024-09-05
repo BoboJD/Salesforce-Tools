@@ -12,6 +12,7 @@
 
 	<rule ref="category/apex/bestpractices.xml">
 		<exclude name="ApexAssertionsShouldIncludeMessage"/>
+		<exclude name="AvoidGlobalModifier"/>
 		<exclude name="ApexUnitTestClassShouldHaveAsserts"/>
 		<exclude name="ApexUnitTestClassShouldHaveRunAs" />
 		<exclude name="AvoidLogicInTrigger" />

@@ -2,16 +2,16 @@
 private class OrgSettingsTest{
 
 	@IsTest
-	static void getSettingsShouldReturnFieldValueForEachSetting(){
-		for(OrgSettings.Setting setting : OrgSettings.Setting.values())
-			OrgSettings.get(setting);
+	static void getSettingShouldReturnFieldValue(){
+		Assert.equals('https://www.test.com', OrgSettings.get(OrgSetting__mdt.TestUrl__c));
+		Assert.equals('zkyfeRRoodkyjbxYGf15Nvw5FEH3D/FcSLygJDydbZA=', OrgSettings.get(OrgSetting__mdt.TestPassword__c));
 	}
 
 	@IsTest
 	static void getCryptedValueWithRealDataShouldDecryptValue(){
 		insert new EncryptionKey__c(Value__c = 'xLNSoRbaMiEVrCOppUkj2ITiyTIWRmJuxpcBT2VR5+0=');
 		Test.startTest();
-		String password = OrgSettings.get(OrgSettings.Setting.TEST_PASSWORD);
+		String password = OrgSettings.decrypt(OrgSetting__mdt.TestPassword__c);
 		Test.stopTest();
 		Assert.equals('FakePassword', password);
 	}
@@ -19,7 +19,7 @@ private class OrgSettingsTest{
 	@IsTest
 	static void getCryptedValueForUnitTestShouldReturnFakePassword(){
 		Test.startTest();
-		String password = OrgSettings.get(OrgSettings.Setting.TEST_PASSWORD);
+		String password = OrgSettings.decrypt(OrgSetting__mdt.TestPassword__c);
 		Test.stopTest();
 		Assert.equals('FakePasswordFromException', password);
 	}
@@ -38,8 +38,7 @@ private class OrgSettingsTest{
 		Test.startTest();
 		String errorMessage;
 		try{
-			for(Integer i = 0 ; i < OrgSettings.Setting.values().size() ; i++)
-				OrgSettings.get(OrgSettings.Setting.values()[i]);
+			OrgSettings.get(OrgSetting__mdt.TestUrl__c);
 		}catch(Exception e){
 			errorMessage = e.getMessage();
 		}
