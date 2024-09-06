@@ -2,6 +2,10 @@
 global class TestUtils{
 	private static final String CHARS = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 
+	global static void setMock(HttpCalloutMock theMock) {
+		Test.setMock(HttpCalloutMock.class, theMock);
+	}
+
 	global static SObject setReadableFields(SObject sObj, Map<SObjectField, Object> valueBysObjField){
 		Map<String,Object> dataMap = (Map<String,Object>)JSON.deserializeUntyped(JSON.serialize(sObj));
 		for(SObjectField field : valueBysObjField.keySet()){
