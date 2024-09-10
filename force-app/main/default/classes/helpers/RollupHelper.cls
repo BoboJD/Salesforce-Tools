@@ -297,8 +297,8 @@ global without sharing class RollupHelper{
 	 */
 	global class Rollup{
 
-		protected Schema.sObjectField rollupField;
-		protected Aggregation aggr;
+		global Schema.sObjectField rollupField;
+		global Aggregation aggr;
 		private Schema.sObjectField fieldToRollup;
 		private String concatSeparator;
 		private String concatOrderBy;

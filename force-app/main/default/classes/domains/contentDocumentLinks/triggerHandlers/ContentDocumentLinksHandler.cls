@@ -1,11 +1,11 @@
 global inherited sharing virtual class ContentDocumentLinksHandler extends TriggerHandler{
-	protected List<ContentDocumentLink> contentDocumentLinks { get { return (List<ContentDocumentLink>)domain.Records; } }
+	global List<ContentDocumentLink> contentDocumentLinks { get { return (List<ContentDocumentLink>)domain.Records; } }
 
-	protected ContentDocumentLinksHandler(ContentDocumentLinks domain){
+	global ContentDocumentLinksHandler(ContentDocumentLinks domain){
 		super(domain);
 	}
 
-	protected ContentDocumentLinksHandler(ContentDocumentLinks domain, fflib_ISObjectUnitOfWork uow){
+	global ContentDocumentLinksHandler(ContentDocumentLinks domain, fflib_ISObjectUnitOfWork uow){
 		super(domain, uow);
 	}
 }

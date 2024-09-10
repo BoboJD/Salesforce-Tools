@@ -1,24 +1,24 @@
 global inherited sharing virtual class TriggerHandler{
-	protected fflib_SObjectDomain domain;
+	global fflib_SObjectDomain domain;
 	private Map<Id, SObject> oldRecordById;
-	protected fflib_ISObjectUnitOfWork uow;
+	global fflib_ISObjectUnitOfWork uow;
 
 	@TestVisible
-	protected Boolean isNew{
+	global Boolean isNew{
 		get{
 			return Trigger.isInsert;
 		}
 	}
 
 	@TestVisible
-	protected Boolean isDeleted{
+	global Boolean isDeleted{
 		get{
 			return Trigger.isDelete;
 		}
 	}
 
 	@TestVisible
-	protected Set<Id> recordIds{
+	global Set<Id> recordIds{
 		get{
 			if(recordIds == null)
 				recordIds = new Map<Id, SObject>(domain.Records).keySet();
@@ -27,70 +27,70 @@ global inherited sharing virtual class TriggerHandler{
 	}
 
 	@TestVisible
-	protected TriggerHandler(){}
+	global TriggerHandler(){}
 
 	@TestVisible
-	protected TriggerHandler(fflib_SObjectDomain domain){
+	global TriggerHandler(fflib_SObjectDomain domain){
 		this.domain = domain;
 	}
 
 	@TestVisible
-	protected TriggerHandler(fflib_SObjectDomain domain, fflib_ISObjectUnitOfWork uow){
+	global TriggerHandler(fflib_SObjectDomain domain, fflib_ISObjectUnitOfWork uow){
 		this.domain = domain;
 		this.uow = uow;
 	}
 
 	@TestVisible
-	protected TriggerHandler(fflib_SObjectDomain domain, Map<Id, SObject> oldRecordById){
+	global TriggerHandler(fflib_SObjectDomain domain, Map<Id, SObject> oldRecordById){
 		this(domain);
 		this.oldRecordById = oldRecordById;
 	}
 
 	@TestVisible
-	protected TriggerHandler(fflib_SObjectDomain domain, Map<Id, SObject> oldRecordById, fflib_ISObjectUnitOfWork uow){
+	global TriggerHandler(fflib_SObjectDomain domain, Map<Id, SObject> oldRecordById, fflib_ISObjectUnitOfWork uow){
 		this(domain, uow);
 		this.oldRecordById = oldRecordById;
 	}
 
 	@TestVisible
-	protected Boolean hasChanged(SObject record, SObjectField fieldToVerify){
+	global Boolean hasChanged(SObject record, SObjectField fieldToVerify){
 		return hasChanged(record, new List<SObjectField>{fieldToVerify});
 	}
 
 	@TestVisible
-	protected Boolean hasChanged(SObject record, String fieldToVerify){
+	global Boolean hasChanged(SObject record, String fieldToVerify){
 		return hasChanged(record, new List<String>{fieldToVerify});
 	}
 
 	@TestVisible
-	protected Boolean hasBeenFilled(SObject record, SObjectField fieldToVerify){
+	global Boolean hasBeenFilled(SObject record, SObjectField fieldToVerify){
 		return record.get(fieldToVerify) != null && (isNew || hasChanged(record, new List<SObjectField>{fieldToVerify}));
 	}
 
 	@TestVisible
-	protected Boolean hasBeenRemoved(SObject record, SObjectField fieldToVerify){
+	global Boolean hasBeenRemoved(SObject record, SObjectField fieldToVerify){
 		return record.get(fieldToVerify) == null && hasChanged(record, new List<SObjectField>{fieldToVerify});
 	}
 
-	protected Boolean hasChanged(SObject record, List<SObjectField> fieldsToVerify){
+	global Boolean hasChanged(SObject record, List<SObjectField> fieldsToVerify){
 		return SObjectUtils.fieldValueHasChanged(record, old(record), fieldsToVerify);
 	}
 
-	protected Boolean hasChanged(SObject record, List<String> fieldsToVerify){
+	global Boolean hasChanged(SObject record, List<String> fieldsToVerify){
 		return SObjectUtils.fieldValueHasChanged(record, old(record), fieldsToVerify);
 	}
 
 	@TestVisible
-	protected Boolean hasChanged(SObject record, Set<SObjectField> fieldsToVerify){
+	global Boolean hasChanged(SObject record, Set<SObjectField> fieldsToVerify){
 		return SObjectUtils.fieldValueHasChanged(record, old(record), fieldsToVerify);
 	}
 
-	protected SObject old(SObject record){
+	global SObject old(SObject record){
 		return oldRecordById?.get(record.Id);
 	}
 
 	@TestVisible
-	protected Set<Id> setIds(SObjectField sObjectField){
+	global Set<Id> setIds(SObjectField sObjectField){
 		Set<Id> ids = new Set<Id>();
 		for(SObject record : domain.Records){
 			if(record.get(sObjectField) != null)
