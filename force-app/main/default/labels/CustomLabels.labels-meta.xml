@@ -4,7 +4,7 @@
         <fullName>AnErrorOccurredContactAnAdministrator</fullName>
         <categories>ui,error</categories>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>AnErrorOccurredContactAnAdministrator</shortDescription>
         <value>An error occurred, contact an administrator.</value>
     </labels>
@@ -12,7 +12,7 @@
         <fullName>ErrorLossOfInternetConnection</fullName>
         <categories>ui,error</categories>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>ErrorLossOfInternetConnection</shortDescription>
         <value>Loss of internet connection.</value>
     </labels>
@@ -20,7 +20,7 @@
         <fullName>ErrorProcessingFailed</fullName>
         <categories>ui,error</categories>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>ErrorProcessingFailed</shortDescription>
         <value>Processing failed, please try again.</value>
     </labels>
@@ -28,7 +28,7 @@
         <fullName>AddFile</fullName>
         <categories>ui</categories>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>AddFile</shortDescription>
         <value>Add file</value>
     </labels>
@@ -36,7 +36,7 @@
         <fullName>Apply</fullName>
         <categories>ui</categories>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>Apply</shortDescription>
         <value>Apply</value>
     </labels>
@@ -44,7 +44,7 @@
         <fullName>Cancel</fullName>
         <categories>ui</categories>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>Cancel</shortDescription>
         <value>Cancel</value>
     </labels>
@@ -52,7 +52,7 @@
         <fullName>Close</fullName>
         <categories>ui</categories>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>Close</shortDescription>
         <value>Close</value>
     </labels>
@@ -60,7 +60,7 @@
         <fullName>CloseThisWindow</fullName>
         <categories>ui</categories>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>CloseThisWindow</shortDescription>
         <value>Close this window</value>
     </labels>
@@ -68,7 +68,7 @@
         <fullName>CompleteThisField</fullName>
         <categories>ui</categories>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>CompleteThisField</shortDescription>
         <value>Complete this field.</value>
     </labels>
@@ -76,7 +76,7 @@
         <fullName>Continue</fullName>
         <categories>ui</categories>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>Continue</shortDescription>
         <value>Continue</value>
     </labels>
@@ -84,7 +84,7 @@
         <fullName>Delete</fullName>
         <categories>ui</categories>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>Delete</shortDescription>
         <value>Delete</value>
     </labels>
@@ -92,7 +92,7 @@
         <fullName>DeselectAll</fullName>
         <categories>ui</categories>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>DeselectAll</shortDescription>
         <value>Deselect all</value>
     </labels>
@@ -100,7 +100,7 @@
         <fullName>FileDeleted</fullName>
         <categories>ui</categories>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>FileDeleted</shortDescription>
         <value>File deleted.</value>
     </labels>
@@ -108,7 +108,7 @@
         <fullName>Filter</fullName>
         <categories>ui</categories>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>Filter</shortDescription>
         <value>Filter</value>
     </labels>
@@ -116,7 +116,7 @@
         <fullName>Modify</fullName>
         <categories>ui</categories>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>Modify</shortDescription>
         <value>Modify</value>
     </labels>
@@ -124,7 +124,7 @@
         <fullName>NewRecord</fullName>
         <categories>ui</categories>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>NewRecord</shortDescription>
         <value>New record</value>
     </labels>
@@ -132,7 +132,7 @@
         <fullName>Search</fullName>
         <categories>ui</categories>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>Search</shortDescription>
         <value>Search</value>
     </labels>
@@ -140,7 +140,7 @@
         <fullName>SelectAll</fullName>
         <categories>ui</categories>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>SelectAll</shortDescription>
         <value>Select all</value>
     </labels>
@@ -148,7 +148,7 @@
         <fullName>SelectAnOption</fullName>
         <categories>ui</categories>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>SelectAnOption</shortDescription>
         <value>Select an option</value>
     </labels>
@@ -156,7 +156,7 @@
         <fullName>Selected</fullName>
         <categories>ui</categories>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>Selected</shortDescription>
         <value>Selected</value>
     </labels>
@@ -164,7 +164,7 @@
         <fullName>SelectedValues</fullName>
         <categories>ui</categories>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>SelectedValues</shortDescription>
         <value>Selected values</value>
     </labels>
@@ -172,7 +172,7 @@
         <fullName>UploadAtLeastOneFile</fullName>
         <categories>ui</categories>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>UploadAtLeastOneFile</shortDescription>
         <value>Upload at least one file</value>
     </labels>
@@ -180,7 +180,7 @@
         <fullName>XSelectedOptions</fullName>
         <categories>ui</categories>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>XSelectedOptions</shortDescription>
         <value>{0} selected option(s)</value>
     </labels>
@@ -188,7 +188,7 @@
         <fullName>ProfileSystemAdministrator</fullName>
         <categories>ui,profile</categories>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>ProfileSystemAdministrator</shortDescription>
         <value>System administrator</value>
     </labels>
@@ -196,7 +196,7 @@
         <fullName>AddFiles</fullName>
         <categories>ui</categories>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>AddFiles</shortDescription>
         <value>Add files</value>
     </labels>
@@ -204,7 +204,7 @@
         <fullName>DeleteSelection</fullName>
         <categories>ui</categories>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>DeleteSelection</shortDescription>
         <value>DeleteSelection</value>
     </labels>
@@ -212,7 +212,7 @@
         <fullName>Download</fullName>
         <categories>ui</categories>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>Download</shortDescription>
         <value>Download</value>
     </labels>
@@ -220,7 +220,7 @@
         <fullName>DownloadAllFiles</fullName>
         <categories>ui</categories>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>DownloadAllFiles</shortDescription>
         <value>Download all files</value>
     </labels>
@@ -228,7 +228,7 @@
         <fullName>FileType</fullName>
         <categories>ui</categories>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>FileType</shortDescription>
         <value>File type</value>
     </labels>
@@ -236,7 +236,7 @@
         <fullName>FileTypes</fullName>
         <categories>ui</categories>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>FileTypes</shortDescription>
         <value>File types</value>
     </labels>
@@ -244,7 +244,7 @@
         <fullName>File_0_deleted</fullName>
         <categories>ui</categories>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>File_0_deleted</shortDescription>
         <value>File {0} deleted.</value>
     </labels>
@@ -252,7 +252,7 @@
         <fullName>File_s</fullName>
         <categories>ui</categories>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>File_s</shortDescription>
         <value>File(s)</value>
     </labels>
@@ -260,7 +260,7 @@
         <fullName>File_sAdded</fullName>
         <categories>ui</categories>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>File_sAdded</shortDescription>
         <value>File(s) added.</value>
     </labels>
@@ -268,7 +268,7 @@
         <fullName>Files</fullName>
         <categories>ui</categories>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>Files</shortDescription>
         <value>Files</value>
     </labels>
@@ -276,7 +276,7 @@
         <fullName>FilesDeleted</fullName>
         <categories>ui</categories>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>FilesDeleted</shortDescription>
         <value>Files deleted.</value>
     </labels>
@@ -284,7 +284,7 @@
         <fullName>LinkToMergePDFs</fullName>
         <categories>ui</categories>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>LinkToMergePDFs</shortDescription>
         <value>Link to merge PDFs</value>
     </labels>
@@ -292,7 +292,7 @@
         <fullName>LinkToReduceTheSizeOfPDFs</fullName>
         <categories>ui</categories>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>LinkToReduceTheSizeOfPDFs</shortDescription>
         <value>Link to reduce the size of PDFs</value>
     </labels>
@@ -300,7 +300,7 @@
         <fullName>Refresh</fullName>
         <categories>ui</categories>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>Refresh</shortDescription>
         <value>Refresh</value>
     </labels>
@@ -308,7 +308,7 @@
         <fullName>Select</fullName>
         <categories>ui</categories>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>Select</shortDescription>
         <value>Select</value>
     </labels>
@@ -316,7 +316,7 @@
         <fullName>SelectOfFiles</fullName>
         <categories>ui</categories>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>SelectOfFiles</shortDescription>
         <value>Select of files</value>
     </labels>
@@ -324,7 +324,7 @@
         <fullName>SetTheFileAsPrivate</fullName>
         <categories>ui</categories>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>SetTheFileAsPrivate</shortDescription>
         <value>Set the file as private</value>
     </labels>
@@ -332,7 +332,7 @@
         <fullName>ProfileChatterFreeUser</fullName>
         <categories>profile</categories>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>ProfileChatterFreeUser</shortDescription>
         <value>Chatter Free User</value>
     </labels>
@@ -340,7 +340,7 @@
         <fullName>ProfileContractManager</fullName>
         <categories>profile</categories>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>ProfileContractManager</shortDescription>
         <value>Contract Manager</value>
     </labels>
@@ -348,7 +348,7 @@
         <fullName>ProfileMarketingUser</fullName>
         <categories>profile</categories>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>ProfileMarketingUser</shortDescription>
         <value>Marketing User</value>
     </labels>
@@ -356,7 +356,7 @@
         <fullName>ProfileStandardUser</fullName>
         <categories>profile</categories>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>ProfileStandardUser</shortDescription>
         <value>Standard User</value>
     </labels>
