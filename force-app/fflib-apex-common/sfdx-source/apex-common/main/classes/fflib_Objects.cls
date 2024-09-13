@@ -25,7 +25,7 @@
 **/
 global virtual class fflib_Objects implements fflib_IObjects
 {
-	protected List<Object> objects { get; private set;} { objects = new List<Object>(); }
+	global List<Object> objects { get; private set;} { objects = new List<Object>(); }
 
 	/**
 	 * Class constructor
@@ -106,7 +106,7 @@ global virtual class fflib_Objects implements fflib_IObjects
 		return getObjects().size();
 	}
 
-	protected void setObjects(List<Object> objects)
+	global void setObjects(List<Object> objects)
 	{
 		this.objects = objects;
 	}

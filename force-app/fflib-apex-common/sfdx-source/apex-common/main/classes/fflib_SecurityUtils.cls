@@ -39,8 +39,8 @@ global class fflib_SecurityUtils
      * in the event you wish to handle CRUD and FLS violations the same way (e.g. die and display an error)
     **/
     global virtual class SecurityException extends Exception {
-        protected OperationType m_operation;
-        protected Schema.SObjectType m_objectType;
+        global OperationType m_operation;
+        global Schema.SObjectType m_objectType;
     }
 
     /**

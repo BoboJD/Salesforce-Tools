@@ -33,7 +33,7 @@
  */
 global with sharing class fflib_ArgumentCaptor
 {
-	protected List<Object> argumentsCaptured = new List<Object>();
+	global List<Object> argumentsCaptured = new List<Object>();
 
 	/**
 	 *	Factory method to create a new fflib_ArgumentCaptor.

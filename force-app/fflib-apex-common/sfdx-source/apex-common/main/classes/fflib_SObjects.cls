@@ -79,7 +79,7 @@ global virtual class fflib_SObjects
 	 *
 	 * @param message The error message to add to each record
 	 */
-	protected void addError(String message)
+	global void addError(String message)
 	{
 		for (SObject record : getRecords())
 		{
@@ -94,7 +94,7 @@ global virtual class fflib_SObjects
 	 * @param message The error message to add to the given field on each record
 	 */
 	@TestVisible
-	protected virtual void addError(Schema.SObjectField field, String message)
+	global virtual void addError(Schema.SObjectField field, String message)
 	{
 		for (SObject record : getRecords())
 		{
@@ -107,7 +107,7 @@ global virtual class fflib_SObjects
 	 * @param field The field to nullify
 	 */
 	@TestVisible
-	protected virtual void clearField(Schema.SObjectField field)
+	global virtual void clearField(Schema.SObjectField field)
 	{
 		clearFields(new Set<Schema.SObjectField>{ field });
 	}
@@ -117,7 +117,7 @@ global virtual class fflib_SObjects
 	 * @param fields The fields to nullify
 	 */
 	@TestVisible
-	protected virtual void clearFields(Set<Schema.SObjectField> fields)
+	global virtual void clearFields(Set<Schema.SObjectField> fields)
 	{
 		for (SObject record : getRecords())
 		{
@@ -136,7 +136,7 @@ global virtual class fflib_SObjects
 	 *
 	 * @return Returns the Error message
 	 **/
-	protected virtual String error(String message, SObject record)
+	global virtual String error(String message, SObject record)
 	{
 		return Errors.error(this, message, record);
 	}
@@ -150,7 +150,7 @@ global virtual class fflib_SObjects
 	 *
 	 * @return Returns the Error message
 	 **/
-	protected virtual String error(String message, SObject record, Schema.SObjectField field)
+	global virtual String error(String message, SObject record, Schema.SObjectField field)
 	{
 		return fflib_SObjects.Errors.error(this, message, record, field);
 	}
@@ -161,7 +161,7 @@ global virtual class fflib_SObjects
 	 * @return Return a set with all the Id values of the given field
 	 */
 	@TestVisible
-	protected Set<Id> getIdFieldValues(Schema.SObjectField field)
+	global Set<Id> getIdFieldValues(Schema.SObjectField field)
 	{
 		Set<Id> result = new Set<Id>();
 		for (SObject record : getRecords())
@@ -177,7 +177,7 @@ global virtual class fflib_SObjects
 	 * @return Return a set with all the String values of the given field
 	 */
 	@TestVisible
-	protected Set<String> getStringFieldValues(Schema.SObjectField field)
+	global Set<String> getStringFieldValues(Schema.SObjectField field)
 	{
 		Set<String> result = new Set<String>();
 		for (SObject record : getRecords())
@@ -193,7 +193,7 @@ global virtual class fflib_SObjects
 	 * @return Return a set with all the values of the given field
 	 */
 	@TestVisible
-	protected virtual Set<Object> getFieldValues(Schema.SObjectField field)
+	global virtual Set<Object> getFieldValues(Schema.SObjectField field)
 	{
 		Set<Object> result = new Set<Object>();
 		for (SObject record : getRecords())
@@ -209,7 +209,7 @@ global virtual class fflib_SObjects
 	 *
 	 * @return A list with only the SObjects where the given field has the provided value
 	 */
-	protected virtual List<SObject> getRecordsByFieldValue(Schema.SObjectField field, Object value)
+	global virtual List<SObject> getRecordsByFieldValue(Schema.SObjectField field, Object value)
 	{
 		return getRecordsByFieldValues(field, new Set<Object>{value});
 	}
@@ -220,7 +220,7 @@ global virtual class fflib_SObjects
 	 *
 	 * @return A list with only the SObjects where the given field value is part of the provided values
 	 */
-	protected virtual List<SObject> getRecordsByFieldValues(Schema.SObjectField field, Set<Object> values)
+	global virtual List<SObject> getRecordsByFieldValues(Schema.SObjectField field, Set<Object> values)
 	{
 		List<SObject> result = new List<SObject>();
 		for (SObject record : getRecords())
@@ -238,7 +238,7 @@ global virtual class fflib_SObjects
 	 *
 	 * @return A list with only the SObjects where the given field value is either null or '')
 	 */
-	protected virtual List<SObject> getRecordsWithBlankFieldValues(Schema.SObjectField field)
+	global virtual List<SObject> getRecordsWithBlankFieldValues(Schema.SObjectField field)
 	{
 		return getRecordsWithBlankFieldValues(
 				new Set<Schema.SObjectField> {field}
@@ -250,7 +250,7 @@ global virtual class fflib_SObjects
 	 *
 	 * @return A list with only the SObjects where the at least one given field value is either null or '')
 	 */
-	protected virtual List<SObject> getRecordsWithBlankFieldValues(Set<Schema.SObjectField> fields)
+	global virtual List<SObject> getRecordsWithBlankFieldValues(Set<Schema.SObjectField> fields)
 	{
 		List<SObject> result = new List<SObject>();
 		for (SObject record : getRecords())
@@ -271,7 +271,7 @@ global virtual class fflib_SObjects
 	 *
 	 * @return A list with only the SObjects where all given field values are either null or ''
 	 */
-	protected virtual List<SObject> getRecordsWithAllBlankFieldValues(Set<Schema.SObjectField> fields)
+	global virtual List<SObject> getRecordsWithAllBlankFieldValues(Set<Schema.SObjectField> fields)
 	{
 		List<SObject> result = new List<SObject>();
 		for (SObject record : getRecords())
@@ -295,7 +295,7 @@ global virtual class fflib_SObjects
 	 *
 	 * @return A list with only the SObjects where the given field value is not null or ''
 	 */
-	protected virtual List<SObject> getRecordsWithNotBlankFieldValues(Schema.SObjectField field)
+	global virtual List<SObject> getRecordsWithNotBlankFieldValues(Schema.SObjectField field)
 	{
 		return getRecordsWithNotBlankFieldValues(
 				new Set<Schema.SObjectField> {field}
@@ -307,7 +307,7 @@ global virtual class fflib_SObjects
 	 *
 	 * @return A list with only the SObjects where the at least one given field value not null or ''
 	 */
-	protected virtual List<SObject> getRecordsWithNotBlankFieldValues(Set<Schema.SObjectField> fields)
+	global virtual List<SObject> getRecordsWithNotBlankFieldValues(Set<Schema.SObjectField> fields)
 	{
 		List<SObject> result = new List<SObject>();
 		for (SObject record : getRecords())
@@ -329,7 +329,7 @@ global virtual class fflib_SObjects
 	 *
 	 * @return A list with only the SObjects where all given field values are not null or ''
 	 */
-	protected virtual List<SObject> getRecordsWithAllNotBlankFieldValues(Set<Schema.SObjectField> fields)
+	global virtual List<SObject> getRecordsWithAllNotBlankFieldValues(Set<Schema.SObjectField> fields)
 	{
 		List<SObject> result = new List<SObject>();
 		for (SObject record : getRecords())
@@ -354,7 +354,7 @@ global virtual class fflib_SObjects
 	 * @param field The reference to the SObjectField to be modified
 	 * @param value The value to store in the given SObjectField
 	 */
-	protected virtual void setFieldValue(Schema.SObjectField field, Object value)
+	global virtual void setFieldValue(Schema.SObjectField field, Object value)
 	{
 		for (SObject record : getRecords())
 		{
@@ -367,7 +367,7 @@ global virtual class fflib_SObjects
 	 * @param fieldToUpdate The SObjectField to store the mapped value when the key matches the value in the fieldToUpdate field
 	 * @param values Map of values to store by the fieldToCheck fields value
 	 */
-	protected virtual void setFieldValueByMap(
+	global virtual void setFieldValueByMap(
 			Schema.SObjectField fieldToCheck,
 			Schema.SObjectField fieldToUpdate,
 			Map<Object, Object> values)

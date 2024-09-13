@@ -57,7 +57,7 @@ global virtual with sharing class fflib_SObjectDomain
      * Provides access to Trigger.oldMap and allowing it to be mocked in unit-tests
      **/
 	@TestVisible
-	protected Map<Id, SObject> ExistingRecords
+	global Map<Id, SObject> ExistingRecords
 	{
 		get
 		{

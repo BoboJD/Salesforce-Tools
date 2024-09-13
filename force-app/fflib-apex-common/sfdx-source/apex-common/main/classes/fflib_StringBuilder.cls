@@ -31,7 +31,7 @@
  **/
 global virtual class fflib_StringBuilder
 {
-	protected List<String> buffer = new List<String>();
+	global List<String> buffer = new List<String>();
 
 	/**
 	 * Construct an empty StringBuilder

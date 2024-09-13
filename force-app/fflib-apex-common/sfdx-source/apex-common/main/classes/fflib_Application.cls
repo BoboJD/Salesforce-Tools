@@ -36,8 +36,8 @@ global virtual class fflib_Application
 	 **/
 	global virtual class UnitOfWorkFactory implements fflib_IUnitOfWorkFactory
 	{
-		protected List<SObjectType> m_objectTypes;
-		protected fflib_ISObjectUnitOfWork m_mockUow;
+		global List<SObjectType> m_objectTypes;
+		global fflib_ISObjectUnitOfWork m_mockUow;
 
 		/**
 		 * Constructs a Unit Of Work factory
@@ -113,7 +113,7 @@ global virtual class fflib_Application
 		}
 
 		@TestVisible
-		protected virtual void setMock(fflib_ISObjectUnitOfWork mockUow)
+		global virtual void setMock(fflib_ISObjectUnitOfWork mockUow)
 		{
 			m_mockUow = mockUow;
 		}
@@ -124,9 +124,9 @@ global virtual class fflib_Application
 	 **/
 	global virtual class ServiceFactory implements fflib_IServiceFactory
 	{
-		protected Map<Type, Type> m_serviceInterfaceTypeByServiceImplType;
+		global Map<Type, Type> m_serviceInterfaceTypeByServiceImplType;
 
-		protected Map<Type, Object> m_serviceInterfaceTypeByMockService;
+		global Map<Type, Object> m_serviceInterfaceTypeByMockService;
 
 		/**
 		 * Constructs a simple Service Factory
@@ -169,7 +169,7 @@ global virtual class fflib_Application
 		}
 
 		@TestVisible
-		protected virtual void setMock(Type serviceInterfaceType, Object serviceImpl)
+		global virtual void setMock(Type serviceInterfaceType, Object serviceImpl)
 		{
 			m_serviceInterfaceTypeByMockService.put(serviceInterfaceType, serviceImpl);
 		}
@@ -180,8 +180,8 @@ global virtual class fflib_Application
 	 **/
 	global virtual class SelectorFactory implements fflib_ISelectorFactory
 	{
-		protected Map<SObjectType, Type> m_sObjectBySelectorType;
-		protected Map<SObjectType, fflib_ISObjectSelector> m_sObjectByMockSelector;
+		global Map<SObjectType, Type> m_sObjectBySelectorType;
+		global Map<SObjectType, fflib_ISObjectSelector> m_sObjectByMockSelector;
 
 		/**
 		 * Constructs a simple Selector Factory
@@ -271,7 +271,7 @@ global virtual class fflib_Application
 		}
 
 		@TestVisible
-		protected virtual void setMock(fflib_ISObjectSelector selectorInstance)
+		global virtual void setMock(fflib_ISObjectSelector selectorInstance)
 		{
 			m_sObjectByMockSelector.put(selectorInstance.sObjectType(), selectorInstance);
 		}
@@ -282,11 +282,11 @@ global virtual class fflib_Application
 	 **/
 	global virtual class DomainFactory implements fflib_IDomainFactory
 	{
-		protected fflib_Application.SelectorFactory m_selectorFactory;
+		global fflib_Application.SelectorFactory m_selectorFactory;
 
-		protected Map<Object, Type> constructorTypeByObject;
+		global Map<Object, Type> constructorTypeByObject;
 
-		protected Map<Object, fflib_IDomain> mockDomainByObject;
+		global Map<Object, fflib_IDomain> mockDomainByObject;
 
         /**
 		 * Constructs a Domain factory
@@ -413,18 +413,18 @@ global virtual class fflib_Application
 		}
 
 		@TestVisible
-		protected virtual void setMock(fflib_ISObjectDomain mockDomain)
+		global virtual void setMock(fflib_ISObjectDomain mockDomain)
 		{
 			mockDomainByObject.put((Object) mockDomain.sObjectType(), (fflib_IDomain) mockDomain);
 		}
 
 		@TestVisible
-		protected virtual void setMock(fflib_IDomain mockDomain)
+		global virtual void setMock(fflib_IDomain mockDomain)
 		{
 			mockDomainByObject.put(mockDomain.getType(), mockDomain);
 		}
 
-		protected virtual Map<Object, Type> getConstructorTypeByObject(Map<SObjectType, Type> constructorTypeBySObjectType)
+		global virtual Map<Object, Type> getConstructorTypeByObject(Map<SObjectType, Type> constructorTypeBySObjectType)
 		{
 			Map<Object, Type> result = new Map<Object, Type>();
 			for (SObjectType sObjectType : constructorTypeBySObjectType.keySet())
