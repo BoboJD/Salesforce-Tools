@@ -1,6 +1,10 @@
 # Salesforce Tools
 
-This project is an unlocked package containing fflib files, utility classes, and service Apex classes. It also includes best practices used in conjunction with fflib. The repository features a `scripts` folder to manage deployments and keep the repository up-to-date.
+This project is an unlocked package containing fflib apex files, utility classes, and service Apex classes. It also includes best practices used in conjunction with fflib apex files. The repository features a `scripts` folder to manage deployments and keep the repository up-to-date.
+
+## Documentation
+
+For more detailed documentation, check out the [docs](./docs).
 
 ## Usage
 
