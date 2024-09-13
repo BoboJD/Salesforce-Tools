@@ -2,20 +2,20 @@
 private class TriggerHandlerTest{
 
 	@IsTest
-	static void isNewShouldReturnNull(){
+	static void isNewShouldReturnFalse(){
 		TriggerHandler handler = new TriggerHandler();
 
 		Test.startTest();
-		Assert.isNull(handler.isNew);
+		Assert.isFalse(handler.isNew);
 		Test.stopTest();
 	}
 
 	@IsTest
-	static void isDeletedShouldReturnNull(){
+	static void isDeletedShouldReturnFalse(){
 		TriggerHandler handler = new TriggerHandler();
 
 		Test.startTest();
-		Assert.isNull(handler.isDeleted);
+		Assert.isFalse(handler.isDeleted);
 		Test.stopTest();
 	}
 

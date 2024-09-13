@@ -2,18 +2,19 @@ global inherited sharing virtual class TriggerHandler{
 	global fflib_SObjectDomain domain;
 	private Map<Id, SObject> oldRecordById;
 	global fflib_ISObjectUnitOfWork uow;
+	@TestVisible private Boolean forceIsNew = false;
 
 	@TestVisible
 	global Boolean isNew{
 		get{
-			return Trigger.isInsert;
+			return forceIsNew || (Trigger.isExecuting && Trigger.isInsert);
 		}
 	}
 
 	@TestVisible
 	global Boolean isDeleted{
 		get{
-			return Trigger.isDelete;
+			return Trigger.isExecuting && Trigger.isDelete;
 		}
 	}
 
