@@ -51,4 +51,21 @@ private class UserPermissionSetTest{
 		List<PermissionSetAssignment> assignedPermissionSets = getAssignedPermissionSets(standardUser);
 		Assert.equals(0, assignedPermissionSets.size());
 	}
+
+	@IsTest
+	static void updateStandardUserToUnknownProfileButWithCheckboxCheckedShouldHavePermissionSetsAssigned(){
+		Profile newProfile = [SELECT Id FROM Profile WHERE Name = :ProfileConstants.MARKETING_USER LIMIT 1];
+		User standardUser = UserBuilder.newStandardUser().build();
+
+		Test.startTest();
+		update new User(
+			Id = standardUser.Id,
+			ProfileId = newProfile.Id,
+			PermissionSetAttributionTest__c = true
+		);
+		Test.stopTest();
+
+		List<PermissionSetAssignment> assignedPermissionSets = getAssignedPermissionSets(standardUser);
+		Assert.equals(1, assignedPermissionSets.size());
+	}
 }

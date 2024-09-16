@@ -1,6 +1,6 @@
+@SuppressWarnings('PMD.CognitiveComplexity')
 global with sharing class UserPermissionSet extends UsersHandler{
 	private Set<Id> userIds = new Set<Id>();
-	private static Set<String> automaticallyAssignedPermissionSets;
 
 	private Map<Id, User> userById{
 		get{
@@ -18,19 +18,40 @@ global with sharing class UserPermissionSet extends UsersHandler{
 		}set;
 	}
 
+	private static Set<String> automaticallyAssignedPermissionSets{
+		get{
+			if(automaticallyAssignedPermissionSets == null){
+				automaticallyAssignedPermissionSets = new Set<String>();
+				for(PermissionSetConfiguration__mdt config : PermissionSetConfiguration__mdt.getAll().values())
+					automaticallyAssignedPermissionSets.addAll(config.GrantedPermissions__c.split(';'));
+			}
+			return automaticallyAssignedPermissionSets;
+		}set;
+	}
+
 	private static Map<String, List<String>> permissionSetsByProfileName{
 		get{
 			if(permissionSetsByProfileName == null){
-				automaticallyAssignedPermissionSets = new Set<String>();
 				permissionSetsByProfileName = new Map<String, List<String>>();
 				for(PermissionSetConfiguration__mdt config : PermissionSetConfiguration__mdt.getAll().values()){
-					List<String> permissionSets = config.GrantedPermissions__c.split(';');
-					permissionSetsByProfileName.put(config.Label, permissionSets);
-					for(String permissionSetName : permissionSets)
-						automaticallyAssignedPermissionSets.add(permissionSetName);
+					if(config.AttributionType__c != 'Checkbox')
+						permissionSetsByProfileName.put(config.Label, config.GrantedPermissions__c.split(';'));
 				}
 			}
 			return permissionSetsByProfileName;
+		}set;
+	}
+
+	private static Map<String, List<String>> permissionSetsByCheckbox{
+		get{
+			if(permissionSetsByCheckbox == null){
+				permissionSetsByCheckbox = new Map<String, List<String>>();
+				for(PermissionSetConfiguration__mdt config : PermissionSetConfiguration__mdt.getAll().values()){
+					if(config.AttributionType__c == 'Checkbox')
+						permissionSetsByCheckbox.put(config.Label, config.GrantedPermissions__c.split(';'));
+				}
+			}
+			return permissionSetsByCheckbox;
 		}set;
 	}
 
@@ -59,20 +80,20 @@ global with sharing class UserPermissionSet extends UsersHandler{
 	}
 
 	global void assignPermissionSets(){
-		for(User user : getUsersWhereItsNewOrProfileHasChanged()){
-			String profileName = userById.get(user.Id).Profile.Name;
-			if(permissionSetsByProfileName.containsKey(profileName)){
-				managePermissionSetAssignments(user, permissionSetsByProfileName.get(profileName));
+		for(User user : getUsersNewlyCreatedOrWhereProfilesOrCheckboxesHasChanged()){
+			List<String> permissionSetsToAssign = retrievePermissionSetsToAssign(user);
+			if(!permissionSetsToAssign.isEmpty()){
+				managePermissionSetAssignments(user, permissionSetsToAssign);
 			}else if(!isNew && assignedPermissionSetsByUserId.containsKey(user.Id)){
 				removeAllAutomaticallyAssignedPermissionSets(user);
 			}
 		}
 	}
 
-	private List<User> getUsersWhereItsNewOrProfileHasChanged(){
+	private List<User> getUsersNewlyCreatedOrWhereProfilesOrCheckboxesHasChanged(){
 		List<User> usersToProcess = new List<User>();
 		for(User user : users){
-			if(newCreationOrProfileHasChanged(user)){
+			if(newCreationOrProfileHasChanged(user) || checkboxWithPermissionsHasBeenChecked(user)){
 				usersToProcess.add(user);
 				userIds.add(user.Id);
 			}
@@ -82,6 +103,26 @@ global with sharing class UserPermissionSet extends UsersHandler{
 
 	private Boolean newCreationOrProfileHasChanged(User user){
 		return user.ProfileId != null && (isNew || hasChanged(user, Schema.User.ProfileId));
+	}
+
+	private Boolean checkboxWithPermissionsHasBeenChecked(User user){
+		for(String checkboxField : permissionSetsByCheckbox.keySet()){
+			if((Boolean)user.get(checkboxField) && (isNew || hasChanged(user, checkboxField)))
+				return true;
+		}
+		return false;
+	}
+
+	private List<String> retrievePermissionSetsToAssign(User user){
+		List<String> permissionSetsToAssign = new List<String>();
+		String profileName = userById.get(user.Id).Profile.Name;
+		if(permissionSetsByProfileName.containsKey(profileName))
+			permissionSetsToAssign.addAll(permissionSetsByProfileName.get(profileName));
+		for(String checkboxField : permissionSetsByCheckbox.keySet()){
+			if((Boolean)user.get(checkboxField))
+				permissionSetsToAssign.addAll(permissionSetsByCheckbox.get(checkboxField));
+		}
+		return permissionSetsToAssign;
 	}
 
 	private void managePermissionSetAssignments(User user, List<String> permissionSetsToAssign){

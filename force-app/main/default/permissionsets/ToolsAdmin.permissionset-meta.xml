@@ -101,6 +101,11 @@
         <field>User.LoadingPicture__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>User.PermissionSetAttributionTest__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Tools - Admin</label>
     <objectPermissions>
