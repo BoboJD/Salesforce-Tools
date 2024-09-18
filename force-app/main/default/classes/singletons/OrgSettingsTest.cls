@@ -5,6 +5,7 @@ private class OrgSettingsTest{
 	static void getSettingShouldReturnFieldValue(){
 		Assert.equals('https://www.test.com', OrgSettings.get(OrgSetting__mdt.TestUrl__c));
 		Assert.equals('zkyfeRRoodkyjbxYGf15Nvw5FEH3D/FcSLygJDydbZA=', OrgSettings.get(OrgSetting__mdt.TestPassword__c));
+		Assert.isTrue(OrgSettings.isActive(OrgSetting__mdt.TestCheckbox__c));
 	}
 
 	@IsTest

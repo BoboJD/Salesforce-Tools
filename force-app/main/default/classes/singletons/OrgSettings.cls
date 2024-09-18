@@ -38,6 +38,10 @@ global without sharing class OrgSettings{
 		return value;
 	}
 
+	global static Boolean isActive(SObjectField sObjectField){
+		return (Boolean)getInstance().orgSetting?.get(sObjectField) == true;
+	}
+
 	private static String decrypt(String encryptedValueString){
 		Blob encryptionKey = getEncryptionKey();
 		Blob decryptedString;

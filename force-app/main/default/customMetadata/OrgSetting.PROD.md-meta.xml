@@ -3,6 +3,10 @@
     <label>PROD</label>
     <protected>false</protected>
     <values>
+        <field>TestCheckbox__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
         <field>TestPassword__c</field>
         <value xsi:type="xsd:string">zkyfeRRoodkyjbxYGf15Nvw5FEH3D/FcSLygJDydbZA=</value>
     </values>
