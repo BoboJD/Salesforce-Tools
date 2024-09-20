@@ -6,7 +6,7 @@ import {
 	displaySuccessToast, displaySpinner, hideSpinner, handleErrorForUser, recursiveDeepCopy
 } from 'c/utils';
 import deleteFile from '@salesforce/apex/FileUploaderController.deleteFile';
-import label from './labels';
+import l from './labels';
 
 export default class Input extends NavigationMixin(LightningElement){
 	@api type = 'text';
@@ -40,7 +40,7 @@ export default class Input extends NavigationMixin(LightningElement){
 	};
 	hasError = false;
 	isLoading = false;
-	label = label;
+	l = l;
 
 	_files = [];
 
@@ -160,7 +160,7 @@ export default class Input extends NavigationMixin(LightningElement){
 	}
 
 	get errorMessage(){
-		return this.typeFile ? label.UploadAtLeastOneFile : label.CompleteThisField;
+		return this.typeFile ? l.UploadAtLeastOneFile : l.CompleteThisField;
 	}
 
 	get inputVariant(){
@@ -246,7 +246,7 @@ export default class Input extends NavigationMixin(LightningElement){
 				if(result.status !== 'SUCCESS')
 					throw result.message;
 				this.removeFileFromFilesAndDispatchChange(contentDocumentId);
-				displaySuccessToast(this, label.FileDeleted);
+				displaySuccessToast(this, l.FileDeleted);
 				hideSpinner(this);
 			}).catch(error => {
 				logError('lwc/input/input.js', 'deleteFile', error);

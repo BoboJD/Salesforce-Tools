@@ -109,10 +109,10 @@
                 </template>
             </template>
         </div>
-        <div if:true={hasError} class="slds-form-element__help">{label.CompleteThisField}</div>
+        <div if:true={hasError} class="slds-form-element__help">{l.CompleteThisField}</div>
     </div>
     <div if:true={displaySelectedValues} class="slds-form-element">
-        <label class="slds-form-element__label">{label.SelectedValues}</label>
+        <label class="slds-form-element__label">{l.SelectedValues}</label>
         <div class="slds-form-element__control">
             <template for:each={selectedOptions} for:item="option">
                 <lightning-pill

@@ -1,11 +1,11 @@
 import { LightningElement, track, api } from 'lwc';
 import { recursiveDeepCopy, isEmpty } from 'c/utils';
 import search from '@salesforce/apex/LookupController.search';
-import label from './labels';
+import l from './labels';
 
 export default class Lookup extends LightningElement{
 	@api label;
-	@api placeholder = `${label.Search}...`;
+	@api placeholder = `${l.Search}...`;
 	@api iconName;
 	@api variant;
 	@api required = false;
@@ -27,7 +27,7 @@ export default class Lookup extends LightningElement{
 	searchedTerm;
 	_selectedSearchResult;
 	_value;
-	label = label;
+	l = l;
 
 	get selectedSearchResult(){
 		return this._selectedSearchResult;

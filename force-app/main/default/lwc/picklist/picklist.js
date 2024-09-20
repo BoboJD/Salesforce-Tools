@@ -1,12 +1,12 @@
 import { LightningElement, api, track } from 'lwc';
 import { recursiveDeepCopy, isEmpty, format } from 'c/utils';
-import label from './labels';
+import l from './labels';
 
 export default class Picklist extends LightningElement{
 	@api type = 'picklist';
 	@api label;
 	@api fieldLevelHelp;
-	@api placeholder = label.SelectAnOption;
+	@api placeholder = l.SelectAnOption;
 	@api variant;
 	@api sourceLabel;
 	@api selectedLabel;
@@ -21,13 +21,14 @@ export default class Picklist extends LightningElement{
 	@api selectAllOption = false;
 	@api displaySelection = false;
 	@api addNewRecordOption = false;
-	@api newRecordOptionLabel = label.NewRecord;
+	@api newRecordOptionLabel = l.NewRecord;
 	@api disabledValues = [];
 	filteredTerm;
 	isOpened = false;
 	displayInvalidMsg = false;
 	_multiple = false;
 	isBeingFocused = false;
+	l = l;
 
 	_options = [];
 	@track _value;
@@ -84,7 +85,7 @@ export default class Picklist extends LightningElement{
 			return this.filteredTerm || '';
 		if(this.multiple){
 			if(this.value?.length > 0)
-				return this.readOnly ? this.value.join(', ') : format(label.XSelectedOptions, this.value.length);
+				return this.readOnly ? this.value.join(', ') : format(l.XSelectedOptions, this.value.length);
 			return null;
 		}
 		const selectedValue = this.value || '';
@@ -115,13 +116,13 @@ export default class Picklist extends LightningElement{
 	get filteredOptions(){
 		let options = [];
 		if(this.selectAllOption && this.multiple){
-			options.push({ value: 'selectAll', label: label.SelectAll });
-			options.push({ value: 'deselectAll', label: label.DeselectAll });
+			options.push({ value: 'selectAll', label: l.SelectAll });
+			options.push({ value: 'deselectAll', label: l.DeselectAll });
 		}
 		options = options.concat(this.options);
 		if(this.filteredTerm){
 			const searchTerm = this.filteredTerm.toLowerCase();
-			return options.filter(option => option.label.toLowerCase().includes(searchTerm));
+			return options.filter(option => option.l.toLowerCase().includes(searchTerm));
 		}
 		return options;
 	}
@@ -152,7 +153,7 @@ export default class Picklist extends LightningElement{
 	}
 
 	get editTitle(){
-		return `${label.Modify}: ${this.label}`;
+		return `${l.Modify}: ${this.label}`;
 	}
 
 	get labelHidden(){

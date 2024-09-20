@@ -88,7 +88,7 @@
 							if:true={displayUploadButton}
 							variant="brand-outline"
 							icon-name="utility:upload"
-							label={label.AddFile}
+							label={l.AddFile}
 							onclick={displayFileUploadModal}
 							disabled={isLoading}>
 						</lightning-button>
@@ -103,7 +103,7 @@
 										<a href="#" class="slds-pill__action" title={file.name} onclick={previewFile} data-document-id={file.documentId}>
 											<span class="slds-pill__label">{file.name}</span>
 										</a>
-										<button if:false={readOnly} class="slds-button slds-button_icon slds-button_icon slds-icon_container slds-icon-utility-close slds-pill__remove" title={label.Delete} onclick={deleteFile} data-document-id={file.documentId}>
+										<button if:false={readOnly} class="slds-button slds-button_icon slds-button_icon slds-icon_container slds-icon-utility-close slds-pill__remove" title={l.Delete} onclick={deleteFile} data-document-id={file.documentId}>
 											<lightning-icon icon-name="utility:close"></lightning-icon>
 										</button>
 									</span>
