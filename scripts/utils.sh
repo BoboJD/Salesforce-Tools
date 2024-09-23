@@ -48,6 +48,7 @@ display_start_time(){
 check_if_necessary_commands_are_available(){
 	command -v sf >/dev/null 2>&1 || error_exit "sf CLI is not installed."
 	command -v jq >/dev/null 2>&1 || error_exit "jq is not installed."
+	command -v yq >/dev/null 2>&1 || error_exit "yq is not installed."
 	command -v xml >/dev/null 2>&1 || error_exit "XMLStarlet is not installed."
 }
 
