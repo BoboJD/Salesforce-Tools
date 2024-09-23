@@ -6,6 +6,52 @@ This project is an unlocked package containing fflib apex files, utility classes
 
 For more detailed documentation, check out the [docs](./docs).
 
+## Prerequisites for using bash scripts
+
+* Install "Chocolatey" which allows "choco" command line on windows (https://chocolatey.org/install)
+
+* Install "make" command line
+
+  ```sh
+  choco install -y make
+  ```
+
+* Install "jq" command line, used to parse JSON from scripts
+
+  ```sh
+  choco install -y jq
+  ```
+
+* Install "yq" command line, used to parse YAML from scripts
+
+  ```sh
+  choco install -y yq
+  ```
+
+* Install "XMLStarlet" command line, used to changes XML Files from scripts
+
+  ```sh
+  choco install -y xmlstarlet
+  ```
+
+* Node.js installed for npm (https://nodejs.org/en/download)
+
+  ```sh
+  npm install npm@latest -g
+  ```
+
+* To facilitate updates for global npm packages, install "npm-check-updates" (https://www.npmjs.com/package/npm-check-updates)
+
+  ```sh
+  npm install -g npm-check-updates
+  ```
+
+* Salesforce CLI installed with npm (https://github.com/salesforcecli/cli)
+
+  ```sh
+  npm install -g @salesforce/cli
+  ```
+
 ## Usage
 
 To deploy the latest version of the unlocked package in your org, use the following command. Replace `VERSIONNUMBER` with the specific version you wish to install and `YOUR_ORG_NAME` with the alias of your Salesforce org.
@@ -37,10 +83,10 @@ We welcome contributions! To get started :
 
 ### Create a scratch org
 
-To initialize a new scratch org, use the following script. Add the `-s` flag to set this org as the default.
+To initialize a new scratch org, use the following `make` command. Add the `-s` flag to set this org as the default.
 
   ```sh
-  sh scripts/initScratchOrg.sh test -s
+  make org p="test -s"
   ```
 
 * `test`: Replace with your desired scratch org alias.
