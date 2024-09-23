@@ -1,7 +1,6 @@
 #!/bin/bash
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 . "$SCRIPT_DIR/utils.sh"
-. ./scripts/parameters.sh
 
 # Parameters (not mandatory)
 # -f / --fast : release branch into preprod, prod-release & master branch
@@ -178,6 +177,7 @@ display_pull_request_uri(){
 		feature="${BASH_REMATCH[1]}"
 	fi
 	echo -e "\nTo open a pull request, go to :"
+	local github_repository_url=$(yq eval '.project.github_repository_url' "$config_file")
 	echo -e "\n${RCyan}    ${github_repository_url}/compare/${target_branch}...${release_branch}?title=New%20release%20:%20%27${feature}%27%20into%20%27${target_branch}%27${NC}"
 }
 

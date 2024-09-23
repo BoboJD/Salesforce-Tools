@@ -2,7 +2,7 @@
 
 p=
 
-# Archive Log__c from DevHub into specified folder in parameters.sh
+# Archive Log__c from DevHub into specified folder in salesforce-tools-config.yml
 archive:
 	@bash scripts/archive_logs.sh
 

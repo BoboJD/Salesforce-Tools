@@ -1,7 +1,6 @@
 #!/bin/bash
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 . "$SCRIPT_DIR/utils.sh"
-. ./scripts/parameters.sh
 
 # Parameters (not mandatory)
 # you can provide the id of a test to display test results, ex: 707G500000RSZs7

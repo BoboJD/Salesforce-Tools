@@ -1,7 +1,6 @@
 #!/bin/bash
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 . "$SCRIPT_DIR/utils.sh"
-. ./scripts/parameters.sh
 
 # Parameters (not mandatory)
 # -o / --open-org : navigate to the deploy page of the org
@@ -16,12 +15,8 @@ shutdown=$2
 
 main(){
 	display_start_time
-	if [ "$check_windows_git_update" = "true" ]; then
-		check_update_of_git
-	fi
-	if [ "$check_global_npm_packages_update" = "true" ]; then
-		check_update_for_global_npm_packages
-	fi
+	check_update_of_git
+	check_update_for_global_npm_packages
 	block_deploy_from_master_branch
 	if [[ "$current_branch" = "preprod" || "$current_branch" = "prod-release" ]]; then
 		pull_last_commits_on_current_branch
@@ -84,6 +79,7 @@ edit_files_that_fail_deployment(){
 	if [ -d "${project_directory}connectedApps/" ]; then
 		remove_consumer_key_on_each_connected_app
 	fi
+	local viewallrecords_permissionsets=$(yq eval '.viewallrecords_permissionsets[]' "$config_file")
 	if [ "${#viewallrecords_permissionsets[@]}" -gt 0 ]; then
 		remove_missing_sobjects_from_viewallrecords_permission_sets
 		add_missing_sobjects_in_viewallrecords_permission_sets

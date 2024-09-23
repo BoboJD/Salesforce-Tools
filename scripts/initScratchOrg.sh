@@ -1,7 +1,6 @@
 #!/bin/bash
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 . "$SCRIPT_DIR/utils.sh"
-. ./scripts/parameters.sh
 
 # Parameters
 scratch_org_name=$1 # Mandatory to create the scratch org

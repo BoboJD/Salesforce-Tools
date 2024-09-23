@@ -1,7 +1,6 @@
 #!/bin/bash
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 . "$SCRIPT_DIR/utils.sh"
-. ./scripts/parameters.sh
 
 main(){
 	display_start_time
@@ -61,6 +60,7 @@ archive_logs(){
 	local log_day=$(date -d "@$start_timestamp" +%Y-%m-%d)
 
 	# Create the directory if it doesn't exist
+	local archive_logs_folder=$(yq eval '.project.archive_logs_folder' "$config_file")
 	local directory_path="${archive_logs_folder}\\${log_day}"
 	mkdir -p "$directory_path"
 
@@ -85,6 +85,7 @@ archive_logs(){
 		unix2dos logs_to_delete.csv
 
 		echo -e "\nStarting deletion..."
+		local devhub_name=$(yq eval '.org_settings.devhub_name' "$config_file")
 		sf data delete bulk --sobject Log__c --file logs_to_delete.csv --wait 600 --hard-delete -o $devhub_name
 		if [ $? -ne 0 ]; then
 			error_exit "Failed to delete logs."

@@ -2,6 +2,12 @@
 SECONDS=0
 . "$SCRIPT_DIR/colors.sh"
 
+config_file="config/salesforce-tools-config.yml"
+xml_namespace=$(yq eval '.salesforce_settings.xml_namespace' "$config_file")
+project_directory=$(yq eval '.project.directory' "$config_file")
+territories_used=$(yq eval '.org_settings.territories_used' "$config_file")
+experience_cloud_used=$(yq eval '.org_settings.experience_cloud_used' "$config_file")
+
 # Common methods
 ## error_exit
 error_exit() {
@@ -63,28 +69,34 @@ display_duration_of_script(){
 	echo -e "${minutes}min ${seconds}sec${NC}"
 }
 
-# Methods to update cli if enabled in parameters.sh and used in scripts
+# Methods to update cli if enabled in salesforce-tools-config.yml and used in scripts
 ## check_update_of_git
 check_update_of_git(){
-	echo -e "Checking if ${RBlue}git${NC} has update available..."
-	git update-git-for-windows
+	local check_windows_git_update=$(yq eval '.features.auto_update_settings.check_windows_git_update' "$config_file")
+	if [ "$check_windows_git_update" = "true" ]; then
+		echo -e "Checking if ${RBlue}git${NC} has update available..."
+		git update-git-for-windows
+	fi
 }
 
 ## check_update_for_global_npm_packages
 check_update_for_global_npm_packages(){
-	command -v ncu >/dev/null 2>&1 || error_exit "ncu (npm-check-updates) is not installed."
-	echo -e "\nChecking if ${RBlue}global npm packages${NC} have updates available..."
-	ncu_output=$(ncu -g)
-	if [[ $ncu_output == *"All global packages are up-to-date"* ]]; then
-		echo "All global npm packages are up-to-date."
-	else
-		upgrade_command=$(echo "$ncu_output" | grep -o 'npm -g install .*')
-		if [ -n "$upgrade_command" ]; then
-			echo -e "Updates detected, running : ${RBlue}$upgrade_command${NC}"
-			eval "$upgrade_command"
-			sf autocomplete --refresh-cache
+	local check_global_npm_packages_update=$(yq eval '.features.auto_update_settings.check_global_npm_packages_update' "$config_file")
+	if [ "$check_global_npm_packages_update" = "true" ]; then
+		command -v ncu >/dev/null 2>&1 || error_exit "ncu (npm-check-updates) is not installed."
+		echo -e "\nChecking if ${RBlue}global npm packages${NC} have updates available..."
+		ncu_output=$(ncu -g)
+		if [[ $ncu_output == *"All global packages are up-to-date"* ]]; then
+			echo "All global npm packages are up-to-date."
 		else
-			error_exit "Error extracting upgrade command of 'ncu -g'."
+			upgrade_command=$(echo "$ncu_output" | grep -o 'npm -g install .*')
+			if [ -n "$upgrade_command" ]; then
+				echo -e "Updates detected, running : ${RBlue}$upgrade_command${NC}"
+				eval "$upgrade_command"
+				sf autocomplete --refresh-cache
+			else
+				error_exit "Error extracting upgrade command of 'ncu -g'."
+			fi
 		fi
 	fi
 }
@@ -101,7 +113,8 @@ get_org_details() {
 check_production_org(){
 	get_org_details
 	local org_id=$(echo "$org_details" | jq -r '.result.id')
-	[ "$org_id" = "$PRODUCTION_ORG_ID" ] && echo "true" || echo "false"
+	local production_org_id=$(yq eval '.org_settings.production_org_id' "$config_file")
+	[ "$org_id" = "$production_org_id" ] && echo "true" || echo "false"
 }
 
 ## check_if_org_is_of_type
@@ -186,6 +199,7 @@ remove_unsupported_setting_for_lightning_experience(){
 
 ## remove_components_on_dashboards
 remove_components_on_dashboards(){
+	local dashboards=$(yq eval '.dashboards[]' "$config_file")
 	if [ "${#dashboards[@]}" -gt 0 ]; then
 		echo -ne "- Removing ${RBlue}untracked reports${NC} on dashboards... "
 		for dashboard in ${dashboards[@]}; do
@@ -197,6 +211,7 @@ remove_components_on_dashboards(){
 
 ## remove_controlling_field_on_picklists
 remove_controlling_field_on_picklists(){
+	local controlling_picklists_with_deploy_issue=$(yq eval '.controlling_picklists_with_deploy_issue[]' "$config_file")
 	if [ "${#controlling_picklists_with_deploy_issue[@]}" -gt 0 ]; then
 		for concatenation in "${controlling_picklists_with_deploy_issue[@]}"; do
 			sobject=$(echo "$concatenation" | cut -d "." -f 1)
@@ -258,6 +273,7 @@ remove_missing_sobjects_from_viewallrecords_permission_sets(){
 		)
 	fi
 
+	local viewallrecords_permissionsets=$(yq eval '.viewallrecords_permissionsets[]' "$config_file")
 	for viewallrecords_permissionset in "${viewallrecords_permissionsets[@]}"; do
 		for missing_sobject in "${missing_sobjects[@]}"; do
 			xml ed -L -N x="$xml_namespace" -d "//*/x:objectPermissions[starts-with(x:object, \"$missing_sobject\")]" "${project_directory}permissionsets/${viewallrecords_permissionset}.permissionset-meta.xml"
@@ -270,62 +286,40 @@ remove_missing_sobjects_from_viewallrecords_permission_sets(){
 add_missing_sobjects_in_viewallrecords_permission_sets(){
 	echo -ne "- Adding ${RBlue}missing sObjects${NC} in permission set with 'ViewAllRecords' permission... "
 
-	declare -A missing_sobjects
+    if [ "$is_sandbox_org" = "true" ]; then
+        missing_sobjects=$(yq eval '.sandbox.missing_sobjects' "$config_file")
+        order_to_add_missing_sobjects=($(yq eval '.sandbox.missing_sobjects | keys | .[]' "$config_file"))
+    else
+        missing_sobjects=$(yq eval '.scratch_org.missing_sobjects' "$config_file")
+        order_to_add_missing_sobjects=($(yq eval '.scratch_org.missing_sobjects | keys | .[]' "$config_file"))
+    fi
 
-	if [ "$is_sandbox_org" = "true" ]; then
-		missing_sobjects=(
-			["AppAnalyticsQueryRequest"]="ArchiveJobSession"
-			["Quote"]="RebatePayoutSnapshot"
-			["UniteFonciere__c"]="UserDefinedLabel"
-		)
-		order_to_add_missing_sobjects=("AppAnalyticsQueryRequest" "Quote" "UniteFonciere__c")
-	else
-		missing_sobjects=(
-			["AppAnalyticsQueryRequest"]="ArchiveJobSession"
-			["Asset"]="AsyncRequestResponseEvent"
-			["Case"]="CaseServiceProcess"
-			["CaseUpdateStatus__e"]="ChangeRequest"
-			["CustomerPortalNotification__e"]="DataKitDeploymentLog"
-			["EnchereCapacite__c"]="EngagementAttendee"
-			["EngagementAttendee"]="EngagementInteraction"
-			["EngagementInteraction"]="EngagementTopic"
-			["Image"]="Incident"
-			["Individual"]="IntegrationProviderDef"
-			["PrivacyConsent"]="Problem"
-			["Product2"]="ProductRelatedServiceProcess"
-			["Quote"]="RebatePayoutSnapshot"
-			["RebatePayoutSnapshot"]="RecordActnSelItemExtrc"
-			["RecordActnSelItemExtrc"]="RecordAlert"
-			["SuiviFacturation__c"]="SvcCatalogItemDependency"
-			["UniteFonciere__c"]="UserDefinedLabel"
-			["WebCartDocument"]="WorkPlan"
-			["WorkPlan"]="WorkPlanTemplate"
-			["WorkPlanTemplate"]="WorkStepTemplate"
-		)
-		order_to_add_missing_sobjects=(
-			"AppAnalyticsQueryRequest" "Asset" "Case" "CaseUpdateStatus__e" "CustomerPortalNotification__e" "EnchereCapacite__c" "EngagementAttendee" "EngagementInteraction" "Image" "Individual"
-			"PrivacyConsent" "Product2" "Quote" "RebatePayoutSnapshot" "RecordActnSelItemExtrc" "SuiviFacturation__c" "UniteFonciere__c" "WebCartDocument" "WorkPlan"
-			"WorkPlanTemplate"
-		)
-	fi
-
+	local viewallrecords_permissionsets=$(yq eval '.viewallrecords_permissionsets[]' "$config_file")
 	for viewallrecords_permissionset in "${viewallrecords_permissionsets[@]}"; do
-		local filename="${project_directory}permissionsets/${viewallrecords_permissionset}.permissionset-meta.xml"
+        local filename="${project_directory}permissionsets/${viewallrecords_permissionset}.permissionset-meta.xml"
+        for sobject in "${order_to_add_missing_sobjects[@]}"; do
+            missing_sobject="${missing_sobjects[$sobject]}"
+            add_sobject_to_permissionset "$filename" "$sobject" "$missing_sobject"
+        done
+    done
 
-		for sobject in "${order_to_add_missing_sobjects[@]}"; do
-			missing_sobject="${missing_sobjects[$sobject]}"
-			xml ed -L -N x="$xml_namespace" -a "//*/x:objectPermissions[x:object=\"$sobject\"]" -t elem -n temporaryNode -v "" "$filename"
-			xml ed -L -N x="$xml_namespace" -s "//*/x:temporaryNode" -t elem -n allowCreate -v "false" "$filename"
-			xml ed -L -N x="$xml_namespace" -s "//*/x:temporaryNode" -t elem -n allowDelete -v "false" "$filename"
-			xml ed -L -N x="$xml_namespace" -s "//*/x:temporaryNode" -t elem -n allowEdit -v "false" "$filename"
-			xml ed -L -N x="$xml_namespace" -s "//*/x:temporaryNode" -t elem -n allowRead -v "true" "$filename"
-			xml ed -L -N x="$xml_namespace" -s "//*/x:temporaryNode" -t elem -n modifyAllRecords -v "false" "$filename"
-			xml ed -L -N x="$xml_namespace" -s "//*/x:temporaryNode" -t elem -n object -v "$missing_sobject" "$filename"
-			xml ed -L -N x="$xml_namespace" -s "//*/x:temporaryNode" -t elem -n viewAllRecords -v "true" "$filename"
-			xml ed -L -N x="$xml_namespace" -r "//*/x:temporaryNode" -v "objectPermissions" "$filename"
-		done
-	done
 	echo "Done."
+}
+
+add_sobject_to_permissionset() {
+	local filename="$1"
+	local sobject="$2"
+	local missing_sobject="$3"
+
+	xml ed -L -N x="$xml_namespace" -a "//*/x:objectPermissions[x:object=\"$sobject\"]" -t elem -n temporaryNode -v "" "$filename"
+	xml ed -L -N x="$xml_namespace" -s "//*/x:temporaryNode" -t elem -n allowCreate -v "false" "$filename"
+	xml ed -L -N x="$xml_namespace" -s "//*/x:temporaryNode" -t elem -n allowDelete -v "false" "$filename"
+	xml ed -L -N x="$xml_namespace" -s "//*/x:temporaryNode" -t elem -n allowEdit -v "false" "$filename"
+	xml ed -L -N x="$xml_namespace" -s "//*/x:temporaryNode" -t elem -n allowRead -v "true" "$filename"
+	xml ed -L -N x="$xml_namespace" -s "//*/x:temporaryNode" -t elem -n modifyAllRecords -v "false" "$filename"
+	xml ed -L -N x="$xml_namespace" -s "//*/x:temporaryNode" -t elem -n object -v "$missing_sobject" "$filename"
+	xml ed -L -N x="$xml_namespace" -s "//*/x:temporaryNode" -t elem -n viewAllRecords -v "true" "$filename"
+	xml ed -L -N x="$xml_namespace" -r "//*/x:temporaryNode" -v "objectPermissions" "$filename"
 }
 
 # Methods to help manage git branch
@@ -359,6 +353,7 @@ checking_salesforce_cli_configuration(){
 	echo -e "\nChecking ${RGreen}Salesforce CLI${NC} configuration..."
 	local sf_config=$(sf config list --json)
 
+	local devhub_name=$(yq eval '.org_settings.devhub_name' "$config_file")
 	local devhub=$(echo "$sf_config" | jq -e ".result[] | select(.name == \"target-dev-hub\" and .value == \"$devhub_name\")")
 	if [ -z "$devhub" ]; then
 		echo -ne "Setting ${RBlue}default dev hub${NC} to ${RPurple}${devhub_name}${NC}... "
@@ -460,6 +455,7 @@ check_package_installation(){
 ## rename_api_name_of_standard_metadata
 rename_api_name_of_standard_metadata(){
 	local org_alias=$1
+	local standard_metadata_to_rename=$(yq eval '.standard_metadata_to_rename[]' "$config_file")
 	if [ "${#standard_metadata_to_rename[@]}" -gt 0 ]; then
 		echo -ne "\nRenaming ${RBlue}standard metadata values${NC}... "
 		for concatenation in "${standard_metadata_to_rename[@]}"; do
@@ -499,6 +495,7 @@ activate_debug_mode_for_lightning_components(){
 import_data_from_production(){
 	local org_alias=$1
 	echo -e "\nStarting ${RBlue}import data${NC} from ${RPurple}production org${NC} to ${RPurple}scratch org${NC}..."
+	local devhub_name=$(yq eval '.org_settings.devhub_name' "$config_file")
 	sf sfdmu run --sourceusername $devhub_name --targetusername $org_alias --silent --nowarnings
 	rm -r "target"
 	rm "MissingParentRecordsReport.csv"

@@ -1,7 +1,6 @@
 #!/bin/bash
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 . "$SCRIPT_DIR/utils.sh"
-. ./scripts/parameters.sh
 current_branch=$(git symbolic-ref --short HEAD)
 
 # Parameters (not mandatory)
@@ -14,21 +13,15 @@ option=$1
 
 main(){
 	display_start_time
-	if [ "$check_windows_git_update" = "true" ]; then
-		check_update_of_git
-	fi
-	if [ "$check_global_npm_packages_update" = "true" ]; then
-		check_update_for_global_npm_packages
-	fi
+	check_update_of_git
+	check_update_for_global_npm_packages
 	check_org_type
 
 	if [[ "$is_production_org" = "true" ]]; then
 		if [ $current_branch = "master" ]; then
 			git checkout -b admin master
 		fi
-		if [ "$check_npm_packages_update" = "true" ]; then
-			update_npm_packages
-		fi
+		update_npm_packages
 	fi
 
 	if [[ -z "$option" || "$option" = "-e" || "$option" = "--exclude-experiences" || "$option" = "-oc" || "$option" = "--only-configuration" ]]; then
@@ -57,6 +50,7 @@ main(){
 		if [ -z "$option" ]; then
 			retrieve_development
 			create_backup_of_conga_queries
+			org_shape_enable=$(yq eval '.org_settings.org_shape_enable' "$config_file")
 			if [ "$org_shape_enable" = "true" ]; then
 				recreate_org_shape
 			fi
@@ -82,14 +76,17 @@ check_org_type(){
 }
 
 update_npm_packages(){
-	echo -e "\nChecking if ${RBlue}npm packages${NC} have update... "
-	update_info=$(ncu)
-	if [[ $update_info == *"dependencies match the latest package versions"* ]]; then
-		echo "All dependencies are up to date."
-	else
-		echo "Updates detected."
-		ncu -u
-		npm install --force
+	local check_npm_packages_update=$(yq eval '.features.auto_update_settings.check_npm_packages_update' "$config_file")
+	if [ "$check_npm_packages_update" = "true" ]; then
+		echo -e "\nChecking if ${RBlue}npm packages${NC} have update... "
+		update_info=$(ncu)
+		if [[ $update_info == *"dependencies match the latest package versions"* ]]; then
+			echo "All dependencies are up to date."
+		else
+			echo "Updates detected."
+			ncu -u
+			npm install --force
+		fi
 	fi
 }
 
@@ -198,6 +195,11 @@ retrieve_profiles(){
 	sf project retrieve start -x manifest/profiles.xml --ignore-conflicts > /dev/null
 	mv .DISABLED.forceignore .forceignore
 
+	local unused_standard_layouts=$(yq eval '.unused_standard_layouts[]' "$config_file")
+	local user_permissions_to_delete=$(yq eval '.user_permissions_to_delete[]' "$config_file")
+	local unnecessary_permissions_to_delete=$(yq eval '.unnecessary_permissions_to_delete[]' "$config_file")
+
+
 	echo -ne "Removing unnecessary permissions... "
 	for profile in ${project_directory}profiles/*.profile-meta.xml; do
 		if [ "${#unused_standard_layouts[@]}" -gt 0 ]; then
@@ -232,15 +234,18 @@ create_backup_of_conga_queries(){
 
 recreate_org_shape(){
 	echo -e "\nRecreating ${RGreen}org shape${NC}..."
+	local devhub_name=$(yq eval '.org_settings.devhub_name' "$config_file")
 	sf org create shape -o $devhub_name
 }
 
 check_installed_managed_packages_version(){
+	local appexchange_installation_order=($(yq eval '.scratch_org_settings.appexchange.appexchange_id_by_name | keys | .[]' "$config_file"))
 	if is_array_with_elements "appexchange_installation_order"; then
 		echo -e "\nChecking if ${RBlue}managed packages${NC} have been updated :"
-		installed_packages=$(sf package installed list --json)
+		local appexchange_id_by_name=$(yq eval '.scratch_org_settings.appexchange.appexchange_id_by_name' "$config_file")
+		local installed_packages=$(sf package installed list --json)
 		for appexchange_name in "${appexchange_installation_order[@]}"; do
-			appexchange_id="${appexchange_id_by_name[$appexchange_name]}"
+			local appexchange_id="${appexchange_id_by_name[$appexchange_name]}"
 			check_package_version "$appexchange_id" "$appexchange_name"
 		done
 	fi
@@ -274,7 +279,7 @@ check_package_version(){
 	else
 		local new_package_id=$(echo "$installed_packages" | jq -r ".result[] | select(.SubscriberPackageName == \"$package_name\") | .SubscriberPackageVersionId")
 		if [ -n "$new_package_id" ]; then
-			sed -i "s/${package_id}/${new_package_id}/g" "./scripts/parameters.sh"
+			yq eval -i ".scratch_org_settings.appexchange.appexchange_id_by_name.\"$package_name\" = \"$new_package_id\"" "$config_file"
 			echo -e "${RGreen}Package version id updated.${NC}"
 		else
 			error_exit "Package not found"
