@@ -251,6 +251,26 @@ check_installed_managed_packages_version(){
 	fi
 }
 
+check_package_version(){
+	local package_id=$1
+	local package_name=$2
+
+	echo -ne "- Verifying package version id of ${RCyan}${package_name}${NC}... "
+	local package_installed=$(echo "$installed_packages" | jq ".result[] | select(.SubscriberPackageVersionId == \"$package_id\")")
+
+	if [ -n "$package_installed" ]; then
+		echo -e "${RYellow}Already up-to-date.${NC}"
+	else
+		local new_package_id=$(echo "$installed_packages" | jq -r ".result[] | select(.SubscriberPackageName == \"$package_name\") | .SubscriberPackageVersionId")
+		if [ -n "$new_package_id" ]; then
+			yq eval -i --no-escape ".scratch_org_settings.appexchange.appexchange_id_by_name.\"$package_name\" = \"$new_package_id\"" "$config_file"
+			echo -e "${RGreen}Package version id updated.${NC}"
+		else
+			error_exit "Package not found"
+		fi
+	fi
+}
+
 updating_salesforce_tools_subtree(){
 	local PREFIX="tlz"
 	local REPO="git@github.com:BoboJD/Salesforce-Tools.git"
@@ -265,26 +285,6 @@ updating_salesforce_tools_subtree(){
 		git stash pop > /dev/null 2>&1
 	fi
 	echo "Done."
-}
-
-check_package_version(){
-	local package_id=$1
-	local package_name=$2
-
-	echo -ne "- Verifying package version id of ${RCyan}${package_name}${NC}... "
-	local package_installed=$(echo "$installed_packages" | jq ".result[] | select(.SubscriberPackageVersionId == \"$package_id\")")
-
-	if [ -n "$package_installed" ]; then
-		echo -e "${RYellow}Already up-to-date.${NC}"
-	else
-		local new_package_id=$(echo "$installed_packages" | jq -r ".result[] | select(.SubscriberPackageName == \"$package_name\") | .SubscriberPackageVersionId")
-		if [ -n "$new_package_id" ]; then
-			yq eval -i ".scratch_org_settings.appexchange.appexchange_id_by_name.\"$package_name\" = \"$new_package_id\"" "$config_file"
-			echo -e "${RGreen}Package version id updated.${NC}"
-		else
-			error_exit "Package not found"
-		fi
-	fi
 }
 
 remove_ignored_files(){
