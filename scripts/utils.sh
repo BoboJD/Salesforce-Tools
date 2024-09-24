@@ -2,11 +2,10 @@
 SECONDS=0
 . "$SCRIPT_DIR/colors.sh"
 
-config_file="config/salesforce-tools-config.yml"
+# Load configuration
+config_file="./config/salesforce-tools-config.yml"
 xml_namespace=$(yq eval '.salesforce_settings.xml_namespace' "$config_file")
 project_directory=$(yq eval '.project.directory' "$config_file")
-territories_used=$(yq eval '.org_settings.territories_used' "$config_file")
-experience_cloud_used=$(yq eval '.org_settings.experience_cloud_used' "$config_file")
 
 # Common methods
 ## error_exit
@@ -19,14 +18,8 @@ error_exit() {
 ## is_array_with_elements
 is_array_with_elements(){
 	local var_name="$1"
-
-	# Check if the variable is an array
 	if declare -p "$var_name" 2>/dev/null | grep -q 'declare -a'; then
-		# Get the length of the array
-		local array_length
-		array_length=$(eval "echo \${#$var_name[@]}")
-
-		# Check if the array has elements
+		local array_length=$(eval "echo \${#$var_name[@]}")
 		if [ "$array_length" -gt 0 ]; then
 			return 0 # Array exists and has elements
 		else
@@ -37,6 +30,29 @@ is_array_with_elements(){
 	fi
 }
 
+# Function to parse YAML and create an associative array
+## parse_yaml_to_assoc_array
+parse_yaml_to_assoc_array(){
+    local yaml_file="$1"
+    local yaml_path="$2"
+    declare -n assoc_array="$3"
+    local yaml_entries=$(yq eval "$yaml_path | to_entries | .[]" "$yaml_file")
+    local key
+    local value
+    while IFS= read -r entry; do
+        if [[ $entry == key:* ]]; then
+            key=$(echo "$entry" | sed -n 's/^key: "\(.*\)"/\1/p')
+        elif [[ $entry == value:* ]]; then
+            value=$(echo "$entry" | sed -n 's/^value: "\(.*\)"/\1/p')
+            if [[ -n $key && -n $value ]]; then
+                assoc_array["$key"]="$value"
+                key=""
+                value=""
+            fi
+        fi
+    done <<< "$yaml_entries"
+}
+
 # Manage duration of scripts
 ## display_start_time
 display_start_time(){
@@ -45,6 +61,7 @@ display_start_time(){
 	check_if_necessary_commands_are_available
 }
 
+## check_if_necessary_commands_are_available
 check_if_necessary_commands_are_available(){
 	command -v sf >/dev/null 2>&1 || error_exit "sf CLI is not installed."
 	command -v jq >/dev/null 2>&1 || error_exit "jq is not installed."
@@ -73,8 +90,7 @@ display_duration_of_script(){
 # Methods to update cli if enabled in salesforce-tools-config.yml and used in scripts
 ## check_update_of_git
 check_update_of_git(){
-	local check_windows_git_update=$(yq eval '.features.auto_update_settings.check_windows_git_update' "$config_file")
-	if [ "$check_windows_git_update" = "true" ]; then
+	if [[ $(yq eval '.features.auto_update_settings.check_windows_git_update // "null"' "$config_file") = "true" ]]; then
 		echo -e "Checking if ${RBlue}git${NC} has update available..."
 		git update-git-for-windows
 	fi
@@ -82,8 +98,7 @@ check_update_of_git(){
 
 ## check_update_for_global_npm_packages
 check_update_for_global_npm_packages(){
-	local check_global_npm_packages_update=$(yq eval '.features.auto_update_settings.check_global_npm_packages_update' "$config_file")
-	if [ "$check_global_npm_packages_update" = "true" ]; then
+	if [[ $(yq eval '.features.auto_update_settings.check_global_npm_packages_update // "null"' "$config_file") = "true" ]]; then
 		command -v ncu >/dev/null 2>&1 || error_exit "ncu (npm-check-updates) is not installed."
 		echo -e "\nChecking if ${RBlue}global npm packages${NC} have updates available..."
 		ncu_output=$(ncu -g)
@@ -137,6 +152,7 @@ check_sandbox_org() {
 }
 
 # Methods for deploy script
+## find_metadata_type_by_folder_name
 find_metadata_type_by_folder_name(){
 	local folder="$1"
 
@@ -284,30 +300,33 @@ remove_missing_sobjects_from_viewallrecords_permission_sets(){
 }
 
 ## add_missing_sobjects_in_viewallrecords_permission_sets
-add_missing_sobjects_in_viewallrecords_permission_sets(){
-	echo -ne "- Adding ${RBlue}missing sObjects${NC} in permission set with 'ViewAllRecords' permission... "
+add_missing_sobjects_in_viewallrecords_permission_sets() {
+    echo -ne "- Adding ${RBlue}missing sObjects${NC} in permission set with 'ViewAllRecords' permission... "
 
+    declare -A missing_sobject_map
+    local order_to_add_missing_sobjects
+
+    local yaml_path='.scratch_org.missing_sobjects'
     if [ "$is_sandbox_org" = "true" ]; then
-        missing_sobjects=$(yq eval '.sandbox.missing_sobjects' "$config_file")
-        order_to_add_missing_sobjects=($(yq eval '.sandbox.missing_sobjects | keys | .[]' "$config_file"))
-    else
-        missing_sobjects=$(yq eval '.scratch_org.missing_sobjects' "$config_file")
-        order_to_add_missing_sobjects=($(yq eval '.scratch_org.missing_sobjects | keys | .[]' "$config_file"))
+        yaml_path='.sandbox.missing_sobjects'
     fi
 
-	local viewallrecords_permissionsets=$(yq eval '.viewallrecords_permissionsets[]' "$config_file")
-	for viewallrecords_permissionset in "${viewallrecords_permissionsets[@]}"; do
+    parse_yaml_to_assoc_array "$config_file" "$yaml_path" missing_sobject_map
+    readarray -t order_to_add_missing_sobjects < <(yq eval "$yaml_path | keys | .[]" "$config_file")
+
+    while IFS= read -r viewallrecords_permissionset; do
         local filename="${project_directory}permissionsets/${viewallrecords_permissionset}.permissionset-meta.xml"
         for sobject in "${order_to_add_missing_sobjects[@]}"; do
-            missing_sobject="${missing_sobjects[$sobject]}"
+            local missing_sobject="${missing_sobject_map[$sobject]}"
             add_sobject_to_permissionset "$filename" "$sobject" "$missing_sobject"
         done
-    done
+    done < <(yq eval '.viewallrecords_permissionsets[]' "$config_file")
 
-	echo "Done."
+    echo "Done."
 }
 
-add_sobject_to_permissionset() {
+## add_sobject_to_permissionset
+add_sobject_to_permissionset(){
 	local filename="$1"
 	local sobject="$2"
 	local missing_sobject="$3"
@@ -370,6 +389,7 @@ checking_salesforce_cli_configuration(){
 	fi
 }
 
+## checking_node_modules
 checking_node_modules(){
 	if [ ! -d "node_modules" ]; then
 		echo -e "Installing ${RBlue}node modules${NC}..."

@@ -28,14 +28,13 @@ main(){
 		retrieve_configuration
 	fi
 
-	if [ "$territories_used" = "true" ]; then
+	if [[ $(yq eval '.org_settings.territories_used // "null"' "$config_file") = "true" ]]; then
 		if [[ -z "$option" || "$option" = "-e" || "$option" = "--exclude-experiences" || "$option" = "-ot" || "$option" = "--only-territories" ]]; then
 			retrieve_territories
 		fi
 	fi
 
-
-	if [ "$experience_cloud_used" = "true" ]; then
+	if [[ $(yq eval '.org_settings.experience_cloud_used // "null"' "$config_file") = "true" ]]; then
 		if [[ -z "$option" || "$option" = "-oe" || "$option" = "--only-experiences" ]]; then
 			retrieve_experiences
 		fi
@@ -50,8 +49,7 @@ main(){
 		if [ -z "$option" ]; then
 			retrieve_development
 			create_backup_of_conga_queries
-			org_shape_enable=$(yq eval '.org_settings.org_shape_enable' "$config_file")
-			if [ "$org_shape_enable" = "true" ]; then
+			if [[ $(yq eval '.org_settings.org_shape_enable // "null"' "$config_file") = "true" ]]; then
 				recreate_org_shape
 			fi
 		fi
@@ -76,8 +74,7 @@ check_org_type(){
 }
 
 update_npm_packages(){
-	local check_npm_packages_update=$(yq eval '.features.auto_update_settings.check_npm_packages_update' "$config_file")
-	if [ "$check_npm_packages_update" = "true" ]; then
+	if [[ $(yq eval '.features.auto_update_settings.check_npm_packages_update // "null"' "$config_file") = "true" ]]; then
 		echo -e "\nChecking if ${RBlue}npm packages${NC} have update... "
 		update_info=$(ncu)
 		if [[ $update_info == *"dependencies match the latest package versions"* ]]; then
@@ -239,10 +236,12 @@ recreate_org_shape(){
 }
 
 check_installed_managed_packages_version(){
-	local appexchange_installation_order=($(yq eval '.scratch_org_settings.appexchange.appexchange_id_by_name | keys | .[]' "$config_file"))
-	if is_array_with_elements "appexchange_installation_order"; then
+	if [[ $(yq eval '.scratch_org_settings.appexchange.appexchange_id_by_name // "null"' "$config_file") != "null" ]]; then
 		echo -e "\nChecking if ${RBlue}managed packages${NC} have been updated :"
-		local appexchange_id_by_name=$(yq eval '.scratch_org_settings.appexchange.appexchange_id_by_name' "$config_file")
+		local appexchange_installation_order
+		readarray -t appexchange_installation_order < <(yq eval '.scratch_org_settings.appexchange.appexchange_id_by_name | keys | .[]' "$config_file")
+		declare -A appexchange_id_by_name
+		parse_yaml_to_assoc_array "$config_file" '.scratch_org_settings.appexchange.appexchange_id_by_name' appexchange_id_by_name
 		local installed_packages=$(sf package installed list --json)
 		for appexchange_name in "${appexchange_installation_order[@]}"; do
 			local appexchange_id="${appexchange_id_by_name[$appexchange_name]}"
@@ -263,7 +262,9 @@ check_package_version(){
 	else
 		local new_package_id=$(echo "$installed_packages" | jq -r ".result[] | select(.SubscriberPackageName == \"$package_name\") | .SubscriberPackageVersionId")
 		if [ -n "$new_package_id" ]; then
-			yq eval -i --no-escape ".scratch_org_settings.appexchange.appexchange_id_by_name.\"$package_name\" = \"$new_package_id\"" "$config_file"
+			sed -i '/^$/s// #BLANK_LINE/' "$config_file"
+			yq eval -i ".scratch_org_settings.appexchange.appexchange_id_by_name.\"$package_name\" = \"$new_package_id\"" "$config_file"
+			sed -i "s/ *#BLANK_LINE//g" "$config_file"
 			echo -e "${RGreen}Package version id updated.${NC}"
 		else
 			error_exit "Package not found"

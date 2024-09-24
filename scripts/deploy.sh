@@ -28,7 +28,7 @@ main(){
 	trap ctrl_c SIGINT
 	deploy_files_into_current_org
 	if [ "$is_production_org" = "false" ]; then
-		if [ "$territories_used" = "true" ]; then
+		if [[ $(yq eval '.org_settings.territories_used // "null"' "$config_file") = "true" ]]; then
 			deploy_territories_into_current_org
 		fi
 		restore_edited_files
