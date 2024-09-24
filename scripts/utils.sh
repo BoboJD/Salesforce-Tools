@@ -439,9 +439,13 @@ create_scratch_org(){
 ## install_managed_packages
 install_managed_packages(){
 	local org_alias=$1
-	if is_array_with_elements "appexchange_installation_order"; then
+	if [[ $(yq eval '.scratch_org_settings.appexchange.appexchange_id_by_name // "null"' "$config_file") != "null" ]]; then
 		echo -e "\nInstalling managed packages :"
 		installed_packages=$(sf package installed list --target-org $org_alias --json)
+		local appexchange_installation_order
+		readarray -t appexchange_installation_order < <(yq eval '.scratch_org_settings.appexchange.appexchange_id_by_name | keys | .[]' "$config_file")
+		declare -A appexchange_id_by_name
+		parse_yaml_to_assoc_array "$config_file" '.scratch_org_settings.appexchange.appexchange_id_by_name' appexchange_id_by_name
 		for appexchange_name in "${appexchange_installation_order[@]}"; do
 			appexchange_id="${appexchange_id_by_name[$appexchange_name]}"
 			check_package_installation $org_alias "$appexchange_id" "$appexchange_name"
