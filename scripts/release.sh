@@ -156,7 +156,7 @@ exit_script_if_nothing_to_merge(){
 
 merge_feature_or_project_into_release_branch(){
 	echo -ne "Merging changes on ${RBlue}${release_branch}${NC} branch... "
-	if yes y | git merge --no-ff $current_branch --no-edit; then
+	if yes y | git merge --no-ff $current_branch --no-edit > /dev/null 2>&1; then
 		yes y | git push --set-upstream origin $release_branch > /dev/null 2>&1
 		echo "Done."
 
