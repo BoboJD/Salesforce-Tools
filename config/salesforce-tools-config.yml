@@ -169,30 +169,11 @@ org_settings:
 # Missing sObjects configuration for sandbox environments
 # sandbox:
 #   missing_sobjects:
-#     AppAnalyticsQueryRequest: "ArchiveJobSession"
-#     Quote: "RebatePayoutSnapshot"
-#     UniteFonciere__c: "UserDefinedLabel"
+#     "AppAnalyticsQueryRequest": "ArchiveJobSession"
+#     "Quote": "RebatePayoutSnapshot"
 
 # Missing sObjects configuration for scratch org environments
 # scratch_org:
 #   missing_sobjects:
-#     AppAnalyticsQueryRequest: "ArchiveJobSession"
-#     Asset: "AsyncRequestResponseEvent"
-#     Case: "CaseServiceProcess"
-#     CaseUpdateStatus__e: "ChangeRequest"
-#     CustomerPortalNotification__e: "DataKitDeploymentLog"
-#     EnchereCapacite__c: "EngagementAttendee"
-#     EngagementAttendee: "EngagementInteraction"
-#     EngagementInteraction: "EngagementTopic"
-#     Image: "Incident"
-#     Individual: "IntegrationProviderDef"
-#     PrivacyConsent: "Problem"
-#     Product2: "ProductRelatedServiceProcess"
-#     Quote: "RebatePayoutSnapshot"
-#     RebatePayoutSnapshot: "RecordActnSelItemExtrc"
-#     RecordActnSelItemExtrc: "RecordAlert"
-#     SuiviFacturation__c: "SvcCatalogItemDependency"
-#     UniteFonciere__c: "UserDefinedLabel"
-#     WebCartDocument: "WorkPlan"
-#     WorkPlan: "WorkPlanTemplate"
-#     WorkPlanTemplate: "WorkStepTemplate"
+#     "AppAnalyticsQueryRequest": "ArchiveJobSession"
+#     "Asset": "AsyncRequestResponseEvent"
