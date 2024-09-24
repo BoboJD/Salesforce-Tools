@@ -1,16 +1,20 @@
-const PAGE = 'c-page';
-const SPINNER = 'c-spinner';
+const toggleSpinner = (cmp, action, selectors) => {
+	selectors.forEach(selector => {
+		const element = cmp.template.querySelector(selector);
+		element?.[action]();
+	});
+};
 
 const displaySpinner = cmp => {
 	cmp.isLoading = true;
-	cmp.template.querySelector(PAGE)?.showSpinner();
-	cmp.template.querySelector(SPINNER)?.show();
+	toggleSpinner(cmp, 'showSpinner', ['c-page', 'tlz-page']);
+	toggleSpinner(cmp, 'show', ['c-spinner', 'tlz-spinner']);
 };
 
 const hideSpinner = cmp => {
 	cmp.isLoading = false;
-	cmp.template.querySelector(PAGE)?.hideSpinner();
-	cmp.template.querySelector(SPINNER)?.hide();
+	toggleSpinner(cmp, 'hideSpinner', ['c-page', 'tlz-page']);
+	toggleSpinner(cmp, 'hide', ['c-spinner', 'tlz-spinner']);
 };
 
 export {
