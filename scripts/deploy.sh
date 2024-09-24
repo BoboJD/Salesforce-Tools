@@ -60,7 +60,7 @@ block_deploy_from_master_branch(){
 }
 
 pull_last_commits_on_current_branch(){
-	echo -ne "\Pulling last commits on current branch... "
+	echo -ne "\nPulling last commits on current branch... "
 	yes y | git fetch origin $current_branch > /dev/null 2>&1
 	yes y | git pull origin $current_branch > /dev/null 2>&1
 	echo "Done."
