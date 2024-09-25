@@ -284,7 +284,7 @@ remove_missing_sobjects_from_viewallrecords_permission_sets(){
 			missing_sobjects+=(
 				"Address" "AsyncRequestResponseEvent" "CalcMatrixColumnRange" "CalcProcStepRelationship" "CalculationMatrix" "CalculationMatrixColumn" "CalculationMatrixRow" "CalculationMatrixVersion"
 				"CalculationProcedure" "CalculationProcedureStep" "CalculationProcedureVariable" "CalculationProcedureVersion" "CaseServiceProcess" "DataKitDeploymentLog" "Employee" "EngagementAttendee" "EngagementInteraction" "EngagementTopic" "ExpressionSet" "ExpressionSetObjectAlias"
-				"ExpressionSetVersion" "IntegrationProviderDef" "InternalOrganizationUnit" "ProductRelatedServiceProcess" "RecordActnSelItemExtrc" "RecordAlert" "SharingRecordCollection" "SvcCatalogReqRelatedItem" "SvcCatalogRequest"
+				"ExpressionSetVersion" "IntegrationProviderDef" "InternalOrganizationUnit" "ProductRelatedServiceProcess" "RecordActnSelItemExtrc" "RecordAlert" "SharingRecordCollection" "SvcCatalogItemDependency" "SvcCatalogReqRelatedItem" "SvcCatalogRequest"
 			)
 		fi
 
