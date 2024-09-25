@@ -190,7 +190,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ProfileSystemAdministrator</shortDescription>
-        <value>System administrator</value>
+        <value>System Administrator</value>
     </labels>
     <labels>
         <fullName>AddFiles</fullName>
