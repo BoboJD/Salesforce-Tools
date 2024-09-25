@@ -2,8 +2,12 @@
 global class TestUtils{
 	private static final String CHARS = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 
-	global static void setMock(HttpCalloutMock theMock) {
+	global static void setMock(HttpCalloutMock theMock){
 		Test.setMock(HttpCalloutMock.class, theMock);
+	}
+
+	global static void setHttpResponse(String contentType, Integer statusCode, String body){
+		Test.setMock(HttpCalloutMock.class, MockHttpResponseGenerator.initStringResponse(contentType, statusCode, body));
 	}
 
 	global static SObject setReadableFields(SObject sObj, Map<SObjectField, Object> valueBysObjField){
