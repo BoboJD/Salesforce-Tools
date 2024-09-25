@@ -33,24 +33,24 @@ is_array_with_elements(){
 # Function to parse YAML and create an associative array
 ## parse_yaml_to_assoc_array
 parse_yaml_to_assoc_array(){
-    local yaml_file="$1"
-    local yaml_path="$2"
-    declare -n assoc_array="$3"
-    local yaml_entries=$(yq eval "$yaml_path | to_entries | .[]" "$yaml_file")
-    local key
-    local value
-    while IFS= read -r entry; do
-        if [[ $entry == key:* ]]; then
-            key=$(echo "$entry" | sed -n 's/^key: "\(.*\)"/\1/p')
-        elif [[ $entry == value:* ]]; then
-            value=$(echo "$entry" | sed -n 's/^value: "\(.*\)"/\1/p')
-            if [[ -n $key && -n $value ]]; then
-                assoc_array["$key"]="$value"
-                key=""
-                value=""
-            fi
-        fi
-    done <<< "$yaml_entries"
+	local yaml_file="$1"
+	local yaml_path="$2"
+	declare -n assoc_array="$3"
+	local yaml_entries=$(yq eval "$yaml_path | to_entries | .[]" "$yaml_file")
+	local key
+	local value
+	while IFS= read -r entry; do
+		if [[ $entry == key:* ]]; then
+			key=$(echo "$entry" | sed -n 's/^key: "\(.*\)"/\1/p')
+		elif [[ $entry == value:* ]]; then
+			value=$(echo "$entry" | sed -n 's/^value: "\(.*\)"/\1/p')
+			if [[ -n $key && -n $value ]]; then
+				assoc_array["$key"]="$value"
+				key=""
+				value=""
+			fi
+		fi
+	done <<< "$yaml_entries"
 }
 
 # Manage duration of scripts
@@ -301,28 +301,29 @@ remove_missing_sobjects_from_viewallrecords_permission_sets(){
 
 ## add_missing_sobjects_in_viewallrecords_permission_sets
 add_missing_sobjects_in_viewallrecords_permission_sets() {
-    echo -ne "- Adding ${RBlue}missing sObjects${NC} in permission set with 'ViewAllRecords' permission... "
+	declare -A missing_sobject_map
+	local order_to_add_missing_sobjects
 
-    declare -A missing_sobject_map
-    local order_to_add_missing_sobjects
+	local yaml_path
+	if [[ "$is_sandbox_org" = "true" && $(yq eval '.sandbox.missing_sobjects // "null"' "$config_file") != "null" ]]; then
+		yaml_path='.sandbox.missing_sobjects'
+	elif [[ "$is_scratch_org" = "true" && $(yq eval '.scratch_org.missing_sobjects // "null"' "$config_file") != "null" ]]; then
+		yaml_path='.scratch_org.missing_sobjects'
+	fi
 
-    local yaml_path='.scratch_org.missing_sobjects'
-    if [ "$is_sandbox_org" = "true" ]; then
-        yaml_path='.sandbox.missing_sobjects'
-    fi
-
-    parse_yaml_to_assoc_array "$config_file" "$yaml_path" missing_sobject_map
-    readarray -t order_to_add_missing_sobjects < <(yq eval "$yaml_path | keys | .[]" "$config_file")
-
-    while IFS= read -r viewallrecords_permissionset; do
-        local filename="${project_directory}permissionsets/${viewallrecords_permissionset}.permissionset-meta.xml"
-        for sobject in "${order_to_add_missing_sobjects[@]}"; do
-            local missing_sobject="${missing_sobject_map[$sobject]}"
-            add_sobject_to_permissionset "$filename" "$sobject" "$missing_sobject"
-        done
-    done < <(yq eval '.viewallrecords_permissionsets[]' "$config_file")
-
-    echo "Done."
+	if [ -n $yaml_path ]; then
+		echo -ne "- Adding ${RBlue}missing sObjects${NC} in permission set with 'ViewAllRecords' permission... "
+		parse_yaml_to_assoc_array "$config_file" "$yaml_path" missing_sobject_map
+		readarray -t order_to_add_missing_sobjects < <(yq eval "$yaml_path | keys | .[]" "$config_file")
+		while IFS= read -r viewallrecords_permissionset; do
+			local filename="${project_directory}permissionsets/${viewallrecords_permissionset}.permissionset-meta.xml"
+			for sobject in "${order_to_add_missing_sobjects[@]}"; do
+				local missing_sobject="${missing_sobject_map[$sobject]}"
+				add_sobject_to_permissionset "$filename" "$sobject" "$missing_sobject"
+			done
+		done < <(yq eval '.viewallrecords_permissionsets[]' "$config_file")
+		echo "Done."
+	fi
 }
 
 ## add_sobject_to_permissionset
