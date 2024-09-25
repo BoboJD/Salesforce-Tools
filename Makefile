@@ -36,29 +36,4 @@ tests:
 
 # Upload new version of the package
 version:
-	@echo "Creating new Salesforce package version..."
-	@result=$$(sf package version create --definition-file config/project-scratch-def.json --package "Salesforce Tools" --wait 30 --installation-key-bypass --code-coverage --json); \
-	status=$$(echo $$result | jq -r '.status'); \
-	if [ "$$status" = "0" ]; then \
-		packageStatus=$$(echo $$result | jq -r '.result.Status'); \
-		if [ "$$packageStatus" = "Success" ]; then \
-			subscriberPackageVersionId=$$(echo $$result | jq -r '.result.SubscriberPackageVersionId'); \
-			echo "Package creation successful. Subscriber Package Version ID: $$subscriberPackageVersionId"; \
-			echo "Promoting package version..."; \
-			sf package version promote --package $$subscriberPackageVersionId; \
-		else \
-			echo "Package creation failed with status: $$packageStatus"; \
-			exit 1; \
-		fi \
-	else \
-		errorCode=$$(echo $$result | jq -r '.code'); \
-		errorMessage=$$(echo $$result | jq -r '.message'); \
-		if [ "$$errorCode" = "MultipleErrorsError" ]; then \
-			echo "Multiple errors occurred:"; \
-			errors=$$(echo $$result | jq -r '.message' | tr '\\n' '\n'); \
-			echo "$$errors"; \
-		else \
-			echo "Error occurred: $$errorMessage"; \
-		fi; \
-		exit 1; \
-	fi
+	@bash scripts/update_version_and_create_package.sh
