@@ -1,3 +1,7 @@
+const arrayRemove = (array, attr, value) => { 
+	return array.filter(obj => obj[attr] !== value);
+};
+
 const sortBy = (field, reverse, primer) => {
 	const key = primer
 		? function(x){ return primer(x[field]); }
@@ -18,6 +22,7 @@ const sortArrayOfObject = (array, property, sortDirection='asc') => {
 };
 
 export {
+	arrayRemove,
 	sortArrayOfObject,
 	sortBy
 };

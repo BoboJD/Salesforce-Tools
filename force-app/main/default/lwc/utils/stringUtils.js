@@ -62,6 +62,10 @@ const containsAtLeastOneOfTheTerms = (textToVerify, terms) => {
 	return false;
 };
 
+const capitalize = string => {
+	return string.charAt(0).toUpperCase() + string.slice(1);
+};
+
 export {
 	removeSpaces,
 	getPastedData,
@@ -70,5 +74,6 @@ export {
 	pad,
 	boldString,
 	format,
-	containsAtLeastOneOfTheTerms
+	containsAtLeastOneOfTheTerms,
+	capitalize
 };
