@@ -311,7 +311,7 @@ add_missing_sobjects_in_viewallrecords_permission_sets() {
 		yaml_path='.scratch_org.missing_sobjects'
 	fi
 
-	if [ -n $yaml_path ]; then
+	if [ -n "$yaml_path" ]; then
 		echo -ne "- Adding ${RBlue}missing sObjects${NC} in permission set with 'ViewAllRecords' permission... "
 		parse_yaml_to_assoc_array "$config_file" "$yaml_path" missing_sobject_map
 		readarray -t order_to_add_missing_sobjects < <(yq eval "$yaml_path | keys | .[]" "$config_file")
