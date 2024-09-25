@@ -79,11 +79,8 @@ edit_files_that_fail_deployment(){
 	if [ -d "${project_directory}connectedApps/" ]; then
 		remove_consumer_key_on_each_connected_app
 	fi
-	local viewallrecords_permissionsets=$(yq eval '.viewallrecords_permissionsets[]' "$config_file")
-	if [ "${#viewallrecords_permissionsets[@]}" -gt 0 ]; then
-		remove_missing_sobjects_from_viewallrecords_permission_sets
-		add_missing_sobjects_in_viewallrecords_permission_sets
-	fi
+	remove_missing_sobjects_from_viewallrecords_permission_sets
+	add_missing_sobjects_in_viewallrecords_permission_sets
 	if [ "$is_scratch_org" = "true" ]; then
 		if [ -d "${project_directory}sites/" ]; then
 			remove_domain_on_each_site

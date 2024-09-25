@@ -216,28 +216,26 @@ remove_unsupported_setting_for_lightning_experience(){
 
 ## remove_components_on_dashboards
 remove_components_on_dashboards(){
-	local dashboards=$(yq eval '.dashboards[]' "$config_file")
-	if [ "${#dashboards[@]}" -gt 0 ]; then
+	if [[ $(yq eval '.dashboards // "null"' "$config_file") != "null" ]]; then
 		echo -ne "- Removing ${RBlue}untracked reports${NC} on dashboards... "
-		for dashboard in ${dashboards[@]}; do
+		while IFS= read -r dashboard; do
 			xml ed -L -N x="$xml_namespace" -d "//*/x:dashboardGridComponents" "${project_directory}dashboards/$dashboard.dashboard-meta.xml"
-		done
+		done < <(yq eval '.dashboards[]' "$config_file")
 		echo "Done."
 	fi
 }
 
 ## remove_controlling_field_on_picklists
 remove_controlling_field_on_picklists(){
-	local controlling_picklists_with_deploy_issue=$(yq eval '.controlling_picklists_with_deploy_issue[]' "$config_file")
-	if [ "${#controlling_picklists_with_deploy_issue[@]}" -gt 0 ]; then
-		for concatenation in "${controlling_picklists_with_deploy_issue[@]}"; do
+	if [[ $(yq eval '.controlling_picklists_with_deploy_issue // "null"' "$config_file") != "null" ]]; then
+		while IFS= read -r concatenation; do
 			sobject=$(echo "$concatenation" | cut -d "." -f 1)
 			picklist_api_name=$(echo "$concatenation" | cut -d "." -f 2)
 			echo -ne "- Removing ${RBlue}picklist controlling values${NC} on ${sobject} picklist ${picklist_api_name}... "
 			xml ed -L -N x="$xml_namespace" -d "//*/x:valueSettings" "${project_directory}objects/${sobject}/fields/${picklist_api_name}.field-meta.xml"
 			xml ed -L -N x="$xml_namespace" -d "//*/x:controllingField" "${project_directory}objects/${sobject}/fields/${picklist_api_name}.field-meta.xml"
 			echo "Done."
-		done
+		done < <(yq eval '.controlling_picklists_with_deploy_issue[]' "$config_file")
 	fi
 }
 
@@ -278,51 +276,50 @@ replace_sender_email_in_case_autoresponse_rule(){
 
 ## remove_missing_sobjects_from_viewallrecords_permission_sets
 remove_missing_sobjects_from_viewallrecords_permission_sets(){
-	echo -ne "- Removing ${RBlue}missing sObjects${NC} from permission set with 'ViewAllRecords' permission... "
+	if [[ $(yq eval '.viewallrecords_permissionsets // "null"' "$config_file") != "null" ]]; then
+		echo -ne "- Removing ${RBlue}missing sObjects${NC} from permission set with 'ViewAllRecords' permission... "
 
-	local missing_sobjects=("ActiveScratchOrg" "NamespaceRegistry" "ScratchOrgInfo")
+		local missing_sobjects=("ActiveScratchOrg" "NamespaceRegistry" "ScratchOrgInfo")
+		if [ "$is_sandbox_org" = "true" ]; then
+			missing_sobjects+=(
+				"Address" "AsyncRequestResponseEvent" "CalcMatrixColumnRange" "CalcProcStepRelationship" "CalculationMatrix" "CalculationMatrixColumn" "CalculationMatrixRow" "CalculationMatrixVersion"
+				"CalculationProcedure" "CalculationProcedureStep" "CalculationProcedureVariable" "CalculationProcedureVersion" "CaseServiceProcess" "DataKitDeploymentLog" "Employee" "EngagementAttendee" "EngagementInteraction" "EngagementTopic" "ExpressionSet" "ExpressionSetObjectAlias"
+				"ExpressionSetVersion" "IntegrationProviderDef" "InternalOrganizationUnit" "ProductRelatedServiceProcess" "RecordActnSelItemExtrc" "RecordAlert" "SharingRecordCollection" "SvcCatalogReqRelatedItem" "SvcCatalogRequest"
+			)
+		fi
 
-	if [ "$is_sandbox_org" = "true" ]; then
-		missing_sobjects+=(
-			"Address" "CalcMatrixColumnRange" "CalcProcStepRelationship" "CalculationMatrix" "CalculationMatrixColumn" "CalculationMatrixRow" "CalculationMatrixVersion"
-			"CalculationProcedure" "CalculationProcedureStep" "CalculationProcedureVariable" "CalculationProcedureVersion" "Employee" "ExpressionSet" "ExpressionSetObjectAlias"
-			"ExpressionSetVersion" "InternalOrganizationUnit" "SharingRecordCollection" "SvcCatalogReqRelatedItem" "SvcCatalogRequest"
-		)
+		while IFS= read -r viewallrecords_permissionset; do
+			for missing_sobject in "${missing_sobjects[@]}"; do
+				xml ed -L -N x="$xml_namespace" -d "//*/x:objectPermissions[starts-with(x:object, \"$missing_sobject\")]" "${project_directory}permissionsets/${viewallrecords_permissionset}.permissionset-meta.xml"
+			done
+		done < <(yq eval '.viewallrecords_permissionsets[]' "$config_file")
+
+		echo "Done."
 	fi
-
-	local viewallrecords_permissionsets=$(yq eval '.viewallrecords_permissionsets[]' "$config_file")
-	for viewallrecords_permissionset in "${viewallrecords_permissionsets[@]}"; do
-		for missing_sobject in "${missing_sobjects[@]}"; do
-			xml ed -L -N x="$xml_namespace" -d "//*/x:objectPermissions[starts-with(x:object, \"$missing_sobject\")]" "${project_directory}permissionsets/${viewallrecords_permissionset}.permissionset-meta.xml"
-		done
-	done
-	echo "Done."
 }
 
 ## add_missing_sobjects_in_viewallrecords_permission_sets
-add_missing_sobjects_in_viewallrecords_permission_sets() {
-	declare -A missing_sobject_map
-	local order_to_add_missing_sobjects
-
-	local yaml_path
-	if [[ "$is_sandbox_org" = "true" && $(yq eval '.sandbox.missing_sobjects // "null"' "$config_file") != "null" ]]; then
-		yaml_path='.sandbox.missing_sobjects'
-	elif [[ "$is_scratch_org" = "true" && $(yq eval '.scratch_org.missing_sobjects // "null"' "$config_file") != "null" ]]; then
-		yaml_path='.scratch_org.missing_sobjects'
-	fi
-
-	if [ -n "$yaml_path" ]; then
-		echo -ne "- Adding ${RBlue}missing sObjects${NC} in permission set with 'ViewAllRecords' permission... "
-		parse_yaml_to_assoc_array "$config_file" "$yaml_path" missing_sobject_map
-		readarray -t order_to_add_missing_sobjects < <(yq eval "$yaml_path | keys | .[]" "$config_file")
-		while IFS= read -r viewallrecords_permissionset; do
-			local filename="${project_directory}permissionsets/${viewallrecords_permissionset}.permissionset-meta.xml"
-			for sobject in "${order_to_add_missing_sobjects[@]}"; do
-				local missing_sobject="${missing_sobject_map[$sobject]}"
-				add_sobject_to_permissionset "$filename" "$sobject" "$missing_sobject"
-			done
-		done < <(yq eval '.viewallrecords_permissionsets[]' "$config_file")
-		echo "Done."
+add_missing_sobjects_in_viewallrecords_permission_sets(){
+	if [[ $(yq eval '.viewallrecords_permissionsets // "null"' "$config_file") != "null" ]]; then
+		local yaml_path
+		if [[ "$is_sandbox_org" = "true" && $(yq eval '.sandbox.missing_sobjects // "null"' "$config_file") != "null" ]]; then
+			yaml_path='.sandbox.missing_sobjects'
+		elif [[ "$is_scratch_org" = "true" && $(yq eval '.scratch_org.missing_sobjects // "null"' "$config_file") != "null" ]]; then
+			yaml_path='.scratch_org.missing_sobjects'
+		fi
+		if [ -n "$yaml_path" ]; then
+			echo -ne "- Adding ${RBlue}missing sObjects${NC} in permission set with 'ViewAllRecords' permission... "
+			declare -A missing_sobject_map
+			parse_yaml_to_assoc_array "$config_file" "$yaml_path" missing_sobject_map
+			while IFS= read -r viewallrecords_permissionset; do
+				local filename="${project_directory}permissionsets/${viewallrecords_permissionset}.permissionset-meta.xml"
+				while IFS= read -r sobject; do
+					local missing_sobject="${missing_sobject_map[$sobject]}"
+					add_sobject_to_permissionset "$filename" "$sobject" "$missing_sobject"
+				done < <(yq eval "$yaml_path | keys | .[]" "$config_file")
+			done < <(yq eval '.viewallrecords_permissionsets[]' "$config_file")
+			echo "Done."
+		fi
 	fi
 }
 
@@ -443,14 +440,12 @@ install_managed_packages(){
 	if [[ $(yq eval '.scratch_org_settings.appexchange.appexchange_id_by_name // "null"' "$config_file") != "null" ]]; then
 		echo -e "\nInstalling managed packages :"
 		installed_packages=$(sf package installed list --target-org $org_alias --json)
-		local appexchange_installation_order
-		readarray -t appexchange_installation_order < <(yq eval '.scratch_org_settings.appexchange.appexchange_id_by_name | keys | .[]' "$config_file")
 		declare -A appexchange_id_by_name
 		parse_yaml_to_assoc_array "$config_file" '.scratch_org_settings.appexchange.appexchange_id_by_name' appexchange_id_by_name
-		for appexchange_name in "${appexchange_installation_order[@]}"; do
+		while IFS= read -r appexchange_name; do
 			appexchange_id="${appexchange_id_by_name[$appexchange_name]}"
 			check_package_installation $org_alias "$appexchange_id" "$appexchange_name"
-		done
+		done < <(yq eval '.scratch_org_settings.appexchange.appexchange_id_by_name | keys | .[]' "$config_file")
 	fi
 }
 
@@ -481,15 +476,14 @@ check_package_installation(){
 ## rename_api_name_of_standard_metadata
 rename_api_name_of_standard_metadata(){
 	local org_alias=$1
-	local standard_metadata_to_rename=$(yq eval '.standard_metadata_to_rename[]' "$config_file")
-	if [ "${#standard_metadata_to_rename[@]}" -gt 0 ]; then
+	if [[ $(yq eval '.standard_metadata_to_rename // "null"' "$config_file") != "null" ]]; then
 		echo -ne "\nRenaming ${RBlue}standard metadata values${NC}... "
-		for concatenation in "${standard_metadata_to_rename[@]}"; do
+		while IFS= read -r concatenation; do
 			metadata_type=$(echo "$concatenation" | cut -d ":" -f 1)
 			old_value=$(echo "$concatenation" | cut -d ":" -f 2)
 			new_value=$(echo "$concatenation" | cut -d ":" -f 3)
 			sf metadata rename -t "$metadata_type" -o "$old_value" -n "$new_value" --targetusername $org_alias > /dev/null
-		done
+		done < <(yq eval '.standard_metadata_to_rename[]' "$config_file")
 		echo "Done."
 	fi
 }

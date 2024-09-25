@@ -192,27 +192,22 @@ retrieve_profiles(){
 	sf project retrieve start -x manifest/profiles.xml --ignore-conflicts > /dev/null
 	mv .DISABLED.forceignore .forceignore
 
-	local unused_standard_layouts=$(yq eval '.unused_standard_layouts[]' "$config_file")
-	local user_permissions_to_delete=$(yq eval '.user_permissions_to_delete[]' "$config_file")
-	local unnecessary_permissions_to_delete=$(yq eval '.unnecessary_permissions_to_delete[]' "$config_file")
-
-
 	echo -ne "Removing unnecessary permissions... "
 	for profile in ${project_directory}profiles/*.profile-meta.xml; do
-		if [ "${#unused_standard_layouts[@]}" -gt 0 ]; then
-			for unused_layout in "${unused_standard_layouts[@]}"; do
+		if [[ $(yq eval '.unused_standard_layouts // "null"' "$config_file") != "null" ]]; then
+			while IFS= read -r unused_layout; do
 				xml ed -L -N x="$xml_namespace" -d "//x:layoutAssignments[starts-with(x:layout, \"${unused_layout}-\")]" "$profile"
-			done
+			done < <(yq eval '.unused_standard_layouts[]' "$config_file")
 		fi
-		if [ "${#user_permissions_to_delete[@]}" -gt 0 ]; then
-			for user_permission_name in "${user_permissions_to_delete[@]}"; do
+		if [[ $(yq eval '.user_permissions_to_delete // "null"' "$config_file") != "null" ]]; then
+			while IFS= read -r user_permission_name; do
 				xml ed -L -N x="$xml_namespace" -d "//x:userPermissions[x:name = \"$user_permission_name\"]" "$profile"
-			done
+			done < <(yq eval '.user_permissions_to_delete[]' "$config_file")
 		fi
-		if [ "${#unnecessary_permissions_to_delete[@]}" -gt 0 ]; then
-			for unnecessary_permission in "${unnecessary_permissions_to_delete[@]}"; do
+		if [[ $(yq eval '.unnecessary_permissions_to_delete // "null"' "$config_file") != "null" ]]; then
+			while IFS= read -r unnecessary_permission; do
 				xml ed -L -N x="$xml_namespace" -d "//*/x:$unnecessary_permission" "$profile"
-			done
+			done < <(yq eval '.unnecessary_permissions_to_delete[]' "$config_file")
 		fi
 		xml fo --indent-spaces 4 "$profile" > "${profile}.tmp" && mv "${profile}.tmp" "$profile"
 	done
@@ -238,15 +233,13 @@ recreate_org_shape(){
 check_installed_managed_packages_version(){
 	if [[ $(yq eval '.scratch_org_settings.appexchange.appexchange_id_by_name // "null"' "$config_file") != "null" ]]; then
 		echo -e "\nChecking if ${RBlue}managed packages${NC} have been updated :"
-		local appexchange_installation_order
-		readarray -t appexchange_installation_order < <(yq eval '.scratch_org_settings.appexchange.appexchange_id_by_name | keys | .[]' "$config_file")
 		declare -A appexchange_id_by_name
 		parse_yaml_to_assoc_array "$config_file" '.scratch_org_settings.appexchange.appexchange_id_by_name' appexchange_id_by_name
 		local installed_packages=$(sf package installed list --json)
-		for appexchange_name in "${appexchange_installation_order[@]}"; do
+		while IFS= read -r appexchange_name; do
 			local appexchange_id="${appexchange_id_by_name[$appexchange_name]}"
 			check_package_version "$appexchange_id" "$appexchange_name"
-		done
+		done < <(yq eval '.scratch_org_settings.appexchange.appexchange_id_by_name | keys | .[]' "$config_file")
 	fi
 }
 
