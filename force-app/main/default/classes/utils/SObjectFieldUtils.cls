@@ -3,6 +3,10 @@ global inherited sharing class SObjectFieldUtils{
 
 	private static final String BASE64MAP = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 
+	global static String getLabel(SObjectField sObjectField){
+		return sObjectField.getDescribe(FieldDescribeOptions.DEFAULT).getLabel();
+	}
+
 	global static List<String> getValuesOfPicklist(SObjectField field){
 		List<String> values = new List<String>();
 		for(Schema.PicklistEntry entry : field.getDescribe(FieldDescribeOptions.DEFAULT).getPicklistValues())

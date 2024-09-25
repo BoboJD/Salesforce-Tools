@@ -2,6 +2,11 @@
 private class SObjectFieldUtilsTest{
 
 	@IsTest
+	static void getLabelShouldNotReturnNull(){
+		Assert.isNotNull(SObjectFieldUtils.getLabel(Schema.Account.Name));
+	}
+
+	@IsTest
 	static void getValuesOfPicklistShouldReturnListOfString(){
 		List<String> values = SObjectFieldUtils.getValuesOfPicklist(Schema.Opportunity.Type);
 		Assert.notEquals(0, values.size());

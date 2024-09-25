@@ -2,6 +2,25 @@
 private class SObjectUtilsTest{
 
 	@IsTest
+	static void getLabelShouldNotReturnNull(){
+		Assert.isNotNull(SObjectUtils.getLabel(Log__c.SObjectType));
+	}
+
+	@IsTest
+	static void getDeveloperNameShouldReturnLog(){
+		Assert.equals('tlz__Log__c', SObjectUtils.getDeveloperName(Log__c.SObjectType));
+	}
+
+	@IsTest
+	static void getRecordTypesShouldNotReturnEmptyList(){
+		Test.startTest();
+		List<RecordTypeInfo> recordTypes = SObjectUtils.getRecordTypes(Log__c.SObjectType);
+		Test.stopTest();
+
+		Assert.notEquals(0, recordTypes?.size());
+	}
+
+	@IsTest
 	static void fieldValueHasChangedWithDifferentValueForSObjectFieldsShouldReturnTrue(){
 		Account accountAfter = new Account(Name = 'Toto');
 		Account accountBefore = new Account(Name = 'Tutu');

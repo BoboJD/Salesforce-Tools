@@ -1,5 +1,17 @@
 global inherited sharing class SObjectUtils{
 
+	global static String getLabel(SObjectType sObjType){
+		return sObjType.getDescribe(SObjectDescribeOptions.DEFERRED).getLabel();
+	}
+
+	global static String getDeveloperName(SObjectType sObjType){
+		return sObjType.getDescribe(SObjectDescribeOptions.DEFERRED).getName();
+	}
+
+	global static List<RecordTypeInfo> getRecordTypes(SObjectType sObjType){
+		return sObjType.getDescribe(SObjectDescribeOptions.DEFERRED).getRecordTypeInfos();
+	}
+
 	global static Boolean fieldValueHasChanged(SObject sObjectAfter, SObject sObjectBefore, Set<SObjectField> fieldsToVerify){
 		return fieldValueHasChanged(sObjectAfter, sObjectBefore, new List<SObjectField>(fieldsToVerify));
 	}

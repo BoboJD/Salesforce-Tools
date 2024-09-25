@@ -11,6 +11,12 @@ private class DecoratedPicklistEntryTest{
 		Assert.equals('value', picklistEntry.value);
 		Assert.equals('label', picklistEntry.label);
 
+		List<RecordTypeInfo> recordTypes = SObjectUtils.getRecordTypes(Log__c.SObjectType);
+		picklistEntry = DecoratedPicklistEntry.newInstance(recordTypes[0]);
+		Assert.equals(recordTypes[0].getRecordTypeId(), picklistEntry.value);
+		Assert.equals(recordTypes[0].getName(), picklistEntry.label);
+		Assert.equals(recordTypes[0].getDeveloperName(), picklistEntry.fields?.get('developerName'));
+
 		Account account = new Account(
 			Id = fflib_IDGenerator.generate(Schema.Account.SObjectType),
 			Name = 'toto'

@@ -25,6 +25,12 @@ global class DecoratedPicklistEntry{
 		return new DecoratedPicklistEntry(value, label);
 	}
 
+	global static DecoratedPicklistEntry newInstance(Schema.RecordTypeInfo recordType){
+		DecoratedPicklistEntry picklistEntry = new DecoratedPicklistEntry(recordType.getRecordTypeId(), recordType.getName());
+		picklistEntry.fields.put('developerName', recordType.getDeveloperName());
+		return picklistEntry;
+	}
+
 	global static DecoratedPicklistEntry newInstanceFromSObject(SObject record){
 		return new DecoratedPicklistEntry(record.Id, (String)record.get('Name'));
 	}
