@@ -5,9 +5,14 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 echo "Calculating new version number..."
 currentVersion=$(jq -r '.packageDirectories[0].versionNumber' sfdx-project.json)
 major=$(echo $currentVersion | cut -d '.' -f 1)
-patch=$(echo $currentVersion | cut -d '.' -f 2 | sed 's/NEXT//')
+minor=$(echo $currentVersion | cut -d '.' -f 2)
+patch=$(echo $currentVersion | cut -d '.' -f 3 | sed 's/NEXT//')
 newPatch=$(($patch + 1))
-newVersion="$major.$newPatch.NEXT"
+if [ "$newPatch" -gt 9 ]; then
+    newPatch=0
+    minor=$(($minor + 1))
+fi
+newVersion="$major.$minor.$newPatch.NEXT"
 
 echo "New version: $newVersion"
 echo "Replacing version number in sfdx-project.json..."
@@ -24,7 +29,7 @@ if [ "$status" = "0" ]; then
         subscriberPackageVersionId=$(echo $result | jq -r '.result.SubscriberPackageVersionId')
         echo -e "${RGreen}Package creation successful. Subscriber Package Version ID: $subscriberPackageVersionId ${NC}"
         echo "Promoting package version..."
-        sf package version promote --package $subscriberPackageVersionId
+        sf package version promote --package $subscriberPackageVersionId --no-prompt
     else
         error_exit "Package creation failed with status: $packageStatus"
     fi
