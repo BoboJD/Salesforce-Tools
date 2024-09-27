@@ -26,4 +26,23 @@ private class DatabaseServiceTest{
 			Assert.isNotNull(asyncApexJobId);
 		}
 	}
+
+	@IsTest
+	static void iterateForDatabaseIteratorAndNbOfIterationShouldReturnAsyncApexJobId(){
+		User standardUser = TestUtils.selectStandardUser();
+		System.runAs(standardUser){
+			new CustomIterator(); // coverage for CustomIterator
+			TestIterator iterator = new TestIterator(new List<TestIterator.CustomLoop>{
+				new TestIterator.CustomLoop(),
+				new TestIterator.CustomLoop()
+			});
+
+			Test.startTest();
+			Id asyncApexJobId = DatabaseService.iterate(iterator, 100);
+			Test.stopTest();
+
+			Assert.isNotNull(asyncApexJobId);
+			Assert.equals(2, TestIterator.numberOfLoop);
+		}
+	}
 }

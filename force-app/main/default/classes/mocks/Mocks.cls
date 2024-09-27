@@ -112,12 +112,16 @@ global class Mocks{
 			this.mocks = mocks;
 		}
 
-		global Id executeBatch(Database.Batchable<SObject> batchClassObject){
-			return (Id)mocks.mockNonVoidMethod(this, 'executeBatch', new List<Type>{Database.Batchable<SObject>.class}, new List<Object>{batchClassObject});
+		global Id executeBatch(Database.Batchable<SObject> batchableClass){
+			return (Id)mocks.mockNonVoidMethod(this, 'executeBatch', new List<Type>{Database.Batchable<SObject>.class}, new List<Object>{batchableClass});
 		}
 
-		global Id executeBatch(Database.Batchable<SObject> batchClassObject, Integer nbOfIteration){
-			return (Id)mocks.mockNonVoidMethod(this, 'executeBatch', new List<Type>{Database.Batchable<SObject>.class, Integer.class}, new List<Object>{batchClassObject, nbOfIteration});
+		global Id executeBatch(Database.Batchable<SObject> batchableClass, Integer nbOfIteration){
+			return (Id)mocks.mockNonVoidMethod(this, 'executeBatch', new List<Type>{Database.Batchable<SObject>.class, Integer.class}, new List<Object>{batchableClass, nbOfIteration});
+		}
+
+		global Id iterate(Database.Batchable<CustomIterator> iteratorClass, Integer nbOfIteration){
+			return (Id)mocks.mockNonVoidMethod(this, 'iterate', new List<Type>{Database.Batchable<CustomIterator>.class, Integer.class}, new List<Object>{iteratorClass, nbOfIteration});
 		}
 	}
 

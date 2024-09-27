@@ -8,6 +8,10 @@ global inherited sharing class DatabaseService{
 		return service().executeBatch(batchClassObject, nbOfIteration);
 	}
 
+	global static Id iterate(Database.Batchable<CustomIterator> iteratorClass, Integer nbOfIteration){
+		return service().iterate(iteratorClass, nbOfIteration);
+	}
+
 	private static IDatabaseService service(){
 		return (IDatabaseService)Application.Service.newInstance(IDatabaseService.class);
 	}
