@@ -18,6 +18,7 @@ org_settings:
   # territories_used: true
   # experience_cloud_used: true
   # org_shape_enable: true
+  # backup_conga_queries: true
 
 # Auto update settings for scripts
 # features:

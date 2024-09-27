@@ -48,7 +48,9 @@ main(){
 	if [[ "$is_production_org" = "true" && ( -z "$option" || "$option" = "-s" || "$option" = "--subtree" ) ]]; then
 		if [ -z "$option" ]; then
 			retrieve_development
-			create_backup_of_conga_queries
+			if [[ $(yq eval '.org_settings.backup_conga_queries // "null"' "$config_file") = "true" ]]; then
+				create_backup_of_conga_queries
+			fi
 			if [[ $(yq eval '.org_settings.org_shape_enable // "null"' "$config_file") = "true" ]]; then
 				recreate_org_shape
 			fi
