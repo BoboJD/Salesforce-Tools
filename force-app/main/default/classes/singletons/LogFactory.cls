@@ -1,7 +1,7 @@
 @SuppressWarnings('PMD.ExcessiveParameterList')
 global without sharing class LogFactory{
 	private static LogFactory instance;
-	@TestVisible private List<Log__c> logs;
+	global List<Log__c> logs;
 
 	private LogFactory(){
 		logs = new List<Log__c>();
