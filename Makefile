@@ -1,4 +1,4 @@
-.PHONY: archive clean delete deploy org release retrieve tests version
+.PHONY: archive clean crypt delete deploy key org release retrieve tests version
 
 p=
 
@@ -10,6 +10,10 @@ archive:
 clean:
 	@bash scripts/clean.sh
 
+# Crypt a password to be stored in OrgSettings__mdt
+crypt:
+	@bash scripts/crypt_password.sh $(p)
+
 # Delete metadata files specified in 'manifest/destructiveChanges.xml'
 delete:
 	@bash scripts/deleteMetadata.sh
@@ -17,6 +21,10 @@ delete:
 # Deploy project metadata files into current org
 deploy:
 	@bash scripts/deploy.sh $(p)
+
+# Generate the encryption key to be stored in EncryptionKey__c custom setting
+key:
+	@bash scripts/generate_key.sh
 
 # Create a scratch org
 org:
