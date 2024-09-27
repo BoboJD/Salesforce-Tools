@@ -1,5 +1,5 @@
 @IsTest
-private class AuthorizationUtilTest{
+private class AuthorizationUtilsTest{
 	private static final SObjectType TEST_OBJECT_TYPE = Opportunity.SObjectType;
 
 	@TestSetup
@@ -8,47 +8,47 @@ private class AuthorizationUtilTest{
 	}
 
 	private static void verifyCheckMethods(Boolean authorized){
-		Assert.equals(authorized, AuthorizationUtil.isAccessible(TEST_OBJECT_TYPE));
-		Assert.equals(authorized, AuthorizationUtil.isCreateable(TEST_OBJECT_TYPE));
-		Assert.equals(authorized, AuthorizationUtil.isUpdateable(TEST_OBJECT_TYPE));
-		Assert.equals(authorized, AuthorizationUtil.isUpsertable(TEST_OBJECT_TYPE));
-		Assert.equals(authorized, AuthorizationUtil.isDeletable(TEST_OBJECT_TYPE));
-		Assert.equals(authorized, AuthorizationUtil.isUndeletable(TEST_OBJECT_TYPE));
+		Assert.equals(authorized, AuthorizationUtils.isAccessible(TEST_OBJECT_TYPE));
+		Assert.equals(authorized, AuthorizationUtils.isCreateable(TEST_OBJECT_TYPE));
+		Assert.equals(authorized, AuthorizationUtils.isUpdateable(TEST_OBJECT_TYPE));
+		Assert.equals(authorized, AuthorizationUtils.isUpsertable(TEST_OBJECT_TYPE));
+		Assert.equals(authorized, AuthorizationUtils.isDeletable(TEST_OBJECT_TYPE));
+		Assert.equals(authorized, AuthorizationUtils.isUndeletable(TEST_OBJECT_TYPE));
 	}
 
 	private static void verifyAssertMethods(Boolean authorized){
 		try{
-			AuthorizationUtil.assertAccessible(TEST_OBJECT_TYPE);
+			AuthorizationUtils.assertAccessible(TEST_OBJECT_TYPE);
 			Assert.isTrue(authorized);
 		}catch(Exception e){
 			Assert.isFalse(authorized);
 		}
 		try{
-			AuthorizationUtil.assertCreateable(TEST_OBJECT_TYPE);
+			AuthorizationUtils.assertCreateable(TEST_OBJECT_TYPE);
 			Assert.isTrue(authorized);
 		}catch(Exception e){
 			Assert.isFalse(authorized);
 		}
 		try{
-			AuthorizationUtil.assertUpdateable(TEST_OBJECT_TYPE);
+			AuthorizationUtils.assertUpdateable(TEST_OBJECT_TYPE);
 			Assert.isTrue(authorized);
 		}catch(Exception e){
 			Assert.isFalse(authorized);
 		}
 		try{
-			AuthorizationUtil.assertUpsertable(TEST_OBJECT_TYPE);
+			AuthorizationUtils.assertUpsertable(TEST_OBJECT_TYPE);
 			Assert.isTrue(authorized);
 		}catch(Exception e){
 			Assert.isFalse(authorized);
 		}
 		try{
-			AuthorizationUtil.assertDeletable(TEST_OBJECT_TYPE);
+			AuthorizationUtils.assertDeletable(TEST_OBJECT_TYPE);
 			Assert.isTrue(authorized);
 		}catch(Exception e){
 			Assert.isFalse(authorized);
 		}
 		try{
-			AuthorizationUtil.assertUndeletable(TEST_OBJECT_TYPE);
+			AuthorizationUtils.assertUndeletable(TEST_OBJECT_TYPE);
 			Assert.isTrue(authorized);
 		}catch(Exception e){
 			Assert.isFalse(authorized);

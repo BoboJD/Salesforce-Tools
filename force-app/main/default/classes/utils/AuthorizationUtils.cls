@@ -1,5 +1,5 @@
 @SuppressWarnings('PMD.CognitiveComplexity')
-global with sharing class AuthorizationUtil{
+global with sharing class AuthorizationUtils{
 
 	global static Boolean isAccessible(SObjectType sObjectType){
 		return sObjectType != null && sObjectType.getDescribe(SObjectDescribeOptions.DEFERRED).isAccessible();

@@ -125,7 +125,7 @@ global without sharing class LogFactory{
 	}
 
 	global void commitWork(){
-		if(AuthorizationUtil.isCreateable(Log__c.SObjectType))
+		if(AuthorizationUtils.isCreateable(Log__c.SObjectType))
 			insert logs;
 		logs.clear();
 	}

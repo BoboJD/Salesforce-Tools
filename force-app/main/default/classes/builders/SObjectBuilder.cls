@@ -44,7 +44,7 @@ global inherited sharing abstract class SObjectBuilder{
 			record.put(fieldName, valueByFieldName.get(fieldName));
 		for(SObjectField sObjectField : valueBySObjectField.keySet())
 			record.put(sObjectField, valueBySObjectField.get(sObjectField));
-		if(commitData && AuthorizationUtil.isCreateable(getSObjectType()))
+		if(commitData && AuthorizationUtils.isCreateable(getSObjectType()))
 			insert record;
 		return record;
 	}
@@ -52,7 +52,7 @@ global inherited sharing abstract class SObjectBuilder{
 	global static List<SObject> build(List<SObjectBuilder> sObjectBuilders){
 		List<SObject> records = new List<SObject>();
 		for(SObjectBuilder sObjectBuilder : sObjectBuilders){
-			if(AuthorizationUtil.isCreateable(sObjectBuilder.getSObjectType()))
+			if(AuthorizationUtils.isCreateable(sObjectBuilder.getSObjectType()))
 				records.add(sObjectBuilder.buildRecordWithoutCommit());
 		}
 		insert records;
@@ -63,7 +63,7 @@ global inherited sharing abstract class SObjectBuilder{
 		Map<String, SObject> records = new Map<String, SObject>();
 		for(String friendlyName : sObjectBuilders.keySet()){
 			SObjectBuilder sObjectBuilder = sObjectBuilders.get(friendlyName);
-			if(AuthorizationUtil.isCreateable(sObjectBuilder.getSObjectType()))
+			if(AuthorizationUtils.isCreateable(sObjectBuilder.getSObjectType()))
 				records.put(friendlyName, sObjectBuilder.buildRecordWithoutCommit());
 		}
 		insert records.values();
