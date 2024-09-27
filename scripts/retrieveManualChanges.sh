@@ -223,7 +223,7 @@ retrieve_development(){
 
 create_backup_of_conga_queries(){
 	echo -e "\nCreating backup of ${RBlue}conga queries${NC}..."
-	sf data export tree --query "SELECT Id, Alias__c, APXTConga4__Description__c, APXTConga4__Key__c, APXTConga4__Name__c, APXTConga4__Query__c, Name, Objets__c FROM APXTConga4__Conga_Merge_Query__c ORDER BY Name" --output-dir data
+	sf data export tree --query "SELECT Id, Name, FIELDS(CUSTOM) FROM APXTConga4__Conga_Merge_Query__c ORDER BY Name LIMIT 200" --output-dir data
 }
 
 recreate_org_shape(){
