@@ -1,4 +1,4 @@
-.PHONY: archive clean delete deploy org release retrieve tests
+.PHONY: archive clean delete deploy org release retrieve tests version
 
 p=
 
