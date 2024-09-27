@@ -1,6 +1,6 @@
 @SuppressWarnings('PMD.ExcessiveParameterList, PMD.CognitiveComplexity')
 global inherited sharing class DateUtils{
-	@TestVisible private static Datetime nowDate;
+	global static Datetime nowDate;
 
 	global static Datetime now(){
 		if(nowDate == null)
