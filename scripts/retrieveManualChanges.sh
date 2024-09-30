@@ -42,14 +42,16 @@ main(){
 
 	if [[ -z "$option" || "$option" = "-op" || "$option" = "--only-permissions" ]]; then
 		retrieve_permissions
-		retrieve_profiles
+		if [[ $(yq eval '.org_settings.profile_used // "null"' "$config_file") = "true" ]]; then
+			retrieve_profiles
+		fi
 	fi
 
 	if [[ "$is_production_org" = "true" && ( -z "$option" || "$option" = "-s" || "$option" = "--subtree" ) ]]; then
 		if [ -z "$option" ]; then
 			retrieve_development
-			if [[ $(yq eval '.org_settings.backup_conga_queries // "null"' "$config_file") = "true" ]]; then
-				create_backup_of_conga_queries
+			if [[ $(yq eval '.data_backup // "null"' "$config_file") != "null" ]]; then
+				create_backup_of_data
 			fi
 			if [[ $(yq eval '.org_settings.org_shape_enable // "null"' "$config_file") = "true" ]]; then
 				recreate_org_shape
@@ -221,9 +223,11 @@ retrieve_development(){
 	sf project retrieve start -m ApexClass ApexTrigger ApexPage ApexComponent LightningComponentBundle AuraDefinitionBundle --ignore-conflicts > /dev/null
 }
 
-create_backup_of_conga_queries(){
-	echo -e "\nCreating backup of ${RBlue}conga queries${NC}..."
-	sf data export tree --query "SELECT Id, Name, FIELDS(CUSTOM) FROM APXTConga4__Conga_Merge_Query__c ORDER BY Name LIMIT 200" --output-dir data
+create_backup_of_data(){
+	echo -e "\nCreating backup of ${RBlue}data${NC}..."
+	while IFS= read -r soql; do
+		sf data export tree --query "$soql" --output-dir data
+	done < <(yq eval '.data_backup[]' "$config_file")
 }
 
 recreate_org_shape(){

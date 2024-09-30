@@ -18,7 +18,11 @@ org_settings:
   # territories_used: true
   # experience_cloud_used: true
   # org_shape_enable: true
-  # backup_conga_queries: true
+  # profile_used: true
+
+# Data backup
+# data_backup:
+#  - "SELECT Id, Name, FIELDS(CUSTOM) FROM APXTConga4__Conga_Merge_Query__c ORDER BY Name LIMIT 200"
 
 # Auto update settings for scripts
 # features:
