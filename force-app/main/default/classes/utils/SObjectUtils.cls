@@ -41,12 +41,10 @@ global inherited sharing class SObjectUtils{
 	global static Set<String> getCreatableFields(SObjectType objType){
 		Set<String> fields = new Set<String>();
 		Map<String, SObjectField> fMap = objType.getDescribe(SObjectDescribeOptions.DEFERRED).fields.getMap();
-		if(fMap != null){
-			for(SObjectField ft : fMap.values()){
-				DescribeFieldResult fd = ft.getDescribe(FieldDescribeOptions.DEFAULT);
-				if(fd.isCreateable())
-					fields.add(fd.getName());
-			}
+		for(SObjectField ft : fMap.values()){
+			DescribeFieldResult fd = ft.getDescribe(FieldDescribeOptions.DEFAULT);
+			if(fd.isCreateable())
+				fields.add(fd.getName());
 		}
 		return fields;
 	}
