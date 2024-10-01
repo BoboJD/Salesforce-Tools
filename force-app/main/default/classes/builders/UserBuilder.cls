@@ -52,6 +52,13 @@ global inherited sharing class UserBuilder extends SObjectBuilder{
 			.withLastName('User');
 	}
 
+	global static UserBuilder newMarketingUser(){
+		return newUser()
+			.withProfile(profileByName.get(ProfileConstants.MARKETING_USER))
+			.withFirstName('Marketing')
+			.withLastName('User');
+	}
+
 	global UserBuilder withAdmin(Boolean admin){
 		setFieldValue(User.Admin__c, admin);
 		return this;
