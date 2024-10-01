@@ -44,6 +44,24 @@ private class ExceptionUtilsTest{
 	}
 
 	@IsTest
+	static void isInvalidIdWithFieldCustomValidationExceptionShouldReturnFalse(){
+		Test.startTest();
+		Boolean isInvalidId = ExceptionUtils.isInvalidId(new CustomException('toto'+ExceptionConstants.FIELD_CUSTOM_VALIDATION+': tutu'));
+		Test.stopTest();
+
+		Assert.isFalse(isInvalidId);
+	}
+
+	@IsTest
+	static void isInvalidIdWithInvalidIdFieldExceptionShouldReturnTrue(){
+		Test.startTest();
+		Boolean isInvalidId = ExceptionUtils.isInvalidId(new CustomException('toto'+ExceptionConstants.INVALID_ID_FIELD+': tutu'));
+		Test.stopTest();
+
+		Assert.isTrue(isInvalidId);
+	}
+
+	@IsTest
 	static void isRestrictedPicklistWithFieldCustomValidationExceptionShouldReturnFalse(){
 		Test.startTest();
 		Boolean isRestrictedPicklist = ExceptionUtils.isRestrictedPicklist(new CustomException('toto'+ExceptionConstants.FIELD_CUSTOM_VALIDATION+': tutu'));

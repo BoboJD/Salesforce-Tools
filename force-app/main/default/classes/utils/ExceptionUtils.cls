@@ -8,6 +8,10 @@ global class ExceptionUtils{
 		return e.getMessage().contains(ExceptionConstants.DUPLICATES_DETECTED);
 	}
 
+	global static Boolean isInvalidId(Exception e){
+		return e.getMessage().contains(ExceptionConstants.INVALID_ID_FIELD);
+	}
+
 	global static Boolean isRestrictedPicklist(Exception e){
 		return e.getMessage().contains(ExceptionConstants.INVALID_OR_NULL_FOR_RESTRICTED_PICKLIST);
 	}
