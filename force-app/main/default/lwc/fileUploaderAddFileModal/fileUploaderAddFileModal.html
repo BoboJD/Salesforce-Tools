@@ -18,7 +18,7 @@
 							<c-picklist
 								label={label.FileType}
 								options={fileTypes}
-								value={fieldsFileupload.tlz__Type__c}
+								value={fieldsFileupload.tlz__FileType__c}
 								onvaluechange={setFileType}
 								required>
 							</c-picklist>
@@ -32,7 +32,7 @@
 							</c-input>
 						</div>
 					</div>
-					<template if:true={fieldsFileupload.tlz__Type__c}>
+					<template if:true={fieldsFileupload.tlz__FileType__c}>
 						<div class="slds-form__row">
 							<div class="slds-form__item">
 								<a href="https://www.ilovepdf.com/compress_pdf" target="_blank">{label.LinkToReduceTheSizeOfPDFs}</a>

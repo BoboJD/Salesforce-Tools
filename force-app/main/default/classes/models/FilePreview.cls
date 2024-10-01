@@ -16,7 +16,7 @@ global class FilePreview{
 		documentId = contentVersion.ContentDocumentId;
 		this.contentDocumentLinkId = contentDocumentLinkId;
 		title = contentVersion.Title;
-		type = SObjectFieldUtils.getLabelOfPicklistValue(contentVersion, Schema.ContentVersion.Type__c);
+		type = SObjectFieldUtils.getLabelOfPicklistValue(contentVersion, Schema.ContentVersion.FileType__c);
 		createdDate = contentVersion.CreatedDate?.format('dd/MM/yyyy');
 		initSize(contentVersion);
 		extension = contentVersion.FileExtension?.toLowerCase();

@@ -12,8 +12,8 @@ global inherited sharing class ContentVersionsSelector extends fflib_SObjectSele
 			ContentVersion.CreatedDate,
 			ContentVersion.FileExtension,
 			ContentVersion.FileType,
-			ContentVersion.Title,
-			ContentVersion.Type__c
+			ContentVersion.FileType__c,
+			ContentVersion.Title
 		};
 	}
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>JSON_fileupload__c</fullName>
-    <description>If you want to change the file type when you upload a file, you can for instance fill this field with the JSON { Type__c: &quot;example&quot; }, then a trigger will parse the JSON to fill the ContentVersion fields</description>
+    <description>If you want to change the file type when you upload a file, you can for instance fill this field with the JSON { FileType__c: &quot;example&quot; }, then a trigger will parse the JSON to fill the ContentVersion fields</description>
     <label>JSON</label>
     <length>32768</length>
     <trackHistory>false</trackHistory>

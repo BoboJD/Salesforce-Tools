@@ -4,7 +4,7 @@ global with sharing class FileUploaderController{
 	global static Map<String, Object> getUtilityData(Id recordId){
 		Map<String, Object> utilityData = new Map<String, Object>();
 		utilityData.put('files', getFiles(recordId));
-		utilityData.put('fileTypes', SObjectFieldUtils.getPicklistValues(Schema.ContentVersion.Type__c));
+		utilityData.put('fileTypes', SObjectFieldUtils.getPicklistValues(Schema.ContentVersion.FileType__c));
 		utilityData.put('isAdmin', CurrentUser.isAdmin());
 		utilityData.put('hasEditAccess', CurrentUser.canEditRecord(recordId));
 		String sobjectApiName = recordId.getSObjectType().getDescribe(SObjectDescribeOptions.DEFERRED).getName();

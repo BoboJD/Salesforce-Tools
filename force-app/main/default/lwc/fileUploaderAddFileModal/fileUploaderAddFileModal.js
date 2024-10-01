@@ -8,7 +8,7 @@ export default class FileUploaderAddFileModal extends LightningElement{
 	@api options;
 	@api multiple = false;
 	@track fieldsFileupload = {
-		tlz__Type__c: '',
+		tlz__FileType__c: '',
 		tlz__RecordId__c: '',
 		tlz__PrivateFile__c: false
 	};
@@ -32,11 +32,11 @@ export default class FileUploaderAddFileModal extends LightningElement{
 	}
 
 	get selectedFileTypeIsVisibleOnlyAdmin(){
-		return this.utilityData.config.tlz__AvailableValuesForAdmin__c?.includes(this.fieldsFileupload.tlz__Type__c);
+		return this.utilityData.config.tlz__AvailableValuesForAdmin__c?.includes(this.fieldsFileupload.tlz__FileType__c);
 	}
 
 	setFileType(e){
-		this.fieldsFileupload.tlz__Type__c = e.detail.value;
+		this.fieldsFileupload.tlz__FileType__c = e.detail.value;
 		if(this.utilityData?.isAdmin && this.selectedFileTypeIsVisibleOnlyAdmin)
 			this.fieldsFileupload.tlz__PrivateFile__c = true;
 	}
@@ -48,7 +48,7 @@ export default class FileUploaderAddFileModal extends LightningElement{
 	connectedCallback(){
 		this.setupKeypressListener();
 		if(this.fileTypes.length === 1)
-			this.fieldsFileupload.tlz__Type__c = this.fileTypes[0].value;
+			this.fieldsFileupload.tlz__FileType__c = this.fileTypes[0].value;
 		this.fieldsFileupload.tlz__RecordId__c = this.recordId;
 	}
 

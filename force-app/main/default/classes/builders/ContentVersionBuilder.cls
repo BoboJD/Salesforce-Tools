@@ -11,7 +11,7 @@ global inherited sharing class ContentVersionBuilder extends SObjectBuilder{
 
 	global ContentVersion build(){
 		ContentVersion contentVersion = (ContentVersion)buildRecord();
-		return [SELECT Id, Type__c, ContentDocumentId FROM ContentVersion WHERE Id = :contentVersion.Id];
+		return [SELECT Id, FileType__c, ContentDocumentId FROM ContentVersion WHERE Id = :contentVersion.Id];
 	}
 
 	global static ContentVersionBuilder newFile(String title){

@@ -19,7 +19,7 @@ private class FileUploaderControllerTest{
 			Id = fflib_IDGenerator.generate(Schema.ContentVersion.SObjectType),
 			Title = 'Test',
 			ContentDocumentId = contentDocumentId,
-			Type__c = 'contrat'
+			FileType__c = 'contrat'
 		), new Map<SObjectField, Object>{
 			Schema.ContentVersion.ContentSize => (1024 * 1024 * 2),
 			Schema.ContentVersion.FileExtension => 'pdf',
