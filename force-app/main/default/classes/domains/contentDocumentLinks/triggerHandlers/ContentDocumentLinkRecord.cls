@@ -8,11 +8,11 @@ global with sharing class ContentDocumentLinkRecord extends ContentDocumentLinks
 		}set;
 	}
 
-	private ContentDocumentLinkRecord(ContentDocumentLinks domain, fflib_ISObjectUnitOfWork uow){
+	private ContentDocumentLinkRecord(tlz_ContentDocumentLinks domain, fflib_ISObjectUnitOfWork uow){
 		super(domain, uow);
 	}
 
-	global static ContentDocumentLinkRecord handleInsert(ContentDocumentLinks domain, fflib_ISObjectUnitOfWork uow){
+	global static ContentDocumentLinkRecord handleInsert(tlz_ContentDocumentLinks domain, fflib_ISObjectUnitOfWork uow){
 		return new ContentDocumentLinkRecord(domain, uow);
 	}
 

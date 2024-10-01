@@ -33,6 +33,7 @@ global inherited sharing class Application{
 		new fflib_Application.DomainFactory(
 			Application.Selector,
 				new Map<SObjectType, Type>{
-					ContentDocumentLink.SObjectType => ContentDocumentLinks.Constructor.class,
-					User.SObjectType => Users.Constructor.class});
+					ContentDocumentLink.SObjectType => tlz_ContentDocumentLinks.Constructor.class,
+					ContentVersion.SObjectType => tlz_ContentVersions.Constructor.class,
+					User.SObjectType => tlz_Users.Constructor.class});
 }

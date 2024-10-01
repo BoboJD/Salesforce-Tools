@@ -1,6 +1,6 @@
-global inherited sharing class ContentVersions extends fflib_SObjectDomain implements IContentVersions{
+global inherited sharing class tlz_ContentVersions extends fflib_SObjectDomain implements tlz_IContentVersions{
 
-	global ContentVersions(List<ContentVersion> contentVersions){
+	global tlz_ContentVersions(List<ContentVersion> contentVersions){
 		super(contentVersions);
 	}
 
@@ -19,7 +19,7 @@ global inherited sharing class ContentVersions extends fflib_SObjectDomain imple
 
 	global class Constructor implements fflib_SObjectDomain.IConstructable{
 		global fflib_SObjectDomain construct(List<SObject> sObjects){
-			return new ContentVersions(sObjects);
+			return new tlz_ContentVersions(sObjects);
 		}
 	}
 }

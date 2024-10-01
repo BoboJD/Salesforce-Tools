@@ -1,6 +1,6 @@
-global inherited sharing class ContentDocumentLinks extends fflib_SObjectDomain implements IContentDocumentLinks{
+global inherited sharing class tlz_ContentDocumentLinks extends fflib_SObjectDomain implements tlz_IContentDocumentLinks{
 
-	global ContentDocumentLinks(List<ContentDocumentLink> contentDocumentLinks){
+	global tlz_ContentDocumentLinks(List<ContentDocumentLink> contentDocumentLinks){
 		super(contentDocumentLinks);
 	}
 
@@ -21,7 +21,7 @@ global inherited sharing class ContentDocumentLinks extends fflib_SObjectDomain 
 
 	global class Constructor implements fflib_SObjectDomain.IConstructable{
 		global fflib_SObjectDomain construct(List<SObject> sObjects){
-			return new ContentDocumentLinks(sObjects);
+			return new tlz_ContentDocumentLinks(sObjects);
 		}
 	}
 }

@@ -1,6 +1,6 @@
-global inherited sharing class Users extends fflib_SObjectDomain implements IUsers{
+global inherited sharing class tlz_Users extends fflib_SObjectDomain implements tlz_IUsers{
 
-	global Users(List<User> users){
+	global tlz_Users(List<User> users){
 		super(users);
 	}
 
@@ -18,7 +18,7 @@ global inherited sharing class Users extends fflib_SObjectDomain implements IUse
 
 	global class Constructor implements fflib_SObjectDomain.IConstructable{
 		global fflib_SObjectDomain construct(List<SObject> sObjects){
-			return new Users(sObjects);
+			return new tlz_Users(sObjects);
 		}
 	}
 }

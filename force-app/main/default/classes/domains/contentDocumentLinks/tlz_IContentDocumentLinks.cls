@@ -1,0 +1,1 @@
+global interface tlz_IContentDocumentLinks extends fflib_ISObjectDomain{}

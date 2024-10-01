@@ -1,10 +1,10 @@
 global with sharing class ContentVersionPrivateFile extends ContentVersionsHandler{
 
-	private ContentVersionPrivateFile(ContentVersions domain, fflib_ISObjectUnitOfWork uow){
+	private ContentVersionPrivateFile(tlz_ContentVersions domain, fflib_ISObjectUnitOfWork uow){
 		super(domain, uow);
 	}
 
-	global static ContentVersionPrivateFile handleInsert(ContentVersions domain, fflib_ISObjectUnitOfWork uow){
+	global static ContentVersionPrivateFile handleInsert(tlz_ContentVersions domain, fflib_ISObjectUnitOfWork uow){
 		return new ContentVersionPrivateFile(domain, uow);
 	}
 

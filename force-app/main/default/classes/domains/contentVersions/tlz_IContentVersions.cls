@@ -1,0 +1,1 @@
+global interface tlz_IContentVersions extends fflib_ISObjectDomain{}

@@ -1,10 +1,10 @@
 global with sharing class ContentVersionRecordRelation extends ContentVersionsHandler{
 
-	private ContentVersionRecordRelation(ContentVersions domain, fflib_ISObjectUnitOfWork uow){
+	private ContentVersionRecordRelation(tlz_ContentVersions domain, fflib_ISObjectUnitOfWork uow){
 		super(domain, uow);
 	}
 
-	global static ContentVersionRecordRelation handleInsert(ContentVersions domain, fflib_ISObjectUnitOfWork uow){
+	global static ContentVersionRecordRelation handleInsert(tlz_ContentVersions domain, fflib_ISObjectUnitOfWork uow){
 		return new ContentVersionRecordRelation(domain, uow);
 	}
 

@@ -20,11 +20,11 @@ global with sharing class ContentDocumentLinkShareType extends ContentDocumentLi
 		}set;
 	}
 
-	private ContentDocumentLinkShareType(ContentDocumentLinks domain){
+	private ContentDocumentLinkShareType(tlz_ContentDocumentLinks domain){
 		super(domain);
 	}
 
-	global static ContentDocumentLinkShareType handleInsert(ContentDocumentLinks domain){
+	global static ContentDocumentLinkShareType handleInsert(tlz_ContentDocumentLinks domain){
 		return new ContentDocumentLinkShareType(domain);
 	}
 

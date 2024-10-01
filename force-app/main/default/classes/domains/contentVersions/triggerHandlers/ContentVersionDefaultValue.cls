@@ -1,10 +1,10 @@
 global with sharing class ContentVersionDefaultValue extends ContentVersionsHandler{
 
-	private ContentVersionDefaultValue(ContentVersions domain){
+	private ContentVersionDefaultValue(tlz_ContentVersions domain){
 		super(domain);
 	}
 
-	global static ContentVersionDefaultValue handleInsert(ContentVersions domain){
+	global static ContentVersionDefaultValue handleInsert(tlz_ContentVersions domain){
 		return new ContentVersionDefaultValue(domain);
 	}
 

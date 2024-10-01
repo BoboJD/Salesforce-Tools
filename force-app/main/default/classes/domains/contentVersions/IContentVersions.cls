@@ -1,1 +1,0 @@
-global interface IContentVersions extends fflib_ISObjectDomain{}

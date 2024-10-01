@@ -28,7 +28,7 @@ private class TriggerHandlerTest{
 		List<SObject> records = new List<User>{ user };
 		User oldUser = new User(FirstName = 'Test');
 		Map<Id, User> oldRecordById = new Map<Id, User>{ user.Id => oldUser };
-		TriggerHandler handler = new TriggerHandler(new Users(records), oldRecordById);
+		TriggerHandler handler = new TriggerHandler(new tlz_Users(records), oldRecordById);
 
 		Test.startTest();
 		Assert.isFalse(handler.hasChanged(user, Schema.User.FirstName));
@@ -45,7 +45,7 @@ private class TriggerHandlerTest{
 		User oldUser = new User(FirstName = 'Toto');
 		Map<Id, User> oldRecordById = new Map<Id, User>{ user.Id => oldUser };
 
-		TriggerHandler handler = new TriggerHandler(new Users(records), oldRecordById);
+		TriggerHandler handler = new TriggerHandler(new tlz_Users(records), oldRecordById);
 
 		Test.startTest();
 		Assert.isTrue(handler.hasChanged(user, Schema.User.FirstName));
@@ -59,7 +59,7 @@ private class TriggerHandlerTest{
 		User user = new User();
 		List<SObject> records = new List<User>{ user };
 
-		TriggerHandler handler = new TriggerHandler(new Users(records));
+		TriggerHandler handler = new TriggerHandler(new tlz_Users(records));
 
 		Test.startTest();
 		Assert.isFalse(handler.hasBeenFilled(user, Schema.User.FirstName));
@@ -76,7 +76,7 @@ private class TriggerHandlerTest{
 		User oldUser = new User(FirstName = 'Toto');
 		Map<Id, User> oldRecordById = new Map<Id, User>{ user.Id => oldUser };
 
-		TriggerHandler handler = new TriggerHandler(new Users(records), oldRecordById);
+		TriggerHandler handler = new TriggerHandler(new tlz_Users(records), oldRecordById);
 
 		Test.startTest();
 		Assert.isFalse(handler.hasBeenRemoved(user, Schema.User.FirstName));
@@ -92,7 +92,7 @@ private class TriggerHandlerTest{
 		User oldUser = new User(FirstName = 'Toto');
 		Map<Id, User> oldRecordById = new Map<Id, User>{ user.Id => oldUser };
 
-		TriggerHandler handler = new TriggerHandler(new Users(records), oldRecordById);
+		TriggerHandler handler = new TriggerHandler(new tlz_Users(records), oldRecordById);
 
 		Test.startTest();
 		Assert.isTrue(handler.hasBeenRemoved(user, Schema.User.FirstName));
@@ -105,7 +105,7 @@ private class TriggerHandlerTest{
 			Id = fflib_IDGenerator.generate(Schema.User.SObjectType)
 		);
 		List<SObject> records = new List<User>{ user };
-		TriggerHandler handler = new TriggerHandler(new Users(records));
+		TriggerHandler handler = new TriggerHandler(new tlz_Users(records));
 
 		Test.startTest();
 		Assert.equals(new Set<Id>{ user.Id }, handler.recordIds);
@@ -119,7 +119,7 @@ private class TriggerHandlerTest{
 			ProfileId = fflib_IDGenerator.generate(Schema.Profile.SObjectType)
 		);
 		List<SObject> records = new List<User>{ user };
-		TriggerHandler handler = new TriggerHandler(new Users(records));
+		TriggerHandler handler = new TriggerHandler(new tlz_Users(records));
 
 		Test.startTest();
 		Assert.equals(new Set<Id>{ user.ProfileId }, handler.setIds(Schema.User.ProfileId));
@@ -134,7 +134,7 @@ private class TriggerHandlerTest{
 		List<SObject> records = new List<User>{ user };
 		User oldUser = new User(FirstName = 'Toto');
 		Map<Id, User> oldRecordById = new Map<Id, User>{ user.Id => oldUser };
-		new TriggerHandler(new Users(records), Application.UnitOfWork.newInstance());
-		new TriggerHandler(new Users(records), oldRecordById, Application.UnitOfWork.newInstance());
+		new TriggerHandler(new tlz_Users(records), Application.UnitOfWork.newInstance());
+		new TriggerHandler(new tlz_Users(records), oldRecordById, Application.UnitOfWork.newInstance());
 	}
 }

@@ -1,4 +1,4 @@
-const arrayRemove = (array, attr, value) => { 
+const arrayRemove = (array, attr, value) => {
 	return array.filter(obj => obj[attr] !== value);
 };
 

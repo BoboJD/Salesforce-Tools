@@ -1,1 +1,0 @@
-global interface IUsers extends fflib_ISObjectDomain{}

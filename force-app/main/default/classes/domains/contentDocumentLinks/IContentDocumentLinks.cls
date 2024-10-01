@@ -1,1 +1,0 @@
-global interface IContentDocumentLinks extends fflib_ISObjectDomain{}

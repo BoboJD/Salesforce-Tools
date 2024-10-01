@@ -11,7 +11,7 @@ private class SObjectHistoryTest{
 			FirstName = 'Test'
 		);
 
-		Users domain = new Users(new List<User>{ user });
+		tlz_Users domain = new tlz_Users(new List<User>{ user });
 
 		User userBeforeChange = new User(
 			Id = user.Id,
@@ -48,7 +48,7 @@ private class SObjectHistoryTest{
 			FirstName = 'FirstName'
 		);
 
-		Users domain = new Users(new List<User>{ user });
+		tlz_Users domain = new tlz_Users(new List<User>{ user });
 
 		User userBeforeChange = new User(
 			Id = user.Id,

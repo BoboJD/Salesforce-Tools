@@ -1,18 +1,18 @@
 global with sharing class UserPermissionSet extends UsersHandler{
 
-	private UserPermissionSet(Users domain, fflib_ISObjectUnitOfWork uow){
+	private UserPermissionSet(tlz_Users domain, fflib_ISObjectUnitOfWork uow){
 		super(domain, uow);
 	}
 
-	private UserPermissionSet(Users domain, Map<Id, SObject> oldRecordById, fflib_ISObjectUnitOfWork uow){
+	private UserPermissionSet(tlz_Users domain, Map<Id, SObject> oldRecordById, fflib_ISObjectUnitOfWork uow){
 		super(domain, oldRecordById, uow);
 	}
 
-	global static UserPermissionSet handleInsert(Users domain, fflib_ISObjectUnitOfWork uow){
+	global static UserPermissionSet handleInsert(tlz_Users domain, fflib_ISObjectUnitOfWork uow){
 		return new UserPermissionSet(domain, uow);
 	}
 
-	global static UserPermissionSet handleUpdate(Users domain, Map<Id, SObject> oldRecordById, fflib_ISObjectUnitOfWork uow){
+	global static UserPermissionSet handleUpdate(tlz_Users domain, Map<Id, SObject> oldRecordById, fflib_ISObjectUnitOfWork uow){
 		return new UserPermissionSet(domain, oldRecordById, uow);
 	}
 

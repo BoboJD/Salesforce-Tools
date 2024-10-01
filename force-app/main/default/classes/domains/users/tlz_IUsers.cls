@@ -1,0 +1,1 @@
+global interface tlz_IUsers extends fflib_ISObjectDomain{}

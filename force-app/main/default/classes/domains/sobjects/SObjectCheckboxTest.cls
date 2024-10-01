@@ -11,7 +11,7 @@ private class SObjectCheckboxTest{
 			ReceivesAdminInfoEmails = true
 		);
 
-		Users domain = new Users(new List<User>{ user });
+		tlz_Users domain = new tlz_Users(new List<User>{ user });
 
 		SObjectCheckbox sObjectCheckbox = SObjectCheckbox.handleInsert(domain, uowMock);
 		sObjectCheckbox.forceIsNew = true;
@@ -39,7 +39,7 @@ private class SObjectCheckboxTest{
 			ReceivesAdminInfoEmails = false
 		);
 
-		Users domain = new Users(new List<User>{ user });
+		tlz_Users domain = new tlz_Users(new List<User>{ user });
 
 		SObjectCheckbox sObjectCheckbox = SObjectCheckbox.handleInsert(domain, uowMock);
 		sObjectCheckbox.forceIsNew = true;
@@ -67,7 +67,7 @@ private class SObjectCheckboxTest{
 			ReceivesAdminInfoEmails = true
 		);
 
-		Users domain = new Users(new List<User>{ user });
+		tlz_Users domain = new tlz_Users(new List<User>{ user });
 
 		User userBeforeChange = new User(
 			Id = user.Id,
@@ -101,7 +101,7 @@ private class SObjectCheckboxTest{
 			ReceivesAdminInfoEmails = false
 		);
 
-		Users domain = new Users(new List<User>{ user });
+		tlz_Users domain = new tlz_Users(new List<User>{ user });
 
 		User userBeforeChange = new User(
 			Id = user.Id,
