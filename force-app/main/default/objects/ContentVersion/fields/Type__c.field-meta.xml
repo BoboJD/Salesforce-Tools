@@ -6,13 +6,7 @@
     <trackHistory>false</trackHistory>
     <type>Picklist</type>
     <valueSet>
-        <valueSetDefinition>
-            <sorted>false</sorted>
-            <value>
-                <fullName>Test</fullName>
-                <default>false</default>
-                <label>Test</label>
-            </value>
-        </valueSetDefinition>
+        <restricted>true</restricted>
+        <valueSetName>FileTypes</valueSetName>
     </valueSet>
 </CustomField>
