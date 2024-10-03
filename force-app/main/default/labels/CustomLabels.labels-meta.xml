@@ -297,12 +297,28 @@
         <value>Link to reduce the size of PDFs</value>
     </labels>
     <labels>
+        <fullName>Next</fullName>
+        <categories>ui</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Next</shortDescription>
+        <value>Next</value>
+    </labels>
+    <labels>
         <fullName>Refresh</fullName>
         <categories>ui</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Refresh</shortDescription>
         <value>Refresh</value>
+    </labels>
+    <labels>
+        <fullName>Save</fullName>
+        <categories>ui</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Save</shortDescription>
+        <value>Save</value>
     </labels>
     <labels>
         <fullName>Select</fullName>

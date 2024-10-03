@@ -1,0 +1,20 @@
+:host{
+	display: flex;
+	flex-direction: column;
+	width: 70%;
+	max-width: 1025px;
+	margin: auto;
+	height: 100%;
+}
+@media all and (max-width: 48em){
+	:host{
+		width: 100%;
+	}
+}
+.slds-modal__content{
+	flex: 1;
+	position: relative;
+}
+.slds-modal__footer{
+	text-align: center;
+}
