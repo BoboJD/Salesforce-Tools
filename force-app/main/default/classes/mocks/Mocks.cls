@@ -159,6 +159,14 @@ global class Mocks{
 		global Boolean checkPermission(String permissionName){
 			return (Boolean)mocks.mockNonVoidMethod(this, 'checkPermission', new List<Type>{String.class}, new List<Object>{permissionName});
 		}
+
+		global Boolean bypassChatterNotification(){
+			return (Boolean)mocks.mockNonVoidMethod(this, 'bypassChatterNotification', new List<Type>{}, new List<Object>{});
+		}
+
+		global Boolean bypassValidationRules(){
+			return (Boolean)mocks.mockNonVoidMethod(this, 'bypassValidationRules', new List<Type>{}, new List<Object>{});
+		}
 	}
 
 	global class MessagingService implements IMessagingService{

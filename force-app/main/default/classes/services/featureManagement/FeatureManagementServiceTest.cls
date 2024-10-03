@@ -18,4 +18,22 @@ private class FeatureManagementServiceTest{
 
 		Assert.isFalse(hasPermission);
 	}
+
+	@IsTest
+	static void bypassChatterNotificationShouldNotReturnNull(){
+		Test.startTest();
+		Boolean hasPermission = FeatureManagementService.bypassChatterNotification();
+		Test.stopTest();
+
+		Assert.isNotNull(hasPermission);
+	}
+
+	@IsTest
+	static void bypassValidationRulesShouldNotReturnNull(){
+		Test.startTest();
+		Boolean hasPermission = FeatureManagementService.bypassValidationRules();
+		Test.stopTest();
+
+		Assert.isNotNull(hasPermission);
+	}
 }
