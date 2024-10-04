@@ -126,6 +126,15 @@
         <object>SObjectHistory__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>Setting__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
     <recordTypeVisibilities>
         <recordType>Log__c.Error</recordType>
         <visible>true</visible>
@@ -136,6 +145,10 @@
     </recordTypeVisibilities>
     <tabSettings>
         <tab>Log__c</tab>
+        <visibility>Available</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>Setting__c</tab>
         <visibility>Available</visibility>
     </tabSettings>
 </PermissionSet>
