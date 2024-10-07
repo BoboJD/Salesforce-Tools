@@ -15,11 +15,11 @@
 				<lightning-progress-step for:each={steps} for:item="step" key={step} label={step} value={step} onclick={setStep}></lightning-progress-step>
 			</lightning-progress-indicator>
 		</div>
-		<lightning-button variant="neutral" onclick={dispatchCancel} label={closeLabel}></lightning-button>
+		<lightning-button variant="neutral" onclick={dispatchCancel} label={label.Cancel}></lightning-button>
 		<lightning-button
 			variant="brand"
 			onclick={dispatchNext}
-			label={label.Cancel}
+			label={nextLabel}
 			class="slds-m-left_small"
 			disabled={nextDisabled}>
 		</lightning-button>
