@@ -16,6 +16,7 @@ export default class FileUploader extends NavigationMixin(LightningElement){
 	@api hideAddFiles = false;
 	@api hideDate = false;
 	@api massDeleteOption = false;
+	@api multiple = false;
 	@track utilityData = { files: [] };
 	@track modal = {
 		addFile: { displayed: false }
