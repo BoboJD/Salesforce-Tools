@@ -282,9 +282,7 @@ remove_missing_sobjects_from_viewallrecords_permission_sets(){
 		local missing_sobjects=("ActiveScratchOrg" "NamespaceRegistry" "ScratchOrgInfo")
 		if [ "$is_sandbox_org" = "true" ]; then
 			missing_sobjects+=(
-				"Address" "AsyncRequestResponseEvent" "CalcMatrixColumnRange" "CalcProcStepRelationship" "CalculationMatrix" "CalculationMatrixColumn" "CalculationMatrixRow" "CalculationMatrixVersion"
-				"CalculationProcedure" "CalculationProcedureStep" "CalculationProcedureVariable" "CalculationProcedureVersion" "CaseServiceProcess" "DataKitDeploymentLog" "Employee" "EngagementAttendee" "EngagementInteraction" "EngagementTopic" "ExpressionSet" "ExpressionSetObjectAlias"
-				"ExpressionSetVersion" "IntegrationProviderDef" "InternalOrganizationUnit" "ProductRelatedServiceProcess" "RecordActnSelItemExtrc" "RecordAlert" "SharingRecordCollection" "SvcCatalogItemDependency" "SvcCatalogReqRelatedItem" "SvcCatalogRequest"
+				"DataKitDeploymentLog" "ProductRelatedServiceProcess"
 			)
 		fi
 
