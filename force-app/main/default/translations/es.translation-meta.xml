@@ -1,127 +1,127 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Translations xmlns="http://soap.sforce.com/2006/04/metadata">
     <customLabels>
-        <label>Ajouter un fichier</label>
+        <label>Agregar archivo</label>
         <name>AddFile</name>
     </customLabels>
     <customLabels>
-        <label>Ajouter des fichiers</label>
+        <label>Agregar archivos</label>
         <name>AddFiles</name>
     </customLabels>
     <customLabels>
-        <label>Une erreur est survenue, contactez un administrateur.</label>
+        <label>Se ha producido un error. Póngase en contacto con un administrador.</label>
         <name>AnErrorOccurredContactAnAdministrator</name>
     </customLabels>
     <customLabels>
-        <label>Appliquer</label>
+        <label>Aplicar</label>
         <name>Apply</name>
     </customLabels>
     <customLabels>
-        <label>Annuler</label>
+        <label>Cancelar</label>
         <name>Cancel</name>
     </customLabels>
     <customLabels>
-        <label>Fermer</label>
+        <label>Cerca</label>
         <name>Close</name>
     </customLabels>
     <customLabels>
-        <label>Fermer la fenêtre</label>
+        <label>Cerrar esta ventana</label>
         <name>CloseThisWindow</name>
     </customLabels>
     <customLabels>
-        <label>Compléter ce champ.</label>
+        <label>Completar este campo.</label>
         <name>CompleteThisField</name>
     </customLabels>
     <customLabels>
-        <label>Continuer</label>
+        <label>Continuar</label>
         <name>Continue</name>
     </customLabels>
     <customLabels>
-        <label>L'enregistrement nommé 'Default' n'a pas été créé pour le SObject "Setting" (tlz__Setting__c).</label>
+        <label>Configuración predeterminada no creada</label>
         <name>DefaultSettingNotCreated</name>
     </customLabels>
     <customLabels>
-        <label>Supprimer</label>
+        <label>Borrar</label>
         <name>Delete</name>
     </customLabels>
     <customLabels>
-        <label>Supprimer la sélection</label>
+        <label>Eliminar selección</label>
         <name>DeleteSelection</name>
     </customLabels>
     <customLabels>
-        <label>Tout désélectionner</label>
+        <label>Deseleccionar todo</label>
         <name>DeselectAll</name>
     </customLabels>
     <customLabels>
-        <label>Télécharger</label>
+        <label>Descargar</label>
         <name>Download</name>
     </customLabels>
     <customLabels>
-        <label>Télécharger tous les fichiers</label>
+        <label>Descargar todos los archivos</label>
         <name>DownloadAllFiles</name>
     </customLabels>
     <customLabels>
-        <label>Perte de connexion Internet.</label>
+        <label>Pérdida de conexión a Internet.</label>
         <name>ErrorLossOfInternetConnection</name>
     </customLabels>
     <customLabels>
-        <label>Le traitement a échoué, veuillez réessayer.</label>
+        <label>El procesamiento falló, inténtalo de nuevo.</label>
         <name>ErrorProcessingFailed</name>
     </customLabels>
     <customLabels>
-        <label>Fichier supprimé.</label>
+        <label>Archivo eliminado.</label>
         <name>FileDeleted</name>
     </customLabels>
     <customLabels>
-        <label>Type de fichier</label>
+        <label>Tipo de archivo</label>
         <name>FileType</name>
     </customLabels>
     <customLabels>
-        <label>Types de fichier</label>
+        <label>Tipos de archivos</label>
         <name>FileTypes</name>
     </customLabels>
     <customLabels>
-        <label>Fichier {0} supprimé.</label>
+        <label>Archivo {0} eliminado.</label>
         <name>File_0_deleted</name>
     </customLabels>
     <customLabels>
-        <label>Fichier(s)</label>
+        <label>Archivo(s)</label>
         <name>File_s</name>
     </customLabels>
     <customLabels>
-        <label>Fichier(s) ajouté(s).</label>
+        <label>Archivo(s) agregado(s).</label>
         <name>File_sAdded</name>
     </customLabels>
     <customLabels>
-        <label>Fichiers</label>
+        <label>Archivos</label>
         <name>Files</name>
     </customLabels>
     <customLabels>
-        <label>Fichiers supprimés.</label>
+        <label>Archivos eliminados.</label>
         <name>FilesDeleted</name>
     </customLabels>
     <customLabels>
-        <label>Filtre</label>
+        <label>Filtrar</label>
         <name>Filter</name>
     </customLabels>
     <customLabels>
-        <label>Lien pour fusionner des PDF</label>
+        <label>Vincular para fusionar archivos PDF</label>
         <name>LinkToMergePDFs</name>
     </customLabels>
     <customLabels>
-        <label>Lien pour réduire la taille des PDF</label>
+        <label>Enlace para reducir el tamaño de los archivos PDF</label>
         <name>LinkToReduceTheSizeOfPDFs</name>
     </customLabels>
     <customLabels>
-        <label>Modifier</label>
+        <label>Modificar</label>
         <name>Modify</name>
     </customLabels>
     <customLabels>
-        <label>Nouvel enregistrement</label>
+        <label>Nuevo registro</label>
         <name>NewRecord</name>
     </customLabels>
     <customLabels>
-        <label>Suivant</label>
+        <label>Próximo</label>
         <name>Next</name>
     </customLabels>
     <customLabels>
@@ -129,67 +129,67 @@
         <name>ProfileChatterFreeUser</name>
     </customLabels>
     <customLabels>
-        <label>Responsable du contrat</label>
+        <label>Administrador del contrato</label>
         <name>ProfileContractManager</name>
     </customLabels>
     <customLabels>
-        <label>Utilisateur de Marketing</label>
+        <label>Usuario de marketing</label>
         <name>ProfileMarketingUser</name>
     </customLabels>
     <customLabels>
-        <label>Utilisateur standard</label>
+        <label>Usuario estándar</label>
         <name>ProfileStandardUser</name>
     </customLabels>
     <customLabels>
-        <label>Administrateur système</label>
+        <label>Administrador del sistema</label>
         <name>ProfileSystemAdministrator</name>
     </customLabels>
     <customLabels>
-        <label>Actualiser</label>
+        <label>Refrescar</label>
         <name>Refresh</name>
     </customLabels>
     <customLabels>
-        <label>Enregistrer</label>
+        <label>Ahorrar</label>
         <name>Save</name>
     </customLabels>
     <customLabels>
-        <label>Rechercher</label>
+        <label>Buscar</label>
         <name>Search</name>
     </customLabels>
     <customLabels>
-        <label>Sélectionner</label>
+        <label>Seleccionar</label>
         <name>Select</name>
     </customLabels>
     <customLabels>
-        <label>Tout sélectionner</label>
+        <label>Seleccionar todo</label>
         <name>SelectAll</name>
     </customLabels>
     <customLabels>
-        <label>Sélectionner une option</label>
+        <label>Seleccione una opción</label>
         <name>SelectAnOption</name>
     </customLabels>
     <customLabels>
-        <label>Selection de fichiers</label>
+        <label>Seleccionar de archivos</label>
         <name>SelectOfFiles</name>
     </customLabels>
     <customLabels>
-        <label>Sélectionné</label>
+        <label>Seleccionado</label>
         <name>Selected</name>
     </customLabels>
     <customLabels>
-        <label>Valeurs sélectionnées</label>
+        <label>Valores seleccionados</label>
         <name>SelectedValues</name>
     </customLabels>
     <customLabels>
-        <label>Définir le fichier comme privé</label>
+        <label>Establecer el archivo como privado</label>
         <name>SetTheFileAsPrivate</name>
     </customLabels>
     <customLabels>
-        <label>Déposer au moins un fichier</label>
+        <label>Cargar al menos un archivo</label>
         <name>UploadAtLeastOneFile</name>
     </customLabels>
     <customLabels>
-        <label>{0} option(s) sélectionnée(s)</label>
+        <label>{0} opciones seleccionadas</label>
         <name>XSelectedOptions</name>
     </customLabels>
     <customLabels>
