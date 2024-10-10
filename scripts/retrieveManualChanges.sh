@@ -97,6 +97,22 @@ retrieve_configuration(){
 		rm -rf "${project_directory}${dir}"
 	done
 	sf project retrieve start -x manifest/configuration.xml --ignore-conflicts > /dev/null
+	if [ -d "${project_directory}translations" ]; then
+		remove_untracked_xml_blocks_in_translations
+	fi
+}
+
+remove_untracked_xml_blocks_in_translations(){
+	for translation in ${project_directory}translations/*.translation-meta.xml; do
+		sed -n -i '/<customApplications>/,/<\/customApplications>/!p' "$translation"
+		sed -n -i '/<customPageWebLinks>/,/<\/customPageWebLinks>/!p' "$translation"
+		sed -n -i '/<customTabs>/,/<\/customTabs>/!p' "$translation"
+		sed -n -i '/<prompts>/,/<\/prompts>/!p' "$translation"
+		sed -n -i '/<reportTypes>/,/<\/reportTypes>/!p' "$translation"
+		sed -i "/<label><!-- Conga Composer (Deprecated) --><\/label>/{$d;N;N;N;d};P;D" "$translation"
+		sed -i "/<label><!-- Conga Composer SF1 EU --><\/label>/{$d;N;N;N;d};P;D" "$translation"
+		sed -i "/<label><!-- Conga Composer --><\/label>/{$d;N;N;N;d};P;D" "$translation"
+	done
 }
 
 configuration_directories=(
