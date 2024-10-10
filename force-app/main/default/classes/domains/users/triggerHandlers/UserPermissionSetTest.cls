@@ -37,6 +37,21 @@ private class UserPermissionSetTest{
 	}
 
 	@IsTest
+	static void deactivateStandardUserShouldHaveAllPermissionSetsRemoved(){
+		User standardUser = UserBuilder.newStandardUser().build();
+
+		Test.startTest();
+		update new User(
+			Id = standardUser.Id,
+			IsActive = false
+		);
+		Test.stopTest();
+
+		List<PermissionSetAssignment> assignedPermissionSets = getAssignedPermissionSets(standardUser);
+		Assert.isTrue(assignedPermissionSets.isEmpty());
+	}
+
+	@IsTest
 	static void updateStandardUserToUnknownProfileShouldHaveAllPermissionSetRemoved(){
 		Profile newProfile = [SELECT Id FROM Profile WHERE Name = :ProfileConstants.MARKETING_USER LIMIT 1];
 		User standardUser = UserBuilder.newStandardUser().build();

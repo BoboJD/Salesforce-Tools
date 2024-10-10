@@ -8,7 +8,8 @@ global inherited sharing class UsersSelector extends fflib_SObjectSelector imple
 	global override List<SObjectField> getSObjectFieldList(){
 		return new List<SObjectField>{
 			User.Id,
-			User.Admin__c
+			User.Admin__c,
+			User.IsActive
 		};
 	}
 

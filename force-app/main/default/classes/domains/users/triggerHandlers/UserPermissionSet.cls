@@ -19,15 +19,16 @@ global with sharing class UserPermissionSet extends UsersHandler{
 	global void assignPermissionSets(){
 		List<User> usersToProcess = new List<User>();
 		for(User user : users){
-			if(newCreationOrProfileHasChanged(user) || checkboxWithPermissionsHasBeenChecked(user))
+			if(newCreationOrProfileChangeOrActivationChange(user) || checkboxWithPermissionsHasBeenChecked(user))
 				usersToProcess.add(user);
 		}
 		if(!usersToProcess.isEmpty())
 			PermissionSetAttributionHelper.newInstance(usersToProcess, uow).assignPermissionSets();
 	}
 
-	private Boolean newCreationOrProfileHasChanged(User user){
-		return user.ProfileId != null && (isNew || hasChanged(user, Schema.User.ProfileId));
+	private Boolean newCreationOrProfileChangeOrActivationChange(User user){
+		return user.ProfileId != null
+			&& (isNew || hasChanged(user, new List<SObjectField>{ Schema.User.ProfileId, Schema.User.IsActive }));
 	}
 
 	private Boolean checkboxWithPermissionsHasBeenChecked(User user){

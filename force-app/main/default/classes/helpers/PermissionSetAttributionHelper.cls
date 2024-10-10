@@ -90,7 +90,7 @@ global inherited sharing class PermissionSetAttributionHelper{
 		for(Id userId : userIds){
 			User user = userById.get(userId);
 			List<String> permissionSetsToAssign = retrievePermissionSetsToAssign(user);
-			if(!permissionSetsToAssign.isEmpty())
+			if(user.IsActive && !permissionSetsToAssign.isEmpty())
 				managePermissionSetAssignments(user, permissionSetsToAssign);
 			else if(!isNew && assignedPermissionSetsByUserId.containsKey(user.Id))
 				removeAllAutomaticallyAssignedPermissionSets(user);
