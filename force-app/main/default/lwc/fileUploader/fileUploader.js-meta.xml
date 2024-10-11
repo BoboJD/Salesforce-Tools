@@ -6,6 +6,7 @@
     <description>Display the files related list, allowing user to define a file type at upload.</description>
     <targets>
         <target>lightning__RecordPage</target>
+        <target>lightning__UtilityBar</target>
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__RecordPage">
