@@ -56,4 +56,17 @@ private class TokenManagerTest{
 
 		Assert.equals(accessToken, returnedAccessToken);
 	}
+
+	@IsTest
+	static void resetTokenShouldReturnRemoveTokenFromCache(){
+		String accessToken = 'tokenToCache';
+		Cache.Org.getPartition('AccessToken').put('TestToken', accessToken);
+
+		Test.startTest();
+		TokenManager.resetToken('Test');
+		String returnedAccessToken = TokenManager.getToken('Test');
+		Test.stopTest();
+
+		Assert.isNull(returnedAccessToken);
+	}
 }

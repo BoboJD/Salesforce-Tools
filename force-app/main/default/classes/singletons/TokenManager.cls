@@ -39,6 +39,11 @@ global without sharing class TokenManager{
 		getInstance().tokenByService.put(serviceName, accessToken);
 	}
 
+	global static void resetToken(String serviceName){
+		getInstance().orgPartition.remove(serviceName+'Token');
+		getInstance().tokenByService.remove(serviceName);
+	}
+
 	@TestVisible
 	private static TokenManager getInstance(){
 		if(instance == null)
