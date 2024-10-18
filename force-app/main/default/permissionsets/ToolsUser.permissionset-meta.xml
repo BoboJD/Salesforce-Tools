@@ -12,6 +12,10 @@
         <apexClass>LookupController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <customSettingAccesses>
+        <enabled>true</enabled>
+        <name>EncryptionKey__c</name>
+    </customSettingAccesses>
     <fieldPermissions>
         <editable>true</editable>
         <field>Log__c.Endpoint__c</field>
