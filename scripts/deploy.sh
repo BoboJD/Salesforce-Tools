@@ -141,53 +141,7 @@ deploy_files_into_current_org(){
 get_additional_deploy_parameters(){
 	additional_deploy_parameters=""
 
-	if [[ "$current_branch" = "preprod" || "$current_branch" = "prod-release" ]]; then
-		if [ "$current_branch" = "preprod" ]; then
-			config_json=".preprod/config.json"
-			if ! [ -e "$config_json" ]; then
-				error_exit "You need a 'config.json' file in the folder '.preprod/' with a property called 'lastDeployedCommit' that represents the last deployed commit hash in preprod."
-			fi
-			current_commit_hash_or_branch=$(git rev-parse HEAD)
-			local last_deployed_commit=$(jq -r '.lastDeployedCommit' "$config_json")
-
-			local commit_timestamp=$(git log -1 --format="%ct" $last_deployed_commit)
-			commit_hash_or_branch_reference=$(git log --since="$commit_timestamp" --reverse --format="%H" --first-parent "$current_branch" | awk -v last_commit="$last_deployed_commit" 'BEGIN { found=0; } { if (found) { print $1; exit; } if ($1 == last_commit) found=1; }')
-
-			if [ -z "$commit_hash_or_branch_reference" ]; then
-				commit_hash_or_branch_reference=$(git log --since="$commit_timestamp" --reverse --format="%H" --first-parent "$current_branch" | awk 'NR==1{print $1; exit}')
-			fi
-
-			if [[ "$commit_hash_or_branch_reference" = "null" || -z "$commit_hash_or_branch_reference" ]]; then
-				error_exit "In '.preprod/config.json' file, you need a property called 'lastDeployedCommit' with a value that represents the last deployed commit hash in preprod."
-			fi
-
-			echo -e "\nDeploying into preprod since commit : ${RGreen}${commit_hash_or_branch_reference}${NC}"
-		else
-			current_commit_hash_or_branch="prod-release"
-			commit_hash_or_branch_reference="master"
-		fi
-
-		echo -ne "\nChecking if files have been deleted from project... "
-		local deleted_files=$(git diff --diff-filter=D --name-only $commit_hash_or_branch_reference^ $current_commit_hash_or_branch | awk '$1 ~ /-meta.xml$/ && $1 ~ /^force-app\/main\/default\//')
-		local renamed_files=$(find_renamed_files)
-		local deleted_labels=$(find_deleted_labels)
-
-		if [[ -n "$deleted_files" || -n "$renamed_files" || -n "$deleted_labels" ]]; then
-			echo -n "Deleted files found."
-			echo -ne "\nGenerating ${RCyan}postDeployDestructiveChanges.xml${NC} to perform deletion on post deployment... "
-			local generated_xml=$(generate_post_deploy_destructive_changes_xml "${deleted_files}\n${renamed_files}\n${deleted_labels}")
-
-			if grep -q "Metadata type not found" <<< "$generated_xml"; then
-				error_exit "$generated_xml"
-			fi
-
-			echo "$generated_xml" > postDeployDestructiveChanges.xml
-			additional_deploy_parameters+=" --ignore-warnings --post-destructive-changes postDeployDestructiveChanges.xml"
-			echo "Done."
-		else
-			echo "No deleted files found."
-		fi
-	fi
+	add_option_to_delete_deleted_or_renamed_files
 
 	if [ "$is_production_org" = "false" ]; then
 		additional_deploy_parameters+=" --ignore-conflicts"
@@ -195,6 +149,54 @@ get_additional_deploy_parameters(){
 
 	if [[ "$is_production_org" = "true" || "$option" = "-t" || "$option" = "--test" ]]; then
 		additional_deploy_parameters+=" -l RunLocalTests"
+	fi
+}
+
+add_option_to_delete_deleted_or_renamed_files(){
+	if [ "$current_branch" = "preprod" ]; then
+		config_json=".preprod/config.json"
+		if ! [ -e "$config_json" ]; then
+			error_exit "You need a 'config.json' file in the folder '.preprod/' with a property called 'lastDeployedCommit' that represents the last deployed commit hash in preprod."
+		fi
+		current_commit_hash_or_branch=$(git rev-parse HEAD)
+		local last_deployed_commit=$(jq -r '.lastDeployedCommit' "$config_json")
+
+		local commit_timestamp=$(git log -1 --format="%ct" $last_deployed_commit)
+		commit_hash_or_branch_reference=$(git log --since="$commit_timestamp" --reverse --format="%H" --first-parent "$current_branch" | awk -v last_commit="$last_deployed_commit" 'BEGIN { found=0; } { if (found) { print $1; exit; } if ($1 == last_commit) found=1; }')
+
+		if [ -z "$commit_hash_or_branch_reference" ]; then
+			commit_hash_or_branch_reference=$(git log --since="$commit_timestamp" --reverse --format="%H" --first-parent "$current_branch" | awk 'NR==1{print $1; exit}')
+		fi
+
+		if [[ "$commit_hash_or_branch_reference" = "null" || -z "$commit_hash_or_branch_reference" ]]; then
+			error_exit "In '.preprod/config.json' file, you need a property called 'lastDeployedCommit' with a value that represents the last deployed commit hash in preprod."
+		fi
+
+		echo -e "\nDeploying into preprod since commit : ${RGreen}${commit_hash_or_branch_reference}${NC}"
+	else
+		current_commit_hash_or_branch="$current_branch"
+		commit_hash_or_branch_reference="master"
+	fi
+
+	echo -ne "\nChecking if files have been deleted from project... "
+	local deleted_files=$(git diff --diff-filter=D --name-only $commit_hash_or_branch_reference^ $current_commit_hash_or_branch | awk '$1 ~ /-meta.xml$/ && $1 ~ /^force-app\/main\/default\//')
+	local renamed_files=$(find_renamed_files)
+	local deleted_labels=$(find_deleted_labels)
+
+	if [[ -n "$deleted_files" || -n "$renamed_files" || -n "$deleted_labels" ]]; then
+		echo -n "Deleted files found."
+		echo -ne "\nGenerating ${RCyan}postDeployDestructiveChanges.xml${NC} to perform deletion on post deployment... "
+		local generated_xml=$(generate_post_deploy_destructive_changes_xml "${deleted_files}\n${renamed_files}\n${deleted_labels}")
+
+		if grep -q "Metadata type not found" <<< "$generated_xml"; then
+			error_exit "$generated_xml"
+		fi
+
+		echo "$generated_xml" > postDeployDestructiveChanges.xml
+		additional_deploy_parameters+=" --ignore-warnings --post-destructive-changes postDeployDestructiveChanges.xml"
+		echo "Done."
+	else
+		echo "No deleted files found."
 	fi
 }
 
