@@ -117,4 +117,43 @@ private class SObjectFieldUtilsTest{
 
 		Assert.equals('0556565656', contact.Phone);
 	}
+
+	@IsTest
+	static void castTypeOfValueWithDecimalShouldReturnDecimal(){
+		Test.startTest();
+		Object returnedValue = SObjectFieldUtils.castTypeOfValue(Schema.Opportunity.Amount, 1.5);
+		Test.stopTest();
+
+		Assert.equals(1.5, returnedValue);
+	}
+
+	@IsTest
+	static void castTypeOfValueWithDateShouldReturnDate(){
+		Test.startTest();
+		Object returnedValue = SObjectFieldUtils.castTypeOfValue(Schema.Opportunity.CloseDate, '2024-10-21');
+		Test.stopTest();
+
+		Assert.equals(Date.newInstance(2024, 10, 21), returnedValue);
+	}
+
+	@IsTest
+	static void castTypeOfValueWithDatetimeShouldReturnDatetime(){
+		Datetime now = System.now();
+		String format = 'yyyy-MM-dd\'T\'HH:mm:ss\'Z\'';
+
+		Test.startTest();
+		Object returnedValue = SObjectFieldUtils.castTypeOfValue(Schema.Opportunity.CreatedDate, now.formatGmt(format));
+		Test.stopTest();
+
+		Assert.equals(now.formatGmt(format), ((Datetime)returnedValue).formatGmt(format));
+	}
+
+	@IsTest
+	static void castTypeOfValueWithStringShouldReturnString(){
+		Test.startTest();
+		Object returnedValue = SObjectFieldUtils.castTypeOfValue(Schema.Opportunity.Name, 'Toto');
+		Test.stopTest();
+
+		Assert.equals('Toto', returnedValue);
+	}
 }

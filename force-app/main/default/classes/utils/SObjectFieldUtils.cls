@@ -105,4 +105,21 @@ global inherited sharing class SObjectFieldUtils{
 			targetSObject.put(targetField, sourceSObject.get(sourceField));
 		}
 	}
+
+	global static Object castTypeOfValue(SObjectField field, Object fieldValue){
+		DisplayType fieldType = field.getDescribe(FieldDescribeOptions.DEFAULT).getType();
+		if(isDecimal(fieldType))
+			return (Decimal)fieldValue;
+		if(fieldType == DisplayType.DATE)
+			return Date.valueOf((String)fieldValue);
+		if(fieldType == DisplayType.DATETIME){
+			String dateString = (String)fieldValue;
+			return Datetime.valueOfGmt(dateString.replace('T', ' ').replace('Z', ''));
+		}
+		return (String)fieldValue;
+	}
+
+	private static Boolean isDecimal(DisplayType fieldType){
+		return fieldType == DisplayType.CURRENCY || fieldType == DisplayType.DOUBLE || fieldType == DisplayType.LONG;
+	}
 }

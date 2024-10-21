@@ -18,8 +18,12 @@ global with sharing class ContentVersionDefaultValue extends ContentVersionsHand
 	private void setFieldsValueFromJSON(ContentVersion contentVersion){
 		Map<String, Object> jsonFields = (Map<String, Object>)JSON.deserializeUntyped(contentVersion.JSON_fileupload__c);
 		for(String fieldName : jsonFields.keySet()){
-			if(jsonFields.get(fieldName) != null)
-				contentVersion.put(fieldName, jsonFields.get(fieldName));
+			Object fieldValue = jsonFields.get(fieldName);
+			if(fieldValue != null){
+				SObjectField sObjectField = SObjectFieldUtils.getByApiName(Schema.ContentVersion.SObjectType, fieldName);
+				if(sObjectField != null)
+					contentVersion.put(fieldName, SObjectFieldUtils.castTypeOfValue(sObjectField, fieldValue));
+			}
 		}
 	}
 }
