@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>BypassProcessusContentVersion</name>
+    </customPermissions>
+    <description>Block the execution of ContentVersion triggers</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Bypass Processus ContentVersion</label>
+</PermissionSet>

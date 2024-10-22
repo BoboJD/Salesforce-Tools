@@ -1,3 +1,4 @@
 trigger ContentVersionsTrigger on ContentVersion(before insert, after insert){
-	fflib_SObjectDomain.triggerHandler(tlz_ContentVersions.class);
+	if(!tlz.FeatureManagementService.checkPermission('BypassProcessusContentVersion'))
+		fflib_SObjectDomain.triggerHandler(tlz_ContentVersions.class);
 }
