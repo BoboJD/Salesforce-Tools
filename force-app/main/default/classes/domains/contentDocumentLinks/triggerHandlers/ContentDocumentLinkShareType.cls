@@ -1,5 +1,4 @@
 global with sharing class ContentDocumentLinkShareType extends ContentDocumentLinksHandler{
-	global static Map<Id, ContentDocument> storedContentDocumentById;
 
 	private static List<String> sObjectsWithShareTypeI{
 		get{
@@ -9,14 +8,6 @@ global with sharing class ContentDocumentLinkShareType extends ContentDocumentLi
 					sObjectsWithShareTypeI.add(config.SObjectApiName__c);
 			}
 			return sObjectsWithShareTypeI;
-		}set;
-	}
-
-	private Map<Id, ContentDocument> contentDocumentById{
-		get{
-			if(storedContentDocumentById == null)
-				storedContentDocumentById = new Map<Id, ContentDocument>(ContentDocumentsSelector.newInstance().selectByIds(setIds(ContentDocumentLink.ContentDocumentId)));
-			return storedContentDocumentById;
 		}set;
 	}
 
