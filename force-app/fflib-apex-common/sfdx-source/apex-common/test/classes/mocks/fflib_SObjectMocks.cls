@@ -142,7 +142,11 @@ global class fflib_SObjectMocks
 
         global void registerDirty(SObject record, Schema.sObjectField relatedToParentField, SObject relatedToParentRecord)
         {
-            mocks.mockVoidMethod(this, 'registerDirty', new List<Type> {SObject.class}, new List<Object> {record});
+            mocks.mockVoidMethod(this, 'registerDirty', new List<Type> {
+				SObject.class, SObjectField.class, SObject.class
+			}, new List<Object>{
+				record, relatedToParentField, relatedToParentRecord
+			});
         }
 
 		global void registerDirty(List<SObject> records)
