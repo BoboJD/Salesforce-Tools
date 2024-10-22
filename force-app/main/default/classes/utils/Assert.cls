@@ -83,4 +83,15 @@ global with sharing class Assert{
 		}
 		System.Assert.isTrue(objectFound, 'Value in list not found');
 	}
+
+	global static void atLeastOneSObjectEquals(List<SObject> sObjects, SObjectField sObjectField, Object fieldValue){
+		System.Assert.isNotNull(sObjects, 'List of SObjects is null.');
+		System.Assert.isNotNull(sObjectField, 'The SObjectField parameter is null.');
+		Boolean fieldValueFound = false;
+		for(SObject sObj : sObjects){
+			if(sObj.get(sObjectField) == fieldValue)
+				fieldValueFound = true;
+		}
+		System.Assert.isTrue(fieldValueFound, 'Value in list not found for sObjectField '+SObjectFieldUtils.getFieldApiName(sObjectField));
+	}
 }
