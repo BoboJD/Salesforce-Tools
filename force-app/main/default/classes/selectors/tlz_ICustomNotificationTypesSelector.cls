@@ -1,0 +1,3 @@
+global interface tlz_ICustomNotificationTypesSelector extends fflib_ISObjectSelector{
+	CustomNotificationType selectByDeveloperName(String developerName);
+}

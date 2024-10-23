@@ -1,8 +1,8 @@
-global inherited sharing class PermissionSetsSelector extends fflib_SObjectSelector implements IPermissionSetsSelector{
+global inherited sharing class tlz_PermissionSetsSelector extends fflib_SObjectSelector implements tlz_IPermissionSetsSelector{
 	private static Map<String, Id> idByName;
 
-	global static PermissionSetsSelector newInstance(){
-		return (PermissionSetsSelector)Application.Selector.newInstance(PermissionSet.SObjectType);
+	global static tlz_PermissionSetsSelector newInstance(){
+		return (tlz_PermissionSetsSelector)Application.Selector.newInstance(PermissionSet.SObjectType);
 	}
 
 	global override List<SObjectField> getSObjectFieldList(){

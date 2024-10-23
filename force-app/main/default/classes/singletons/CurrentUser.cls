@@ -3,7 +3,7 @@ global class CurrentUser{
 	private User user;
 
 	private CurrentUser(){
-		user = UsersSelector.newInstance().selectById(UserInfo.getUserId());
+		user = tlz_UsersSelector.newInstance().selectById(UserInfo.getUserId());
 	}
 
 	private static CurrentUser getInstance(){
@@ -20,10 +20,10 @@ global class CurrentUser{
 	}
 
 	global static Boolean canEditRecord(Id recordId){
-		return UserRecordAccessesSelector.newInstance().canEditRecord(UserInfo.getUserId(), recordId);
+		return tlz_UserRecordAccessesSelector.newInstance().canEditRecord(UserInfo.getUserId(), recordId);
 	}
 
 	global static Map<Id, Boolean> canEditRecords(Set<Id> recordIds){
-		return UserRecordAccessesSelector.newInstance().canEditRecords(UserInfo.getUserId(), recordIds);
+		return tlz_UserRecordAccessesSelector.newInstance().canEditRecords(UserInfo.getUserId(), recordIds);
 	}
 }

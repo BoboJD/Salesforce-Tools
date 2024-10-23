@@ -1,9 +1,9 @@
-global inherited sharing class CustomNotificationTypesSelector extends fflib_SObjectSelector implements ICustomNotificationTypesSelector{
+global inherited sharing class tlz_CustomNotificationTypesSelector extends fflib_SObjectSelector implements tlz_ICustomNotificationTypesSelector{
 
 	private static Map<String, CustomNotificationType> recordByDeveloperName;
 
-	global static ICustomNotificationTypesSelector newInstance(){
-		return (ICustomNotificationTypesSelector)Application.Selector.newInstance(CustomNotificationType.SObjectType);
+	global static tlz_ICustomNotificationTypesSelector newInstance(){
+		return (tlz_ICustomNotificationTypesSelector)Application.Selector.newInstance(CustomNotificationType.SObjectType);
 	}
 
 	global override List<SObjectField> getSObjectFieldList(){

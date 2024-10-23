@@ -13,7 +13,7 @@ global inherited sharing class PermissionSetAttributionHelper{
 	private Map<Id, User> userById{
 		get{
 			if(userById == null)
-				userById = new Map<Id, User>(UsersSelector.newInstance().selectByIds(userIds));
+				userById = new Map<Id, User>(tlz_UsersSelector.newInstance().selectByIds(userIds));
 			return userById;
 		}set;
 	}
@@ -27,7 +27,7 @@ global inherited sharing class PermissionSetAttributionHelper{
 	private Map<Id, List<PermissionSetAssignment>> assignedPermissionSetsByUserId{
 		get{
 			if(assignedPermissionSetsByUserId == null)
-				assignedPermissionSetsByUserId = PermissionSetAssignmentsSelector.newInstance().mapByUserId(userIds);
+				assignedPermissionSetsByUserId = tlz_PermissionSetAssignmentsSelector.newInstance().mapByUserId(userIds);
 			return assignedPermissionSetsByUserId;
 		}set;
 	}
@@ -72,7 +72,7 @@ global inherited sharing class PermissionSetAttributionHelper{
 	private static Map<String, Id> permissionSetIdByName{
 		get{
 			if(permissionSetIdByName == null)
-				permissionSetIdByName = PermissionSetsSelector.newInstance().mapIdByName();
+				permissionSetIdByName = tlz_PermissionSetsSelector.newInstance().mapIdByName();
 			return permissionSetIdByName;
 		}set;
 	}

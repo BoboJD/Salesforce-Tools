@@ -1,7 +1,7 @@
-global inherited sharing class PermissionSetAssignmentsSelector extends fflib_SObjectSelector implements IPermissionSetAssignmentsSelector{
+global inherited sharing class tlz_PermissionSetAssignmentsSelector extends fflib_SObjectSelector implements tlz_IPermissionSetAssignmentsSelector{
 
-	global static PermissionSetAssignmentsSelector newInstance(){
-		return (PermissionSetAssignmentsSelector)Application.Selector.newInstance(PermissionSetAssignment.SObjectType);
+	global static tlz_PermissionSetAssignmentsSelector newInstance(){
+		return (tlz_PermissionSetAssignmentsSelector)Application.Selector.newInstance(PermissionSetAssignment.SObjectType);
 	}
 
 	global override List<SObjectField> getSObjectFieldList(){
@@ -19,7 +19,7 @@ global inherited sharing class PermissionSetAssignmentsSelector extends fflib_SO
 		Map<Id, List<PermissionSetAssignment>> permissionSetAssignmentsByUserId = new Map<Id, List<PermissionSetAssignment>>();
 		if(!userIds.isEmpty()){
 			fflib_QueryFactory queryFactory = newQueryFactory();
-			new PermissionSetsSelector().configureQueryFactoryFields(queryFactory, 'PermissionSet');
+			new tlz_PermissionSetsSelector().configureQueryFactoryFields(queryFactory, 'PermissionSet');
 			for(PermissionSetAssignment permissionSetAssignment : Database.query(queryFactory.setCondition('AssigneeId IN :userIds').toSOQL())){
 				if(!permissionSetAssignmentsByUserId.containsKey(permissionSetAssignment.AssigneeId))
 					permissionSetAssignmentsByUserId.put(permissionSetAssignment.AssigneeId, new List<PermissionSetAssignment>());

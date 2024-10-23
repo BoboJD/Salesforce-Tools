@@ -3,7 +3,7 @@ global inherited sharing class CustomNotificationsServiceImpl implements ICustom
 	@TestVisible private static Messaging.CustomNotification notification;
 
 	global void notifyUsers(String targetId, Set<String> recipientsIds, String title, String body){
-		CustomNotificationType notificationType = CustomNotificationTypesSelector.newInstance().selectByDeveloperName(CustomNotificationConstants.CUSTOM_NOTIFICATION);
+		CustomNotificationType notificationType = tlz_CustomNotificationTypesSelector.newInstance().selectByDeveloperName(CustomNotificationConstants.CUSTOM_NOTIFICATION);
 		notification = new Messaging.CustomNotification();
 		if(String.isNotBlank(title))
 			notification.setTitle(title);

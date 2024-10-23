@@ -3,7 +3,7 @@ global inherited sharing class OrganizationsServiceImpl implements IOrganization
 
 	global String retrieveOrganizationName(){
 		if(organizationName == null){
-			List<Organization> orgs = OrganizationsSelector.newInstance().selectAll();
+			List<Organization> orgs = tlz_OrganizationsSelector.newInstance().selectAll();
 			if(!orgs.isEmpty() && !orgs[0].IsSandbox){
 				organizationName = OrganizationConstants.PROD;
 			}else{

@@ -19,15 +19,15 @@ global inherited sharing class Application{
 	global static final fflib_Application.SelectorFactory Selector =
 		new fflib_Application.SelectorFactory(
 			new Map<SObjectType, Type>{
-				ContentDocument.SObjectType => ContentDocumentsSelector.class,
-				ContentDocumentLink.SObjectType => ContentDocumentLinksSelector.class,
-				ContentVersion.SObjectType => ContentVersionsSelector.class,
-				CustomNotificationType.SObjectType => CustomNotificationTypesSelector.class,
-				Organization.SObjectType => OrganizationsSelector.class,
-				PermissionSet.SObjectType => PermissionSetsSelector.class,
-				PermissionSetAssignment.SObjectType => PermissionSetAssignmentsSelector.class,
-				User.SObjectType => UsersSelector.class,
-				UserRecordAccess.SObjectType => UserRecordAccessesSelector.class});
+				ContentDocument.SObjectType => tlz_ContentDocumentsSelector.class,
+				ContentDocumentLink.SObjectType => tlz_ContentDocumentLinksSelector.class,
+				ContentVersion.SObjectType => tlz_ContentVersionsSelector.class,
+				CustomNotificationType.SObjectType => tlz_CustomNotificationTypesSelector.class,
+				Organization.SObjectType => tlz_OrganizationsSelector.class,
+				PermissionSet.SObjectType => tlz_PermissionSetsSelector.class,
+				PermissionSetAssignment.SObjectType => tlz_PermissionSetAssignmentsSelector.class,
+				User.SObjectType => tlz_UsersSelector.class,
+				UserRecordAccess.SObjectType => tlz_UserRecordAccessesSelector.class});
 
 	global static final fflib_Application.DomainFactory Domain =
 		new fflib_Application.DomainFactory(

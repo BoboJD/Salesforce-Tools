@@ -1,7 +1,7 @@
-global inherited sharing class ContentDocumentLinksSelector extends fflib_SObjectSelector implements IContentDocumentLinksSelector{
+global inherited sharing class tlz_ContentDocumentLinksSelector extends fflib_SObjectSelector implements tlz_IContentDocumentLinksSelector{
 
-	global static IContentDocumentLinksSelector newInstance(){
-		return (IContentDocumentLinksSelector)Application.Selector.newInstance(ContentDocumentLink.SObjectType);
+	global static tlz_IContentDocumentLinksSelector newInstance(){
+		return (tlz_IContentDocumentLinksSelector)Application.Selector.newInstance(ContentDocumentLink.SObjectType);
 	}
 
 	global override List<SObjectField> getSObjectFieldList(){

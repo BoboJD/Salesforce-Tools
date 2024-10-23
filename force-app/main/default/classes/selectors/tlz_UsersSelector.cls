@@ -1,8 +1,8 @@
-global inherited sharing class UsersSelector extends fflib_SObjectSelector implements IUsersSelector{
+global inherited sharing class tlz_UsersSelector extends fflib_SObjectSelector implements tlz_IUsersSelector{
 	private static List<User> allActiveUsers;
 
-	global static IUsersSelector newInstance(){
-		return (IUsersSelector)Application.Selector.newInstance(User.SObjectType);
+	global static tlz_IUsersSelector newInstance(){
+		return (tlz_IUsersSelector)Application.Selector.newInstance(User.SObjectType);
 	}
 
 	global override List<SObjectField> getSObjectFieldList(){

@@ -1,7 +1,7 @@
-global inherited sharing class OrganizationsSelector extends fflib_SObjectSelector implements IOrganizationsSelector{
+global inherited sharing class tlz_OrganizationsSelector extends fflib_SObjectSelector implements tlz_IOrganizationsSelector{
 
-	global static IOrganizationsSelector newInstance(){
-		return (IOrganizationsSelector)Application.Selector.newInstance(Organization.SObjectType);
+	global static tlz_IOrganizationsSelector newInstance(){
+		return (tlz_IOrganizationsSelector)Application.Selector.newInstance(Organization.SObjectType);
 	}
 
 	global override List<SObjectField> getSObjectFieldList() {

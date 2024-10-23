@@ -1,5 +1,5 @@
 @IsTest
-private class ContentDocumentLinksSelectorTest{
+private class tlz_ContentDocumentLinksSelectorTest{
 
 	@TestSetup
 	static void setup(){
@@ -17,7 +17,7 @@ private class ContentDocumentLinksSelectorTest{
 			Account account = TestUtils.selectAccount();
 
 			Test.startTest();
-			List<ContentDocumentLink> records = ContentDocumentLinksSelector.newInstance().selectByLinkedEntityIds(new Set<Id>{account.Id});
+			List<ContentDocumentLink> records = tlz_ContentDocumentLinksSelector.newInstance().selectByLinkedEntityIds(new Set<Id>{account.Id});
 			Test.stopTest();
 
 			Assert.equals(1, records.size());
@@ -31,7 +31,7 @@ private class ContentDocumentLinksSelectorTest{
 			ContentDocument contentDocument = [SELECT Id FROM ContentDocument LIMIT 1];
 
 			Test.startTest();
-			Map<Id, List<ContentDocumentLink>> contentDocumentLinksByContentDocumentId = ContentDocumentLinksSelector.newInstance().mapByContentDocumentId(new Set<Id>{contentDocument.Id});
+			Map<Id, List<ContentDocumentLink>> contentDocumentLinksByContentDocumentId = tlz_ContentDocumentLinksSelector.newInstance().mapByContentDocumentId(new Set<Id>{contentDocument.Id});
 			Test.stopTest();
 
 			Assert.isTrue(contentDocumentLinksByContentDocumentId.containsKey(contentDocument.Id));

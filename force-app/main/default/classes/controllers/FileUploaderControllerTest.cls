@@ -4,8 +4,8 @@ private class FileUploaderControllerTest{
 	@IsTest
 	static void getUtilityDataFromAccountShouldReturn6MappedData(){
 		fflib_ApexMocks mocks = new fflib_ApexMocks();
-		IContentDocumentLinksSelector contentDocumentLinksSelectorMock = new Mocks.ContentDocumentLinksSelector(mocks);
-		IContentVersionsSelector contentVersionsSelectorMock = new Mocks.ContentVersionsSelector(mocks);
+		tlz_IContentDocumentLinksSelector contentDocumentLinksSelectorMock = new Mocks.tlz_ContentDocumentLinksSelector(mocks);
+		tlz_IContentVersionsSelector contentVersionsSelectorMock = new Mocks.tlz_ContentVersionsSelector(mocks);
 
 		Account account = new Account(
 			Id = fflib_IDGenerator.generate(Schema.Account.SObjectType)
@@ -42,8 +42,8 @@ private class FileUploaderControllerTest{
 		Map<String, Object> utilityData = FileUploaderController.getUtilityData(account.Id);
 		Test.stopTest();
 
-		((IContentDocumentLinksSelector)mocks.verify(contentDocumentLinksSelectorMock)).selectByLinkedEntityIds(recordIds);
-		((IContentVersionsSelector)mocks.verify(contentVersionsSelectorMock)).selectLatestByContentDocumentIds(new Set<Id>{contentDocumentId});
+		((tlz_IContentDocumentLinksSelector)mocks.verify(contentDocumentLinksSelectorMock)).selectByLinkedEntityIds(recordIds);
+		((tlz_IContentVersionsSelector)mocks.verify(contentVersionsSelectorMock)).selectLatestByContentDocumentIds(new Set<Id>{contentDocumentId});
 
 		Assert.equals(6, utilityData.size());
 		List<FilePreview> filePreviews = (List<FilePreview>)utilityData.get('files');
@@ -63,7 +63,7 @@ private class FileUploaderControllerTest{
 	static void deleteFilesShouldReturnSuccess(){
 		fflib_ApexMocks mocks = new fflib_ApexMocks();
 		fflib_ISObjectUnitOfWork uowMock = new fflib_SObjectMocks.SObjectUnitOfWork(mocks);
-		IContentDocumentLinksSelector contentDocumentLinksSelectorMock = new Mocks.ContentDocumentLinksSelector(mocks);
+		tlz_IContentDocumentLinksSelector contentDocumentLinksSelectorMock = new Mocks.tlz_ContentDocumentLinksSelector(mocks);
 
 		Id contentDocumentId = fflib_IDGenerator.generate(Schema.ContentDocument.SObjectType);
 		Id contentDocumentLinkToDeleteId = fflib_IDGenerator.generate(Schema.ContentDocumentLink.SObjectType);
@@ -101,7 +101,7 @@ private class FileUploaderControllerTest{
 		Map<String, Object> result = FileUploaderController.deleteFiles(filesToDeleteJSON);
 		Test.stopTest();
 
-		((IContentDocumentLinksSelector)mocks.verify(contentDocumentLinksSelectorMock)).mapByContentDocumentId(contentDocumentIds);
+		((tlz_IContentDocumentLinksSelector)mocks.verify(contentDocumentLinksSelectorMock)).mapByContentDocumentId(contentDocumentIds);
 		((fflib_ISObjectUnitOfWork)mocks.verify(uowMock)).registerDeleted(
 			fflib_Match.sObjectWith(new Map<SObjectField, Object>{
 				Schema.ContentDocumentLink.Id => contentDocumentLinkToDeleteId}));

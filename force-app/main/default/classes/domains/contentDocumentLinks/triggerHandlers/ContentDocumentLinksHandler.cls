@@ -5,7 +5,7 @@ global inherited sharing virtual class ContentDocumentLinksHandler extends Trigg
 	global Map<Id, ContentDocument> contentDocumentById{
 		get{
 			if(storedContentDocumentById == null)
-				storedContentDocumentById = new Map<Id, ContentDocument>(ContentDocumentsSelector.newInstance().selectByIds(setIds(ContentDocumentLink.ContentDocumentId)));
+				storedContentDocumentById = new Map<Id, ContentDocument>(tlz_ContentDocumentsSelector.newInstance().selectByIds(setIds(ContentDocumentLink.ContentDocumentId)));
 			return storedContentDocumentById;
 		}set;
 	}

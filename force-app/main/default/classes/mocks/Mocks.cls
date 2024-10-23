@@ -37,10 +37,10 @@ global class Mocks{
 		}
 	}
 
-	global class ContentDocumentLinksSelector extends fflib_SObjectMocks.SObjectSelector implements IContentDocumentLinksSelector{
+	global class tlz_ContentDocumentLinksSelector extends fflib_SObjectMocks.SObjectSelector implements tlz_IContentDocumentLinksSelector{
 		private fflib_ApexMocks mocks;
 
-		global ContentDocumentLinksSelector(fflib_ApexMocks mocks){
+		global tlz_ContentDocumentLinksSelector(fflib_ApexMocks mocks){
 			super(mocks);
 			this.mocks = mocks;
 		}
@@ -54,10 +54,10 @@ global class Mocks{
 		}
 	}
 
-	global class ContentDocumentsSelector extends fflib_SObjectMocks.SObjectSelector implements IContentDocumentsSelector{
+	global class tlz_ContentDocumentsSelector extends fflib_SObjectMocks.SObjectSelector implements tlz_IContentDocumentsSelector{
 		private fflib_ApexMocks mocks;
 
-		global ContentDocumentsSelector(fflib_ApexMocks mocks){
+		global tlz_ContentDocumentsSelector(fflib_ApexMocks mocks){
 			super(mocks);
 			this.mocks = mocks;
 		}
@@ -67,10 +67,10 @@ global class Mocks{
 		}
 	}
 
-	global class ContentVersionsSelector extends fflib_SObjectMocks.SObjectSelector implements IContentVersionsSelector{
+	global class tlz_ContentVersionsSelector extends fflib_SObjectMocks.SObjectSelector implements tlz_IContentVersionsSelector{
 		private fflib_ApexMocks mocks;
 
-		global ContentVersionsSelector(fflib_ApexMocks mocks){
+		global tlz_ContentVersionsSelector(fflib_ApexMocks mocks){
 			super(mocks);
 			this.mocks = mocks;
 		}
@@ -92,10 +92,10 @@ global class Mocks{
 		}
 	}
 
-	global class CustomNotificationTypesSelector extends fflib_SObjectMocks.SObjectSelector implements ICustomNotificationTypesSelector{
+	global class tlz_CustomNotificationTypesSelector extends fflib_SObjectMocks.SObjectSelector implements tlz_ICustomNotificationTypesSelector{
 		private fflib_ApexMocks mocks;
 
-		global CustomNotificationTypesSelector(fflib_ApexMocks mocks){
+		global tlz_CustomNotificationTypesSelector(fflib_ApexMocks mocks){
 			super(mocks);
 			this.mocks = mocks;
 		}
@@ -249,10 +249,10 @@ global class Mocks{
 		}
 	}
 
-	global class OrganizationsSelector extends fflib_SObjectMocks.SObjectSelector implements IOrganizationsSelector{
+	global class tlz_OrganizationsSelector extends fflib_SObjectMocks.SObjectSelector implements tlz_IOrganizationsSelector{
 		private fflib_ApexMocks mocks;
 
-		global OrganizationsSelector(fflib_ApexMocks mocks){
+		global tlz_OrganizationsSelector(fflib_ApexMocks mocks){
 			super(mocks);
 			this.mocks = mocks;
 		}
@@ -274,10 +274,10 @@ global class Mocks{
 		}
 	}
 
-	global class PermissionSetAssignmentsSelector extends fflib_SObjectMocks.SObjectSelector implements IPermissionSetAssignmentsSelector{
+	global class tlz_PermissionSetAssignmentsSelector extends fflib_SObjectMocks.SObjectSelector implements tlz_IPermissionSetAssignmentsSelector{
 		private fflib_ApexMocks mocks;
 
-		global PermissionSetAssignmentsSelector(fflib_ApexMocks mocks){
+		global tlz_PermissionSetAssignmentsSelector(fflib_ApexMocks mocks){
 			super(mocks);
 			this.mocks = mocks;
 		}
@@ -287,10 +287,10 @@ global class Mocks{
 		}
 	}
 
-	global class PermissionSetsSelector extends fflib_SObjectMocks.SObjectSelector implements IPermissionSetsSelector{
+	global class tlz_PermissionSetsSelector extends fflib_SObjectMocks.SObjectSelector implements tlz_IPermissionSetsSelector{
 		private fflib_ApexMocks mocks;
 
-		global PermissionSetsSelector(fflib_ApexMocks mocks){
+		global tlz_PermissionSetsSelector(fflib_ApexMocks mocks){
 			super(mocks);
 			this.mocks = mocks;
 		}
@@ -300,10 +300,10 @@ global class Mocks{
 		}
 	}
 
-	global class UserRecordAccessesSelector extends fflib_SObjectMocks.SObjectSelector implements IUserRecordAccessesSelector{
+	global class tlz_UserRecordAccessesSelector extends fflib_SObjectMocks.SObjectSelector implements tlz_IUserRecordAccessesSelector{
 		private fflib_ApexMocks mocks;
 
-		global UserRecordAccessesSelector(fflib_ApexMocks mocks){
+		global tlz_UserRecordAccessesSelector(fflib_ApexMocks mocks){
 			super(mocks);
 			this.mocks = mocks;
 		}
@@ -317,10 +317,10 @@ global class Mocks{
 		}
 	}
 
-	global class UsersSelector extends fflib_SObjectMocks.SObjectSelector implements IUsersSelector{
+	global class tlz_UsersSelector extends fflib_SObjectMocks.SObjectSelector implements tlz_IUsersSelector{
 		private fflib_ApexMocks mocks;
 
-		global UsersSelector(fflib_ApexMocks mocks){
+		global tlz_UsersSelector(fflib_ApexMocks mocks){
 			super(mocks);
 			this.mocks = mocks;
 		}

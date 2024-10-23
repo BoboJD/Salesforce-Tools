@@ -1,7 +1,7 @@
-global inherited sharing class UserRecordAccessesSelector extends fflib_SObjectSelector implements IUserRecordAccessesSelector{
+global inherited sharing class tlz_UserRecordAccessesSelector extends fflib_SObjectSelector implements tlz_IUserRecordAccessesSelector{
 
-	global static IUserRecordAccessesSelector newInstance(){
-		return (IUserRecordAccessesSelector)Application.Selector.newInstance(UserRecordAccess.SObjectType);
+	global static tlz_IUserRecordAccessesSelector newInstance(){
+		return (tlz_IUserRecordAccessesSelector)Application.Selector.newInstance(UserRecordAccess.SObjectType);
 	}
 
 	global override List<SObjectField> getSObjectFieldList(){

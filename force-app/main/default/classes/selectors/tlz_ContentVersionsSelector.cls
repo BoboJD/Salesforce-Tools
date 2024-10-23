@@ -1,7 +1,7 @@
-global inherited sharing class ContentVersionsSelector extends fflib_SObjectSelector implements IContentVersionsSelector{
+global inherited sharing class tlz_ContentVersionsSelector extends fflib_SObjectSelector implements tlz_IContentVersionsSelector{
 
-	global static IContentVersionsSelector newInstance(){
-		return (IContentVersionsSelector)Application.Selector.newInstance(ContentVersion.SObjectType);
+	global static tlz_IContentVersionsSelector newInstance(){
+		return (tlz_IContentVersionsSelector)Application.Selector.newInstance(ContentVersion.SObjectType);
 	}
 
 	global override List<SObjectField> getSObjectFieldList(){

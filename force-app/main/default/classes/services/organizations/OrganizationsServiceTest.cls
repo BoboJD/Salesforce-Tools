@@ -4,7 +4,7 @@ private class OrganizationsServiceTest{
 	@IsTest
 	static void retrieveOrganizationNameWithOrgNotSandboxShouldReturnProd(){
 		fflib_ApexMocks mocks = new fflib_ApexMocks();
-		IOrganizationsSelector organizationsSelectorMock = new Mocks.OrganizationsSelector(mocks);
+		tlz_IOrganizationsSelector organizationsSelectorMock = new Mocks.tlz_OrganizationsSelector(mocks);
 
 		Organization organization = (Organization)TestUtils.setReadableFields(new Organization(), new Map<SObjectField, Object>{
 			Schema.Organization.IsSandbox => false
@@ -21,15 +21,15 @@ private class OrganizationsServiceTest{
 		String organizationName = OrganizationsService.retrieveOrganizationName();
 		Test.stopTest();
 
-		((IOrganizationsSelector)mocks.verify(organizationsSelectorMock)).selectAll();
-		
+		((tlz_IOrganizationsSelector)mocks.verify(organizationsSelectorMock)).selectAll();
+
 		Assert.equals(OrganizationConstants.PROD, organizationName);
 	}
 
 	@IsTest
 	static void retrieveOrganizationNameWithSandboxShouldNotReturnProd(){
 		fflib_ApexMocks mocks = new fflib_ApexMocks();
-		IOrganizationsSelector organizationsSelectorMock = new Mocks.OrganizationsSelector(mocks);
+		tlz_IOrganizationsSelector organizationsSelectorMock = new Mocks.tlz_OrganizationsSelector(mocks);
 
 		Organization organization = (Organization)TestUtils.setReadableFields(new Organization(), new Map<SObjectField, Object>{
 			Schema.Organization.IsSandbox => true
@@ -46,8 +46,8 @@ private class OrganizationsServiceTest{
 		String organizationName = OrganizationsService.retrieveOrganizationName();
 		Test.stopTest();
 
-		((IOrganizationsSelector)mocks.verify(organizationsSelectorMock)).selectAll();
-		
+		((tlz_IOrganizationsSelector)mocks.verify(organizationsSelectorMock)).selectAll();
+
 		Assert.notEquals(OrganizationConstants.PROD, organizationName);
 	}
 }

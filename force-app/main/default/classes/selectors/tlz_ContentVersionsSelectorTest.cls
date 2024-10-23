@@ -1,5 +1,5 @@
 @IsTest
-private class ContentVersionsSelectorTest{
+private class tlz_ContentVersionsSelectorTest{
 
 	@TestSetup
 	static void setup(){
@@ -16,7 +16,7 @@ private class ContentVersionsSelectorTest{
 			ContentDocument contentDocument = [SELECT Id FROM ContentDocument LIMIT 1];
 
 			Test.startTest();
-			List<ContentVersion> contentVersions = ContentVersionsSelector.newInstance().selectLatestByContentDocumentIds(new Set<Id>{contentDocument.Id});
+			List<ContentVersion> contentVersions = tlz_ContentVersionsSelector.newInstance().selectLatestByContentDocumentIds(new Set<Id>{contentDocument.Id});
 			Test.stopTest();
 
 			Assert.equals(1, contentVersions.size());

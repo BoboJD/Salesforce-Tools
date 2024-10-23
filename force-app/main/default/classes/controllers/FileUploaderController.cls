@@ -18,7 +18,7 @@ global with sharing class FileUploaderController{
 		Map<Id, Id> contentDocumentLinkIdByContentDocumentId = mapContentDocumentLinkIdByContentDocumentId(new Set<Id>{ recordId });
 		Set<Id> contentDocumentIds = contentDocumentLinkIdByContentDocumentId.keySet();
 		List<FilePreview> files = new List<FilePreview>();
-		for(ContentVersion contentVersion : ContentVersionsSelector.newInstance().selectLatestByContentDocumentIds(contentDocumentIds)){
+		for(ContentVersion contentVersion : tlz_ContentVersionsSelector.newInstance().selectLatestByContentDocumentIds(contentDocumentIds)){
 			Id contentDocumentLinkId = contentDocumentLinkIdByContentDocumentId.get(contentVersion.ContentDocumentId);
 			files.add(new FilePreview(contentVersion, contentDocumentLinkId));
 		}
@@ -27,7 +27,7 @@ global with sharing class FileUploaderController{
 
 	private static Map<Id, Id> mapContentDocumentLinkIdByContentDocumentId(Set<Id> recordIds){
 		Map<Id, Id> contentDocumentLinkIdByContentDocumentId = new Map<Id, Id>();
-		for(ContentDocumentLink cdl : ContentDocumentLinksSelector.newInstance().selectByLinkedEntityIds(recordIds))
+		for(ContentDocumentLink cdl : tlz_ContentDocumentLinksSelector.newInstance().selectByLinkedEntityIds(recordIds))
 			contentDocumentLinkIdByContentDocumentId.put(cdl.ContentDocumentId, cdl.Id);
 		return contentDocumentLinkIdByContentDocumentId;
 	}
@@ -38,7 +38,7 @@ global with sharing class FileUploaderController{
 		try{
 			List<FilePreview> filePreviews = (List<FilePreview>)JSON.deserialize(filesToDeleteJSON, List<FilePreview>.class);
 			Set<Id> contentDocumentIds = getContentDocumentIds(filePreviews);
-			Map<Id, List<ContentDocumentLink>> contentDocumentLinksByContentDocumentId = ContentDocumentLinksSelector.newInstance().mapByContentDocumentId(contentDocumentIds);
+			Map<Id, List<ContentDocumentLink>> contentDocumentLinksByContentDocumentId = tlz_ContentDocumentLinksSelector.newInstance().mapByContentDocumentId(contentDocumentIds);
 			if(!contentDocumentLinksByContentDocumentId.isEmpty()){
 				fflib_ISObjectUnitOfWork uow = Application.UnitOfWork.newInstance(new List<SObjectType>{ ContentDocument.SObjectType, ContentDocumentLink.SObjectType });
 				for(FilePreview filePreview : filePreviews){
