@@ -1,5 +1,13 @@
 global with sharing class ContentDocumentLinkRecord extends ContentDocumentLinksHandler{
 
+	private Map<Id, ContentDocument> contentDocumentById{
+		get{
+			if(contentDocumentById == null)
+				contentDocumentById = new Map<Id, ContentDocument>(tlz_ContentDocumentsSelector.newInstance().selectByIds(setIds(ContentDocumentLink.ContentDocumentId)));
+			return contentDocumentById;
+		}set;
+	}
+
 	private ContentDocumentLinkRecord(tlz_ContentDocumentLinks domain, fflib_ISObjectUnitOfWork uow){
 		super(domain, uow);
 	}

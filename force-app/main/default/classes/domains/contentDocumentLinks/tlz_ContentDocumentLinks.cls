@@ -5,7 +5,6 @@ global inherited sharing class tlz_ContentDocumentLinks extends fflib_SObjectDom
 	}
 
 	global override void onBeforeInsert(){
-		ContentDocumentLinksHandler.resetStoredData();
 		ContentDocumentLinkShareType.handleInsert(this).setShareTypeIAndVisiblityAll();
 	}
 

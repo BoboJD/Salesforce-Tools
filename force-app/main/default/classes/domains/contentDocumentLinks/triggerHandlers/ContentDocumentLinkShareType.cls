@@ -1,5 +1,13 @@
 global with sharing class ContentDocumentLinkShareType extends ContentDocumentLinksHandler{
 
+	private Map<Id, ContentDocument> contentDocumentById{
+		get{
+			if(contentDocumentById == null)
+				contentDocumentById = new Map<Id, ContentDocument>(tlz_ContentDocumentsSelector.newInstance().selectByIds(setIds(ContentDocumentLink.ContentDocumentId)));
+			return contentDocumentById;
+		}set;
+	}
+
 	private static List<String> sObjectsWithShareTypeI{
 		get{
 			if(sObjectsWithShareTypeI == null){
