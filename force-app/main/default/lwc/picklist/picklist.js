@@ -80,6 +80,11 @@ export default class Picklist extends LightningElement{
 		return !this.searchable;
 	}
 
+	get selectedItem(){
+		const selectedValue = this.value || '';
+		return this.options.find(option => option.value === selectedValue);
+	}
+
 	get selectedItemLabel(){
 		if(this.filteredTerm || (this.searchable && this.isBeingFocused))
 			return this.filteredTerm || '';
@@ -88,8 +93,7 @@ export default class Picklist extends LightningElement{
 				return this.readOnly ? this.value.join(', ') : format(l.XSelectedOptions, this.value.length);
 			return null;
 		}
-		const selectedValue = this.value || '';
-		return this.options.find(option => option.value === selectedValue)?.label || '';
+		return this.selectedItem?.label || '';
 	}
 
 	get formElementClass(){
@@ -273,7 +277,7 @@ export default class Picklist extends LightningElement{
 			detail: {
 				value: this.value === '' ? null : this.value,
 				fieldName: this.fieldName,
-				selectedItem: this.options.find(option => option.value === selectedValue)
+				selectedItem: this.selectedItem
 			}
 		}));
 	}
