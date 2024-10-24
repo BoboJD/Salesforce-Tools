@@ -272,7 +272,8 @@ export default class Picklist extends LightningElement{
 		this.dispatchEvent(new CustomEvent('valuechange', {
 			detail: {
 				value: this.value === '' ? null : this.value,
-				fieldName: this.fieldName
+				fieldName: this.fieldName,
+				selectedItem: this.options.find(option => option.value === selectedValue)
 			}
 		}));
 	}
