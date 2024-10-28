@@ -3,6 +3,14 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 . "$SCRIPT_DIR/utils.sh"
 current_branch=$(git symbolic-ref --short HEAD)
 
+if [ $current_branch = "master" ]; then
+	git checkout -b admin master
+fi
+
+if [ $current_branch = "prod-release" ]; then
+	error_exit "Script cannot be run from prod-release"
+fi
+
 # Parameters (not mandatory)
 # -e / --exclude-experiences : doesn't retrieve experience files
 # -oc / --only-configuration : only retrieve configuration files
@@ -17,11 +25,19 @@ main(){
 	check_update_for_global_npm_packages
 	check_org_type
 
-	if [[ "$is_production_org" = "true" ]]; then
-		if [ $current_branch = "master" ]; then
-			git checkout -b admin master
+	if [[ "$is_production_org" = "true" && ( -z "$option" || "$option" = "-s" || "$option" = "--subtree" ) ]]; then
+		updating_salesforce_tools_subtree
+		if [ -z "$option" ]; then
+			update_npm_packages
+			retrieve_development
+			if [[ $(yq eval '.data_backup // "null"' "$config_file") != "null" ]]; then
+				create_backup_of_data
+			fi
+			if [[ $(yq eval '.org_settings.org_shape_enable // "null"' "$config_file") = "true" ]]; then
+				recreate_org_shape
+			fi
 		fi
-		update_npm_packages
+		check_installed_managed_packages_version
 	fi
 
 	if [[ -z "$option" || "$option" = "-e" || "$option" = "--exclude-experiences" || "$option" = "-oc" || "$option" = "--only-configuration" ]]; then
@@ -47,20 +63,6 @@ main(){
 		fi
 	fi
 
-	if [[ "$is_production_org" = "true" && ( -z "$option" || "$option" = "-s" || "$option" = "--subtree" ) ]]; then
-		if [ -z "$option" ]; then
-			retrieve_development
-			if [[ $(yq eval '.data_backup // "null"' "$config_file") != "null" ]]; then
-				create_backup_of_data
-			fi
-			if [[ $(yq eval '.org_settings.org_shape_enable // "null"' "$config_file") = "true" ]]; then
-				recreate_org_shape
-			fi
-		fi
-		check_installed_managed_packages_version
-		updating_salesforce_tools_subtree
-	fi
-
 	remove_ignored_files
 
 	if [ "$is_scratch_org" = "true" ]; then
@@ -68,6 +70,75 @@ main(){
 	fi
 
 	display_duration_of_script
+}
+
+retrieve_development(){
+	echo -e "\nRetrieving ${RBlue}development${NC}..."
+	sf project retrieve start -m ApexClass ApexTrigger ApexPage ApexComponent LightningComponentBundle AuraDefinitionBundle --ignore-conflicts > /dev/null
+}
+
+create_backup_of_data(){
+	echo -e "\nCreating backup of ${RBlue}data${NC}..."
+	while IFS= read -r soql; do
+		sf data export tree --query "$soql" --output-dir data
+	done < <(yq eval '.data_backup[]' "$config_file")
+}
+
+recreate_org_shape(){
+	echo -e "\nRecreating ${RGreen}org shape${NC}..."
+	local devhub_name=$(yq eval '.org_settings.devhub_name' "$config_file")
+	sf org create shape -o $devhub_name
+}
+
+check_installed_managed_packages_version(){
+	if [[ $(yq eval '.scratch_org_settings.appexchange.appexchange_id_by_name // "null"' "$config_file") != "null" ]]; then
+		echo -e "\nChecking if ${RBlue}managed packages${NC} have been updated :"
+		declare -A appexchange_id_by_name
+		parse_yaml_to_assoc_array "$config_file" '.scratch_org_settings.appexchange.appexchange_id_by_name' appexchange_id_by_name
+		local installed_packages=$(sf package installed list --json)
+		while IFS= read -r appexchange_name; do
+			local appexchange_id="${appexchange_id_by_name[$appexchange_name]}"
+			check_package_version "$appexchange_id" "$appexchange_name"
+		done < <(yq eval '.scratch_org_settings.appexchange.appexchange_id_by_name | keys | .[]' "$config_file")
+	fi
+}
+
+check_package_version(){
+	local package_id=$1
+	local package_name=$2
+
+	echo -ne "- Verifying package version id of ${RCyan}${package_name}${NC}... "
+	local package_installed=$(echo "$installed_packages" | jq ".result[] | select(.SubscriberPackageVersionId == \"$package_id\")")
+
+	if [ -n "$package_installed" ]; then
+		echo -e "${RYellow}Already up-to-date.${NC}"
+	else
+		local new_package_id=$(echo "$installed_packages" | jq -r ".result[] | select(.SubscriberPackageName == \"$package_name\") | .SubscriberPackageVersionId")
+		if [ -n "$new_package_id" ]; then
+			sed -i '/^$/s// #BLANK_LINE/' "$config_file"
+			yq eval -i ".scratch_org_settings.appexchange.appexchange_id_by_name.\"$package_name\" = \"$new_package_id\"" "$config_file"
+			sed -i "s/ *#BLANK_LINE//g" "$config_file"
+			echo -e "${RGreen}Package version id updated.${NC}"
+		else
+			error_exit "Package not found"
+		fi
+	fi
+}
+
+updating_salesforce_tools_subtree(){
+	local PREFIX="tlz"
+	local REPO="git@github.com:BoboJD/Salesforce-Tools.git"
+	local BRANCH="master"
+	echo -ne "\nFetching ${RGreen}Salesforce-Tools${NC} subtree... "
+	git fetch $REPO $BRANCH > /dev/null 2>&1
+	local SUBTREE_LATEST=$(git log -n 1 --pretty=format:%H -- "$PREFIX")
+	if ! git diff --quiet FETCH_HEAD $SUBTREE_LATEST; then
+		echo -n "Subtree has changed. Pulling the latest changes... "
+		git stash push -m "Stashing before subtree pull" > /dev/null 2>&1
+		git subtree pull --prefix="$PREFIX" "$REPO" "$BRANCH" -m "Merge subtree" > /dev/null 2>&1
+		git stash pop > /dev/null 2>&1
+	fi
+	echo "Done."
 }
 
 check_org_type(){
@@ -231,75 +302,6 @@ retrieve_profiles(){
 		fi
 		xml fo --indent-spaces 4 "$profile" > "${profile}.tmp" && mv "${profile}.tmp" "$profile"
 	done
-	echo "Done."
-}
-
-retrieve_development(){
-	echo -e "\nRetrieving ${RBlue}development${NC}..."
-	sf project retrieve start -m ApexClass ApexTrigger ApexPage ApexComponent LightningComponentBundle AuraDefinitionBundle --ignore-conflicts > /dev/null
-}
-
-create_backup_of_data(){
-	echo -e "\nCreating backup of ${RBlue}data${NC}..."
-	while IFS= read -r soql; do
-		sf data export tree --query "$soql" --output-dir data
-	done < <(yq eval '.data_backup[]' "$config_file")
-}
-
-recreate_org_shape(){
-	echo -e "\nRecreating ${RGreen}org shape${NC}..."
-	local devhub_name=$(yq eval '.org_settings.devhub_name' "$config_file")
-	sf org create shape -o $devhub_name
-}
-
-check_installed_managed_packages_version(){
-	if [[ $(yq eval '.scratch_org_settings.appexchange.appexchange_id_by_name // "null"' "$config_file") != "null" ]]; then
-		echo -e "\nChecking if ${RBlue}managed packages${NC} have been updated :"
-		declare -A appexchange_id_by_name
-		parse_yaml_to_assoc_array "$config_file" '.scratch_org_settings.appexchange.appexchange_id_by_name' appexchange_id_by_name
-		local installed_packages=$(sf package installed list --json)
-		while IFS= read -r appexchange_name; do
-			local appexchange_id="${appexchange_id_by_name[$appexchange_name]}"
-			check_package_version "$appexchange_id" "$appexchange_name"
-		done < <(yq eval '.scratch_org_settings.appexchange.appexchange_id_by_name | keys | .[]' "$config_file")
-	fi
-}
-
-check_package_version(){
-	local package_id=$1
-	local package_name=$2
-
-	echo -ne "- Verifying package version id of ${RCyan}${package_name}${NC}... "
-	local package_installed=$(echo "$installed_packages" | jq ".result[] | select(.SubscriberPackageVersionId == \"$package_id\")")
-
-	if [ -n "$package_installed" ]; then
-		echo -e "${RYellow}Already up-to-date.${NC}"
-	else
-		local new_package_id=$(echo "$installed_packages" | jq -r ".result[] | select(.SubscriberPackageName == \"$package_name\") | .SubscriberPackageVersionId")
-		if [ -n "$new_package_id" ]; then
-			sed -i '/^$/s// #BLANK_LINE/' "$config_file"
-			yq eval -i ".scratch_org_settings.appexchange.appexchange_id_by_name.\"$package_name\" = \"$new_package_id\"" "$config_file"
-			sed -i "s/ *#BLANK_LINE//g" "$config_file"
-			echo -e "${RGreen}Package version id updated.${NC}"
-		else
-			error_exit "Package not found"
-		fi
-	fi
-}
-
-updating_salesforce_tools_subtree(){
-	local PREFIX="tlz"
-	local REPO="git@github.com:BoboJD/Salesforce-Tools.git"
-	local BRANCH="master"
-	echo -ne "\nFetching ${RGreen}Salesforce-Tools${NC} subtree... "
-	git fetch $REPO $BRANCH > /dev/null 2>&1
-	local SUBTREE_LATEST=$(git log -n 1 --pretty=format:%H -- "$PREFIX")
-	if ! git diff --quiet FETCH_HEAD $SUBTREE_LATEST; then
-		echo -n "Subtree has changed. Pulling the latest changes... "
-		git stash push -m "Stashing before subtree pull" > /dev/null 2>&1
-		git subtree pull --prefix="$PREFIX" "$REPO" "$BRANCH" -m "Merge subtree" > /dev/null 2>&1
-		git stash pop > /dev/null 2>&1
-	fi
 	echo "Done."
 }
 
