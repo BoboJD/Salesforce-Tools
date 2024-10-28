@@ -53,3 +53,11 @@ $RECYCLE.BIN/
 # Files created from scripts
 testresults/
 test_output.txt
+
+# Subtree Apex Common
+force-app/fflib-apex-common/*
+!force-app/fflib-apex-common/sfdx-source/
+
+# Subtree Apex Mocks
+force-app/fflib-apex-mocks/*
+!force-app/fflib-apex-mocks/sfdx-source/
