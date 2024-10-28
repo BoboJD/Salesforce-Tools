@@ -72,6 +72,21 @@ main(){
 	display_duration_of_script
 }
 
+updating_salesforce_tools_subtree(){
+	local PREFIX="tlz"
+	local REPO="git@github.com:BoboJD/Salesforce-Tools.git"
+	local BRANCH="master"
+	echo -ne "\nFetching ${RGreen}Salesforce-Tools${NC} subtree... "
+	git fetch $REPO $BRANCH > /dev/null 2>&1
+	echo "Done."
+	local SUBTREE_LATEST=$(git log -n 1 --pretty=format:%H -- "$PREFIX")
+	if ! git diff --quiet FETCH_HEAD $SUBTREE_LATEST; then
+		echo -n "Subtree has changed. Pulling the latest changes... "
+		git subtree pull --prefix="$PREFIX" "$REPO" "$BRANCH" -m "Merge subtree" > /dev/null 2>&1
+		echo "Done."
+	fi
+}
+
 retrieve_development(){
 	echo -e "\nRetrieving ${RBlue}development${NC}..."
 	sf project retrieve start -m ApexClass ApexTrigger ApexPage ApexComponent LightningComponentBundle AuraDefinitionBundle --ignore-conflicts > /dev/null
@@ -123,22 +138,6 @@ check_package_version(){
 			error_exit "Package not found"
 		fi
 	fi
-}
-
-updating_salesforce_tools_subtree(){
-	local PREFIX="tlz"
-	local REPO="git@github.com:BoboJD/Salesforce-Tools.git"
-	local BRANCH="master"
-	echo -ne "\nFetching ${RGreen}Salesforce-Tools${NC} subtree... "
-	git fetch $REPO $BRANCH > /dev/null 2>&1
-	local SUBTREE_LATEST=$(git log -n 1 --pretty=format:%H -- "$PREFIX")
-	if ! git diff --quiet FETCH_HEAD $SUBTREE_LATEST; then
-		echo -n "Subtree has changed. Pulling the latest changes... "
-		git stash push -m "Stashing before subtree pull" > /dev/null 2>&1
-		git subtree pull --prefix="$PREFIX" "$REPO" "$BRANCH" -m "Merge subtree" > /dev/null 2>&1
-		git stash pop > /dev/null 2>&1
-	fi
-	echo "Done."
 }
 
 check_org_type(){
