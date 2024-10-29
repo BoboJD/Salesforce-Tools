@@ -126,7 +126,7 @@ export default class Picklist extends LightningElement{
 		options = options.concat(this.options);
 		if(this.filteredTerm){
 			const searchTerm = this.filteredTerm.toLowerCase();
-			return options.filter(option => option.l.toLowerCase().includes(searchTerm));
+			return options.filter(option => option.label.toLowerCase().includes(searchTerm));
 		}
 		return options;
 	}
