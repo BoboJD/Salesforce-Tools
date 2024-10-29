@@ -128,6 +128,15 @@ private class SObjectFieldUtilsTest{
 	}
 
 	@IsTest
+	static void castTypeOfValueWithBooleanShouldReturnBoolean(){
+		Test.startTest();
+		Object returnedValue = SObjectFieldUtils.castTypeOfValue(Schema.User.IsActive, true);
+		Test.stopTest();
+
+		Assert.isTrue(returnedValue);
+	}
+
+	@IsTest
 	static void castTypeOfValueWithDateShouldReturnDate(){
 		Test.startTest();
 		Object returnedValue = SObjectFieldUtils.castTypeOfValue(Schema.Opportunity.CloseDate, '2024-10-21');

@@ -110,6 +110,8 @@ global inherited sharing class SObjectFieldUtils{
 		DisplayType fieldType = field.getDescribe(FieldDescribeOptions.DEFAULT).getType();
 		if(isDecimal(fieldType))
 			return (Decimal)fieldValue;
+		if(fieldType == DisplayType.BOOLEAN)
+			return (Boolean)fieldValue;
 		if(fieldType == DisplayType.DATE)
 			return Date.valueOf((String)fieldValue);
 		if(fieldType == DisplayType.DATETIME){
