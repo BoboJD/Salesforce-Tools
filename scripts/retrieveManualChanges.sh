@@ -113,8 +113,37 @@ check_installed_managed_packages_version(){
 		local installed_packages=$(sf package installed list --json)
 		while IFS= read -r appexchange_name; do
 			local appexchange_id="${appexchange_id_by_name[$appexchange_name]}"
-			check_package_version "$appexchange_id" "$appexchange_name"
+			if [ "$appexchange_name" = "Salesforce Tools" ]; then
+				check_update_of_salesforce_tools "$appexchange_id"
+			else
+				check_package_version "$appexchange_id" "$appexchange_name"
+			fi
 		done < <(yq eval '.scratch_org_settings.appexchange.appexchange_id_by_name | keys | .[]' "$config_file")
+	fi
+}
+
+check_update_of_salesforce_tools(){
+	echo -ne "- Verifying last version of ${RCyan}Salesforce Tools${NC}... "
+	local appexchange_id=$1
+	local package_id=$(jq -r '.packageAliases | to_entries | map(select(.key | startswith("Salesforce Tools"))) | last | .value' tlz/sfdx-project.json)
+	if [[ -n "$package_id" ]]; then
+		if [ "$appexchange_id" = "$package_id" ]; then
+			echo -e "${RYellow}Already up-to-date.${NC}"
+		else
+			echo "Latest version not installed, starting installation..."
+			local package_installation_result=$(sf package install -p "$package_id" -w 60 -r --json)
+			local package_installation_status=$(echo "$package_installation_result" | jq -r '.status')
+			if [ "$package_installation_status" -eq 0 ]; then
+				sed -i '/^$/s// #BLANK_LINE/' "$config_file"
+				yq eval -i ".scratch_org_settings.appexchange.appexchange_id_by_name.[\"Salesforce Tools\"] = \"$package_id\"" "$config_file"
+				sed -i "s/ *#BLANK_LINE//g" "$config_file"
+				echo -e "${RGreen}Package version updated.${NC}"
+			else
+				error_exit "Package installation failed."
+			fi
+		fi
+	else
+		error_exit "No valid package ID found for Salesforce Tools."
 	fi
 }
 
@@ -131,7 +160,7 @@ check_package_version(){
 		local new_package_id=$(echo "$installed_packages" | jq -r ".result[] | select(.SubscriberPackageName == \"$package_name\") | .SubscriberPackageVersionId")
 		if [ -n "$new_package_id" ]; then
 			sed -i '/^$/s// #BLANK_LINE/' "$config_file"
-			yq eval -i ".scratch_org_settings.appexchange.appexchange_id_by_name.\"$package_name\" = \"$new_package_id\"" "$config_file"
+			yq eval -i ".scratch_org_settings.appexchange.appexchange_id_by_name.[\"$package_name\"] = \"$package_id\"" "$config_file"
 			sed -i "s/ *#BLANK_LINE//g" "$config_file"
 			echo -e "${RGreen}Package version id updated.${NC}"
 		else
