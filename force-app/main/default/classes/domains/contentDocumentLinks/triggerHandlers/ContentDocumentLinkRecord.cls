@@ -33,7 +33,9 @@ global with sharing class ContentDocumentLinkRecord extends ContentDocumentLinks
 	}
 
 	private Boolean relatedToRecord(ContentDocumentLink contentDocumentLink){
-		return contentDocumentLink.LinkedEntityId.getSObjectType() != Schema.User.SObjectType;
+		SObjectType sObjectType = contentDocumentLink.LinkedEntityId.getSObjectType();
+		return sObjectType != Schema.User.SObjectType
+			&& sObjectType != Schema.EmailMessage.SObjectType;
 	}
 
 	private Boolean recordIdIsEmpty(ContentDocumentLink contentDocumentLink){
