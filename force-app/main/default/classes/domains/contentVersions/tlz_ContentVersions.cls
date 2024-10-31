@@ -11,7 +11,7 @@ global inherited sharing class tlz_ContentVersions extends fflib_SObjectDomain i
 	global override void onAfterInsert(){
 		fflib_ISObjectUnitOfWork uow = Application.UnitOfWork.newInstance(new List<SObjectType>{
 			ContentVersion.SObjectType, ContentDocument.SObjectType, ContentDocumentLink.SObjectType
-		});
+		}, DmlManager.allowPartialSuccess());
 		ContentVersionRecordRelation.handleInsert(this, uow).handleRecordIdIfFilled();
 		ContentVersionPrivateFile.handleInsert(this, uow).handlePrivateFile();
 		uow.commitWork();

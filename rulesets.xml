@@ -30,6 +30,7 @@
 		<exclude name="ForLoopsMustUseBraces" />
 		<exclude name="WhileLoopsMustUseBraces" />
 		<exclude name="OneDeclarationPerLine" />
+		<exclude name="ClassNamingConventions" />
 	</rule>
 
 	<rule ref="category/apex/design.xml">

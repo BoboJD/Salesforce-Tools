@@ -13,6 +13,10 @@ global inherited sharing class AccountBuilder extends SObjectBuilder{
 		return (Account)buildRecord();
 	}
 
+	global Account buildWithoutCommit(){
+		return (Account)buildRecordWithoutCommit();
+	}
+
 	global static AccountBuilder newAccount(String name){
 		return new AccountBuilder()
 			.withName(name);
