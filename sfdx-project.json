@@ -2,7 +2,7 @@
   "packageDirectories": [
     {
       "versionName": "ver 1",
-      "versionNumber": "1.5.2.NEXT",
+      "versionNumber": "1.5.3.NEXT",
       "path": "force-app",
       "default": true,
       "package": "Salesforce Tools",
@@ -14,6 +14,6 @@
   "sourceApiVersion": "62.0",
   "packageAliases": {
     "Salesforce Tools": "0HoJ60000000001KAA",
-    "Salesforce Tools@1.5.2-1": "04tJ6000000LTg3IAG"
+    "Salesforce Tools@1.5.3-1": "04tJ6000000LToTIAW"
   }
 }
