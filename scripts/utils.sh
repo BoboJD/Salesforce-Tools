@@ -495,10 +495,13 @@ deploy(){
 	local source=$3
 	echo -e "- Deploying ${RBlue}${label}${NC}..."
 	local deploy_result=$(sf project deploy start --source-dir $source --ignore-conflicts --ignore-warnings --json --target-org $org_alias)
+	echo "$deploy_result"
 	local deploy_status=$(echo "$deploy_result" | jq -r '.status')
 	if [ "$deploy_status" -eq 0 ]; then
 		echo -e "${RGreen}Deployment successful.${NC}"
 	else
+		local deploy_url=$(echo "$deploy_result" | jq -r '.result.deployUrl')
+		sf org open -p "$deploy_url" --target-org $org_alias
 		error_exit "Deployment failed. Fix the errors then relaunch the script."
 	fi
 }
