@@ -50,6 +50,50 @@ private class MessagingServiceTest{
 	}
 
 	@IsTest
+	static void setOrgWideEmailAddressShouldModifyOrgWideEmailAddressOnLastEmailAdded(){
+		fflib_ApexMocks mocks = new fflib_ApexMocks();
+		tlz_IOrgWideEmailAddressesSelector orgWideEmailAddressesSelectorMock = new Mocks.tlz_OrgWideEmailAddressesSelector(mocks);
+
+		OrgWideEmailAddress orgWideEmailAddress = new OrgWideEmailAddress(
+			Id = fflib_IDGenerator.generate(Schema.OrgWideEmailAddress.SObjectType),
+			Address = 'toto@totot.fr'
+		);
+
+		mocks.startStubbing();
+		mocks.when(orgWideEmailAddressesSelectorMock.sObjectType()).thenReturn(Schema.OrgWideEmailAddress.SObjectType);
+		mocks.when(orgWideEmailAddressesSelectorMock.selectByAddress(orgWideEmailAddress.Address)).thenReturn(orgWideEmailAddress);
+		mocks.stopStubbing();
+
+		Application.Selector.setMock(orgWideEmailAddressesSelectorMock);
+
+		MessagingService.newSingleEmailMessage();
+
+		Test.startTest();
+		MessagingService.setOrgWideEmailAddressId(orgWideEmailAddress.Address);
+		Test.stopTest();
+
+		((tlz_IOrgWideEmailAddressesSelector)mocks.verify(orgWideEmailAddressesSelectorMock)).selectByAddress(orgWideEmailAddress.Address);
+
+		Assert.equals(orgWideEmailAddress.Id, MessagingServiceImpl.emails[0].getOrgWideEmailAddressId());
+	}
+
+	@IsTest
+	static void setOrgWideEmailAddressWithAddressNotFoundShouldThrowError(){
+		MessagingService.newSingleEmailMessage();
+
+		Test.startTest();
+		String errorMessage;
+		try{
+			MessagingService.setOrgWideEmailAddressId('toto@totot.fr');
+		}catch(Exception e){
+			errorMessage = e.getMessage();
+		}
+		Test.stopTest();
+
+		Assert.messageContains(errorMessage, 'OrgWideEmailAddress "toto@totot.fr" not found.');
+	}
+
+	@IsTest
 	static void setToAddressShouldModifyToAddressesOnLastEmailAdded(){
 		String toAddress = 'test@test.fr';
 

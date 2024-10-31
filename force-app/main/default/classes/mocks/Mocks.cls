@@ -192,6 +192,10 @@ global class Mocks{
 			mocks.mockVoidMethod(this, 'setWhatId', new List<Type>{Id.class}, new List<Object>{whatId});
 		}
 
+		global void setOrgWideEmailAddressId(String orgWideEmailAddress){
+			mocks.mockVoidMethod(this, 'setOrgWideEmailAddressId', new List<Type>{String.class}, new List<Object>{orgWideEmailAddress});
+		}
+
 		global void setToAddress(String toAddress){
 			mocks.mockVoidMethod(this, 'setToAddress', new List<Type>{String.class}, new List<Object>{toAddress});
 		}
@@ -271,6 +275,23 @@ global class Mocks{
 
 		global String retrieveOrganizationName(){
 			return (String)mocks.mockNonVoidMethod(this, 'retrieveOrganizationName', new List<Type>(), new List<Object>());
+		}
+	}
+
+	global class tlz_OrgWideEmailAddressesSelector extends fflib_SObjectMocks.SObjectSelector implements tlz_IOrgWideEmailAddressesSelector{
+		private fflib_ApexMocks mocks;
+
+		global tlz_OrgWideEmailAddressesSelector(fflib_ApexMocks mocks){
+			super(mocks);
+			this.mocks = mocks;
+		}
+
+		global Map<String, OrgWideEmailAddress> mapAll(){
+			return (Map<String, OrgWideEmailAddress>)mocks.mockNonVoidMethod(this, 'mapAll', new List<Type>(), new List<Object>());
+		}
+
+		global OrgWideEmailAddress selectByAddress(String address){
+			return (OrgWideEmailAddress)mocks.mockNonVoidMethod(this, 'selectByAddress', new List<Type>{String.class}, new List<Object>{address});
 		}
 	}
 

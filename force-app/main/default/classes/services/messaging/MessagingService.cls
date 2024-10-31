@@ -19,6 +19,10 @@ global inherited sharing class MessagingService{
 		service().setWhatId(whatId);
 	}
 
+	global static void setOrgWideEmailAddressId(String orgWideEmailAddress){
+		service().setOrgWideEmailAddressId(orgWideEmailAddress);
+	}
+
 	global static void setToAddress(String toAddress){
 		service().setToAddress(toAddress);
 	}

@@ -24,6 +24,7 @@ global inherited sharing class Application{
 				ContentVersion.SObjectType => tlz_ContentVersionsSelector.class,
 				CustomNotificationType.SObjectType => tlz_CustomNotificationTypesSelector.class,
 				Organization.SObjectType => tlz_OrganizationsSelector.class,
+				OrgWideEmailAddress.SObjectType => tlz_OrgWideEmailAddressesSelector.class,
 				PermissionSet.SObjectType => tlz_PermissionSetsSelector.class,
 				PermissionSetAssignment.SObjectType => tlz_PermissionSetAssignmentsSelector.class,
 				User.SObjectType => tlz_UsersSelector.class,

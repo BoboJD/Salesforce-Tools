@@ -3,6 +3,7 @@ global interface IMessagingService{
 	void newSingleEmailMessage();
 	void setTargetObjectId(Id targetObjectId);
 	void setWhatId(Id whatId);
+	void setOrgWideEmailAddressId(String orgWideEmailAddress);
 	void setToAddress(String toAddress);
 	void setToAddresses(Set<String> toAddresses);
 	void setToAddresses(List<String> toAddresses);
