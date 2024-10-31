@@ -3,11 +3,15 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 . "$SCRIPT_DIR/utils.sh"
 
 # Parameters
-scratch_org_name=$1 # Mandatory to create the scratch org
-option=$2 # Values : -s / --setdefaultusername
+scratch_org_name=$1
+option=$2 # Values : -s / --set-default
 
 if [ -z "$scratch_org_name" ]; then
-	error_exit "You need to provide a scratch org name."
+	echo "No scratch org name provided. Please enter a scratch org name:"
+	read scratch_org_name
+	if [ -z "$scratch_org_name" ]; then
+		error_exit "You need to provide a scratch org name."
+	fi
 fi
 
 main(){
