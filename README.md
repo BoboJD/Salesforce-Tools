@@ -63,7 +63,9 @@ To deploy the latest version of the unlocked package in your org, use the follow
 * `VERSIONNUMBER`: The version of the package (e.g., 1.0.0).
 * `YOUR_ORG_NAME`: The alias of your Salesforce org.
 
-After deployment, you can add this repository as a subtree of your project to reference the components and Apex classes.
+After deployment, you have to remove every "tlz" custom permissions of Salesforce Tools package which were assigned on Admin profile.
+
+Also, you can add this repository as a subtree of your project to see the components and Apex classes. It will allows you to use the bash scripts to manage org files.
 
   ```sh
   git subtree add --prefix=tlz git@github.com:BoboJD/Salesforce-Tools.git master
