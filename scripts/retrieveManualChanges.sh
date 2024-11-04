@@ -134,6 +134,7 @@ check_update_of_salesforce_tools(){
 			local package_installation_result=$(sf package install -p "$package_id" -w 60 -r --json)
 			local package_installation_status=$(echo "$package_installation_result" | jq -r '.status')
 			if [ "$package_installation_status" -eq 0 ]; then
+				sf project deploy start -m "Layout:tlz__OrgSetting__mdt-tlz__OrgSetting Layout" "Layout:tlz__Setting__c-tlz__Setting Layout" --ignore-conflicts --ignore-warnings --json > /dev/null
 				sed -i '/^$/s// #BLANK_LINE/' "$config_file"
 				yq eval -i ".scratch_org_settings.appexchange.appexchange_id_by_name.[\"Salesforce Tools\"] = \"$package_id\"" "$config_file"
 				sed -i "s/ *#BLANK_LINE//g" "$config_file"
