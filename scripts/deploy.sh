@@ -24,6 +24,8 @@ main(){
 	check_current_org_type
 	if [ "$is_production_org" = "false" ]; then
 		edit_files_that_fail_deployment
+		org_alias=$(echo "$org_details" | jq -r '.result.alias')
+		install_managed_packages $org_alias
 	fi
 	trap ctrl_c SIGINT
 	deploy_files_into_current_org
