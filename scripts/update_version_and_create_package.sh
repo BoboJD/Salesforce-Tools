@@ -31,10 +31,12 @@ if [ "$status" = "0" ]; then
         echo "Promoting package version..."
         sf package version promote --package $subscriberPackageVersionId --no-prompt
     else
+		git restore sfdx-project.json
         error_exit "Package creation failed with status: $packageStatus"
     fi
 else
-    errorCode=$(echo $result | jq -r '.code')
+    git restore sfdx-project.json
+	errorCode=$(echo $result | jq -r '.code')
     errorMessage=$(echo $result | jq -r '.message')
     if [ "$errorCode" = "MultipleErrorsError" ]; then
         echo "Multiple errors occurred:"
