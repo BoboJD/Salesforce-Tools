@@ -42,7 +42,7 @@ global with sharing class FileUploaderController{
 			Set<Id> contentDocumentIds = getContentDocumentIds(filePreviews);
 			Map<Id, List<ContentDocumentLink>> contentDocumentLinksByContentDocumentId = tlz_ContentDocumentLinksSelector.newInstance().mapByContentDocumentId(contentDocumentIds);
 			if(!contentDocumentLinksByContentDocumentId.isEmpty()){
-				fflib_ISObjectUnitOfWork uow = Application.UnitOfWork.newInstance(new List<SObjectType>{ ContentDocument.SObjectType, ContentDocumentLink.SObjectType });
+				fflib_ISObjectUnitOfWork uow = Application.UnitOfWork.newInstance(new List<SObjectType>{ ContentDocument.SObjectType, ContentDocumentLink.SObjectType }, tlz.DmlManager.newInstance());
 				for(FilePreview filePreview : filePreviews){
 					if(fileIsRelatedToOtherSObject(filePreview, contentDocumentLinksByContentDocumentId) || !FilePreview.hasDeleteAccess)
 						uow.registerDeleted(new ContentDocumentLink(Id = filePreview.contentDocumentLinkId));
