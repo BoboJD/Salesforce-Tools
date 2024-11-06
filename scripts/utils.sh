@@ -518,11 +518,11 @@ remove_tlz_custom_permissions_on_profiles(){
 			"tlz__ErrorMessageVisible"
 		)
 		for profile in ${project_directory}profiles/*.profile-meta.xml; do
-			local xml_content='<?xml version="1.0" encoding="UTF-8"?><Profile xmlns="http://soap.sforce.com/2006/04/metadata"><custom>false</custom>'
+			local xml_content='<?xml version="1.0" encoding="UTF-8"?><Profile xmlns="http://soap.sforce.com/2006/04/metadata">'
 			for custom_permission in "${custom_permissions[@]}"; do
 				xml_content+="<customPermissions><enabled>false</enabled><name>$custom_permission</name></customPermissions>"
 			done
-			xml_content+="<userLicense>Salesforce</userLicense></Profile>"
+			xml_content+="</Profile>"
 			echo "$xml_content" > "$profile"
 		done
 
