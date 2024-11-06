@@ -78,15 +78,8 @@ updating_salesforce_tools_subtree(){
 	local REPO="git@github.com:BoboJD/Salesforce-Tools.git"
 	local BRANCH="master"
 	git fetch $REPO $BRANCH > /dev/null 2>&1
-	local LOCAL_COMMIT=$(git log -n 1 --pretty=format:%H -- "$PREFIX")
-	local REMOTE_COMMIT=$(git log -n 1 --pretty=format:%H "$REPO/$BRANCH" -- "$PREFIX")
-	if [ "$LOCAL_COMMIT" = "$REMOTE_COMMIT" ]; then
-		echo -e "${RYellow}Already up-to-date.${NC}"
-	else
-		echo -n "New commits were added, pulling... "
-		git subtree pull --prefix="$PREFIX" "$REPO" "$BRANCH" -m "Pulled Salesforce Tools new commits" --squash > /dev/null 2>&1
-		echo -e "${RGreen}Folder '$PREFIX' updated.${NC}"
-	fi
+	git subtree pull --prefix="$PREFIX" "$REPO" "$BRANCH" -m "Pulled Salesforce Tools new commits" --squash > /dev/null 2>&1
+	echo "Done."
 }
 
 retrieve_development(){
