@@ -203,7 +203,7 @@ add_option_to_delete_deleted_or_renamed_files(){
 }
 
 find_renamed_files(){
-	local renamed_or_moved_files=$(git diff --diff-filter=R --name-status $commit_hash_or_branch_reference^ $current_commit_hash_or_branch | awk '$1 ~ /^R/ && $2 ~ /-meta.xml$/ && $2 ~ /^force-app\/main\/default\// && $2 !~ /(lwc|aura)\// {print $2}')
+	local renamed_or_moved_files=$(git diff --diff-filter=R --name-status $commit_hash_or_branch_reference^ $current_commit_hash_or_branch | awk '$1 ~ /^R/ && $2 ~ /-meta.xml$/ && $2 ~ /^force-app\/main\/default\// {print $2}')
 
 	local files_to_delete=""
 	if [[ -n "$renamed_or_moved_files" ]]; then
