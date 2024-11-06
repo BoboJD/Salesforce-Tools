@@ -465,62 +465,12 @@ check_package_installation(){
 		local package_installation_result=$(sf package install -p "$package_id" -w 60 -s AllUsers -r --target-org $org_alias --json)
 		local package_installation_status=$(echo "$package_installation_result" | jq -r '.status')
 		if [ "$package_installation_status" -eq 0 ]; then
-			if [ "$package_name" = "Salesforce Tools" ]; then
-				remove_tlz_custom_permissions_on_admin $org_alias
-			fi
 			echo -e "${RGreen}Successfully installed ${package_name} package.${NC}"
 		else
 			local reset_files=$(reset_changes_on_metadata_files)
 			error_exit "Package installation failed. Relaunch the script."
 		fi
 	fi
-}
-
-## remove_tlz_custom_permissions_on_admin
-remove_tlz_custom_permissions_on_admin(){
-	local org_alias=$1
-	local profiles_dir_created=false
-	local profiles_dir="${project_directory}profiles/"
-	local admin_profile_created=false
-	local admin_profile="${profiles_dir}Admin.profile-meta.xml"
-
-	if [ ! -d "${project_directory}profiles/" ]; then
-		mkdir "${project_directory}profiles/"
-		profiles_dir_created=true
-	fi
-	if [ ! -f "$admin_profile" ]; then
-		admin_profile_created=true
-	fi
-
-	custom_permissions=(
-		"tlz__BypassChatterNotification"
-		"tlz__BypassProcessusContentDocumentLink"
-		"tlz__BypassProcessusContentVersion"
-		"tlz__BypassProcessusUser"
-		"tlz__BypassValidationRules"
-		"tlz__ErrorMessageVisible"
-	)
-	local xml_content='<?xml version="1.0" encoding="UTF-8"?><Profile xmlns="http://soap.sforce.com/2006/04/metadata"><custom>false</custom>'
-	for custom_permission in "${custom_permissions[@]}"; do
-		xml_content+="<customPermissions><enabled>false</enabled><name>$custom_permission</name></customPermissions>"
-	done
-	xml_content+="<userLicense>Salesforce</userLicense></Profile>"
-	echo "$xml_content" > "$admin_profile"
-
-	echo -n "Deleting tlz custom permissions assigned on Admin profile... "
-	mv .forceignore .DISABLED.forceignore # so that profiles can be deployed
-	sf project deploy start -m Profile:Admin --ignore-conflicts --ignore-warnings --json --target-org $org_alias > /dev/null
-	mv .DISABLED.forceignore .forceignore
-
-	if $profiles_dir_created; then
-		rm -rf "$profiles_dir"
-	elif $admin_profile_created; then
-		rm "$admin_profile"
-	else
-		git checkout -- "$admin_profile"
-	fi
-
-	echo "Done."
 }
 
 ## rename_api_name_of_standard_metadata
@@ -552,6 +502,36 @@ deploy(){
 		local deploy_url=$(echo "$deploy_result" | jq -r '.result.deployUrl')
 		sf org open -p "$deploy_url" --target-org $org_alias
 		error_exit "Deployment failed. Fix the errors then relaunch the script."
+	fi
+}
+
+## remove_tlz_custom_permissions_on_profiles
+remove_tlz_custom_permissions_on_profiles(){
+	local org_alias=$1
+	if [ -d "${project_directory}profiles/" ]; then
+		local custom_permissions=(
+			"tlz__BypassChatterNotification"
+			"tlz__BypassProcessusContentDocumentLink"
+			"tlz__BypassProcessusContentVersion"
+			"tlz__BypassProcessusUser"
+			"tlz__BypassValidationRules"
+			"tlz__ErrorMessageVisible"
+		)
+		for profile in ${project_directory}profiles/*.profile-meta.xml; do
+			local xml_content='<?xml version="1.0" encoding="UTF-8"?><Profile xmlns="http://soap.sforce.com/2006/04/metadata"><custom>false</custom>'
+			for custom_permission in "${custom_permissions[@]}"; do
+				xml_content+="<customPermissions><enabled>false</enabled><name>$custom_permission</name></customPermissions>"
+			done
+			xml_content+="<userLicense>Salesforce</userLicense></Profile>"
+			echo "$xml_content" > "$profile"
+		done
+
+		echo -n "Deleting tlz custom permissions assigned on profiles... "
+		mv .forceignore .DISABLED.forceignore # so that profiles can be deployed
+		sf project deploy start -m Profile --ignore-conflicts --ignore-warnings --json --target-org $org_alias > /dev/null
+		mv .DISABLED.forceignore .forceignore
+		git restore "${project_directory}profiles"
+		echo "Done."
 	fi
 }
 
