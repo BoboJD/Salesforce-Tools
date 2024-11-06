@@ -52,7 +52,7 @@ For more detailed documentation, check out the [docs](./docs).
   npm install -g @salesforce/cli
   ```
 
-## Usage
+## Installation of package in your Salesforce org
 
 To deploy the latest version of the unlocked package in your org, use the following command. Replace `VERSIONNUMBER` with the specific version you wish to install and `YOUR_ORG_NAME` with the alias of your Salesforce org.
 
@@ -65,13 +65,31 @@ To deploy the latest version of the unlocked package in your org, use the follow
 
 After deployment, you have to remove every "tlz" custom permissions of Salesforce Tools package which were assigned on Admin profile.
 
-Also, you can add this repository as a subtree of your project to see the components and Apex classes. It will allows you to use the bash scripts to manage org files.
+To use the package's components and Apex classes, reference them with the "tlz" namespace.
+
+## A subtree for your project
+
+You can add this repository as a subtree of your project to see the components and Apex classes. It will allows you to use the bash scripts to manage org files.
 
   ```sh
   git subtree add --prefix=tlz git@github.com:BoboJD/Salesforce-Tools.git master
   ```
 
-To use the package's components and Apex classes, reference them with the "tlz" namespace.
+If you adds files of the subtree in the `.gitignore` of your project, during `subtree pull` you may encounter conflicts. To avoid this conflicts, you can set up `.gitattributes` like this:
+
+  ```sh
+  tlz/* merge=ours
+  ```
+
+And then define the `ours` merge driver in your Git configuration so that Git understands this custom merge behavior:
+
+  ```plaintext
+  [merge "ours"]
+      name = "Keep ours during merge"
+      driver = true
+  ```
+  
+You can add this to your local `.git/config` file (for local use) or to the global `.gitconfig` if you want it to apply to all repositories.
 
 ## Contributing to the Project
 
