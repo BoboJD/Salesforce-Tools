@@ -78,8 +78,9 @@ updating_salesforce_tools_subtree(){
 	local REPO="git@github.com:BoboJD/Salesforce-Tools.git"
 	local BRANCH="master"
 	git fetch $REPO $BRANCH > /dev/null 2>&1
-	local SUBTREE_LATEST=$(git log -n 1 --pretty=format:%H -- "$PREFIX")
-	if git diff --quiet FETCH_HEAD $SUBTREE_LATEST; then
+	local LOCAL_COMMIT=$(git log -n 1 --pretty=format:%H -- "$PREFIX")
+	local REMOTE_COMMIT=$(git log -n 1 --pretty=format:%H "$REPO/$BRANCH" -- "$PREFIX")
+	if [ "$LOCAL_COMMIT" = "$REMOTE_COMMIT" ]; then
 		echo -e "${RYellow}Already up-to-date.${NC}"
 	else
 		echo -n "New commits were added, pulling... "
