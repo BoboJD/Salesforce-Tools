@@ -73,17 +73,23 @@ main(){
 }
 
 updating_salesforce_tools_subtree(){
+	echo -ne "\nVerifying if ${RBlue}Salesforce Tools${NC} has new commits... "
 	local PREFIX="tlz"
 	local REPO="git@github.com:BoboJD/Salesforce-Tools.git"
 	local BRANCH="master"
-	echo -ne "\nFetching ${RGreen}Salesforce-Tools${NC} subtree... "
 	git fetch $REPO $BRANCH > /dev/null 2>&1
-	echo "Done."
 	local SUBTREE_LATEST=$(git log -n 1 --pretty=format:%H -- "$PREFIX")
-	if ! git diff --quiet FETCH_HEAD $SUBTREE_LATEST; then
-		echo -n "Subtree has changed. Pulling the latest changes... "
-		git subtree pull --prefix="$PREFIX" "$REPO" "$BRANCH" -m "Merge subtree" > /dev/null 2>&1
-		echo "Done."
+	if git diff --quiet FETCH_HEAD $SUBTREE_LATEST; then
+		echo -e "${RYellow}Already up-to-date.${NC}"
+	else
+		echo -n "New commits were added, pulling... "
+		mv .gitignore .DISABLED.gitignore
+		git subtree pull --prefix="$PREFIX" "$REPO" "$BRANCH" > /dev/null 2>&1
+		mv .DISABLED.gitignore .gitignore
+		git add $PREFIX > /dev/null
+		git commit -m "Pulled Salesforce Tools new commits" > /dev/null
+		git clean -dfX $PREFIX > /dev/null
+		echo -e "${RGreen}Folder '$PREFIX' updated.${NC}"
 	fi
 }
 
