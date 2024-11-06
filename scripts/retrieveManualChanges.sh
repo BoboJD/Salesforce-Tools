@@ -83,12 +83,7 @@ updating_salesforce_tools_subtree(){
 		echo -e "${RYellow}Already up-to-date.${NC}"
 	else
 		echo -n "New commits were added, pulling... "
-		mv .gitignore .DISABLED.gitignore
-		git subtree pull --prefix="$PREFIX" "$REPO" "$BRANCH" > /dev/null 2>&1
-		mv .DISABLED.gitignore .gitignore
-		git add $PREFIX > /dev/null
-		git commit -m "Pulled Salesforce Tools new commits" > /dev/null
-		git clean -dfX $PREFIX > /dev/null
+		git subtree pull --prefix="$PREFIX" "$REPO" "$BRANCH" -m "Pulled Salesforce Tools new commits" > /dev/null 2>&1
 		echo -e "${RGreen}Folder '$PREFIX' updated.${NC}"
 	fi
 }
