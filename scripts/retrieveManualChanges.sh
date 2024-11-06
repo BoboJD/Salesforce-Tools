@@ -179,14 +179,13 @@ check_org_type(){
 
 update_npm_packages(){
 	if [[ $(yq eval '.features.auto_update_settings.check_npm_packages_update // "null"' "$config_file") = "true" ]]; then
-		echo -e "\nChecking if ${RBlue}npm packages${NC} have update... "
-		update_info=$(ncu)
-		if [[ $update_info == *"dependencies match the latest package versions"* ]]; then
-			echo "All dependencies are up to date."
+		echo -ne "\nChecking if ${RBlue}npm packages${NC} have update... "
+		ncu --upgrade --silent
+		if git diff --quiet package.json; then
+			echo -e "${RYellow}All dependencies are up to date.${NC}"
 		else
-			echo "Updates detected."
-			ncu -u
-			npm install --force
+			echo "Updates detected in package.json, starting installation..."
+			npm install --force --loglevel=error
 		fi
 	fi
 }

@@ -391,7 +391,7 @@ checking_salesforce_cli_configuration(){
 checking_node_modules(){
 	if [ ! -d "node_modules" ]; then
 		echo -e "Installing ${RBlue}node modules${NC}..."
-		npm install --force
+		npm install --force --loglevel=error
 	fi
 }
 
