@@ -10,8 +10,9 @@ global class FilePreview{
 	@AuraEnabled global String extension;
 	@AuraEnabled global String previewLink;
 	@AuraEnabled global Boolean selected;
+	@AuraEnabled global Boolean hasDeleteAccess;
 
-	global FilePreview(ContentVersion contentVersion, Id contentDocumentLinkId){
+	global FilePreview(ContentVersion contentVersion, Id contentDocumentLinkId, Boolean hasDeleteAccess){
 		id = contentVersion.Id;
 		documentId = contentVersion.ContentDocumentId;
 		this.contentDocumentLinkId = contentDocumentLinkId;
@@ -22,6 +23,7 @@ global class FilePreview{
 		extension = contentVersion.FileExtension?.toLowerCase();
 		previewLink = hasPreview() ? '/sfc/servlet.shepherd/version/renditionDownload?rendition=THUMB120BY90&versionId='+contentVersion.Id+'&operationContext=CHATTER&page=0' : null;
 		selected = false;
+		this.hasDeleteAccess = hasDeleteAccess;
 	}
 
 	private void initSize(ContentVersion contentVersion){

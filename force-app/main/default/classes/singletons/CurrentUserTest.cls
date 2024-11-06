@@ -49,7 +49,7 @@ private class CurrentUserTest{
 	}
 
 	@IsTest
-	static void canEditRecordShouldReturnFalse(){
+	static void canEditRecordWithFakeIdShouldReturnFalse(){
 		User standardUser = UserBuilder.newStandardUser().withAdmin(true).build();
 		System.runAs(standardUser){
 			Id fakeId = fflib_IDGenerator.generate(Schema.Account.SObjectType);
@@ -77,7 +77,7 @@ private class CurrentUserTest{
 	}
 
 	@IsTest
-	static void canEditRecordsShouldReturnFalse(){
+	static void canEditRecordsWithFakeIdShouldReturnFalse(){
 		User standardUser = UserBuilder.newStandardUser().withAdmin(true).build();
 		System.runAs(standardUser){
 			Id fakeId = fflib_IDGenerator.generate(Schema.Account.SObjectType);
@@ -87,6 +87,34 @@ private class CurrentUserTest{
 			Test.stopTest();
 
 			Assert.isFalse(editRightByRecordId.get(fakeId));
+		}
+	}
+
+	@IsTest
+	static void canDeleteRecordsShouldReturnTrue(){
+		User standardUser = UserBuilder.newStandardUser().withAdmin(true).build();
+		System.runAs(standardUser){
+			Account account = AccountBuilder.newAccount().build();
+
+			Test.startTest();
+			Map<Id, Boolean> deleteRightByRecordId = CurrentUser.canDeleteRecords(new Set<Id>{account.Id});
+			Test.stopTest();
+
+			Assert.isTrue(deleteRightByRecordId.get(account.Id));
+		}
+	}
+
+	@IsTest
+	static void canDeleteRecordsWithFakeIdShouldReturnFalse(){
+		User standardUser = UserBuilder.newStandardUser().withAdmin(true).build();
+		System.runAs(standardUser){
+			Id fakeId = fflib_IDGenerator.generate(Schema.Account.SObjectType);
+
+			Test.startTest();
+			Map<Id, Boolean> deleteRightByRecordId = CurrentUser.canDeleteRecords(new Set<Id>{fakeId});
+			Test.stopTest();
+
+			Assert.isFalse(deleteRightByRecordId.get(fakeId));
 		}
 	}
 }

@@ -336,6 +336,10 @@ global class Mocks{
 		global Map<Id, Boolean> canEditRecords(Id userId, Set<Id> recordIds){
 			return (Map<Id, Boolean>)mocks.mockNonVoidMethod(this, 'canEditRecords', new List<Type>{Id.class, Set<Id>.class}, new List<Object>{userId, recordIds});
 		}
+
+		global Map<Id, Boolean> canDeleteRecords(Id userId, Set<Id> recordIds){
+			return (Map<Id, Boolean>)mocks.mockNonVoidMethod(this, 'canDeleteRecords', new List<Type>{Id.class, Set<Id>.class}, new List<Object>{userId, recordIds});
+		}
 	}
 
 	global class tlz_UsersSelector extends fflib_SObjectMocks.SObjectSelector implements tlz_IUsersSelector{

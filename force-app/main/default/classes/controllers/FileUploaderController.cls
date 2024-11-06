@@ -17,10 +17,12 @@ global with sharing class FileUploaderController{
 	global static List<FilePreview> getFiles(Id recordId){
 		Map<Id, Id> contentDocumentLinkIdByContentDocumentId = mapContentDocumentLinkIdByContentDocumentId(new Set<Id>{ recordId });
 		Set<Id> contentDocumentIds = contentDocumentLinkIdByContentDocumentId.keySet();
+		Map<Id, Boolean> hasDeleteAccessByContentDocumentId = CurrentUser.canDeleteRecords(contentDocumentIds);
 		List<FilePreview> files = new List<FilePreview>();
 		for(ContentVersion contentVersion : tlz_ContentVersionsSelector.newInstance().selectLatestByContentDocumentIds(contentDocumentIds)){
 			Id contentDocumentLinkId = contentDocumentLinkIdByContentDocumentId.get(contentVersion.ContentDocumentId);
-			files.add(new FilePreview(contentVersion, contentDocumentLinkId));
+			Boolean hasDeleteAccess = hasDeleteAccessByContentDocumentId.get(contentVersion.ContentDocumentId);
+			files.add(new FilePreview(contentVersion, contentDocumentLinkId, hasDeleteAccess));
 		}
 		return files;
 	}
@@ -42,7 +44,7 @@ global with sharing class FileUploaderController{
 			if(!contentDocumentLinksByContentDocumentId.isEmpty()){
 				fflib_ISObjectUnitOfWork uow = Application.UnitOfWork.newInstance(new List<SObjectType>{ ContentDocument.SObjectType, ContentDocumentLink.SObjectType });
 				for(FilePreview filePreview : filePreviews){
-					if(fileIsRelatedToOtherSObject(filePreview, contentDocumentLinksByContentDocumentId))
+					if(fileIsRelatedToOtherSObject(filePreview, contentDocumentLinksByContentDocumentId) || !FilePreview.hasDeleteAccess)
 						uow.registerDeleted(new ContentDocumentLink(Id = filePreview.contentDocumentLinkId));
 					else
 						uow.registerDeleted(new ContentDocument(Id = filePreview.documentId));

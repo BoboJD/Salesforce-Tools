@@ -6,6 +6,7 @@ global inherited sharing class tlz_UserRecordAccessesSelector extends fflib_SObj
 
 	global override List<SObjectField> getSObjectFieldList(){
 		return new List<SObjectField>{
+			UserRecordAccess.HasDeleteAccess,
 			UserRecordAccess.HasEditAccess,
 			UserRecordAccess.RecordId
 		};
@@ -35,6 +36,18 @@ global inherited sharing class tlz_UserRecordAccessesSelector extends fflib_SObj
 				.setOrdering(Schema.UserRecordAccess.RecordId, fflib_QueryFactory.SortOrder.ASCENDING);
 			for(UserRecordAccess access : Database.query(queryFactory.toSOQL()))
 				editRightByRecordId.put(access.RecordId, access.HasEditAccess);
+		}
+		return editRightByRecordId;
+	}
+
+	global Map<Id, Boolean> canDeleteRecords(Id userId, Set<Id> recordIds){
+		Map<Id, Boolean> editRightByRecordId = new Map<Id, Boolean>();
+		if(userId != null && !recordIds.isEmpty()){
+			fflib_QueryFactory queryFactory = newQueryFactory()
+				.setCondition('UserId = :userId AND RecordId IN :recordIds')
+				.setOrdering(Schema.UserRecordAccess.RecordId, fflib_QueryFactory.SortOrder.ASCENDING);
+			for(UserRecordAccess access : Database.query(queryFactory.toSOQL()))
+				editRightByRecordId.put(access.RecordId, access.HasDeleteAccess);
 		}
 		return editRightByRecordId;
 	}

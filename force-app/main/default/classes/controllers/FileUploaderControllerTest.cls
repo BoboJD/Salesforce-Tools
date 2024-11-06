@@ -85,8 +85,8 @@ private class FileUploaderControllerTest{
 		};
 
 		String filesToDeleteJSON = JSON.serialize(new List<FilePreview>{
-			new FilePreview(new ContentVersion(ContentDocumentId = contentDocumentId), contentDocumentLinkToDeleteId),
-			new FilePreview(new ContentVersion(ContentDocumentId = contentDocumentToDeleteId), contentDocumentLinkId)
+			new FilePreview(new ContentVersion(ContentDocumentId = contentDocumentId), contentDocumentLinkToDeleteId, true),
+			new FilePreview(new ContentVersion(ContentDocumentId = contentDocumentToDeleteId), contentDocumentLinkId, true)
 		});
 
 		mocks.startStubbing();
