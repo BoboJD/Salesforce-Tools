@@ -488,7 +488,7 @@ remove_tlz_custom_permissions_on_admin(){
 		mkdir "${project_directory}profiles/"
 		profiles_dir_created=true
 	fi
-	if [ ! -f "$profile_file" ]; then
+	if [ ! -f "$admin_profile" ]; then
 		admin_profile_created=true
 	fi
 
