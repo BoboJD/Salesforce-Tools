@@ -72,24 +72,8 @@ To use the package's components and Apex classes, reference them with the "tlz" 
 You can add this repository as a subtree of your project to see the components and Apex classes. It will allows you to use the bash scripts to manage org files.
 
   ```sh
-  git subtree add --prefix=tlz git@github.com:BoboJD/Salesforce-Tools.git master
+  git subtree add --prefix=tlz git@github.com:BoboJD/Salesforce-Tools.git master --squash
   ```
-
-If you adds files of the subtree in the `.gitignore` of your project, during `subtree pull` you may encounter conflicts. To avoid this conflicts, you can set up `.gitattributes` like this:
-
-  ```sh
-  tlz/* merge=ours
-  ```
-
-And then define the `ours` merge driver in your Git configuration so that Git understands this custom merge behavior:
-
-  ```plaintext
-  [merge "ours"]
-      name = "Keep ours during merge"
-      driver = true
-  ```
-  
-You can add this to your local `.git/config` file (for local use) or to the global `.gitconfig` if you want it to apply to all repositories.
 
 ## Contributing to the Project
 
