@@ -125,6 +125,12 @@ get_org_details() {
 	fi
 }
 
+## get_org_alias
+get_org_alias(){
+	get_org_details
+	echo $(echo "$org_details" | jq -r '.result.alias')
+}
+
 ## check_production_org
 check_production_org(){
 	get_org_details
