@@ -4,6 +4,7 @@ import label from './labels';
 export default class Modal extends LightningElement{
 	@api theme;
 	@api title;
+	@api subtitle;
 	@api message;
 	@api confirmLabel = label.Continue;
 	@api noPadding = false;

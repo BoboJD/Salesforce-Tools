@@ -3,6 +3,8 @@ import label from './labels';
 
 export default class ModalContainer extends LightningElement{
 	@api theme;
+	@api title;
+	@api subtitle;
 	@api message;
 	@api closeLabel = label.Cancel;
 	@api confirmLabel = label.Continue;

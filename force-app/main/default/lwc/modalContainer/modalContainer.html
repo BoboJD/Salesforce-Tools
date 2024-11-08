@@ -14,6 +14,7 @@
 			<h2 class="slds-text-heading_small">
 				<template lwc:if={title}>{title}</template>
 				<template lwc:else><slot name="title"></slot></template>
+				<p if:true={subtitle} class="slds-m-top_x-small">{subtitle}</p>
 			</h2>
 		</header>
 		<div class={contentClass}>
