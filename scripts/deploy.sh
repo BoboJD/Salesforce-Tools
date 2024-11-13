@@ -134,6 +134,9 @@ deploy_files_into_current_org(){
 		display_duration_of_script
 		if [[ -n "$shutdown" || "$option" = "-s" || "$option" = "--shut-down" ]]; then
 			shutdown /s /t 0
+		else
+			local deploy_url=$(echo "$deploy_files_result" | jq -r '.result.deployUrl')
+			sf org open -p "$deploy_url"
 		fi
 		exit 1
 	fi
