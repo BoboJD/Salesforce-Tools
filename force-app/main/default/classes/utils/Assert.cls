@@ -43,6 +43,14 @@ global with sharing class Assert{
 		System.Assert.isFalse(objects?.isEmpty(), 'List is empty');
 	}
 
+	global static void isEmpty(Set<Object> objects){
+		System.Assert.isTrue(objects?.isEmpty(), 'Set is not empty');
+	}
+
+	global static void isNotEmpty(Set<Object> objects){
+		System.Assert.isFalse(objects?.isEmpty(), 'Set is empty');
+	}
+
 	global static void success(Map<String, Object> result){
 		System.Assert.areEqual(Constants.SUCCESS, result.get(Constants.STATUS), 'Error occured : '+(String)result.get(Constants.MESSAGE));
 	}
