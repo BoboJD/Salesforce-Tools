@@ -48,7 +48,7 @@ private class UserPermissionSetTest{
 		Test.stopTest();
 
 		List<PermissionSetAssignment> assignedPermissionSets = getAssignedPermissionSets(standardUser);
-		Assert.isTrue(assignedPermissionSets.isEmpty());
+		Assert.isEmpty(assignedPermissionSets);
 	}
 
 	@IsTest

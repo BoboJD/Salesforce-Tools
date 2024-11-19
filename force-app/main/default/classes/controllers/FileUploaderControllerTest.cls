@@ -52,7 +52,7 @@ private class FileUploaderControllerTest{
 		Assert.equals('MB', filePreviews[0].sizeUnit);
 		Assert.isTrue(filePreviews[0].previewLink.contains('/sfc/servlet.shepherd/version'));
 		List<DecoratedPicklistEntry> fileTypes = (List<DecoratedPicklistEntry>)utilityData.get('fileTypes');
-		Assert.isFalse(fileTypes?.isEmpty());
+		Assert.isNotEmpty(fileTypes);
 		Assert.isTrue(utilityData.get('isAdmin'));
 		Assert.isTrue(utilityData.containsKey('hasEditAccess'));
 		Assert.isTrue(utilityData.containsKey('config'));

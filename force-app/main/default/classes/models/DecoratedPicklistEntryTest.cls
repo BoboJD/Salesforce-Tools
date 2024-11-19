@@ -38,7 +38,7 @@ private class DecoratedPicklistEntryTest{
 		List<DecoratedPicklistEntry> picklistEntries = new List<DecoratedPicklistEntry>();
 		for(Schema.PicklistEntry entry : Log__c.Type__c.getDescribe(FieldDescribeOptions.DEFAULT).getPicklistValues())
 			picklistEntries.add(DecoratedPicklistEntry.newInstanceFromPicklistEntry(entry));
-		Assert.isFalse(picklistEntries.isEmpty());
+		Assert.isNotEmpty(picklistEntries);
 
 		Log__c log = new Log__c(
 			Type__c = LogConstants.TYPE_APEX,

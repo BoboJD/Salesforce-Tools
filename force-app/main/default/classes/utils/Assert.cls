@@ -35,6 +35,14 @@ global with sharing class Assert{
 		System.Assert.isNotNull(obj, 'Argument is "null"');
 	}
 
+	global static void isEmpty(List<Object> objects){
+		System.Assert.isTrue(objects?.isEmpty(), 'List is not empty');
+	}
+
+	global static void isNotEmpty(List<Object> objects){
+		System.Assert.isFalse(objects?.isEmpty(), 'List is empty');
+	}
+
 	global static void success(Map<String, Object> result){
 		System.Assert.areEqual(Constants.SUCCESS, result.get(Constants.STATUS), 'Error occured : '+(String)result.get(Constants.MESSAGE));
 	}
@@ -64,6 +72,13 @@ global with sharing class Assert{
 		errorWithMessage(result, message);
 		List<Log__c> logs = [SELECT Id FROM Log__c];
 		System.Assert.areEqual(1, logs.size(), 'No log created.');
+	}
+
+	global static void logsCreated(Integer numberOfLogs){
+		List<Log__c> logs = [SELECT Id FROM Log__c];
+		if(numberOfLogs > 0)
+			System.Assert.isFalse(logs?.isEmpty(), 'No log created.');
+		System.Assert.areEqual(numberOfLogs, logs.size(), 'Expected '+numberOfLogs+' log(s), Actual : '+logs.size()+'+ logs(s)');
 	}
 
 	global static void messageContains(String message, String searchedTerm){

@@ -21,8 +21,7 @@ private class LogFactoryControllerTest{
 			LogFactoryController.commitError(JSON.serialize(error));
 			Test.stopTest();
 
-			List<Log__c> logs = [SELECT Id FROM Log__c];
-			Assert.equals(1, logs.size());
+			Assert.logsCreated(1);
 		}
 	}
 }

@@ -16,8 +16,7 @@ private class FeatureManagementServiceTest{
 	@IsTest
 	static void checkPermissionWithPermissionSetAssignedShouldReturnTrue(){
 		User standardUser = UserBuilder.newStandardUser().build();
-		PermissionSet bypassChatterNotification = [SELECT Id FROM PermissionSet WHERE Name = :PermissionConstants.BYPASS_CHATTER_NOTIFICATION.removeStart('tlz__') LIMIT 1];
-		insert new PermissionSetAssignment(AssigneeId = standardUser.Id, PermissionSetId = bypassChatterNotification.Id);
+		TestUtils.assignPermission(standardUser, PermissionConstants.BYPASS_CHATTER_NOTIFICATION.removeStart('tlz__'));
 		System.runAs(standardUser){
 			Test.startTest();
 			Boolean hasPermission = FeatureManagementService.checkPermission(PermissionConstants.BYPASS_CHATTER_NOTIFICATION);

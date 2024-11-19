@@ -22,7 +22,7 @@ private class DatacloudServiceTest{
 			List<SObject> duplicatesRecords = DatacloudService.findDuplicates(contact);
 			Test.stopTest();
 
-			Assert.isTrue(duplicatesRecords.isEmpty());
+			Assert.isEmpty(duplicatesRecords);
 		}
 	}
 
@@ -37,7 +37,7 @@ private class DatacloudServiceTest{
 			List<SObject> duplicatesRecords = DatacloudService.findDuplicates(contact);
 			Test.stopTest();
 
-			Assert.isFalse(duplicatesRecords.isEmpty());
+			Assert.isNotEmpty(duplicatesRecords);
 		}
 	}
 }

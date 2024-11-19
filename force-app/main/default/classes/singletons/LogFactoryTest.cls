@@ -37,8 +37,7 @@ private class LogFactoryTest{
 		LogFactory.instance().logError(LogFactoryTest.class, 'test', null, new CustomException()).commitWork();
 		Test.stopTest();
 
-		List<Log__c> logs = [SELECT Id FROM Log__c];
-		Assert.equals(1, logs.size());
+		Assert.logsCreated(1);
 	}
 
 	@IsTest
@@ -47,8 +46,7 @@ private class LogFactoryTest{
 		LogFactory.instance().logComponentError('url', 'Large', 'component', 'method', 'details').commitWork();
 		Test.stopTest();
 
-		List<Log__c> logs = [SELECT Id FROM Log__c];
-		Assert.equals(1, logs.size());
+		Assert.logsCreated(1);
 	}
 
 	@IsTest
@@ -78,8 +76,7 @@ private class LogFactoryTest{
 		LogFactory.instance().logError(LogFactoryTest.class, 'test', new List<Object>{UserInfo.getUserId()}, new CustomException()).commitWork();
 		Test.stopTest();
 
-		List<Log__c> logs = [SELECT Id FROM Log__c];
-		Assert.equals(1, logs.size());
+		Assert.logsCreated(1);
 	}
 
 	@IsTest
@@ -88,8 +85,7 @@ private class LogFactoryTest{
 		LogFactory.instance().logError(LogFactoryTest.class, 'test', new List<Object>{new User()}, new CustomException()).commitWork();
 		Test.stopTest();
 
-		List<Log__c> logs = [SELECT Id FROM Log__c];
-		Assert.equals(1, logs.size());
+		Assert.logsCreated(1);
 	}
 
 	@IsTest
@@ -98,8 +94,7 @@ private class LogFactoryTest{
 		LogFactory.instance().logError(LogFactoryTest.class, 'test', new List<Object>{new User(), UserInfo.getUserId(), 'test'}, new CustomException()).commitWork();
 		Test.stopTest();
 
-		List<Log__c> logs = [SELECT Id FROM Log__c];
-		Assert.equals(1, logs.size());
+		Assert.logsCreated(1);
 	}
 
 	@IsTest
@@ -108,8 +103,7 @@ private class LogFactoryTest{
 		LogFactory.instance().commitWork();
 		Test.stopTest();
 
-		List<Log__c> logs = [SELECT Id FROM Log__c];
-		Assert.equals(0, logs.size());
+		Assert.logsCreated(0);
 	}
 
 	@IsTest
@@ -118,7 +112,6 @@ private class LogFactoryTest{
 		LogFactory.commitError(LogFactoryTest.class, 'test', null, new CustomException());
 		Test.stopTest();
 
-		List<Log__c> logs = [SELECT Id FROM Log__c];
-		Assert.equals(1, logs.size());
+		Assert.logsCreated(1);
 	}
 }
