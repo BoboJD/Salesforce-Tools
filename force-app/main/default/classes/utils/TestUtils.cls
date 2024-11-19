@@ -52,6 +52,18 @@ global class TestUtils{
 		return randomString;
 	}
 
+	global static void bypassValidationRules(User user){
+		assignPermission(user, PermissionConstants.BYPASS_VALIDATION_RULES);
+	}
+
+	global static void assignPermission(User user, String permissionSetName){
+		PermissionSet permissionSet = [SELECT Id FROM PermissionSet WHERE Name = :permissionSetName];
+		insert new PermissionSetAssignment(
+			AssigneeId = user.Id,
+			PermissionSetId = permissionSet.Id
+		);
+	}
+
 	global static Account selectAccount(){
 		return [SELECT Id FROM Account WHERE Name = 'TestAccount' LIMIT 1];
 	}
