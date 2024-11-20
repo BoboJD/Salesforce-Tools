@@ -53,7 +53,7 @@ global class TestUtils{
 	}
 
 	global static void bypassValidationRules(User testUser){
-		assignPermission(testUser, PermissionConstants.BYPASS_VALIDATION_RULES);
+		assignPermission(testUser, PermissionConstants.BYPASS_VALIDATION_RULES.removeStart('tlz__'));
 	}
 
 	global static void assignPermission(User testUser, String permissionSetName){
