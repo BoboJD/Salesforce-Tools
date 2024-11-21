@@ -3,7 +3,7 @@
 }
 
 :host.fixed-position{
-    position: fixed;
+	position: fixed;
 	top: 0;
 	right: 0;
 	bottom: 0;
@@ -18,6 +18,10 @@
 }
 
 .slds-modal__content{
+	min-height: 100px;
+}
+
+.slds-modal__content.min-content-height{
 	min-height: 200px;
 }
 

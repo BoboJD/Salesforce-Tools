@@ -1,0 +1,12 @@
+<template>
+	<c-modal-container
+		position="action"
+		title="Test Modal"
+		subtitle="Just some test"
+		confirm-label="Display spinner"
+		is-loading={isLoading}
+		onclosemodal={closeQuickAction}
+		onconfirm={toggleSpinner}
+		enable-spinner
+	></c-modal-container>
+</template>

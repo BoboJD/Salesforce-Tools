@@ -53,12 +53,12 @@ export default class Page extends LightningElement{
 	// Public Methods
 	@api
 	showSpinner(){
-		displaySpinner(this);
+		displaySpinner(this, false);
 	}
 
 	@api
 	hideSpinner(){
-		hideSpinner(this);
+		hideSpinner(this, false);
 	}
 
 	@api

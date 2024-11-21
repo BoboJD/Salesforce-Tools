@@ -10,6 +10,8 @@ export default class Modal extends LightningElement{
 	@api isLoading = false;
 	@api noPadding = false;
 	@api hideConfirm = false;
+	@api enableSpinner = false;
+	@api hideSpinnerByDefault = false;
 
 	get noMessage(){
 		return !this.message;

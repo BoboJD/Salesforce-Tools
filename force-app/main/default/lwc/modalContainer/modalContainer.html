@@ -17,7 +17,8 @@
 				<p if:true={subtitle} class="slds-m-top_x-small">{subtitle}</p>
 			</h2>
 		</header>
-		<div class={contentClass}>
+		<div class={contentClass} onscroll={setScrollingHeight}>
+			<c-spinner if:true={enableSpinner} top={scrollingHeight} hide-by-default={hideSpinnerByDefault} size="small"></c-spinner>
 			<template lwc:if={message}>{message}</template>
 			<template lwc:else><slot></slot></template>
 		</div>

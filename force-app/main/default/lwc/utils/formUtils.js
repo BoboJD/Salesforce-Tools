@@ -35,8 +35,13 @@ const setValue = (form, property, value) => {
 	}
 };
 
+const wait = seconds => {
+	return new Promise(resolve => setTimeout(resolve, seconds * 1000));
+};
+
 export {
 	functionExist,
 	checkRequiredFields,
-	setValue
+	setValue,
+	wait
 };
