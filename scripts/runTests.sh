@@ -18,6 +18,7 @@ main(){
 	else
 		run_test_and_store_id
 	fi
+	trap ctrl_c SIGINT
 	if [ "$option" = "--output-file" ]; then
 		output_file="test_output.txt" > $output_file
 	fi
@@ -48,10 +49,25 @@ run_test_and_store_id(){
 	echo -e "Test run id : ${BYellow}${test_run_id}${NC}\n"
 }
 
+ctrl_c(){
+	echo -ne "\n${RYellow}Aborting tests... ${NC}"
+	apex_file=$(mktemp)
+cat <<EOF > "$apex_file"
+List<ApexTestQueueItem> queues = [SELECT Id FROM ApexTestQueueItem WHERE ParentJobId = '${test_run_id}'];
+for(ApexTestQueueItem queue : queues){
+	queue.Status = 'ABORTED';
+}
+update queues;
+EOF
+	sf apex run --file "$apex_file" > /dev/null 2>&1
+	echo -e "${RYellow}Done${NC}"
+	exit 1
+}
+
 extract_test_result(){
 	echo -e "Extracting result of test ${RYellow}${test_run_id}${NC}..."
 	test_folder="testresults/"
-	sf apex get test --test-run-id $test_run_id --code-coverage --result-format json --output-dir $test_folder > /dev/null
+	sf apex get test --test-run-id $test_run_id --code-coverage --result-format json --output-dir $test_folder > /dev/null 2>&1
 	test_file="${test_folder}test-result-${test_run_id}.json"
 }
 
