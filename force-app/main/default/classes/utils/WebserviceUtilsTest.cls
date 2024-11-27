@@ -11,6 +11,7 @@ private class WebserviceUtilsTest{
 		Test.stopTest();
 
 		Assert.equals('{}', response.getBody());
+		Assert.equals(1, LogFactory.instance().logs.size());
 	}
 
 	@IsTest
@@ -41,5 +42,32 @@ private class WebserviceUtilsTest{
 		Test.stopTest();
 
 		Assert.equals('{}', response.getBody());
+		Assert.equals(1, LogFactory.instance().logs.size());
+	}
+
+	@IsTest
+	static void sendWithoutLogShouldReturnAnHttpResponse(){
+		Test.setMock(HttpCalloutMock.class, MockHttpResponseGenerator.initStringResponse(
+			WebserviceConstants.APPLICATION_JSON, 200, '{}'
+		));
+		Test.startTest();
+		HttpResponse response = WebserviceUtils.sendWithoutLog(new HttpRequest());
+		Test.stopTest();
+
+		Assert.equals('{}', response.getBody());
+		Assert.isEmpty(LogFactory.instance().logs);
+	}
+
+	@IsTest
+	static void sendWithoutLogAndHandleErrorShouldNotThrowAnException(){
+		Test.setMock(HttpCalloutMock.class, MockHttpResponseGenerator.initStringResponse(
+			WebserviceConstants.APPLICATION_JSON, 500, '{}'
+		));
+		Test.startTest();
+		HttpResponse response = WebserviceUtils.sendWithoutLogAndHandleError(new HttpRequest());
+		Test.stopTest();
+
+		Assert.equals('{}', response.getBody());
+		Assert.isEmpty(LogFactory.instance().logs);
 	}
 }
