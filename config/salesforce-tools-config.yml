@@ -19,6 +19,26 @@ org_settings:
   # experience_cloud_used: true
   # org_shape_enable: true
   # profile_used: true
+  translation_used: true
+
+# Translation to remove
+# translation_settings:
+#   sobjects:
+#     Account:
+#       layouts:
+#         - "ELLI Account layout"
+#       quickActions:
+#         - "ESCONNECT__"
+#   untracked:
+#     - "customApplications"
+#     - "customPageWebLinks"
+#     - "customTabs"
+#     - "prompts"
+#     - "reportTypes"
+#   globalQuickActions:
+#     - "Composer_for_Sf1"
+#     - "Conga_Composer_"
+#     - "SearchEngineGlobalActions"
 
 # Data backup
 # data_backup:

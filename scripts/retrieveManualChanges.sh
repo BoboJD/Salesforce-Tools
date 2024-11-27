@@ -15,6 +15,7 @@ fi
 # -e / --exclude-experiences : doesn't retrieve experience files
 # -oc / --only-configuration : only retrieve configuration files
 # -oe / --only-experiences : only retrieve experience files
+# -trad : only retrieve translation files
 # -op / --only-permissions : only retrieve permission files
 # -s / --subtree : only pull subtree changes
 option=$1
@@ -53,6 +54,12 @@ main(){
 	if [[ $(yq eval '.org_settings.experience_cloud_used // "null"' "$config_file") = "true" ]]; then
 		if [[ -z "$option" || "$option" = "-oe" || "$option" = "--only-experiences" ]]; then
 			retrieve_experiences
+		fi
+	fi
+
+	if [[ $(yq eval '.org_settings.translation_used // "null"' "$config_file") = "true" ]]; then
+		if [[ -z "$option" || "$option" = "-e" || "$option" = "--exclude-experiences" || "$option" = "-trad" ]]; then
+			retrieve_translations
 		fi
 	fi
 
@@ -191,22 +198,6 @@ retrieve_configuration(){
 		rm -rf "${project_directory}${dir}"
 	done
 	sf project retrieve start -x manifest/configuration.xml --ignore-conflicts > /dev/null
-	if [ -d "${project_directory}translations" ]; then
-		remove_untracked_xml_blocks_in_translations
-	fi
-}
-
-remove_untracked_xml_blocks_in_translations(){
-	for translation in ${project_directory}translations/*.translation-meta.xml; do
-		sed -n -i '/<customApplications>/,/<\/customApplications>/!p' "$translation"
-		sed -n -i '/<customPageWebLinks>/,/<\/customPageWebLinks>/!p' "$translation"
-		sed -n -i '/<customTabs>/,/<\/customTabs>/!p' "$translation"
-		sed -n -i '/<prompts>/,/<\/prompts>/!p' "$translation"
-		sed -n -i '/<reportTypes>/,/<\/reportTypes>/!p' "$translation"
-		sed -i "/<label><!-- Conga Composer (Deprecated) --><\/label>/{$d;N;N;N;d};P;D" "$translation"
-		sed -i "/<label><!-- Conga Composer SF1 EU --><\/label>/{$d;N;N;N;d};P;D" "$translation"
-		sed -i "/<label><!-- Conga Composer --><\/label>/{$d;N;N;N;d};P;D" "$translation"
-	done
 }
 
 configuration_directories=(
@@ -286,6 +277,88 @@ experiences_directories=(
 	"userCriteria"
 )
 
+retrieve_translations(){
+	echo -e "\nRetrieving ${RPurple}translation${NC}..."
+	for dir in "${translation_directories[@]}"; do
+		rm -rf "${project_directory}${dir}"
+	done
+	sf project retrieve start -x manifest/translation.xml --ignore-conflicts > /dev/null
+	if [[ $(yq eval '.translation_settings // "null"' "$config_file") != "null" ]]; then
+		remove_untracked_xml_blocks_in_translations
+	fi
+}
+
+translation_directories=(
+	"objectTranslations"
+	"standardValueSetTranslations"
+	"translations"
+)
+
+remove_untracked_xml_blocks_in_translations(){
+	if [[ $(yq eval '.translation_settings.sobjects // "null"' "$config_file") != "null" ]]; then
+		for folder in ${project_directory}objectTranslations/*; do
+			if [ -d "$folder" ]; then
+				local sobject=$(basename "$folder" | cut -d'-' -f1)
+				if [[ $(yq eval ".translation_settings.sobjects.$sobject // \"null\"" "$config_file") != "null" ]]; then
+					for objectTranslation in ${folder}/*.objectTranslation-meta.xml; do
+						remove_untracked_layouts "$sobject" "$objectTranslation"
+						remove_untracked_quickActions "$sobject" "$objectTranslation"
+						indent "$objectTranslation"
+					done
+				fi
+			fi
+		done
+	fi
+	for translation in ${project_directory}translations/*.translation-meta.xml; do
+		remove_untracked_xml_tags "$translation"
+		remove_untracked_globalQuickActions "$translation"
+		indent "$translation"
+	done
+}
+
+remove_untracked_layouts(){
+	local sobject=$1
+	local file_path=$2
+	if [[ $(yq eval ".translation_settings.sobjects.${sobject}.layouts // \"null\"" "$config_file") != "null" ]]; then
+		while IFS= read -r layout_to_remove; do
+			xml ed -L -N x="$xml_namespace" -d "//x:layouts[x:layout = \"$layout_to_remove\"]" "$file_path"
+		done < <(yq eval ".translation_settings.sobjects.${sobject}.layouts[]" "$config_file")
+	fi
+}
+
+remove_untracked_quickActions(){
+	local sobject=$1
+	local file_path=$2
+	if [[ $(yq eval ".translation_settings.sobjects.${sobject}.quickActions // \"null\"" "$config_file") != "null" ]]; then
+		while IFS= read -r action_to_remove; do
+			xml ed -L -N x="$xml_namespace" -d "//x:quickActions[starts-with(x:name, \"$action_to_remove\")]" "$file_path"
+		done < <(yq eval ".translation_settings.sobjects.${sobject}.quickActions[]" "$config_file")
+	fi
+}
+
+remove_untracked_xml_tags(){
+	local file_path=$1
+	if [[ $(yq eval '.translation_settings.untracked // "null"' "$config_file") != "null" ]]; then
+		while IFS= read -r untracked; do
+			xml ed -L -N x="$xml_namespace" -d "//x:$untracked" "$translation"
+		done < <(yq eval '.translation_settings.untracked[]' "$config_file")
+	fi
+}
+
+remove_untracked_globalQuickActions(){
+	local file_path=$1
+	if [[ $(yq eval '.translation_settings.globalQuickActions // "null"' "$config_file") != "null" ]]; then
+		while IFS= read -r action_to_remove; do
+			xml ed -L -N x="$xml_namespace" -d "//x:globalQuickActions[starts-with(x:name, \"$action_to_remove\")]" "$file_path"
+		done < <(yq eval '.translation_settings.globalQuickActions[]' "$config_file")
+	fi
+}
+
+indent(){
+	local file_path=$1
+	xml fo --indent-spaces 4 "$file_path" > "${file_path}.tmp" && mv "${file_path}.tmp" "$file_path"
+}
+
 retrieve_permissions(){
 	echo -e "\nRetrieving ${RRed}permissions${NC}..."
 	for dir in "${permissions_directories[@]}"; do
@@ -323,7 +396,7 @@ retrieve_profiles(){
 				xml ed -L -N x="$xml_namespace" -d "//*/x:$unnecessary_permission" "$profile"
 			done < <(yq eval '.unnecessary_permissions_to_delete[]' "$config_file")
 		fi
-		xml fo --indent-spaces 4 "$profile" > "${profile}.tmp" && mv "${profile}.tmp" "$profile"
+		indent "$profile"
 	done
 	echo "Done."
 }
