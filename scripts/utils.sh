@@ -157,16 +157,27 @@ check_sandbox_org() {
   	check_if_org_is_of_type "sandbox"
 }
 
-# Methods for deploy script
+# Methods to handle metadata in script
+## delete_folders
+delete_folders(){
+	local xml_file="$1"
+	while read -r metadata_type; do
+		metadata_type=$(echo "$metadata_type" | xargs)
+		folder=$(find_folder_name_by_metadata_type "$metadata_type")
+		if [ -n "$folder" ]; then
+			rm -rf "${project_directory}${folder}"
+		fi
+	done < <(xml sel -t -m "//*[local-name()='name']" -v . -n "$xml_file")
+}
+
 ## find_metadata_type_by_folder_name
 find_metadata_type_by_folder_name(){
 	local folder="$1"
-
 	declare -A folder_to_type_mapping
-
 	folder_to_type_mapping=(
 		["animationRules"]="AnimationRule"
 		["applications"]="CustomApplication"
+		["audience"]="Audience"
 		["aura"]="AuraDefinitionBundle"
 		["brandingSets"]="BrandingSet"
 		["cachePartitions"]="PlatformCachePartition"
@@ -181,6 +192,7 @@ find_metadata_type_by_folder_name(){
 		["customPermissions"]="CustomPermission"
 		["duplicateRules"]="DuplicateRule"
 		["email"]="EmailTemplate"
+		["experiences"]="ExperienceBundle"
 		["fields"]="CustomField"
 		["flexipages"]="FlexiPage"
 		["flows"]="Flow"
@@ -192,8 +204,14 @@ find_metadata_type_by_folder_name(){
 		["lightningExperienceThemes"]="LightningExperienceTheme"
 		["listViews"]="ListView"
 		["lwc"]="LightningComponentBundle"
+		["managedTopics"]="ManagedTopics"
+		["moderation"]="ModerationRule"
+		["navigationMenus"]="NavigationMenu"
+		["networkBranding"]="NetworkBranding"
+		["networks"]="Network"
 		["notificationtypes"]="CustomNotificationType"
 		["objects"]="CustomObject"
+		["objectTranslations"]="CustomObjectTranslation"
 		["pages"]="ApexPage"
 		["pathAssistants"]="PathAssistant"
 		["permissionsetgroups"]="PermissionSetGroup"
@@ -203,15 +221,87 @@ find_metadata_type_by_folder_name(){
 		["recordTypes"]="RecordType"
 		["remoteSiteSettings"]="RemoteSiteSetting"
 		["roles"]="Role"
+		["sites"]="SiteDotCom"
+		["standardValueSetTranslations"]="StandardValueSetTranslation"
 		["staticresources"]="StaticResource"
 		["tabs"]="CustomTab"
+		["territory2Models"]="Territory2Model"
+		["territory2Types"]="Territory2Type"
+		["translations"]="Translations"
 		["triggers"]="ApexTrigger"
+		["userCriteria"]="UserCriteria"
 		["validationRules"]="ValidationRule"
 		["webLinks"]="WebLink"
 	)
+	local metadata_type="${folder_to_type_mapping[$folder]}"
+	echo "${metadata_type:-}"
+}
 
-	folder_type="${folder_to_type_mapping[$folder]}"
-	echo "${folder_type:-}"
+## find_folder_name_by_metadata_type
+find_folder_name_by_metadata_type(){
+	local metadata_type="$1"
+	declare -A type_to_folder_mapping
+	type_to_folder_mapping=(
+		["AnimationRule"]="animationRules"
+		["ApexClass"]="classes"
+		["ApexComponent"]="components"
+		["ApexPage"]="pages"
+		["ApexTrigger"]="triggers"
+		["Audience"]="audience"
+		["AuraDefinitionBundle"]="aura"
+		["BrandingSet"]="brandingSets"
+		["CallCenter"]="callCenters"
+		["CompactLayout"]="compactLayouts"
+		["ContentAsset"]="contentassets"
+		["CorsWhitelistOrigin"]="corsWhitelistOrigins"
+		["CspTrustedSite"]="cspTrustedSites"
+		["CustomApplication"]="applications"
+		["CustomField"]="fields"
+		["CustomLabel"]="label"
+		["CustomMetadata"]="customMetadata"
+		["CustomNotificationType"]="notificationtypes"
+		["CustomObject"]="objects"
+		["CustomObjectTranslation"]="objectTranslations"
+		["CustomPermission"]="customPermissions"
+		["CustomTab"]="tabs"
+		["DuplicateRule"]="duplicateRules"
+		["EmailTemplate"]="email"
+		["ExperienceBundle"]="experiences"
+		["FlexiPage"]="flexipages"
+		["Flow"]="flows"
+		["GlobalValueSet"]="globalValueSets"
+		["Group"]="groups"
+		["Layout"]="layouts"
+		["Letterhead"]="letterhead"
+		["LightningComponentBundle"]="lwc"
+		["LightningExperienceTheme"]="lightningExperienceThemes"
+		["ListView"]="listViews"
+		["ManagedTopics"]="managedTopics"
+		["ModerationRule"]="moderation"
+		["NavigationMenu"]="navigationMenus"
+		["Network"]="networks"
+		["NetworkBranding"]="networkBranding"
+		["PathAssistant"]="pathAssistants"
+		["PermissionSet"]="permissionsets"
+		["PermissionSetGroup"]="permissionsetgroups"
+		["PlatformCachePartition"]="cachePartitions"
+		["Queue"]="queues"
+		["QuickAction"]="quickActions"
+		["RecordType"]="recordTypes"
+		["RemoteSiteSetting"]="remoteSiteSettings"
+		["Role"]="roles"
+		["SiteDotCom"]="sites"
+		["StandardValueSetTranslation"]="standardValueSetTranslations"
+		["StaticResource"]="staticresources"
+		["Territory2Model"]="territory2Models"
+		["Territory2Type"]="territory2Types"
+		["Translations"]="translations"
+		["UserCriteria"]="userCriteria"
+		["ValidationRule"]="validationRules"
+		["WebLink"]="webLinks"
+	)
+	folder="${type_to_folder_mapping[$metadata_type]}"
+	echo "${folder:-}"
 }
 
 # Methods to manage files for deploy

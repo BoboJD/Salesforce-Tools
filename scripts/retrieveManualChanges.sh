@@ -194,105 +194,36 @@ update_npm_packages(){
 
 retrieve_configuration(){
 	echo -e "\nRetrieving ${RCyan}configuration${NC}..."
-	for dir in "${configuration_directories[@]}"; do
-		rm -rf "${project_directory}${dir}"
-	done
-	sf project retrieve start -x manifest/configuration.xml --ignore-conflicts > /dev/null
+	retrieve "configuration"
 }
 
-configuration_directories=(
-	"animationRules"
-	"applications"
-	"assignmentRules"
-	"autoResponseRules"
-	"cachePartitions"
-	"callCenters"
-	"contentassets"
-	"corsWhitelistOrigins"
-	"cspTrustedSites"
-	"customMetadata"
-	"documents"
-	"email"
-	"escalationRules"
-	"flexipages"
-	"flows"
-	"globalValueSets"
-	"groups"
-	"labels"
-	"layouts"
-	"LeadConvertSettings"
-	"letterhead"
-	"matchingRules"
-	"notificationTypes"
-	"objects"
-	"objectTranslations"
-	"pathAssistants"
-	"queues"
-	"quickActions"
-	"remoteSiteSettings"
-	"reports"
-	"reportTypes"
-	"roles"
-	"sharingRules"
-	"standardValueSets"
-	"staticresources"
-	"tabs"
-	"workflows"
-)
+retrieve(){
+	local xml_name="$1"
+	local xml_path="manifest/${xml_name}.xml"
+	delete_folders "$xml_path"
+	sf project retrieve start -x "$xml_path" --ignore-conflicts > /dev/null
+}
 
 retrieve_territories(){
 	echo -e "\nRetrieving ${RYellow}territories${NC}..."
-	for dir in "${territories_directories[@]}"; do
-		rm -rf "${project_directory}${dir}"
-	done
-	sf project retrieve start -x manifest/territories.xml --ignore-conflicts > /dev/null
+	retrieve "territories"
 }
-
-territories_directories=(
-	"territory2Models"
-	"territory2Types"
-)
 
 retrieve_experiences(){
 	echo -e "\nRetrieving ${RGreen}experiences${NC}..."
-	for dir in "${experiences_directories[@]}"; do
-		rm -rf "${project_directory}${dir}"
-	done
-	sf project retrieve start -x manifest/communities.xml --ignore-conflicts > /dev/null
+	retrieve "communities"
 	for file in ${project_directory}siteDotComSites/*; do
 		git restore "$file" > /dev/null 2>&1
 	done
 }
 
-experiences_directories=(
-	"audience"
-	"experiences"
-	"managedTopics"
-	"moderation"
-	"navigationMenus"
-	"networkBranding"
-	"networks"
-	"sites"
-	"siteDotComSites"
-	"userCriteria"
-)
-
 retrieve_translations(){
 	echo -e "\nRetrieving ${RPurple}translation${NC}..."
-	for dir in "${translation_directories[@]}"; do
-		rm -rf "${project_directory}${dir}"
-	done
-	sf project retrieve start -x manifest/translation.xml --ignore-conflicts > /dev/null
+	retrieve "translation"
 	if [[ $(yq eval '.translation_settings // "null"' "$config_file") != "null" ]]; then
 		remove_untracked_xml_blocks_in_translations
 	fi
 }
-
-translation_directories=(
-	"objectTranslations"
-	"standardValueSetTranslations"
-	"translations"
-)
 
 remove_untracked_xml_blocks_in_translations(){
 	if [[ $(yq eval '.translation_settings.sobjects // "null"' "$config_file") != "null" ]]; then
@@ -361,24 +292,18 @@ indent(){
 
 retrieve_permissions(){
 	echo -e "\nRetrieving ${RRed}permissions${NC}..."
-	for dir in "${permissions_directories[@]}"; do
-		rm -rf "${project_directory}${dir}"
-	done
-	sf project retrieve start -x manifest/permissions.xml --ignore-conflicts > /dev/null
+	retrieve "permissions"
 }
-
-permissions_directories=(
-	"customPermissions"
-	"permissionsetgroups"
-	"permissionsets"
-)
 
 retrieve_profiles(){
 	echo -e "\nRetrieving ${RPurple}profiles${NC}..."
 	mv .forceignore .DISABLED.forceignore
-	sf project retrieve start -x manifest/profiles.xml --ignore-conflicts > /dev/null
+	retrieve "profiles"
 	mv .DISABLED.forceignore .forceignore
+	remove_unnecessary_permissions_in_profiles
+}
 
+remove_unnecessary_permissions_in_profiles(){
 	echo -ne "Removing unnecessary permissions... "
 	for profile in ${project_directory}profiles/*.profile-meta.xml; do
 		if [[ $(yq eval '.unused_standard_layouts // "null"' "$config_file") != "null" ]]; then

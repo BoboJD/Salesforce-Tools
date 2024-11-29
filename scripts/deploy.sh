@@ -259,7 +259,7 @@ generate_post_deploy_destructive_changes_xml(){
 			local folder=$(echo "$fileFullPath" | awk -F '/' '{print $4}')
 
 			case $folder in
-				"assignmentRules" | "audience" | "autoResponseRules" | "dashboards" | "documents" | "escalationRules" | "experiences" | "managedTopics" | "matchingRules" | "moderation" | "navigationMenus" | "networkBranding" | "networks" | "objectTranslations" | "profiles" | "reports" | "recordTypes" | "reportTypes" | "settings" | "sharingRules" | "siteDotComSites" | "sites" | "standardValueSets" | "territory2Models" | "territory2Types" | "userCriteria" | "workflows")
+				"assignmentRules" | "audience" | "autoResponseRules" | "dashboards" | "documents" | "escalationRules" | "experiences" | "managedTopics" | "matchingRules" | "moderation" | "navigationMenus" | "networkBranding" | "networks" | "objectTranslations" | "profiles" | "reports" | "recordTypes" | "reportTypes" | "settings" | "sharingRules" | "siteDotComSites" | "sites" | "standardValueSets" | "territory2Models" | "territory2Types" | "translations" | "userCriteria" | "workflows")
 					continue
 					;;
 			esac
