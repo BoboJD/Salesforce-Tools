@@ -502,15 +502,15 @@ create_scratch_org(){
 		echo -e "Scratch org ${RPurple}$org_alias${NC} has already been created."
 	else
 		echo -ne "Scratch org ${RPurple}$org_alias${NC} does not exist"
-		local setdefaultusername=""
-		if [ "$defaultusername_option" = "-s" ] || [ "$defaultusername_option" = "--setdefaultusername" ]; then
+		local set_default=""
+		if [ "$defaultusername_option" = "-s" ] || [ "$defaultusername_option" = "--set-default" ]; then
 			echo -ne " as ${RGreen}default org${NC} for project"
-			setdefaultusername="--set-default"
+			set_default="--set-default"
 		fi
 		echo ". Starting creation..."
 
 
-		local scratch_org_creation_result=$(sf org create scratch -f config/project-scratch-def.json -y 30 -w 20 --json --alias $org_alias $setdefaultusername)
+		local scratch_org_creation_result=$(sf org create scratch -f config/project-scratch-def.json -y 30 -w 20 --json --alias $org_alias $set_default)
 
 		local status=$(echo "$scratch_org_creation_result" | jq -r '.status')
 		if [ "$status" -eq 0 ]; then
