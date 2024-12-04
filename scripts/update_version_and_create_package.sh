@@ -9,8 +9,8 @@ minor=$(echo $currentVersion | cut -d '.' -f 2)
 patch=$(echo $currentVersion | cut -d '.' -f 3 | sed 's/NEXT//')
 newPatch=$(($patch + 1))
 if [ "$newPatch" -gt 9 ]; then
-    newPatch=0
-    minor=$(($minor + 1))
+	newPatch=0
+	minor=$(($minor + 1))
 fi
 newVersion="$major.$minor.$newPatch.NEXT"
 
@@ -24,25 +24,43 @@ result=$(sf package version create --definition-file config/project-scratch-def.
 status=$(echo $result | jq -r '.status')
 
 if [ "$status" = "0" ]; then
-    packageStatus=$(echo $result | jq -r '.result.Status')
-    if [ "$packageStatus" = "Success" ]; then
-        subscriberPackageVersionId=$(echo $result | jq -r '.result.SubscriberPackageVersionId')
-        echo -e "${RGreen}Package creation successful. Subscriber Package Version ID: $subscriberPackageVersionId ${NC}"
-        echo "Promoting package version..."
-        sf package version promote --package $subscriberPackageVersionId --no-prompt
-    else
+	packageStatus=$(echo $result | jq -r '.result.Status')
+	if [ "$packageStatus" = "Success" ]; then
+		subscriberPackageVersionId=$(echo $result | jq -r '.result.SubscriberPackageVersionId')
+		echo -e "${RGreen}Package creation successful. Subscriber Package Version ID: $subscriberPackageVersionId ${NC}"
+		echo "Promoting package version..."
+		promote_result=$(sf package version promote --package $subscriberPackageVersionId --no-prompt --json)
+		promote_status=$(echo $promote_result | jq -r '.status')
+		if [ "$promote_status" = "0" ]; then
+			jq '
+			.packageAliases |= (
+				{ "Salesforce Tools": .["Salesforce Tools"] } +
+				(to_entries
+				| map(select(.key | startswith("Salesforce Tools@")))
+				| sort_by(.key | split("@")[1])
+				| last
+				| { (.key): .value }
+				)
+			)
+			' "sfdx-project.json" > temp.json && mv temp.json "sfdx-project.json"
+			echo -e "${RGreen}Promotion of package was successful.${NC}"
+		else
+			errors=$(echo $result | jq -r '.result.errors' | tr '\\n' '\n')
+			error_exit "$errors"
+		fi
+	else
 		git restore sfdx-project.json
-        error_exit "Package creation failed with status: $packageStatus"
-    fi
+		error_exit "Package creation failed with status: $packageStatus"
+	fi
 else
-    git restore sfdx-project.json
+	git restore sfdx-project.json
 	errorCode=$(echo $result | jq -r '.code')
-    errorMessage=$(echo $result | jq -r '.message')
-    if [ "$errorCode" = "MultipleErrorsError" ]; then
-        echo "Multiple errors occurred:"
-        errors=$(echo $result | jq -r '.message' | tr '\\n' '\n')
-        error_exit "$errors"
-    else
-        error_exit "Error occurred: $errorMessage"
-    fi
+	errorMessage=$(echo $result | jq -r '.message')
+	if [ "$errorCode" = "MultipleErrorsError" ]; then
+		echo "Multiple errors occurred:"
+		errors=$(echo $result | jq -r '.message' | tr '\\n' '\n')
+		error_exit "$errors"
+	else
+		error_exit "Error occurred: $errorMessage"
+	fi
 fi
