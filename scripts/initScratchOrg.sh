@@ -28,7 +28,9 @@ main(){
 
 deploy_project(){
 	echo -e "\nStarting deployment of project :"
+	mv .forceignore .DISABLED.forceignore
 	deploy $scratch_org_name "Project metadata files" "force-app"
+	mv .DISABLED.forceignore .forceignore
 }
 
 assign_permissionsets_to_current_user(){

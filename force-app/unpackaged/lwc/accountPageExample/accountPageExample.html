@@ -1,0 +1,23 @@
+<template>
+	<c-page
+		title="My Page"
+		steps={steps}
+		oncancel={doCancel}
+		onnext={doNext}
+		hide-spinner-by-default
+	>
+		Content below for account {accountId} :
+		<template if:true={pageReady}>
+			Page loaded
+			<div if:true={page.isFirstStep}>
+				Page 1
+			</div>
+			<div if:true={page.isSecondStep}>
+				Page 2
+			</div>
+			<div if:true={page.isLastStep}>
+				Last page
+			</div>
+		</template>
+	</c-page>
+</template>
