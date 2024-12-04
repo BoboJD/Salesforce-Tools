@@ -5,15 +5,27 @@ import label from './labels';
 export default class Page extends LightningElement{
 	// Public Properties
 	@api title;
-	@api steps = [];
 	@api nextDisabled = false;
+	@api hideSpinnerByDefault = false;
 
 	// Private Properties
 	label = label;
 	scrollingHeight = 0;
+	_steps = [];
 	_step = 0;
+	numberOfSteps = 0;
 
 	// Getters and Setters
+	get steps(){
+		return this._steps;
+	}
+
+	@api
+	set steps(value){
+		this._steps = value;
+		this.numberOfSteps = this._steps.length;
+	}
+
 	get step(){
 		return this._step;
 	}
@@ -35,7 +47,7 @@ export default class Page extends LightningElement{
 
 	@api
 	get isLastStep(){
-		return (this.steps.length - 1) === this.step;
+		return (this.numberOfSteps - 1) === this.step;
 	}
 
 	get progressStepLabel(){
@@ -43,7 +55,7 @@ export default class Page extends LightningElement{
 	}
 
 	get multipleSteps(){
-		return this.steps.length > 1;
+		return this.numberOfSteps > 1;
 	}
 
 	get nextLabel(){

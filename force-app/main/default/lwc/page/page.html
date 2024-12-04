@@ -6,7 +6,7 @@
 		<p class="slds-var-m-top_xx-small">{progressStepLabel}</p>
 	</header>
 	<div class="slds-modal__content" onscroll={setScrollingHeight}>
-		<c-spinner top={scrollingHeight}></c-spinner>
+		<c-spinner top={scrollingHeight} hide-by-default={hideSpinnerByDefault}></c-spinner>
 		<slot></slot>
 	</div>
 	<footer class="slds-modal__footer">
