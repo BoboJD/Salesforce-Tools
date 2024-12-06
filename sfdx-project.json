@@ -2,11 +2,11 @@
   "packageDirectories": [
     {
       "versionName": "ver 1",
-      "versionNumber": "1.6.5.NEXT",
+      "versionNumber": "1.6.6.NEXT",
+      "versionDescription": "https://github.com/BoboJD/Salesforce-Tools",
       "path": "force-app",
       "default": true,
-      "package": "Salesforce Tools",
-      "versionDescription": ""
+      "package": "Salesforce Tools"
     }
   ],
   "namespace": "tlz",
@@ -14,6 +14,6 @@
   "sourceApiVersion": "62.0",
   "packageAliases": {
     "Salesforce Tools": "0HoJ60000000001KAA",
-    "Salesforce Tools@1.6.5-1": "04tJ6000000LWKnIAO"
+    "Salesforce Tools@1.6.6-1": "04tJ6000000LWKxIAO"
   }
 }
