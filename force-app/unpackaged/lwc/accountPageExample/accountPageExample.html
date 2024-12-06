@@ -6,8 +6,8 @@
 		onnext={doNext}
 		hide-spinner-by-default
 	>
-		Content below for account {accountId} :
-		<template if:true={pageReady}>
+		Content for account {accountId} :
+		<div if:true={pageReady}>
 			Page loaded
 			<div if:true={page.isFirstStep}>
 				Page 1
@@ -18,6 +18,6 @@
 			<div if:true={page.isLastStep}>
 				Last page
 			</div>
-		</template>
+		</div>
 	</c-page>
 </template>

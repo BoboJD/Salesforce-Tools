@@ -1,7 +1,7 @@
 import { LightningElement, wire } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 import { CurrentPageReference } from 'lightning/navigation';
-import { IsConsoleNavigation, EnclosingTabId, getFocusedTabInfo, openSubtab, closeTab } from 'lightning/platformWorkspaceApi';
+import { IsConsoleNavigation, EnclosingTabId, getFocusedTabInfo, setTabLabel, setTabIcon, openSubtab, closeTab } from 'lightning/platformWorkspaceApi';
 import { displaySpinner } from 'c/utils';
 
 export default class AccountPageExample extends NavigationMixin(LightningElement){
@@ -12,9 +12,15 @@ export default class AccountPageExample extends NavigationMixin(LightningElement
 
 	@wire(CurrentPageReference)
 	getStateParameters(currentPageReference){
-		if(currentPageReference){
+		if(currentPageReference)
 			this.accountId = currentPageReference.state.tlz__accountId;
-		}
+		if(!this.isConsoleNavigation && this.connected)
+			this.reloadCurrentPage(currentPageReference);
+	}
+
+	reloadCurrentPage(currentPageReference){
+		this.connected = false;
+		this[NavigationMixin.GenerateUrl](currentPageReference).then(url => { window.location.replace(url); });
 	}
 
 	get steps(){
@@ -25,10 +31,20 @@ export default class AccountPageExample extends NavigationMixin(LightningElement
 		return this.template.querySelector('c-page');
 	}
 
+	connectedCallback(){
+		this.connected = true;
+		if(this.isConsoleNavigation)
+			this.changeTabLabelAndIcon();
+	}
+
+	changeTabLabelAndIcon(){
+		setTabLabel(this.enclosingTabId, 'Page Test');
+		setTabIcon(this.enclosingTabId, 'utility:insert_template', { iconAlt: 'Page Test' });
+	}
+
 	renderedCallback(){
-		if(!this.pageReady){
+		if(!this.pageReady)
 			this.pageReady = !!this.page;
-		}
 	}
 
 	doNext(){
