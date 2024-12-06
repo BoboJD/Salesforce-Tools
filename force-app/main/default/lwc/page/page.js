@@ -5,6 +5,7 @@ import label from './labels';
 export default class Page extends LightningElement{
 	// Public Properties
 	@api title;
+	@api backDisabled = false;
 	@api nextDisabled = false;
 	@api hideSpinnerByDefault = false;
 
@@ -94,6 +95,10 @@ export default class Page extends LightningElement{
 	// Dispatch Events
 	dispatchCancel(){
 		this.dispatchEvent(new CustomEvent('cancel'));
+	}
+
+	doBack(){
+		this.step--;
 	}
 
 	dispatchNext(){
