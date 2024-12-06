@@ -6,7 +6,7 @@ import globals from 'globals';
 export default [
 	{
 		ignores: [
-			'**/templates/lightningcomponent/*'
+			'**/unpackaged/*'
 		]
 	},
 	{
@@ -47,6 +47,7 @@ export default [
 			'key-spacing': ['error', { 'beforeColon': false }],
 			'new-parens': 'error',
 			'no-confusing-arrow': 'error',
+			'no-console': 'error',
 			'no-extra-parens': ['error', 'all', { 'nestedBinaryExpressions': false, 'ternaryOperandBinaryExpressions': false }],
 			'no-extra-semi': 'error',
 			'no-floating-decimal': 'error',
