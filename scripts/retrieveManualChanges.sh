@@ -200,6 +200,9 @@ retrieve_configuration(){
 retrieve(){
 	local xml_name="$1"
 	local xml_path="manifest/${xml_name}.xml"
+	if [[ ! -f "$xml_path" ]]; then
+		error_exit "Error: File '$xml_path' is missing. Please create the file and try again."
+	fi
 	delete_folders "$xml_path"
 	sf project retrieve start -x "$xml_path" --ignore-conflicts > /dev/null
 }
