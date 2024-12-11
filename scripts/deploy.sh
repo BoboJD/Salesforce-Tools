@@ -140,7 +140,9 @@ deploy_files_into_current_org(){
 			shutdown /s /t 0
 		else
 			local deploy_url=$(echo "$deploy_files_result" | jq -r '.result.deployUrl')
-			sf org open -p "$deploy_url"
+			if [[ -n "$deploy_url" ]]; then
+				sf org open -p "$deploy_url"
+			fi
 		fi
 		exit 1
 	fi
