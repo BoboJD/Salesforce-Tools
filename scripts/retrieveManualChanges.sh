@@ -243,11 +243,13 @@ remove_untracked_xml_blocks_in_translations(){
 			fi
 		done
 	fi
-	for translation in ${project_directory}translations/*.translation-meta.xml; do
-		remove_untracked_xml_tags "$translation"
-		remove_untracked_globalQuickActions "$translation"
-		indent "$translation"
-	done
+	if [ -d "${project_directory}translations" ]; then
+		for translation in ${project_directory}translations/*.translation-meta.xml; do
+			remove_untracked_xml_tags "$translation"
+			remove_untracked_globalQuickActions "$translation"
+			indent "$translation"
+		done
+	fi
 }
 
 remove_untracked_layouts(){
