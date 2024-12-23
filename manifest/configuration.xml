@@ -77,6 +77,10 @@
 		<name>CustomObject</name>
 	</types>
 	<types>
+		<members>Account-fr</members>
+		<name>CustomObjectTranslation</name>
+	</types>
+	<types>
 		<members>*</members>
 		<name>CustomTab</name>
 	</types>
@@ -180,6 +184,10 @@
 		<members>*</members>
 		<name>StaticResource</name>
 	</types>
+	<types>
+        <members>*</members>
+        <name>Translations</name>
+    </types>
 	<types>
 		<members>*</members>
 		<name>Workflow</name>

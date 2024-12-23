@@ -19,7 +19,6 @@ org_settings:
   # experience_cloud_used: true
   # org_shape_enable: true
   # profile_used: true
-  translation_used: true
 
 # Translation to remove
 # translation_settings:

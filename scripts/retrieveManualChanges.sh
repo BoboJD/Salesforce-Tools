@@ -57,12 +57,6 @@ main(){
 		fi
 	fi
 
-	if [[ $(yq eval '.org_settings.translation_used // "null"' "$config_file") = "true" ]]; then
-		if [[ -z "$option" || "$option" = "-e" || "$option" = "--exclude-experiences" || "$option" = "-trad" ]]; then
-			retrieve_translations
-		fi
-	fi
-
 	if [[ -z "$option" || "$option" = "-op" || "$option" = "--only-permissions" ]]; then
 		retrieve_permissions
 		if [[ $(yq eval '.org_settings.profile_used // "null"' "$config_file") = "true" ]]; then
@@ -195,6 +189,9 @@ update_npm_packages(){
 retrieve_configuration(){
 	echo -e "\nRetrieving ${RCyan}configuration${NC}..."
 	retrieve "configuration"
+	if [[ $(yq eval '.translation_settings // "null"' "$config_file") != "null" ]]; then
+		remove_untracked_xml_blocks_in_translations
+	fi
 }
 
 retrieve(){
@@ -218,14 +215,6 @@ retrieve_experiences(){
 	for file in ${project_directory}siteDotComSites/*; do
 		git restore "$file" > /dev/null 2>&1
 	done
-}
-
-retrieve_translations(){
-	echo -e "\nRetrieving ${RPurple}translation${NC}..."
-	retrieve "translation"
-	if [[ $(yq eval '.translation_settings // "null"' "$config_file") != "null" ]]; then
-		remove_untracked_xml_blocks_in_translations
-	fi
 }
 
 remove_untracked_xml_blocks_in_translations(){
