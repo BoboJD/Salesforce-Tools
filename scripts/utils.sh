@@ -563,7 +563,8 @@ check_package_installation(){
 		if [ "$package_installation_status" -eq 0 ]; then
 			echo -e "${RGreen}Successfully installed ${package_name} package.${NC}"
 		else
-			error_exit "Package installation failed. Relaunch the script."
+			local package_installation_message=$(echo "$package_installation_result" | jq -r '.message')
+			error_exit "Package installation failed : ${package_installation_message}"
 		fi
 	fi
 }
