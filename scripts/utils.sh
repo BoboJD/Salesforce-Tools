@@ -563,7 +563,6 @@ check_package_installation(){
 		if [ "$package_installation_status" -eq 0 ]; then
 			echo -e "${RGreen}Successfully installed ${package_name} package.${NC}"
 		else
-			local reset_files=$(reset_changes_on_metadata_files)
 			error_exit "Package installation failed. Relaunch the script."
 		fi
 	fi
