@@ -11,11 +11,11 @@
 				class="slds-modal__close"
 				size="large">
 			</lightning-button-icon>
-			<h2 class="slds-text-heading_small">
+			<h1 class="slds-modal__title slds-hyphenate">
 				<template lwc:if={title}>{title}</template>
 				<template lwc:else><slot name="title"></slot></template>
-				<p if:true={subtitle} class="slds-m-top_x-small">{subtitle}</p>
-			</h2>
+			</h1>
+			<p if:true={subtitle} class="slds-m-top_x-small">{subtitle}</p>
 		</header>
 		<div class={contentClass} onscroll={setScrollingHeight}>
 			<c-spinner if:true={enableSpinner} top={scrollingHeight} hide-by-default={hideSpinnerByDefault} size="small"></c-spinner>
