@@ -58,7 +58,7 @@ export default class Input extends NavigationMixin(LightningElement){
 			this.labelHidden ? '' : 'slds-form-element_stacked',
 			this.readOnly ? 'slds-form-element_readonly' : 'slds-is-editing',
 			this.edit ? 'slds-form-element_edit' : '',
-			this.hasError ? 'slds-has-error' : ''
+			this.hasError || this.displayEmailInvalid ? 'slds-has-error' : ''
 		];
 		return classes.join(' ');
 	}
@@ -135,6 +135,10 @@ export default class Input extends NavigationMixin(LightningElement){
 		return this.type === 'file';
 	}
 
+	get typeEmail(){
+		return this.type === 'email';
+	}
+
 	get typeRichtext(){
 		return this.type === 'richtext';
 	}
@@ -163,6 +167,25 @@ export default class Input extends NavigationMixin(LightningElement){
 		return this.typeFile ? l.UploadAtLeastOneFile : l.CompleteThisField;
 	}
 
+	get displayEmailInvalid(){
+		return this.typeEmail && !this.emailValidityHandledBySalesforce && !this.emailValid;
+	}
+
+	get emailValidityHandledBySalesforce(){
+		if(!this.value)
+			return true;
+		const sfEmailPattern = /^[^\s@]+@[^\s@]+$/;
+		return !sfEmailPattern.test(this.value);
+	}
+
+	get emailValid(){
+		if(this.value){
+			const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+			return emailPattern.test(this.value);
+		}
+		return false;
+	}
+
 	get inputVariant(){
 		return this.typeToggle ? 'label-hidden' : this.variant;
 	}
@@ -177,7 +200,7 @@ export default class Input extends NavigationMixin(LightningElement){
 	reportValidity(){
 		if(this.readOnly)
 			return;
-		if(!this.typeFile && !this.typeRichtext && !this.typeTextarea)
+		if(!this.typeFile && !this.typeRichtext && !this.typeTextarea && !(this.typeEmail && this.emailValidityHandledBySalesforce))
 			this.lightningInput?.reportValidity();
 		const isValid = this.checkValidity();
 		this.hasError = !isValid;
@@ -191,7 +214,8 @@ export default class Input extends NavigationMixin(LightningElement){
 			return this.typeFile ? this.files?.length > 0
 				: (this.typeCheckbox || this.typeToggle) ? this.checked
 					: (this.typeRichtext || this.typeTextarea) ? !isEmpty(this.value)
-						: this.lightningInput.checkValidity();
+						: this.typeEmail && !this.emailValidityHandledBySalesforce ? this.emailValid
+							: this.lightningInput.checkValidity();
 		return true;
 	}
 

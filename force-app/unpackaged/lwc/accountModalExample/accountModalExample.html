@@ -3,10 +3,24 @@
 		position="action"
 		title="Test Modal"
 		subtitle="Just some test"
-		confirm-label="Display spinner"
+		confirm-label="Submit form"
 		is-loading={isLoading}
 		onclosemodal={closeQuickAction}
-		onconfirm={toggleSpinner}
-		enable-spinner
-	></c-modal-container>
+		onconfirm={submitForm}
+	>
+	<div class="slds-form">
+		<div class="slds-form__row">
+			<div class="slds-form__item">
+				<c-input
+					type="email"
+					label="Email"
+					value={email}
+					onvaluechange={setEmail}
+					max="255"
+					required>
+				</c-input>
+			</div>
+		</div>
+	</div>
+	</c-modal-container>
 </template>

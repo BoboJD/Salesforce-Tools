@@ -43,6 +43,7 @@
 					disabled={disabled}>
 				</lightning-input>
 			</template>
+			<div if:true={displayEmailInvalid} class="slds-form-element__help">{l.YouHaveEnteredAnInvalidFormat}</div>
 		</template>
 		<template lwc:else>
 			<label if:false={labelHidden} class="slds-form-element__label">
