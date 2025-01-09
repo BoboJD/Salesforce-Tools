@@ -12,6 +12,7 @@ export default class ModalContainer extends LightningElement{
 	@api message;
 	@api closeLabel = label.Cancel;
 	@api confirmLabel = label.Continue;
+	@api hideClose = false;
 	@api hideConfirm = false;
 	@api position = 'fixed';
 	@api isLoading = false;
@@ -52,7 +53,7 @@ export default class ModalContainer extends LightningElement{
 	}
 
 	get hideCloseIcon(){
-		return this._hideCloseIcon || this.position === 'action';
+		return this._hideCloseIcon || this.position === 'action' || this.hideClose;
 	}
 
 	@api

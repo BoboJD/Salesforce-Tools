@@ -23,7 +23,7 @@
 			<template lwc:else><slot></slot></template>
 		</div>
 		<footer class="slds-modal__footer">
-			<lightning-button variant="neutral" onclick={dispatchCloseModal} label={closeLabel}></lightning-button>
+			<lightning-button if:false={hideClose} variant="neutral" onclick={dispatchCloseModal} label={closeLabel}></lightning-button>
 			<lightning-button
 				if:false={hideConfirm}
 				variant="brand"
