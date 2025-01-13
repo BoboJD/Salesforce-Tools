@@ -1,8 +1,8 @@
-import { LightningElement, api, wire } from 'lwc';
+import { LightningElement, api, wire, track } from 'lwc';
 import { getRecord } from 'lightning/uiRecordApi';
 import loadingFox from '@salesforce/resourceUrl/loadingFox';
 import USER_ID from '@salesforce/user/Id';
-import PHOTO_CHARGEMENT_FIELD from '@salesforce/schema/User.LoadingPicture__c';
+import LOADING_PICTURE_FIELD from '@salesforce/schema/User.LoadingPicture__c';
 import ROTATION_FIELD from '@salesforce/schema/User.ActivateRotation__c';
 
 export default class Spinner extends LightningElement{
@@ -10,20 +10,20 @@ export default class Spinner extends LightningElement{
 	@api size;
 	@api isFixed = false;
 	@api top = 0;
-	loadingFox = loadingFox;
-	displaySpinner = true;
-	infiniteRotate = false;
+	@track spinner = {
+		visible: true,
+		picture: loadingFox,
+		rotation: false
+	};
 
 	@wire(getRecord, {
 		recordId: USER_ID,
-		fields: [PHOTO_CHARGEMENT_FIELD, ROTATION_FIELD]
+		fields: [LOADING_PICTURE_FIELD, ROTATION_FIELD]
 	})wireuser({ data }){
-		if(data){
-			if(data.fields.LoadingPicture__c && data.fields.LoadingPicture__c.value){
-				this.loadingFox = data.fields.LoadingPicture__c.value;
-				if(data.fields.ActivateRotation__c)
-					this.infiniteRotate = data.fields.ActivateRotation__c.value;
-			}
+		if(data?.fields[LOADING_PICTURE_FIELD.fieldApiName]?.value){
+			this.spinner.picture = data.fields[LOADING_PICTURE_FIELD.fieldApiName].value;
+			if(data.fields[ROTATION_FIELD.fieldApiName])
+				this.spinner.rotation = data.fields[ROTATION_FIELD.fieldApiName].value;
 		}
 	}
 
@@ -31,7 +31,7 @@ export default class Spinner extends LightningElement{
 		return 'loading-fox'
 			+ (this.size ? ' fox-size__'+ this.size : '')
 			+ (this.isFixed ? ' fox-fixed' : '')
-			+ (this.infiniteRotate ? ' infinite-rotate' : '');
+			+ (this.spinner.rotation ? ' infinite-rotate' : '');
 	}
 
 	get style(){
@@ -39,16 +39,16 @@ export default class Spinner extends LightningElement{
 	}
 
 	connectedCallback(){
-		if(this.hideByDefault) this.displaySpinner = false;
+		if(this.hideByDefault) this.spinner.visible = false;
 	}
 
 	@api
 	show(){
-		this.displaySpinner = true;
+		this.spinner.visible = true;
 	}
 
 	@api
 	hide(){
-		this.displaySpinner = false;
+		this.spinner.visible = false;
 	}
 }

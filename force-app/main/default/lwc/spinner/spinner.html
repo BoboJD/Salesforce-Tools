@@ -1,6 +1,6 @@
 <template>
-	<div if:true={displaySpinner} class={className} style={style}>
+	<div if:true={spinner.visible} class={className} style={style}>
 		<div class="fox-white-bg"></div>
-		<img class="fox-logo" src={loadingFox} />
+		<img class="fox-logo" src={spinner.picture} />
 	</div>
 </template>
