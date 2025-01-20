@@ -355,6 +355,15 @@ remove_domain_on_each_site(){
 	echo "Done."
 }
 
+## remove_users_from_queues
+remove_users_from_queues(){
+	echo -ne "- Removing ${RBlue}users${NC} from queues... "
+	for filename in ${project_directory}queues/*.queue-meta.xml; do
+		xml ed -L -N x="$xml_namespace" -d "//*/x:users" "$filename"
+	done
+	echo "Done."
+}
+
 ## replace_sender_email_in_case_autoresponse_rule
 replace_sender_email_in_case_autoresponse_rule(){
 	local org_alias=$1

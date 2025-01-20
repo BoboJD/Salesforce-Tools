@@ -83,6 +83,7 @@ edit_files_that_fail_deployment(){
 	remove_missing_sobjects_from_viewallrecords_permission_sets
 	add_missing_sobjects_in_viewallrecords_permission_sets
 	if [ "$is_scratch_org" = "true" ]; then
+		remove_users_from_queues
 		if [ -d "${project_directory}sites/" ]; then
 			remove_domain_on_each_site
 		fi
@@ -320,7 +321,7 @@ restore_edited_files(){
 	if [ "$is_production_org" = "false" ]; then
 		modified_directories+=("permissionsets")
 		if [ "$is_scratch_org" = "true" ]; then
-			modified_directories+=("autoResponseRules" "sites")
+			modified_directories+=("queues" "autoResponseRules" "sites")
 		fi
 	fi
 	for dir in "${modified_directories[@]}"; do
