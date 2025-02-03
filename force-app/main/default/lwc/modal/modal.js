@@ -23,12 +23,12 @@ export default class Modal extends LightningElement{
 	// Public Methods
 	@api
 	showSpinner(){
-		displaySpinner(this, false);
+		displaySpinner(this);
 	}
 
 	@api
 	hideSpinner(){
-		hideSpinner(this, false);
+		hideSpinner(this);
 	}
 
 	// Private Methods
