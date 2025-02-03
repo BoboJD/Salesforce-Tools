@@ -8,14 +8,14 @@ const toggleSpinner = (cmp, action, selectors) => {
 const displaySpinner = (cmp, watchForTlzComponents=true) => {
 	cmp.isLoading = true;
 	if(watchForTlzComponents)
-		toggleSpinner(cmp, 'showSpinner', ['c-page', 'tlz-page', 'c-modal-container', 'tlz-modal-container']);
+		toggleSpinner(cmp, 'showSpinner', ['c-page', 'tlz-page', 'c-modal', 'c-modal-container', 'tlz-modal-container']);
 	toggleSpinner(cmp, 'show', ['c-spinner', 'tlz-spinner']);
 };
 
 const hideSpinner = (cmp, watchForTlzComponents=true) => {
 	cmp.isLoading = false;
 	if(watchForTlzComponents)
-		toggleSpinner(cmp, 'hideSpinner', ['c-page', 'tlz-page', 'c-modal-container', 'tlz-modal-container']);
+		toggleSpinner(cmp, 'hideSpinner', ['c-page', 'tlz-page', 'c-modal', 'c-modal-container', 'tlz-modal-container']);
 	toggleSpinner(cmp, 'hide', ['c-spinner', 'tlz-spinner']);
 };
 
