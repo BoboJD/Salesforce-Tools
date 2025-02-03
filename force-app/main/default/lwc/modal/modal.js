@@ -1,4 +1,5 @@
 import { LightningElement, api } from 'lwc';
+import { displaySpinner, hideSpinner } from 'c/utils';
 import label from './labels';
 
 export default class Modal extends LightningElement{
