@@ -24,6 +24,7 @@
 		</div>
 		<footer class="slds-modal__footer">
 			<lightning-button if:false={hideClose} variant="neutral" onclick={dispatchCloseModal} label={closeLabel}></lightning-button>
+			<slot name="additional-buttons"></slot>
 			<lightning-button
 				if:false={hideConfirm}
 				variant="brand"

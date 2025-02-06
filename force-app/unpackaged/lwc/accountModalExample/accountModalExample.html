@@ -8,19 +8,25 @@
 		onclosemodal={closeQuickAction}
 		onconfirm={submitForm}
 	>
-	<div class="slds-form">
-		<div class="slds-form__row">
-			<div class="slds-form__item">
-				<c-input
-					type="email"
-					label="Email"
-					value={email}
-					onvaluechange={setEmail}
-					max="255"
-					required>
-				</c-input>
+		<div class="slds-form">
+			<div class="slds-form__row">
+				<div class="slds-form__item">
+					<c-input
+						type="email"
+						label="Email"
+						value={email}
+						onvaluechange={setEmail}
+						max="255"
+						required>
+					</c-input>
+				</div>
 			</div>
 		</div>
-	</div>
+		<lightning-button
+			slot="additional-buttons"
+			variant="brand"
+			label="Test"
+			class="slds-var-m-left_small">
+		</lightning-button>
 	</c-modal-container>
 </template>
