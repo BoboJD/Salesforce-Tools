@@ -4,7 +4,7 @@
 	<description>This component disables "pull to refresh" behavior in the Salesforce Mobile app.
 	Add it to a page, or as a child component in your component. This component has no user
 	interface, and has no effect outside supported mobile apps.</description>
-	<apiVersion>62.0</apiVersion>
+	<apiVersion>63.0</apiVersion>
 	<isExposed>true</isExposed>
 	<targets>
 			<target>lightning__AppPage</target>

@@ -303,7 +303,7 @@ generate_post_deploy_destructive_changes_xml(){
 		echo -e "\t</types>"
 	done
 
-	echo -e "\t<version>62.0</version>"
+	echo -e "\t<version>63.0</version>"
 	echo "</Package>"
 }
 
