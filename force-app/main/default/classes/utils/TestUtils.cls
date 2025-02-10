@@ -2,6 +2,14 @@
 global class TestUtils{
 	private static final String CHARS = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 
+	private static LeadStatus leadConvertedStatus{
+		get{
+			if(leadConvertedStatus == null)
+				leadConvertedStatus = [SELECT Id, MasterLabel FROM LeadStatus WHERE IsConverted = true LIMIT 1];
+			return leadConvertedStatus;
+		}set;
+	}
+
 	global static void setMock(HttpCalloutMock theMock){
 		Test.setMock(HttpCalloutMock.class, theMock);
 	}
@@ -59,6 +67,19 @@ global class TestUtils{
 	global static void assignPermission(User testUser, String permissionSetName){
 		PermissionSet permissionSetToAssign = [SELECT Id FROM PermissionSet WHERE Name = :permissionSetName LIMIT 1];
 		insert new PermissionSetAssignment(AssigneeId = testUser.Id, PermissionSetId = permissionSetToAssign.Id);
+	}
+
+	global static Database.LeadConvertResult convertLead(Lead lead){
+		return convertLead(lead, null);
+	}
+
+	global static Database.LeadConvertResult convertLead(Lead lead, Account account){
+		Database.LeadConvert lc = new Database.LeadConvert();
+		lc.setLeadId(lead.Id);
+		lc.setConvertedStatus(leadConvertedStatus.MasterLabel);
+		if(account != null)
+			lc.setAccountId(account.Id);
+		return Database.convertLead(lc);
 	}
 
 	global static Account selectAccount(){
