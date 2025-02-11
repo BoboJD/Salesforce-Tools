@@ -52,6 +52,12 @@ For more detailed documentation, check out the [docs](./docs).
   npm install -g @salesforce/cli
   ```
 
+* To avoid line return warning with git, you can run this command
+
+  ```sh
+  git config --global core.safecrlf false
+  ```
+
 ## Installation of package in your Salesforce org
 
 To deploy the latest version of the unlocked package in your org, use the following command. Replace `VERSIONNUMBER` with the specific version you wish to install and `YOUR_ORG_NAME` with the alias of your Salesforce org.
