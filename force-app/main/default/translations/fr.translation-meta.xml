@@ -37,7 +37,7 @@
         <name>Continue</name>
     </customLabels>
     <customLabels>
-        <label>L'enregistrement nommé 'Default' n'a pas été créé pour le SObject "Setting" (tlz__Setting__c).</label>
+        <label>L&apos;enregistrement nommé &apos;Default&apos; n&apos;a pas été créé pour le SObject &quot;Setting&quot; (tlz__Setting__c).</label>
         <name>DefaultSettingNotCreated</name>
     </customLabels>
     <customLabels>
@@ -191,6 +191,10 @@
     <customLabels>
         <label>{0} option(s) sélectionnée(s)</label>
         <name>XSelectedOptions</name>
+    </customLabels>
+    <customLabels>
+        <label>Vous avez rentré un format invalide</label>
+        <name>YouHaveEnteredAnInvalidFormat</name>
     </customLabels>
     <customLabels>
         <label><!-- Error when selecting a cross-object fieldsset is not allowed and attempted. --></label>

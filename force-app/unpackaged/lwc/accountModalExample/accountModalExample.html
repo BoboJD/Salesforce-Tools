@@ -7,8 +7,9 @@
 		is-loading={isLoading}
 		onclosemodal={closeQuickAction}
 		onconfirm={submitForm}
+		enable-spinner
 	>
-		<div class="slds-form">
+		<div if:false={isLoading} class="slds-form">
 			<div class="slds-form__row">
 				<div class="slds-form__item">
 					<c-input
@@ -19,6 +20,15 @@
 						max="255"
 						required>
 					</c-input>
+				</div>
+			</div>
+			<div class="slds-form__row">
+				<div class="slds-form__item">
+					<c-picklist
+						label="Test multipicklist"
+						options={types}
+						multiple>
+					</c-picklist>
 				</div>
 			</div>
 		</div>

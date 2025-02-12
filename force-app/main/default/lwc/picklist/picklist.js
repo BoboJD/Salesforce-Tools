@@ -90,7 +90,7 @@ export default class Picklist extends LightningElement{
 			return this.filteredTerm || '';
 		if(this.multiple){
 			if(this.value?.length > 0)
-				return this.readOnly ? this.value.join(', ') : format(l.XSelectedOptions, this.value.length);
+				return this.readOnly ? this.value.join(', ') : format(l.XSelectedOptions, [this.value.length]);
 			return null;
 		}
 		return this.selectedItem?.label || '';

@@ -70,22 +70,29 @@ export default class ModalContainer extends LightningElement{
 	@api
 	hideSpinner(){
 		hideSpinner(this, false);
+		if(this.position === 'action'){ // fix to change the height of the modal
+			setTimeout(() => {
+				window.dispatchEvent(new Event('resize'));
+			}, 1);
+		}
 	}
 
 	// Callbacks
 	connectedCallback(){
-		this.setupKeypressListener();
 		this.updatePosition();
 		if(this.position === 'action'){
 			loadScript(this, HEIGHT_MANAGER).then(this.updateHeight.bind(this));
 			window.addEventListener('resize', this.updateHeight.bind(this));
+		}else{
+			this.setupKeypressListener();
 		}
 	}
 
 	disconnectedCallback(){
-		window.removeEventListener('keydown', this._watchKeypressComponent);
 		if(this.position === 'action'){
 			window.removeEventListener('resize', this.updateHeight.bind(this));
+		}else{
+			window.removeEventListener('keydown', this._watchKeypressComponent);
 		}
 	}
 

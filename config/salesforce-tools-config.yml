@@ -21,23 +21,19 @@ org_settings:
   # profile_used: true
 
 # Translation to remove
-# translation_settings:
-#   sobjects:
-#     Account:
-#       layouts:
-#         - "ELLI Account layout"
-#       quickActions:
-#         - "ESCONNECT__"
-#   untracked:
-#     - "customApplications"
-#     - "customPageWebLinks"
-#     - "customTabs"
-#     - "prompts"
-#     - "reportTypes"
-#   globalQuickActions:
-#     - "Composer_for_Sf1"
-#     - "Conga_Composer_"
-#     - "SearchEngineGlobalActions"
+translation_settings:
+  # sobjects:
+  #   Account:
+  #     layouts:
+  #       - "ELLI Account layout"
+  #     quickActions:
+  #       - "ESCONNECT__"
+  untracked:
+    - "customApplications"
+    - "quickActions"
+    - "reportTypes"
+  # globalQuickActions:
+  #   - "SearchEngineGlobalActions"
 
 # Data backup
 # data_backup:

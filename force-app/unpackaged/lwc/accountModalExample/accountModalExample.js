@@ -14,8 +14,18 @@ export default class AccountModalExample extends LightningElement{
 			this.recordId = currentPageReference.state.recordId;
 	}
 
+	get types(){
+		return [
+			{ value: 'A', label: 'A'},
+			{ value: 'B', label: 'B'},
+			{ value: 'C', label: 'C'}
+		];
+	}
+
 	connectedCallback(){
-		this.isLoading = false;
+		setTimeout(() => {
+			hideSpinner(this);
+		}, 2000);
 	}
 
 	closeQuickAction(){

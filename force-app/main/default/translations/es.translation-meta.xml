@@ -193,6 +193,10 @@
         <name>XSelectedOptions</name>
     </customLabels>
     <customLabels>
+        <label>Ha ingresado un formato no válido.</label>
+        <name>YouHaveEnteredAnInvalidFormat</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Error when selecting a cross-object fieldsset is not allowed and attempted. --></label>
         <name>fflib_QueryFactory_crossobject_fieldsets_not_allowed_error</name>
     </customLabels>
