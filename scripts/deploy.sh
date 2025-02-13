@@ -285,6 +285,10 @@ generate_post_deploy_destructive_changes_xml(){
 				error_exit "Metadata type not found for folder '$folder$sub_folder'"
 			fi
 
+			if [[ "$metadata_type" == "CustomField" && ! "$fileName" =~ __c$ ]]; then
+				continue
+			fi
+
 			fileNames_by_metadata_type["$metadata_type"]+="$fileName "
 		fi
 	done <<< "$files_to_delete"
