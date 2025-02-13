@@ -149,6 +149,14 @@
         <name>Refresh</name>
     </customLabels>
     <customLabels>
+        <label>Résultat : {0} réussi(s) &amp; {0} erreur(s)</label>
+        <name>SObjectUpdateIteratorMessage</name>
+    </customLabels>
+    <customLabels>
+        <label>Mise à jour terminée</label>
+        <name>SObjectUpdateIteratorTitle</name>
+    </customLabels>
+    <customLabels>
         <label>Enregistrer</label>
         <name>Save</name>
     </customLabels>
