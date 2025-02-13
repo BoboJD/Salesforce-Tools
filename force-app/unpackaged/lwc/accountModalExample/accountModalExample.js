@@ -16,9 +16,9 @@ export default class AccountModalExample extends LightningElement{
 
 	get types(){
 		return [
-			{ value: 'A', label: 'A'},
-			{ value: 'B', label: 'B'},
-			{ value: 'C', label: 'C'}
+			{ value: 'A', label: 'A' },
+			{ value: 'B', label: 'B' },
+			{ value: 'C', label: 'C' }
 		];
 	}
 
