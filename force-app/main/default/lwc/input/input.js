@@ -86,7 +86,7 @@ export default class Input extends NavigationMixin(LightningElement){
 			if(this.type === 'datetime')
 				return formatDatetime(new Date(this.value));
 			if(this.typeCurrency || this.typeNumber || this.typePercent){
-				let minimumFractionDigits = this.step ? this.step.split('.')[1].length : 2;
+				let minimumFractionDigits = this.step?.includes('.') ? this.step.split('.')[1].length : this.step ? parseInt(this.step) : 2;
 				if(this.typeCurrency)
 					return formatCurrency(this.value, minimumFractionDigits);
 				if(this.typeNumber || this.typePercent){
