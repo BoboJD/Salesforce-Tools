@@ -157,7 +157,7 @@ check_package_version(){
 		local new_package_id=$(echo "$installed_packages" | jq -r ".result[] | select(.SubscriberPackageName == \"$package_name\") | .SubscriberPackageVersionId")
 		if [ -n "$new_package_id" ]; then
 			sed -i '/^$/s// #BLANK_LINE/' "$config_file"
-			yq eval -i ".scratch_org_settings.appexchange.appexchange_id_by_name.[\"$package_name\"] = \"$package_id\"" "$config_file"
+			yq eval -i ".scratch_org_settings.appexchange.appexchange_id_by_name.[\"$package_name\"] = \"$new_package_id\"" "$config_file"
 			sed -i "s/ *#BLANK_LINE//g" "$config_file"
 			echo -e "${RGreen}Package version id updated.${NC}"
 		else
