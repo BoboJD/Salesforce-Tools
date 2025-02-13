@@ -90,6 +90,10 @@ global class Mocks{
 		global void notifyUsers(String targetId, Set<String> recipientsIds, String title, String body){
 			mocks.mockVoidMethod(this, 'notifyUsers', new List<Type>{String.class, Set<String>.class, String.class, String.class}, new List<Object>{targetId, recipientsIds, title, body});
 		}
+
+		global void notifyUser(String recipientId, String title, String body){
+			mocks.mockVoidMethod(this, 'notifyUser', new List<Type>{String.class, String.class, String.class}, new List<Object>{recipientId, title, body});
+		}
 	}
 
 	global class tlz_CustomNotificationTypesSelector extends fflib_SObjectMocks.SObjectSelector implements tlz_ICustomNotificationTypesSelector{

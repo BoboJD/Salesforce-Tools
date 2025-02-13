@@ -10,7 +10,11 @@ global inherited sharing class CustomNotificationsServiceImpl implements ICustom
 		if(String.isNotBlank(body))
 			notification.setBody(body);
 		notification.setNotificationTypeId(notificationType.Id);
-		notification.setTargetId(targetId);
+		notification.setTargetId(targetId ?? '000000000000000AAA');
 		notification.send(recipientsIds);
+	}
+
+	global void notifyUser(String recipientId, String title, String body){
+		notifyUsers(null, new Set<String>{recipientId}, title, body);
 	}
 }

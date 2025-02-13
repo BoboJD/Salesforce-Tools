@@ -5,6 +5,10 @@ global inherited sharing class CustomNotificationsService{
 		service().notifyUsers(targetId, recipientsIds, title, body);
 	}
 
+	global static void notifyUser(String recipientId, String title, String body){
+		service().notifyUser(recipientId, title, body);
+	}
+
 	private static ICustomNotificationsService service(){
 		return (ICustomNotificationsService)Application.Service.newInstance(ICustomNotificationsService.class);
 	}

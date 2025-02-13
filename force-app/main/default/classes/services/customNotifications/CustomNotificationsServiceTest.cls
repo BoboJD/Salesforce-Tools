@@ -9,4 +9,13 @@ private class CustomNotificationsServiceTest{
 
 		Assert.isNotNull(CustomNotificationsServiceImpl.notification);
 	}
+
+	@IsTest
+	static void testNotifyUserShouldNotThrowError(){
+		Test.startTest();
+		CustomNotificationsService.notifyUser(UserInfo.getUserId(), 'title', 'body');
+		Test.stopTest();
+
+		Assert.isNotNull(CustomNotificationsServiceImpl.notification);
+	}
 }
