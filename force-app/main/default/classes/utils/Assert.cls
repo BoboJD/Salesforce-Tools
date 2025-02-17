@@ -51,6 +51,10 @@ global with sharing class Assert{
 		System.Assert.isFalse(objects?.isEmpty(), 'Set is empty');
 	}
 
+	global static void isNow(Datetime actualDate){
+		equals(DateUtils.now(), actualDate);
+	}
+
 	global static void success(Map<String, Object> result){
 		System.Assert.areEqual(Constants.SUCCESS, result.get(Constants.STATUS), 'Error occured : '+(String)result.get(Constants.MESSAGE));
 	}
