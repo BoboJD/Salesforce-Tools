@@ -19,6 +19,7 @@ global without sharing class LogFactory{
 	global LogFactory logError(Type classApex, String methodName, List<Object> parameters, Exception e){
 		String message = e != null ? e.getMessage() : null;
 		if(errorCanBeLogged(message)){
+			System.debug(LoggingLevel.FINEST, '> EXCEPTION : '+message);
 			logs.add(new Log__c(
 				RecordTypeId = RecordTypeSingleton.getRecordTypeId(Log__c.SObjectType, LogConstants.RT_ERROR),
 				Type__c = LogConstants.TYPE_APEX,
