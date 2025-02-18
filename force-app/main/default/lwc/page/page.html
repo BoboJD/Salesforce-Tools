@@ -17,6 +17,7 @@
 			</div>
 			<lightning-button variant="neutral" onclick={dispatchCancel} label={label.Cancel}></lightning-button>
 			<lightning-button if:false={isFirstStep} variant="neutral" class="slds-m-left_small" onclick={doBack} label="Back" disabled={backDisabled}></lightning-button>
+			<slot name="additional-buttons"></slot>
 			<lightning-button
 				variant="brand"
 				onclick={dispatchNext}
