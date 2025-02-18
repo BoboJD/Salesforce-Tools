@@ -8,6 +8,7 @@ export default class Page extends LightningElement{
 	@api backDisabled = false;
 	@api nextDisabled = false;
 	@api hideSpinnerByDefault = false;
+	@api fullWidth = false;
 
 	// Private Properties
 	label = label;
@@ -61,6 +62,10 @@ export default class Page extends LightningElement{
 
 	get nextLabel(){
 		return this.isLastStep ? label.Save : label.Next;
+	}
+
+	get pageClass(){
+		return 'page' + (this.fullWidth ? ' full-width' : '');
 	}
 
 	// Public Methods

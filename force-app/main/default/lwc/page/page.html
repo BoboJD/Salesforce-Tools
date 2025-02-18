@@ -1,28 +1,29 @@
 <template>
 	<c-disable-pull-to-refresh></c-disable-pull-to-refresh>
-
-	<header class="slds-modal__header">
-		<h2 class="slds-text-heading_medium slds-hyphenate">{title}</h2>
-		<p class="slds-var-m-top_xx-small">{progressStepLabel}</p>
-	</header>
-	<div class="slds-modal__content" onscroll={setScrollingHeight}>
-		<c-spinner top={scrollingHeight} hide-by-default={hideSpinnerByDefault}></c-spinner>
-		<slot></slot>
-	</div>
-	<footer class="slds-modal__footer">
-		<div if:true={multipleSteps} class="slds-var-m-bottom_small">
-			<lightning-progress-indicator current-step={progressStepLabel}>
-				<lightning-progress-step for:each={steps} for:item="step" key={step} label={step} value={step} onclick={setStep}></lightning-progress-step>
-			</lightning-progress-indicator>
+	<div class={pageClass}>
+		<header class="slds-modal__header">
+			<h2 class="slds-text-heading_medium slds-hyphenate">{title}</h2>
+			<p class="slds-var-m-top_xx-small">{progressStepLabel}</p>
+		</header>
+		<div class="slds-modal__content" onscroll={setScrollingHeight}>
+			<c-spinner top={scrollingHeight} hide-by-default={hideSpinnerByDefault}></c-spinner>
+			<slot></slot>
 		</div>
-		<lightning-button variant="neutral" onclick={dispatchCancel} label={label.Cancel}></lightning-button>
-		<lightning-button if:false={isFirstStep} variant="neutral" class="slds-m-left_small" onclick={doBack} label="Back" disabled={backDisabled}></lightning-button>
-		<lightning-button
-			variant="brand"
-			onclick={dispatchNext}
-			label={nextLabel}
-			class="slds-m-left_small"
-			disabled={nextDisabled}>
-		</lightning-button>
-	</footer>
+		<footer class="slds-modal__footer">
+			<div if:true={multipleSteps} class="slds-var-m-bottom_small">
+				<lightning-progress-indicator current-step={progressStepLabel}>
+					<lightning-progress-step for:each={steps} for:item="step" key={step} label={step} value={step} onclick={setStep}></lightning-progress-step>
+				</lightning-progress-indicator>
+			</div>
+			<lightning-button variant="neutral" onclick={dispatchCancel} label={label.Cancel}></lightning-button>
+			<lightning-button if:false={isFirstStep} variant="neutral" class="slds-m-left_small" onclick={doBack} label="Back" disabled={backDisabled}></lightning-button>
+			<lightning-button
+				variant="brand"
+				onclick={dispatchNext}
+				label={nextLabel}
+				class="slds-m-left_small"
+				disabled={nextDisabled}>
+			</lightning-button>
+		</footer>
+	</div>
 </template>

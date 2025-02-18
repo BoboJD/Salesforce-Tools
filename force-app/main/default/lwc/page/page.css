@@ -1,10 +1,17 @@
 :host{
+	height: 100%;
+}
+.page{
 	display: flex;
 	flex-direction: column;
+	margin: auto;
 	width: 70%;
 	max-width: 1025px;
-	margin: auto;
 	height: 100%;
+}
+.page.full-width{
+	width: 100%;
+	max-width: none;
 }
 @media all and (max-width: 48em){
 	:host{
