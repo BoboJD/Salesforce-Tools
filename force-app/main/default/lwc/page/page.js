@@ -48,7 +48,7 @@ export default class Page extends LightningElement{
 
 	@api
 	get isLastStep(){
-		return (this.numberOfSteps - 1) === this.step;
+		return (this.numberOfSteps - 1) === this.step || this.numberOfSteps === 0;
 	}
 
 	get progressStepLabel(){
