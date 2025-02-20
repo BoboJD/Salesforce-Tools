@@ -1,4 +1,4 @@
-.PHONY: archive clean crypt delete deploy key org release retrieve tests version
+.PHONY: archive clean crypt delete deploy key org release retrieve tests update version
 
 p=
 
@@ -41,6 +41,10 @@ retrieve:
 # Run all tests in your current org, then summarize tests result
 tests:
 	@bash scripts/runTests.sh $(p)
+
+# Update fflib folders
+update:
+	@bash scripts/update_fflib.sh
 
 # Upload new version of the package
 version:
