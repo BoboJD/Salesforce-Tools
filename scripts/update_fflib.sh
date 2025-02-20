@@ -7,8 +7,8 @@ main(){
 
 pull_fflib_changes(){
     echo "Pulling fflib changes..."
-    apex_mocks_output=$(git subtree pull --prefix=force-app/fflib-apex-mocks git@github.com:apex-enterprise-patterns/fflib-apex-mocks.git master)
-    apex_common_output=$(git subtree pull --prefix=force-app/fflib-apex-common git@github.com:apex-enterprise-patterns/fflib-apex-common.git master)
+    apex_mocks_output=$(git subtree pull --prefix=force-app/fflib-apex-mocks git@github.com:apex-enterprise-patterns/fflib-apex-mocks.git master -m "Pulled Apex Mocks new commits" --squash)
+    apex_common_output=$(git subtree pull --prefix=force-app/fflib-apex-common git@github.com:apex-enterprise-patterns/fflib-apex-common.git master -m "Pulled Apex Common new commits" --squash)
 }
 
 add_system_to_assert_in_files(){
