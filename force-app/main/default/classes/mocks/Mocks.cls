@@ -141,6 +141,18 @@ global class Mocks{
 		}
 	}
 
+	global class EmailService implements IEmailService{
+		private fflib_ApexMocks mocks;
+
+		global EmailService(fflib_ApexMocks mocks){
+			this.mocks = mocks;
+		}
+
+		global void sendErrorToCurrentUser(String subject, String body){
+			mocks.mockVoidMethod(this, 'sendErrorToCurrentUser', new List<Type>{String.class, String.class}, new List<Object>{subject, body});
+		}
+	}
+
 	global class EmailTemplatesService implements IEmailTemplatesService{
 		private fflib_ApexMocks mocks;
 

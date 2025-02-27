@@ -225,6 +225,14 @@
         <value>Download all files</value>
     </labels>
     <labels>
+        <fullName>EmailNoReplySenderDisplayName</fullName>
+        <categories>ui</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>EmailNoReplySenderDisplayName</shortDescription>
+        <value>No reply</value>
+    </labels>
+    <labels>
         <fullName>FileType</fullName>
         <categories>ui</categories>
         <language>en_US</language>

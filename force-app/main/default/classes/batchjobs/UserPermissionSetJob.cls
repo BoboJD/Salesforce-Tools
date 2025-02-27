@@ -11,7 +11,7 @@ global without sharing class UserPermissionSetJob implements Database.Batchable<
 	}
 
 	global void execute(Database.BatchableContext bc, List<User> users){
-		tlz.fflib_ISObjectUnitOfWork uow = Application.UnitOfWork.newInstance(new List<SObjectType>{ PermissionSetAssignment.SObjectType });
+		fflib_ISObjectUnitOfWork uow = Application.UnitOfWork.newInstance(new List<SObjectType>{ PermissionSetAssignment.SObjectType });
 		PermissionSetAttributionHelper.newInstance(users, uow).assignPermissionSets();
 		uow.commitWork();
 	}

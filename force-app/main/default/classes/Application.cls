@@ -11,6 +11,7 @@ global inherited sharing class Application{
 				ICustomNotificationsService.class => CustomNotificationsServiceImpl.class,
 				IDatabaseService.class => DatabaseServiceImpl.class,
 				IDatacloudService.class => DatacloudServiceImpl.class,
+				IEmailService.class => EmailServiceImpl.class,
 				IEmailTemplatesService.class => EmailTemplatesServiceImpl.class,
 				IFeatureManagementService.class => FeatureManagementServiceImpl.class,
 				IMessagingService.class => MessagingServiceImpl.class,
