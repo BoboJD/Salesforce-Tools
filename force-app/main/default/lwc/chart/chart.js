@@ -2,6 +2,7 @@ import { api, LightningElement } from 'lwc';
 import { loadScript } from 'lightning/platformResourceLoader';
 import { recursiveDeepCopy } from 'c/utils';
 import chartJs from '@salesforce/resourceUrl/chartJs';
+import chartAdapterDateJs from '@salesforce/resourceUrl/chartAdapterDateJs';
 
 export default class Chart extends LightningElement{
 	@api config;
@@ -26,7 +27,10 @@ export default class Chart extends LightningElement{
 	}
 
 	loadScriptsThenInitChart(){
-		loadScript(this, chartJs).then(() => {
+		Promise.all([
+			loadScript(this, chartJs),
+			loadScript(this, chartAdapterDateJs)
+		]).then(() => {
 			this.isInitalized = true;
 			this.initChart();
 		});
