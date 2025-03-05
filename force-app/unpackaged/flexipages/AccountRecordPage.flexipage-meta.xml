@@ -218,6 +218,28 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>hideAddFiles</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>hideDate</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>massDeleteOption</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>multiple</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentName>fileUploader</componentName>
+                <identifier>tlz_fileUploader</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
                     <name>label</name>
                     <value>Tabs</value>
                 </componentInstanceProperties>
