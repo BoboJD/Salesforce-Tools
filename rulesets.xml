@@ -16,6 +16,7 @@
 		<exclude name="ApexUnitTestClassShouldHaveAsserts"/>
 		<exclude name="ApexUnitTestClassShouldHaveRunAs" />
 		<exclude name="AvoidLogicInTrigger" />
+		<exclude name="QueueableWithoutFinalizer" />
 	</rule>
 
 	<rule ref="category/apex/bestpractices.xml/UnusedLocalVariable">

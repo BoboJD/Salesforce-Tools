@@ -5,11 +5,6 @@ import globals from 'globals';
 
 export default [
 	{
-		ignores: [
-			'**/unpackaged/*'
-		]
-	},
-	{
 		languageOptions: {
 			ecmaVersion: 'latest',
 			sourceType: 'module',

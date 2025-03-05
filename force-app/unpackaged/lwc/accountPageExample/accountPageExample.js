@@ -49,13 +49,9 @@ export default class AccountPageExample extends NavigationMixin(LightningElement
 
 	doNext(){
 		if(this.page.isFirstStep){
-			console.log('First page');
 			this.page.incrementStep();
 		}else if(this.page.isSecondStep){
-			console.log('Second page');
 			this.page.incrementStep();
-		}else{
-			console.log('Last page');
 		}
 	}
 

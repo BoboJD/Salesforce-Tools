@@ -47,6 +47,9 @@ $RECYCLE.BIN/
 # VSCode IDE
 .vscode
 
+# Husky cache
+.husky/_/
+
 # PMD Cache
 .pmdCache
 
