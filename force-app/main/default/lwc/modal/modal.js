@@ -8,6 +8,7 @@ export default class Modal extends LightningElement{
 	@api title;
 	@api subtitle;
 	@api message;
+	@api closeLabel = label.Cancel;
 	@api confirmLabel = label.Continue;
 	@api isLoading = false;
 	@api noPadding = false;
