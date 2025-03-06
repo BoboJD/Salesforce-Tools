@@ -15,11 +15,15 @@
 					<c-input
 						type="email"
 						label="Email"
-						value={email}
+						form={form}
+						field-name="email"
 						onvaluechange={setEmail}
 						max="255"
 						required>
 					</c-input>
+				</div>
+				<div class="slds-form__item">
+					Value : {form.email}
 				</div>
 			</div>
 			<div class="slds-form__row">

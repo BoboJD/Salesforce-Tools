@@ -14,11 +14,11 @@ export default class Input extends NavigationMixin(LightningElement){
 	@api label;
 	@api fieldLevelHelp;
 	@api placeholder;
+	@api form;
 	@api fieldName;
 	@api messageToggleActive;
 	@api messageToggleInactive;
 	@api dateStyle;
-	@api value;
 	@api checked;
 	@api step;
 	@api autocomplete;
@@ -41,8 +41,16 @@ export default class Input extends NavigationMixin(LightningElement){
 	hasError = false;
 	isLoading = false;
 	l = l;
-
+	_value;
 	_files = [];
+
+	get value(){
+		return this._value;
+	}
+	@api
+	set value(value){
+		this._value = value;
+	}
 
 	get files(){
 		return this._files;
@@ -303,6 +311,8 @@ export default class Input extends NavigationMixin(LightningElement){
 	}
 
 	connectedCallback(){
+		if(this.form && this.fieldName)
+			this._value = this.form[this.fieldName];
 		if(this.type === 'file' && this.value && this.value != null && JSON.stringify(this.value) !== '[]' && JSON.stringify(this.value).length > 0 && typeof this.value === 'object'){
 			if(this.value[Object.keys(this.value)[0]] === 'object'){
 				for(let v in this.value){

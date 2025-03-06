@@ -1,4 +1,4 @@
-@SuppressWarnings('PMD.ExcessiveParameterList')
+@SuppressWarnings('PMD.ExcessiveParameterList,PMD.AvoidDebugStatements')
 global without sharing class LogFactory{
 	private static LogFactory instance;
 	global List<Log__c> logs;

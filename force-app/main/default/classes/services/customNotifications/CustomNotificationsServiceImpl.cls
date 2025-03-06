@@ -1,4 +1,4 @@
-@SuppressWarnings('PMD.ExcessiveParameterList')
+@SuppressWarnings('PMD.ExcessiveParameterList,PMD.AvoidHardcodingId')
 global inherited sharing class CustomNotificationsServiceImpl implements ICustomNotificationsService{
 	@TestVisible private static Messaging.CustomNotification notification;
 

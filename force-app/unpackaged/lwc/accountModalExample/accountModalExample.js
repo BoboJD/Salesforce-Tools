@@ -1,12 +1,12 @@
-import { LightningElement, wire } from 'lwc';
+import { LightningElement, wire, track } from 'lwc';
 import { CurrentPageReference } from 'lightning/navigation';
 import { CloseActionScreenEvent } from 'lightning/actions';
-import { displaySpinner, wait, hideSpinner, checkRequiredFields, displayErrorToast } from 'c/utils';
+import { displaySpinner, wait, hideSpinner, checkRequiredFields, displayErrorToast, setValue } from 'c/utils';
 
 export default class AccountModalExample extends LightningElement{
+	@track form = { email: 'test@test.fr' };
 	recordId;
 	isLoading = true;
-	email;
 
 	@wire(CurrentPageReference)
 	getStateParameters(currentPageReference){
@@ -65,7 +65,8 @@ export default class AccountModalExample extends LightningElement{
 	}
 
 	setEmail(e){
-		this.email = e.detail.value;
+		const { fieldName, value } = e.detail;
+		setValue(this.form, fieldName, value);
 	}
 
 	submitForm(){
