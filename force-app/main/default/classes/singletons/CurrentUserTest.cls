@@ -2,8 +2,9 @@
 private class CurrentUserTest{
 
 	@IsTest
-	static void isAdminAsStandardUserShouldReturnFalse(){
+	static void isAdminAsStandardUserWithoutAdminPermissionShouldReturnFalse(){
 		User standardUser = UserBuilder.newStandardUser().build();
+		delete [SELECT Id FROM PermissionSetAssignment WHERE AssigneeId = :standardUser.Id AND PermissionSet.Name = 'ToolsAdmin'];
 		System.runAs(standardUser){
 			Test.startTest();
 			Boolean isAdmin = CurrentUser.isAdmin();
@@ -14,8 +15,8 @@ private class CurrentUserTest{
 	}
 
 	@IsTest
-	static void isAdminAsStandardUserWithAdminCheckedShouldReturnTrue(){
-		User standardUser = UserBuilder.newStandardUser().withAdmin(true).build();
+	static void isAdminAsStandardUserWithAdminPermissionShouldReturnTrue(){
+		User standardUser = UserBuilder.newStandardUser().build();
 		System.runAs(standardUser){
 			Test.startTest();
 			Boolean isAdmin = CurrentUser.isAdmin();
@@ -36,7 +37,7 @@ private class CurrentUserTest{
 
 	@IsTest
 	static void canEditRecordShouldReturnTrue(){
-		User standardUser = UserBuilder.newStandardUser().withAdmin(true).build();
+		User standardUser = UserBuilder.newStandardUser().build();
 		System.runAs(standardUser){
 			Account account = AccountBuilder.newAccount().build();
 
@@ -50,7 +51,7 @@ private class CurrentUserTest{
 
 	@IsTest
 	static void canEditRecordWithFakeIdShouldReturnFalse(){
-		User standardUser = UserBuilder.newStandardUser().withAdmin(true).build();
+		User standardUser = UserBuilder.newStandardUser().build();
 		System.runAs(standardUser){
 			Id fakeId = fflib_IDGenerator.generate(Schema.Account.SObjectType);
 
@@ -64,7 +65,7 @@ private class CurrentUserTest{
 
 	@IsTest
 	static void canEditRecordsShouldReturnTrue(){
-		User standardUser = UserBuilder.newStandardUser().withAdmin(true).build();
+		User standardUser = UserBuilder.newStandardUser().build();
 		System.runAs(standardUser){
 			Account account = AccountBuilder.newAccount().build();
 
@@ -78,7 +79,7 @@ private class CurrentUserTest{
 
 	@IsTest
 	static void canEditRecordsWithFakeIdShouldReturnFalse(){
-		User standardUser = UserBuilder.newStandardUser().withAdmin(true).build();
+		User standardUser = UserBuilder.newStandardUser().build();
 		System.runAs(standardUser){
 			Id fakeId = fflib_IDGenerator.generate(Schema.Account.SObjectType);
 
@@ -92,7 +93,7 @@ private class CurrentUserTest{
 
 	@IsTest
 	static void canDeleteRecordsShouldReturnTrue(){
-		User standardUser = UserBuilder.newStandardUser().withAdmin(true).build();
+		User standardUser = UserBuilder.newStandardUser().build();
 		System.runAs(standardUser){
 			Account account = AccountBuilder.newAccount().build();
 
@@ -106,7 +107,7 @@ private class CurrentUserTest{
 
 	@IsTest
 	static void canDeleteRecordsWithFakeIdShouldReturnFalse(){
-		User standardUser = UserBuilder.newStandardUser().withAdmin(true).build();
+		User standardUser = UserBuilder.newStandardUser().build();
 		System.runAs(standardUser){
 			Id fakeId = fflib_IDGenerator.generate(Schema.Account.SObjectType);
 

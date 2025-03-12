@@ -20,6 +20,10 @@
         <enabled>true</enabled>
         <name>ErrorMessageVisible</name>
     </customPermissions>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>ToolsAdmin</name>
+    </customPermissions>
     <customSettingAccesses>
         <enabled>true</enabled>
         <name>EncryptionKey__c</name>
@@ -97,11 +101,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>User.ActivateRotation__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>User.Admin__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

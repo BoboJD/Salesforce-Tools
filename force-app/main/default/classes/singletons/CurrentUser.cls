@@ -16,7 +16,8 @@ global class CurrentUser{
 	}
 
 	global static Boolean isAdmin(){
-		return data().Profile.Name == Label.ProfileSystemAdministrator || data().Admin__c;
+		return data().Profile.Name == Label.ProfileSystemAdministrator
+			|| FeatureManagementService.checkPermission(PermissionConstants.TOOLS_ADMIN);
 	}
 
 	global static Boolean canEditRecord(Id recordId){

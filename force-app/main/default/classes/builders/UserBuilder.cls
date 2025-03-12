@@ -59,11 +59,6 @@ global inherited sharing class UserBuilder extends SObjectBuilder{
 			.withLastName('User');
 	}
 
-	global UserBuilder withAdmin(Boolean admin){
-		setFieldValue(User.Admin__c, admin);
-		return this;
-	}
-
 	global UserBuilder withAlias(String alias){
 		setFieldValue(User.Alias, alias);
 		return this;

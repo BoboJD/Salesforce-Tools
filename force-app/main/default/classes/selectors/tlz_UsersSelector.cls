@@ -8,7 +8,6 @@ global inherited sharing class tlz_UsersSelector extends fflib_SObjectSelector i
 	global override List<SObjectField> getSObjectFieldList(){
 		return new List<SObjectField>{
 			User.Id,
-			User.Admin__c,
 			User.IsActive
 		};
 	}
