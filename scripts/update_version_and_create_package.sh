@@ -12,6 +12,10 @@ if [ "$newPatch" -gt 9 ]; then
 	newPatch=0
 	minor=$(($minor + 1))
 fi
+if [ "$minor" -gt 9 ]; then
+    minor=0
+    major=$((major + 1))
+fi
 newVersion="$major.$minor.$newPatch.NEXT"
 
 echo "New version: $newVersion"
