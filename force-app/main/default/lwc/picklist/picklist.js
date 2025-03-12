@@ -1,5 +1,5 @@
 import { LightningElement, api, track } from 'lwc';
-import { recursiveDeepCopy, isEmpty, format } from 'c/utils';
+import { recursiveDeepCopy, isEmpty, format, getValue } from 'c/utils';
 import l from './labels';
 
 export default class Picklist extends LightningElement{
@@ -205,7 +205,7 @@ export default class Picklist extends LightningElement{
 		if(this.isCheckbox || this.isDual)
 			this._multiple = true;
 		if(this.form && this.fieldName)
-			this._value = this.form[this.fieldName];
+			this._value = getValue(this.form, this.fieldName);
 	}
 
 	setupClickListener(){

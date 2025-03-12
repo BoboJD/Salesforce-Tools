@@ -2,7 +2,7 @@ import { LightningElement, api, track } from 'lwc';
 import { logError } from 'c/logFactory';
 import { NavigationMixin } from 'lightning/navigation';
 import {
-	formatDate, formatDatetime, formatNumber, isEmpty, formatCurrency,
+	formatDate, formatDatetime, formatNumber, isEmpty, formatCurrency, getValue,
 	displaySuccessToast, displaySpinner, hideSpinner, handleErrorForUser, recursiveDeepCopy
 } from 'c/utils';
 import deleteFile from '@salesforce/apex/FileUploaderController.deleteFile';
@@ -312,7 +312,7 @@ export default class Input extends NavigationMixin(LightningElement){
 
 	connectedCallback(){
 		if(this.form && this.fieldName)
-			this._value = this.form[this.fieldName];
+			this._value = getValue(this.form, this.fieldName);
 		if(this.type === 'file' && this.value && this.value != null && JSON.stringify(this.value) !== '[]' && JSON.stringify(this.value).length > 0 && typeof this.value === 'object'){
 			if(this.value[Object.keys(this.value)[0]] === 'object'){
 				for(let v in this.value){

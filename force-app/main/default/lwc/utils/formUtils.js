@@ -35,6 +35,21 @@ const setValue = (form, property, value) => {
 	}
 };
 
+const getValue = (form, property) => {
+	let currentObj = form;
+	if(property.includes('.')){
+		const nestedProperties = property.split('.');
+		const lastProperty = nestedProperties.pop();
+		for(const nestedProperty of nestedProperties){
+			if(!currentObj[nestedProperty])
+				currentObj[nestedProperty] = {};
+			currentObj = currentObj[nestedProperty];
+		}
+		return getValue(currentObj, lastProperty);
+	}
+	return currentObj[property];
+};
+
 const wait = seconds => {
 	return new Promise(resolve => setTimeout(resolve, seconds * 1000));
 };
@@ -43,5 +58,6 @@ export {
 	functionExist,
 	checkRequiredFields,
 	setValue,
+	getValue,
 	wait
 };
