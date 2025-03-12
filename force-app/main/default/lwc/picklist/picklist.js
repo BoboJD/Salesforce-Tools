@@ -12,7 +12,7 @@ export default class Picklist extends LightningElement{
 	@api selectedLabel;
 	@api fieldName;
 	@api max;
-
+	@api form;
 	@api searchable = false;
 	@api edit = false;
 	@api required = false;
@@ -204,6 +204,8 @@ export default class Picklist extends LightningElement{
 		this.setupClickListener();
 		if(this.isCheckbox || this.isDual)
 			this._multiple = true;
+		if(this.form && this.fieldName)
+			this._value = this.form[this.fieldName];
 	}
 
 	setupClickListener(){
