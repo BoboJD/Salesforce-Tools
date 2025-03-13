@@ -91,10 +91,9 @@ export default class Page extends LightningElement{
 	}
 
 	setStep(e){
-		const newStep = parseInt(e.target.value, 10);
-		if(newStep < this.step){
+		const newStep = this.steps.findIndex(step => step === e.target.value);
+		if(newStep < this.step)
 			this.step = newStep;
-		}
 	}
 
 	// Dispatch Events

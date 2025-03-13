@@ -15,7 +15,8 @@
 				<template lwc:if={title}>{title}</template>
 				<template lwc:else><slot name="title"></slot></template>
 			</h1>
-			<p if:true={subtitle} class="slds-m-top_x-small">{subtitle}</p>
+			<p lwc:if={steps.length} class="slds-m-top_x-small">{progressStepLabel}</p>
+			<p lwc:elseif={subtitle} class="slds-m-top_x-small">{subtitle}</p>
 		</header>
 		<div class={contentClass} onscroll={setScrollingHeight}>
 			<c-spinner if:true={enableSpinner} top={scrollingHeight} hide-by-default={hideSpinnerByDefault} size="small"></c-spinner>
@@ -23,6 +24,11 @@
 			<template lwc:else><slot></slot></template>
 		</div>
 		<footer class="slds-modal__footer">
+			<div if:true={multipleSteps} class="slds-var-m-bottom_small">
+				<lightning-progress-indicator current-step={progressStepLabel}>
+					<lightning-progress-step for:each={steps} for:item="step" key={step} label={step} value={step} onclick={setStep}></lightning-progress-step>
+				</lightning-progress-indicator>
+			</div>
 			<lightning-button if:false={hideClose} variant="neutral" onclick={dispatchCloseModal} label={closeLabel}></lightning-button>
 			<slot name="additional-buttons"></slot>
 			<lightning-button

@@ -25,6 +25,9 @@ export default class ModalContainer extends LightningElement{
 	_confirmDisabled = false;
 	label = label;
 	scrollingHeight = 0;
+	_steps = [];
+	_step = 0;
+	numberOfSteps = 0;
 
 	// Getters and Setters
 	get containerClass(){
@@ -61,6 +64,48 @@ export default class ModalContainer extends LightningElement{
 		this._hideCloseIcon = value;
 	}
 
+	get steps(){
+		return this._steps;
+	}
+
+	@api
+	set steps(value){
+		this._steps = value;
+		this.numberOfSteps = this._steps.length;
+	}
+
+	get step(){
+		return this._step;
+	}
+
+	@api
+	set step(value){
+		this._step = value;
+	}
+
+	@api
+	get isFirstStep(){
+		return this.step === 0;
+	}
+
+	@api
+	get isSecondStep(){
+		return this.step === 1;
+	}
+
+	@api
+	get isLastStep(){
+		return (this.numberOfSteps - 1) === this.step || this.numberOfSteps === 0;
+	}
+
+	get progressStepLabel(){
+		return this.steps[this.step];
+	}
+
+	get multipleSteps(){
+		return this.numberOfSteps > 1;
+	}
+
 	// Public Methods
 	@api
 	showSpinner(){
@@ -75,6 +120,12 @@ export default class ModalContainer extends LightningElement{
 				window.dispatchEvent(new Event('resize'));
 			}, 1);
 		}
+	}
+
+	@api
+	incrementStep(){
+		this.step++;
+		this.template.querySelector('.slds-modal__content').scrollTop = 0;
 	}
 
 	// Callbacks
@@ -121,6 +172,12 @@ export default class ModalContainer extends LightningElement{
 
 	setScrollingHeight(e){
 		this.scrollingHeight = e.target.scrollTop;
+	}
+
+	setStep(e){
+		const newStep = this.steps.findIndex(step => step === e.target.value);
+		if(newStep < this.step)
+			this.step = newStep;
 	}
 
 	// Dispatch Events

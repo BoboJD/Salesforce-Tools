@@ -14,6 +14,10 @@ export default class AccountModalExample extends LightningElement{
 			this.recordId = currentPageReference.state.recordId;
 	}
 
+	get steps(){
+		return ['Page 1', 'Page 2'];
+	}
+
 	get types(){
 		return [
 			{ value: 'A', label: 'A' },
@@ -48,6 +52,10 @@ export default class AccountModalExample extends LightningElement{
 		};
 	}
 
+	get modalContainer(){
+		return this.template.querySelector('c-modal-container');
+	}
+
 	connectedCallback(){
 		setTimeout(() => {
 			hideSpinner(this);
@@ -72,6 +80,8 @@ export default class AccountModalExample extends LightningElement{
 	submitForm(){
 		if(!this.formIsValid()){
 			displayErrorToast(this, 'Vérifier les informations du contact.');
+		}else{
+			this.modalContainer.incrementStep();
 		}
 	}
 
