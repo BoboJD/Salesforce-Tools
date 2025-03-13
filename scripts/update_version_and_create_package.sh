@@ -2,6 +2,20 @@
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 . "$SCRIPT_DIR/utils.sh"
 
+echo -ne "\nChecking if ${RBlue}npm packages${NC} have update... "
+ncu --upgrade --silent
+if git diff --quiet package.json; then
+	echo -e "${RYellow}All dependencies are up to date.${NC}"
+else
+	echo "Updates detected in package.json, starting installation..."
+	npm install --force --loglevel=error
+fi
+
+npm run lint
+if [ $? -ne 0 ]; then
+  error_exit "Linting failed."
+fi
+
 echo "Calculating new version number..."
 currentVersion=$(jq -r '.packageDirectories[0].versionNumber' sfdx-project.json)
 major=$(echo $currentVersion | cut -d '.' -f 1)
