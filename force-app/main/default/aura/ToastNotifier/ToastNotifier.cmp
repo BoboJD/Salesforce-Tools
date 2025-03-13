@@ -1,4 +1,4 @@
-<aura:component implements="lightning:backgroundUtilityItem">
+<aura:component implements="lightning:backgroundUtilityItem" access="global">
 	<lightning:empApi aura:id="empApi"/>
 	<aura:handler name="init" value="{!this}" action="{!c.listenToToastPlatformEvents}" />
 </aura:component>
