@@ -37,8 +37,9 @@ echo "Replacing version number in sfdx-project.json..."
 jq --arg newVersion "$newVersion" '.packageDirectories[0].versionNumber = $newVersion' sfdx-project.json > sfdx-project.json.tmp && mv sfdx-project.json.tmp sfdx-project.json
 
 echo -e "${RGreen}Version number updated to $newVersion ${NC}"
-echo "Creating new Salesforce package version..."
-result=$(sf package version create --definition-file config/project-scratch-def.json --package "Salesforce Tools" --wait 30 --installation-key-bypass --code-coverage --json)
+echo "Creating new package version..."
+package_name=$(jq -r '.packageDirectories[0].package' sfdx-project.json)
+result=$(sf package version create --definition-file config/project-scratch-def.json --package "$package_name" --wait 30 --installation-key-bypass --code-coverage --json)
 status=$(echo $result | jq -r '.status')
 
 if [ "$status" = "0" ]; then
@@ -52,9 +53,9 @@ if [ "$status" = "0" ]; then
 		if [ "$promote_status" = "0" ]; then
 			jq '
 			.packageAliases |= (
-				{ "Salesforce Tools": .["Salesforce Tools"] } +
+				{ "$package_name": .["$package_name"] } +
 				(to_entries
-				| map(select(.key | startswith("Salesforce Tools@")))
+				| map(select(.key | startswith("$package_name@")))
 				| sort_by(.key | split("@")[1])
 				| last
 				| { (.key): .value }
