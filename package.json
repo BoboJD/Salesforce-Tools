@@ -2,7 +2,8 @@
 	"name": "tlz",
 	"description": "Salesforce Tools",
 	"scripts": {
-		"lint": "npm run lint:lwc && npm run pmd",
+		"lint": "npm run lint:aura && npm run lint:lwc && npm run pmd",
+    	"lint:aura": "eslint **/aura/**/*.js --format=stylish",
 		"lint:lwc": "eslint **/lwc/**/*.js --format=stylish",
 		"pmd": "pmd check --dir force-app --rulesets ./rulesets.xml --cache .pmdCache --format text",
 		"prepare": "husky"
@@ -18,12 +19,13 @@
 	},
 	"homepage": "https://github.com/BoboJD/Salesforce-Tools#readme",
 	"devDependencies": {
-		"@babel/core": "^7.26.9",
-		"@babel/eslint-parser": "^7.26.8",
+		"@babel/core": "^7.26.10",
+		"@babel/eslint-parser": "^7.26.10",
 		"@lwc/eslint-plugin-lwc": "^2.1.0",
 		"@salesforce/eslint-config-lwc": "^3.7.1",
+    	"@salesforce/eslint-plugin-aura": "^2.1.0",
 		"@salesforce/eslint-plugin-lightning": "^1.0.1",
-		"eslint": "^9.21.0",
+		"eslint": "^9.22.0",
 		"eslint-plugin-import": "^2.31.0",
 		"eslint-plugin-jest": "^28.11.0",
 		"husky": "^9.1.7",

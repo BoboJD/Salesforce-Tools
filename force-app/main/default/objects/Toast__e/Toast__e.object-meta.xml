@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>If the aura component ToastNotifier is in the utility bar, it will display the content of the message to the corresponding user.</description>
+    <eventType>HighVolume</eventType>
+    <label>Toast</label>
+    <pluralLabel>Toasts</pluralLabel>
+    <publishBehavior>PublishImmediately</publishBehavior>
+</CustomObject>

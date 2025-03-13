@@ -55,7 +55,7 @@ jobs:
         run: npm install --force
 
       - name: Run linting of js code
-        run: npm run lint:lwc
+        run: npm run lint:lwc && npm run lint:aura
 
       - name: Install Java
         uses: actions/setup-java@v4

@@ -1,4 +1,5 @@
 
+import eslintPluginAura from '@salesforce/eslint-plugin-aura';
 import eslintPluginLwc from '@lwc/eslint-plugin-lwc';
 import babelParser from '@babel/eslint-parser';
 import globals from 'globals';
@@ -24,6 +25,7 @@ export default [
 			}
 		},
 		plugins: {
+			aura: eslintPluginAura,
 			lwc: eslintPluginLwc
 		},
 		rules: {

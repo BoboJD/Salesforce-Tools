@@ -51,16 +51,16 @@ if [ "$status" = "0" ]; then
 		promote_result=$(sf package version promote --package $subscriberPackageVersionId --no-prompt --json)
 		promote_status=$(echo $promote_result | jq -r '.status')
 		if [ "$promote_status" = "0" ]; then
-			jq '
-			.packageAliases |= (
-				{ "$package_name": .["$package_name"] } +
-				(to_entries
-				| map(select(.key | startswith("$package_name@")))
-				| sort_by(.key | split("@")[1])
-				| last
-				| { (.key): .value }
+			jq --arg package_name "$package_name" '
+				.packageAliases |= (
+					{ ($package_name): .[$package_name] } +
+					(to_entries
+					| map(select(.key | startswith($package_name + "@")))
+					| sort_by(.key | split("@")[1])
+					| last
+					| { (.key): .value }
+					)
 				)
-			)
 			' "sfdx-project.json" > temp.json && mv temp.json "sfdx-project.json"
 			echo -e "${RGreen}Promotion of package was successful.${NC}"
 		else
