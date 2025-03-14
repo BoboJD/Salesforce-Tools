@@ -19,7 +19,6 @@ export default class Input extends NavigationMixin(LightningElement){
 	@api messageToggleActive;
 	@api messageToggleInactive;
 	@api dateStyle;
-	@api checked;
 	@api step;
 	@api autocomplete;
 	@api variant;
@@ -42,6 +41,7 @@ export default class Input extends NavigationMixin(LightningElement){
 	isLoading = false;
 	l = l;
 	_value;
+	_checked;
 	_files = [];
 
 	get value(){
@@ -50,6 +50,14 @@ export default class Input extends NavigationMixin(LightningElement){
 	@api
 	set value(value){
 		this._value = value;
+	}
+
+	get checked(){
+		return this._checked;
+	}
+	@api
+	set checked(checked){
+		this._checked = checked;
 	}
 
 	get files(){
@@ -311,8 +319,12 @@ export default class Input extends NavigationMixin(LightningElement){
 	}
 
 	connectedCallback(){
-		if(this.form && this.fieldName)
-			this._value = getValue(this.form, this.fieldName);
+		if(this.form && this.fieldName){
+			if(this.typeCheckbox)
+				this._checked = getValue(this.form, this.fieldName);
+			else
+				this._value = getValue(this.form, this.fieldName);
+		}
 		if(this.type === 'file' && this.value && this.value != null && JSON.stringify(this.value) !== '[]' && JSON.stringify(this.value).length > 0 && typeof this.value === 'object'){
 			if(this.value[Object.keys(this.value)[0]] === 'object'){
 				for(let v in this.value){
