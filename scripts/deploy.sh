@@ -204,7 +204,7 @@ add_option_to_delete_deleted_or_renamed_files(){
 		fi
 
 		echo "$generated_xml" > postDeployDestructiveChanges.xml
-		additional_deploy_parameters+=" --ignore-warnings --post-destructive-changes postDeployDestructiveChanges.xml"
+		additional_deploy_parameters+=" --ignore-warnings --post-destructive-changes postDeployDestructiveChanges.xml --purge-on-delete"
 		echo "Done."
 	else
 		echo "No deleted files found."
