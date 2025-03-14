@@ -320,10 +320,8 @@ export default class Input extends NavigationMixin(LightningElement){
 
 	connectedCallback(){
 		if(this.form && this.fieldName){
-			if(this.typeCheckbox)
-				this._checked = getValue(this.form, this.fieldName);
-			else
-				this._value = getValue(this.form, this.fieldName);
+			const property = this.typeCheckbox || this.typeToggle ? '_checked' : '_value';
+			this[property] = getValue(this.form, this.fieldName);
 		}
 		if(this.type === 'file' && this.value && this.value != null && JSON.stringify(this.value) !== '[]' && JSON.stringify(this.value).length > 0 && typeof this.value === 'object'){
 			if(this.value[Object.keys(this.value)[0]] === 'object'){
