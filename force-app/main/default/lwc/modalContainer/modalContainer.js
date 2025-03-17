@@ -11,7 +11,6 @@ export default class ModalContainer extends LightningElement{
 	@api subtitle;
 	@api message;
 	@api closeLabel = label.Cancel;
-	@api confirmLabel = label.Continue;
 	@api hideClose = false;
 	@api hideConfirm = false;
 	@api position = 'fixed';
@@ -22,6 +21,7 @@ export default class ModalContainer extends LightningElement{
 
 	// Private Properties
 	_hideCloseIcon = false;
+	_confirmLabel = label.Continue;
 	_confirmDisabled = false;
 	label = label;
 	scrollingHeight = 0;
@@ -44,6 +44,15 @@ export default class ModalContainer extends LightningElement{
 		return 'slds-modal__content slds-is-relative'
 			+ (this.noPadding ? '' : '  slds-p-around_small')
 			+ (this.position === 'fixed' ? ' min-content-height' : '');
+	}
+
+	get confirmLabel(){
+		return this.multipleSteps && !this.isLastStep ? label.Next : this._confirmLabel;
+	}
+
+	@api
+	set confirmLabel(confirmLabel){
+		this._confirmLabel = confirmLabel;
 	}
 
 	get confirmDisabled(){
