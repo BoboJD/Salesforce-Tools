@@ -3,6 +3,7 @@ global class Constants{
 	global static final String ERROR = 'ERROR';
 	global static final String LATEST_SALESFORCE_VERSION = '63.0';
 	global static final String MESSAGE = 'message';
+	global static final String CUSTOM_ERROR = 'customError';
 	global static final String NONE = '- Aucun -';
 	global static final String STATUS = 'status';
 	global static final String SUCCESS = 'SUCCESS';

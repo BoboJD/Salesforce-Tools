@@ -25,8 +25,13 @@ global inherited sharing class ContentVersionBuilder extends SObjectBuilder{
 		return newFile('TestFile');
 	}
 
-	global ContentVersionBuilder withTitle(String title){
-		setFieldValue(ContentVersion.Title, title);
+	global ContentVersionBuilder withJSON(String json){
+		setFieldValue(ContentVersion.JSON_fileupload__c, json);
+		return this;
+	}
+
+	global ContentVersionBuilder withFileType(String fileType){
+		setFieldValue(ContentVersion.FileType__c, fileType);
 		return this;
 	}
 
@@ -35,23 +40,23 @@ global inherited sharing class ContentVersionBuilder extends SObjectBuilder{
 		return this;
 	}
 
+	global ContentVersionBuilder withPrivateFile(Boolean privateFile){
+		setFieldValue(ContentVersion.PrivateFile__c, privateFile);
+		return this;
+	}
+
 	global ContentVersionBuilder withRecord(SObject record){
 		setFieldValue(ContentVersion.RecordId__c, record.Id);
 		return this;
 	}
 
+	global ContentVersionBuilder withTitle(String title){
+		setFieldValue(ContentVersion.Title, title);
+		return this;
+	}
+
 	global ContentVersionBuilder withVersionData(Blob versionData){
 		setFieldValue(ContentVersion.VersionData, versionData);
-		return this;
-	}
-
-	global ContentVersionBuilder withJSON(String json){
-		setFieldValue(ContentVersion.JSON_fileupload__c, json);
-		return this;
-	}
-
-	global ContentVersionBuilder withPrivateFile(Boolean privateFile){
-		setFieldValue(ContentVersion.PrivateFile__c, privateFile);
 		return this;
 	}
 }

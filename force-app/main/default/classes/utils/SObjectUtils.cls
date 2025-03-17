@@ -1,7 +1,12 @@
+@SuppressWarnings('PMD.CognitiveComplexity')
 global inherited sharing class SObjectUtils{
 
 	global static String getLabel(SObjectType sObjType){
 		return sObjType.getDescribe(SObjectDescribeOptions.DEFERRED).getLabel();
+	}
+
+	global static String getLabelPlural(SObjectType sObjType){
+		return sObjType.getDescribe(SObjectDescribeOptions.DEFERRED).getLabelPlural();
 	}
 
 	global static String getDeveloperName(SObjectType sObjType){

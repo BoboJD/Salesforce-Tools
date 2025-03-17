@@ -51,15 +51,14 @@ global with sharing class FileUploaderController{
 				}
 				uow.commitWork();
 			}
-			result.put(Constants.STATUS, Constants.SUCCESS);
+			result = ControllerUtils.success();
 		}catch(Exception e){
 			Boolean fileIsAlreadyDeleted = ExceptionUtils.isUnknown(e);
 			if(fileIsAlreadyDeleted){
-				result.put(Constants.STATUS, Constants.SUCCESS);
+				result = ControllerUtils.success();
 			}else{
 				LogFactory.commitError(FileUploaderController.class, 'deleteFiles', new List<Object>{ filesToDeleteJSON }, e);
-				result.put(Constants.STATUS, Constants.ERROR);
-				result.put(Constants.MESSAGE, e.getMessage());
+				result = ControllerUtils.error(e);
 			}
 		}
 		return result;
@@ -88,11 +87,10 @@ global with sharing class FileUploaderController{
 			fflib_ISObjectUnitOfWork uow = Application.UnitOfWork.newInstance(new List<SObjectType>{ ContentDocument.SObjectType });
 			uow.registerDeleted(new ContentDocument(Id = contentDocumentId));
 			uow.commitWork();
-			result.put(Constants.STATUS, Constants.SUCCESS);
+			result = ControllerUtils.success();
 		}catch(Exception e){
 			LogFactory.commitError(FileUploaderController.class, 'deleteFile', new List<Object>{ contentDocumentId }, e);
-			result.put(Constants.STATUS, Constants.ERROR);
-			result.put(Constants.MESSAGE, e.getMessage());
+			result = ControllerUtils.error(e);
 		}
 		return result;
 	}

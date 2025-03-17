@@ -20,7 +20,20 @@ global inherited sharing class tlz_ContentDocumentLinksSelector extends fflib_SO
 		List<ContentDocumentLink> contentDocumentLinks = new List<ContentDocumentLink>();
 		if(!linkedEntityIds.isEmpty()){
 			fflib_QueryFactory query = newQueryFactory()
+				.selectFields(new List<String>{ 'ContentDocument.LatestPublishedVersionId' })
 				.setCondition('LinkedEntityId IN :linkedEntityIds')
+				.setOrdering('ContentDocument.LatestPublishedVersion.CreatedDate', fflib_QueryFactory.SortOrder.DESCENDING);
+			contentDocumentLinks = Database.query(query.toSOQL());
+		}
+		return contentDocumentLinks;
+	}
+
+	global List<ContentDocumentLink> selectByLinkedEntityIdsAndFileTypes(Set<Id> linkedEntityIds, List<String> fileTypes){
+		List<ContentDocumentLink> contentDocumentLinks = new List<ContentDocumentLink>();
+		if(!linkedEntityIds.isEmpty() && !fileTypes.isEmpty()){
+			fflib_QueryFactory query = newQueryFactory()
+				.selectFields(new List<String>{ 'ContentDocument.LatestPublishedVersionId' })
+				.setCondition('LinkedEntityId IN :linkedEntityIds AND ContentDocument.LatestPublishedVersion.tlz__FileType__c IN :fileTypes')
 				.setOrdering('ContentDocument.LatestPublishedVersion.CreatedDate', fflib_QueryFactory.SortOrder.DESCENDING);
 			contentDocumentLinks = Database.query(query.toSOQL());
 		}

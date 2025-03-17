@@ -416,4 +416,44 @@
         <shortDescription>SObjectUpdateIteratorTitle</shortDescription>
         <value>Update finished</value>
     </labels>
+    <labels>
+        <fullName>DownloadFiles</fullName>
+        <categories>ui</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>DownloadFilesFromReport</shortDescription>
+        <value>Download files</value>
+    </labels>
+    <labels>
+        <fullName>DownloadFilesFromReport</fullName>
+        <categories>ui</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>DownloadFilesFromReport</shortDescription>
+        <value>Download files from report</value>
+    </labels>
+    <labels>
+        <fullName>NoFilesWereFoundInTheRecordsRelatedToYourReport</fullName>
+        <categories>ui</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>NoFilesWereFoundInTheRecordsRelatedToYourReport</shortDescription>
+        <value>No files were found in the records related to your report.</value>
+    </labels>
+    <labels>
+        <fullName>TheReportHasNoRecords</fullName>
+        <categories>ui</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>TheReportHasNoRecords</shortDescription>
+        <value>The report has no records.</value>
+    </labels>
+    <labels>
+        <fullName>TheRecordIdShouldBeTheFirstColumnOfYourReport</fullName>
+        <categories>ui</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>TheReportHasNoRecords</shortDescription>
+        <value>The record id should be the first column of your report.</value>
+    </labels>
 </CustomLabels>

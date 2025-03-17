@@ -49,6 +49,10 @@ global class Mocks{
 			return (List<ContentDocumentLink>)mocks.mockNonVoidMethod(this, 'selectByLinkedEntityIds', new List<Type>{Set<Id>.class}, new List<Object>{linkedEntityIds});
 		}
 
+		global List<ContentDocumentLink> selectByLinkedEntityIdsAndFileTypes(Set<Id> linkedEntityIds, List<String> fileTypes){
+			return (List<ContentDocumentLink>)mocks.mockNonVoidMethod(this, 'selectByLinkedEntityIdsAndFileTypes', new List<Type>{Set<Id>.class, List<String>.class}, new List<Object>{linkedEntityIds, fileTypes});
+		}
+
 		global Map<Id, List<ContentDocumentLink>> mapByContentDocumentId(Set<Id> contentDocumentIds){
 			return (Map<Id, List<ContentDocumentLink>>)mocks.mockNonVoidMethod(this, 'mapByContentDocumentId', new List<Type>{Set<Id>.class}, new List<Object>{contentDocumentIds});
 		}

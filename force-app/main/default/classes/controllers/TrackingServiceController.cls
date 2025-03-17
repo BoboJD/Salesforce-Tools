@@ -7,11 +7,10 @@ public without sharing class TrackingServiceController{
 			fflib_ISObjectUnitOfWork uow = Application.UnitOfWork.newInstance(new List<SObjectType>{ Tracking__c.SObjectType });
 			uow.registerNew(new Tracking__c(Functionality__c = functionality));
 			uow.commitWork();
-			result.put(Constants.STATUS, Constants.SUCCESS);
+			result = ControllerUtils.success();
 		}catch(Exception e){
 			LogFactory.commitError(TrackingServiceController.class, 'commitTracking', new List<Object>{ functionality }, e);
-			result.put(Constants.STATUS, Constants.ERROR);
-			result.put(Constants.MESSAGE, e.getMessage());
+			result = ControllerUtils.error(e);
 		}
 		return result;
 	}

@@ -1,0 +1,38 @@
+<template>
+	<c-spinner></c-spinner>
+	<lightning-card>
+		<h3 slot="title">
+			<lightning-icon icon-name="standard:report" alternative-text={label.Reports} title={label.Reports} class="slds-m-right_small"></lightning-icon>
+			{label.DownloadFilesFromReport}
+		</h3>
+		<div if:true={utilityData} class="slds-form slds-p-horizontal_small">
+			<div class="slds-form__row">
+				<div class="slds-form__item">
+					<c-lookup
+						label={label.Report}
+						icon-name="standard:report"
+						s-object-api-name="Report"
+						value={form.reportId}
+						onvaluechange={setReportId}
+						required
+					></c-lookup>
+				</div>
+				<div class="slds-form__item">
+					<c-picklist
+						label={label.FileType}
+						options={utilityData.fileTypes}
+						value={form.fileType}
+						onvaluechange={setFileType}
+					></c-picklist>
+				</div>
+			</div>
+			<lightning-button
+				icon-name="utility:download"
+				variant="neutral"
+				label={label.DownloadFiles}
+				onclick={getDownloadLinkReportFiles}
+				disabled={downloadDisabled}>
+			</lightning-button>
+		</div>
+	</lightning-card>
+</template>

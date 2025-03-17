@@ -7,6 +7,11 @@ private class SObjectUtilsTest{
 	}
 
 	@IsTest
+	static void getLabelPluralShouldNotReturnNull(){
+		Assert.isNotNull(SObjectUtils.getLabelPlural(Log__c.SObjectType));
+	}
+
+	@IsTest
 	static void getDeveloperNameShouldReturnLog(){
 		Assert.equals('tlz__Log__c', SObjectUtils.getDeveloperName(Log__c.SObjectType));
 	}

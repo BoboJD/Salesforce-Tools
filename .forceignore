@@ -17,5 +17,9 @@ package.xml
 **/tsconfig.json
 **/*.ts
 
+# Ignore standard salesforce fields on standard objects
+**/objects/**/fields/*
+!**/objects/**/fields/*__c.*
+
 # Test files
 force-app/unpackaged/

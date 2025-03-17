@@ -64,3 +64,7 @@ force-app/fflib-apex-common/*
 # Subtree Apex Mocks
 force-app/fflib-apex-mocks/*
 !force-app/fflib-apex-mocks/sfdx-source/
+
+# Ignore standard salesforce fields on standard objects
+**/objects/**/fields/*
+!**/objects/**/fields/*__c.*
