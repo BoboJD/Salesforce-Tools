@@ -27,9 +27,20 @@
 					Value : {form.email}
 				</div>
 			</div>
-			<div class="slds-form__row">
+			<div if:true={displayNextRow} class="slds-form__row">
 				<div class="slds-form__item">
-					<c-chart config={chartConfig}></c-chart>
+					<c-input
+						type="email"
+						label="Email"
+						form={form}
+						field-name="email"
+						onvaluechange={setEmail}
+						max="255"
+						required>
+					</c-input>
+				</div>
+				<div class="slds-form__item">
+					Value : {form.email}
 				</div>
 			</div>
 		</div>

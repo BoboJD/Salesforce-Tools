@@ -7,6 +7,8 @@ export default class AccountModalExample extends LightningElement{
 	@track form = { email: 'test@test.fr' };
 	recordId;
 	isLoading = true;
+	displayNextRow = false;
+	previousFormHeight;
 
 	@wire(CurrentPageReference)
 	getStateParameters(currentPageReference){
@@ -26,32 +28,6 @@ export default class AccountModalExample extends LightningElement{
 		];
 	}
 
-	get chartConfig(){
-		return {
-			type: 'polarArea',
-			data: {
-				labels: [
-					'Red',
-					'Green',
-					'Yellow',
-					'Grey',
-					'Blue'
-				],
-				datasets: [{
-					label: 'My First Dataset',
-					data: [11, 16, 7, 3, 14],
-					backgroundColor: [
-						'rgb(255, 99, 132)',
-						'rgb(75, 192, 192)',
-						'rgb(255, 205, 86)',
-						'rgb(201, 203, 207)',
-						'rgb(54, 162, 235)'
-					]
-				}]
-			}
-		};
-	}
-
 	get modalContainer(){
 		return this.template.querySelector('c-modal-container');
 	}
@@ -60,6 +36,33 @@ export default class AccountModalExample extends LightningElement{
 		setTimeout(() => {
 			hideSpinner(this);
 		}, 2000);
+	}
+
+	renderedCallback(){
+		if(this.formDiv)
+			return;
+		this.formDiv = this.template.querySelector('.slds-form');
+		if(this.formDiv){
+			const observer = new MutationObserver(() => {
+				this.checkFormHeightChange();
+			});
+			observer.observe(this.formDiv, { childList: true, subtree: true, attributes: true, characterData: true });
+		}
+	}
+
+	disconnectedCallback(){
+		if(this.formDiv){
+			const observer = new MutationObserver(() => {});
+			observer.disconnect();
+		}
+	}
+
+	checkFormHeightChange(){
+		const currentHeight = this.formDiv.scrollHeight;
+		if(currentHeight !== this.previousFormHeight){
+			this.previousFormHeight = currentHeight;
+			this.modalContainer.updateModalHeight();
+		}
 	}
 
 	closeQuickAction(){
@@ -82,6 +85,7 @@ export default class AccountModalExample extends LightningElement{
 			displayErrorToast(this, 'Vérifier les informations du contact.');
 		}else{
 			this.modalContainer.incrementStep();
+			this.displayNextRow = true;
 		}
 	}
 

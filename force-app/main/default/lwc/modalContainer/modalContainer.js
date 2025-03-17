@@ -137,12 +137,17 @@ export default class ModalContainer extends LightningElement{
 		this.template.querySelector('.slds-modal__content').scrollTop = 0;
 	}
 
+	@api
+	updateModalHeight(){
+		window.adjustModalHeight(this.template.host);
+	}
+
 	// Callbacks
 	connectedCallback(){
 		this.updatePosition();
 		if(this.position === 'action'){
-			loadScript(this, HEIGHT_MANAGER).then(this.updateHeight.bind(this));
-			window.addEventListener('resize', this.updateHeight.bind(this));
+			loadScript(this, HEIGHT_MANAGER).then(this.updateModalHeight.bind(this));
+			window.addEventListener('resize', this.updateModalHeight.bind(this));
 		}else{
 			this.setupKeypressListener();
 		}
@@ -150,7 +155,7 @@ export default class ModalContainer extends LightningElement{
 
 	disconnectedCallback(){
 		if(this.position === 'action'){
-			window.removeEventListener('resize', this.updateHeight.bind(this));
+			window.removeEventListener('resize', this.updateModalHeight.bind(this));
 		}else{
 			window.removeEventListener('keydown', this._watchKeypressComponent);
 		}
@@ -168,10 +173,6 @@ export default class ModalContainer extends LightningElement{
 		}else{
 			this.template.host.classList.remove('fixed-position');
 		}
-	}
-
-	updateHeight(){
-		window.adjustModalHeight(this.template.host);
 	}
 
 	// Event Handlers
