@@ -2,13 +2,12 @@ import { api, LightningElement } from 'lwc';
 import { loadScript } from 'lightning/platformResourceLoader';
 import { recursiveDeepCopy } from 'c/utils';
 import chartJs from '@salesforce/resourceUrl/chartJs';
-import chartAdapterDateJs from '@salesforce/resourceUrl/chartAdapterDateJs';
 
 export default class Chart extends LightningElement{
 	@api config;
-	isInitalized = false;
-	chart;
 	@api height;
+	isInitialized = false;
+	chart;
 
 	get chartStyle(){
 		if(this.height)
@@ -23,15 +22,12 @@ export default class Chart extends LightningElement{
 	}
 
 	renderedCallback(){
-		if(!this.isInitalized) this.loadScriptsThenInitChart();
+		if(!this.isInitialized) this.loadScriptsThenInitChart();
 	}
 
 	loadScriptsThenInitChart(){
-		Promise.all([
-			loadScript(this, chartJs),
-			loadScript(this, chartAdapterDateJs)
-		]).then(() => {
-			this.isInitalized = true;
+		this.isInitialized = true;
+		loadScript(this, chartJs).then(() => {
 			this.initChart();
 		});
 	}

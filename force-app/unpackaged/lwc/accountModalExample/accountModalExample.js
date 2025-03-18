@@ -28,6 +28,58 @@ export default class AccountModalExample extends LightningElement{
 		];
 	}
 
+	get chartConfig(){
+		return {
+			type: 'line',
+			data: {
+				labels: ['2024-01', '2024-02', '2024-03', '2024-04', '2024-05', '2024-06', '2024-07', '2024-08', '2024-09', '2024-10', '2024-11', '2024-12'],
+				datasets: [
+					{
+						label: 'Dataset 1',
+						data: [10, 20, 15, 25, 30, 22, 35, 40, 38, 50, 55, 60],
+						borderColor: 'rgba(75, 192, 192, 1)',
+						backgroundColor: 'rgba(75, 192, 192, 0.2)',
+						fill: true,
+						tension: 0.3
+					},
+					{
+						label: 'Dataset 2',
+						data: [5, 15, 10, 20, 25, 18, 30, 32, 28, 45, 50, 58],
+						borderColor: 'rgba(255, 99, 132, 1)',
+						backgroundColor: 'rgba(255, 99, 132, 0.2)',
+						fill: true,
+						tension: 0.3
+					}
+				]
+			},
+			options: {
+				responsive: true,
+				scales: {
+					xAxes: [{
+						type: 'time',
+						time: {
+							unit: 'month',
+							unitStepSize: 1,
+							displayFormats: {
+								'month': 'MMM-YYYY'
+							}
+						},
+						scaleLabel: {
+							display: true,
+							labelString: 'Date'
+						}
+					}],
+					yAxes: [{
+						ticks: {
+							beginAtZero: true
+						}
+					}]
+				}
+			}
+		};
+	}
+
+
 	get modalContainer(){
 		return this.template.querySelector('c-modal-container');
 	}
