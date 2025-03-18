@@ -1,36 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
     <labels>
-        <fullName>AnErrorOccurredContactAnAdministrator</fullName>
-        <categories>ui,error</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>AnErrorOccurredContactAnAdministrator</shortDescription>
-        <value>An error occurred, contact an administrator.</value>
-    </labels>
-    <labels>
-        <fullName>ErrorLossOfInternetConnection</fullName>
-        <categories>ui,error</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ErrorLossOfInternetConnection</shortDescription>
-        <value>Loss of internet connection.</value>
-    </labels>
-    <labels>
-        <fullName>ErrorProcessingFailed</fullName>
-        <categories>ui,error</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ErrorProcessingFailed</shortDescription>
-        <value>Processing failed, please try again.</value>
-    </labels>
-    <labels>
         <fullName>AddFile</fullName>
         <categories>ui</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AddFile</shortDescription>
         <value>Add file</value>
+    </labels>
+    <labels>
+        <fullName>AddFiles</fullName>
+        <categories>ui</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AddFiles</shortDescription>
+        <value>Add files</value>
+    </labels>
+    <labels>
+        <fullName>AnErrorOccurredContactAnAdministrator</fullName>
+        <categories>ui,error</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AnErrorOccurredContactAnAdministrator</shortDescription>
+        <value>An error occurred, contact an administrator.</value>
     </labels>
     <labels>
         <fullName>Apply</fullName>
@@ -81,6 +73,14 @@
         <value>Continue</value>
     </labels>
     <labels>
+        <fullName>DefaultSettingNotCreated</fullName>
+        <categories>ui</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DefaultSettingNotCreated</shortDescription>
+        <value>The record named &apos;Default&apos; has not been created for the SObject &quot;Setting&quot; (tlz__Setting__c).</value>
+    </labels>
+    <labels>
         <fullName>Delete</fullName>
         <categories>ui</categories>
         <language>en_US</language>
@@ -89,124 +89,20 @@
         <value>Delete</value>
     </labels>
     <labels>
-        <fullName>DeselectAll</fullName>
-        <categories>ui</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>DeselectAll</shortDescription>
-        <value>Deselect all</value>
-    </labels>
-    <labels>
-        <fullName>FileDeleted</fullName>
-        <categories>ui</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>FileDeleted</shortDescription>
-        <value>File deleted.</value>
-    </labels>
-    <labels>
-        <fullName>Filter</fullName>
-        <categories>ui</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Filter</shortDescription>
-        <value>Filter</value>
-    </labels>
-    <labels>
-        <fullName>Modify</fullName>
-        <categories>ui</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Modify</shortDescription>
-        <value>Modify</value>
-    </labels>
-    <labels>
-        <fullName>NewRecord</fullName>
-        <categories>ui</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>NewRecord</shortDescription>
-        <value>New record</value>
-    </labels>
-    <labels>
-        <fullName>Search</fullName>
-        <categories>ui</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Search</shortDescription>
-        <value>Search</value>
-    </labels>
-    <labels>
-        <fullName>SelectAll</fullName>
-        <categories>ui</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>SelectAll</shortDescription>
-        <value>Select all</value>
-    </labels>
-    <labels>
-        <fullName>SelectAnOption</fullName>
-        <categories>ui</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>SelectAnOption</shortDescription>
-        <value>Select an option</value>
-    </labels>
-    <labels>
-        <fullName>Selected</fullName>
-        <categories>ui</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Selected</shortDescription>
-        <value>Selected</value>
-    </labels>
-    <labels>
-        <fullName>SelectedValues</fullName>
-        <categories>ui</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>SelectedValues</shortDescription>
-        <value>Selected values</value>
-    </labels>
-    <labels>
-        <fullName>UploadAtLeastOneFile</fullName>
-        <categories>ui</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>UploadAtLeastOneFile</shortDescription>
-        <value>Upload at least one file</value>
-    </labels>
-    <labels>
-        <fullName>XSelectedOptions</fullName>
-        <categories>ui</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>XSelectedOptions</shortDescription>
-        <value>{0} selected option(s)</value>
-    </labels>
-    <labels>
-        <fullName>ProfileSystemAdministrator</fullName>
-        <categories>ui,profile</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ProfileSystemAdministrator</shortDescription>
-        <value>System Administrator</value>
-    </labels>
-    <labels>
-        <fullName>AddFiles</fullName>
-        <categories>ui</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>AddFiles</shortDescription>
-        <value>Add files</value>
-    </labels>
-    <labels>
         <fullName>DeleteSelection</fullName>
         <categories>ui</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>DeleteSelection</shortDescription>
         <value>DeleteSelection</value>
+    </labels>
+    <labels>
+        <fullName>DeselectAll</fullName>
+        <categories>ui</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DeselectAll</shortDescription>
+        <value>Deselect all</value>
     </labels>
     <labels>
         <fullName>Download</fullName>
@@ -225,12 +121,52 @@
         <value>Download all files</value>
     </labels>
     <labels>
+        <fullName>DownloadFiles</fullName>
+        <categories>ui</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>DownloadFilesFromReport</shortDescription>
+        <value>Download files</value>
+    </labels>
+    <labels>
+        <fullName>DownloadFilesFromReport</fullName>
+        <categories>ui</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>DownloadFilesFromReport</shortDescription>
+        <value>Download files from report</value>
+    </labels>
+    <labels>
         <fullName>EmailNoReplySenderDisplayName</fullName>
         <categories>ui</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>EmailNoReplySenderDisplayName</shortDescription>
         <value>No reply</value>
+    </labels>
+    <labels>
+        <fullName>ErrorLossOfInternetConnection</fullName>
+        <categories>ui,error</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ErrorLossOfInternetConnection</shortDescription>
+        <value>Loss of internet connection.</value>
+    </labels>
+    <labels>
+        <fullName>ErrorProcessingFailed</fullName>
+        <categories>ui,error</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ErrorProcessingFailed</shortDescription>
+        <value>Processing failed, please try again.</value>
+    </labels>
+    <labels>
+        <fullName>FileDeleted</fullName>
+        <categories>ui</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>FileDeleted</shortDescription>
+        <value>File deleted.</value>
     </labels>
     <labels>
         <fullName>FileType</fullName>
@@ -289,6 +225,14 @@
         <value>Files deleted.</value>
     </labels>
     <labels>
+        <fullName>Filter</fullName>
+        <categories>ui</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Filter</shortDescription>
+        <value>Filter</value>
+    </labels>
+    <labels>
         <fullName>LinkToMergePDFs</fullName>
         <categories>ui</categories>
         <language>en_US</language>
@@ -305,6 +249,22 @@
         <value>Link to reduce the size of PDFs</value>
     </labels>
     <labels>
+        <fullName>Modify</fullName>
+        <categories>ui</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Modify</shortDescription>
+        <value>Modify</value>
+    </labels>
+    <labels>
+        <fullName>NewRecord</fullName>
+        <categories>ui</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NewRecord</shortDescription>
+        <value>New record</value>
+    </labels>
+    <labels>
         <fullName>Next</fullName>
         <categories>ui</categories>
         <language>en_US</language>
@@ -313,44 +273,12 @@
         <value>Next</value>
     </labels>
     <labels>
-        <fullName>Refresh</fullName>
+        <fullName>NoFilesWereFoundInTheRecordsRelatedToYourReport</fullName>
         <categories>ui</categories>
         <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Refresh</shortDescription>
-        <value>Refresh</value>
-    </labels>
-    <labels>
-        <fullName>Save</fullName>
-        <categories>ui</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Save</shortDescription>
-        <value>Save</value>
-    </labels>
-    <labels>
-        <fullName>Select</fullName>
-        <categories>ui</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Select</shortDescription>
-        <value>Select</value>
-    </labels>
-    <labels>
-        <fullName>SelectOfFiles</fullName>
-        <categories>ui</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>SelectOfFiles</shortDescription>
-        <value>Select of files</value>
-    </labels>
-    <labels>
-        <fullName>SetTheFileAsPrivate</fullName>
-        <categories>ui</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>SetTheFileAsPrivate</shortDescription>
-        <value>Set the file as private</value>
+        <protected>true</protected>
+        <shortDescription>NoFilesWereFoundInTheRecordsRelatedToYourReport</shortDescription>
+        <value>No files were found in the records related to your report.</value>
     </labels>
     <labels>
         <fullName>ProfileChatterFreeUser</fullName>
@@ -385,20 +313,20 @@
         <value>Standard User</value>
     </labels>
     <labels>
-        <fullName>DefaultSettingNotCreated</fullName>
+        <fullName>ProfileSystemAdministrator</fullName>
+        <categories>ui,profile</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ProfileSystemAdministrator</shortDescription>
+        <value>System Administrator</value>
+    </labels>
+    <labels>
+        <fullName>Refresh</fullName>
         <categories>ui</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>DefaultSettingNotCreated</shortDescription>
-        <value>The record named &apos;Default&apos; has not been created for the SObject &quot;Setting&quot; (tlz__Setting__c).</value>
-    </labels>
-    <labels>
-        <fullName>YouHaveEnteredAnInvalidFormat</fullName>
-        <categories>ui,error</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>YouHaveEnteredAnInvalidFormat</shortDescription>
-        <value>You have entered an invalid format.</value>
+        <shortDescription>Refresh</shortDescription>
+        <value>Refresh</value>
     </labels>
     <labels>
         <fullName>SObjectUpdateIteratorMessage</fullName>
@@ -417,28 +345,84 @@
         <value>Update finished</value>
     </labels>
     <labels>
-        <fullName>DownloadFiles</fullName>
+        <fullName>Save</fullName>
         <categories>ui</categories>
         <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>DownloadFilesFromReport</shortDescription>
-        <value>Download files</value>
+        <protected>false</protected>
+        <shortDescription>Save</shortDescription>
+        <value>Save</value>
     </labels>
     <labels>
-        <fullName>DownloadFilesFromReport</fullName>
+        <fullName>Search</fullName>
         <categories>ui</categories>
         <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>DownloadFilesFromReport</shortDescription>
-        <value>Download files from report</value>
+        <protected>false</protected>
+        <shortDescription>Search</shortDescription>
+        <value>Search</value>
     </labels>
     <labels>
-        <fullName>NoFilesWereFoundInTheRecordsRelatedToYourReport</fullName>
+        <fullName>Select</fullName>
+        <categories>ui</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Select</shortDescription>
+        <value>Select</value>
+    </labels>
+    <labels>
+        <fullName>SelectAll</fullName>
+        <categories>ui</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SelectAll</shortDescription>
+        <value>Select all</value>
+    </labels>
+    <labels>
+        <fullName>SelectAnOption</fullName>
+        <categories>ui</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SelectAnOption</shortDescription>
+        <value>Select an option</value>
+    </labels>
+    <labels>
+        <fullName>SelectOfFiles</fullName>
+        <categories>ui</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SelectOfFiles</shortDescription>
+        <value>Select of files</value>
+    </labels>
+    <labels>
+        <fullName>Selected</fullName>
+        <categories>ui</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Selected</shortDescription>
+        <value>Selected</value>
+    </labels>
+    <labels>
+        <fullName>SelectedValues</fullName>
+        <categories>ui</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SelectedValues</shortDescription>
+        <value>Selected values</value>
+    </labels>
+    <labels>
+        <fullName>SetTheFileAsPrivate</fullName>
+        <categories>ui</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SetTheFileAsPrivate</shortDescription>
+        <value>Set the file as private</value>
+    </labels>
+    <labels>
+        <fullName>TheRecordIdShouldBeTheFirstColumnOfYourReport</fullName>
         <categories>ui</categories>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>NoFilesWereFoundInTheRecordsRelatedToYourReport</shortDescription>
-        <value>No files were found in the records related to your report.</value>
+        <shortDescription>TheReportHasNoRecords</shortDescription>
+        <value>The record id should be the first column of your report.</value>
     </labels>
     <labels>
         <fullName>TheReportHasNoRecords</fullName>
@@ -449,11 +433,27 @@
         <value>The report has no records.</value>
     </labels>
     <labels>
-        <fullName>TheRecordIdShouldBeTheFirstColumnOfYourReport</fullName>
+        <fullName>UploadAtLeastOneFile</fullName>
         <categories>ui</categories>
         <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>UploadAtLeastOneFile</shortDescription>
+        <value>Upload at least one file</value>
+    </labels>
+    <labels>
+        <fullName>XSelectedOptions</fullName>
+        <categories>ui</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>XSelectedOptions</shortDescription>
+        <value>{0} selected option(s)</value>
+    </labels>
+    <labels>
+        <fullName>YouHaveEnteredAnInvalidFormat</fullName>
+        <categories>ui,error</categories>
+        <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>TheReportHasNoRecords</shortDescription>
-        <value>The record id should be the first column of your report.</value>
+        <shortDescription>YouHaveEnteredAnInvalidFormat</shortDescription>
+        <value>You have entered an invalid format.</value>
     </labels>
 </CustomLabels>
