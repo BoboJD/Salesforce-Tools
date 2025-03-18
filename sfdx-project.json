@@ -4,12 +4,10 @@
       "versionNumber": "2.0.7.NEXT",
       "versionDescription": "https://github.com/BoboJD/Salesforce-Tools",
       "path": "force-app",
-      "default": true,
       "package": "Salesforce Tools"
     }
   ],
   "namespace": "tlz",
-  "sfdcLoginUrl": "https://login.salesforce.com",
   "sourceApiVersion": "63.0",
   "packageAliases": {
     "Salesforce Tools": "0HoJ60000000001KAA",
