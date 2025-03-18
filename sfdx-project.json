@@ -1,7 +1,6 @@
 {
   "packageDirectories": [
     {
-      "versionName": "ver 1",
       "versionNumber": "2.0.7.NEXT",
       "versionDescription": "https://github.com/BoboJD/Salesforce-Tools",
       "path": "force-app",
