@@ -21,5 +21,10 @@ private class ControllerUtilsTest{
 		Assert.equals(Constants.ERROR, result.get(Constants.STATUS));
 		Assert.isTrue(result.get(Constants.CUSTOM_ERROR));
 		Assert.equals('error message', result.get(Constants.MESSAGE));
+
+		result = ControllerUtils.error('error message');
+		Assert.equals(Constants.ERROR, result.get(Constants.STATUS));
+		Assert.isTrue(result.get(Constants.CUSTOM_ERROR));
+		Assert.equals('error message', result.get(Constants.MESSAGE));
 	}
 }

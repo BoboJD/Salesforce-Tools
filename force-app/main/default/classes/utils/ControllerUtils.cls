@@ -16,6 +16,14 @@ global inherited sharing class ControllerUtils{
 		return result;
 	}
 
+	global static Map<String, Object> error(String errorMessage){
+		return new Map<String, Object>{
+			Constants.STATUS => Constants.ERROR,
+			Constants.CUSTOM_ERROR => true,
+			Constants.MESSAGE => errorMessage
+		};
+	}
+
 	global static Map<String, Object> error(Exception e){
 		return new Map<String, Object>{
 			Constants.STATUS => Constants.ERROR,
