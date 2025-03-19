@@ -192,11 +192,11 @@ export default class Picklist extends LightningElement{
 		this.filteredTerm = e.target.value;
 	}
 
-	setFocusOn(e){
+	setFocusOn(){
 		this.isBeingFocused = true;
 	}
 
-	setFocusOut(e){
+	setFocusOut(){
 		this.isBeingFocused = false;
 	}
 

@@ -55,6 +55,7 @@ export default [
 			'no-trailing-spaces': 'error',
 			'no-whitespace-before-property': 'error',
 			'no-tabs': ['error', { allowIndentationTabs: true }],
+			'no-unused-vars': ['error', { vars: 'all', args: 'after-used', ignoreRestSiblings: true, argsIgnorePattern: '^_', caughtErrors: 'none' }],
 			'object-curly-spacing': ['error', 'always'],
 			'operator-linebreak': ['error', 'before'],
 			'padded-blocks': ['error', { 'blocks': 'never' }],
