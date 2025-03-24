@@ -9,7 +9,6 @@ global with sharing class FileUploaderController{
 		utilityData.put('hasEditAccess', CurrentUser.canEditRecord(recordId));
 		String sobjectApiName = recordId.getSObjectType().getDescribe(SObjectDescribeOptions.DEFERRED).getName();
 		utilityData.put('config', FileTypeConfiguration__mdt.getInstance(sobjectApiName.removeEnd('__c')));
-		utilityData.put('sObjectType', sobjectApiName);
 		return utilityData;
 	}
 

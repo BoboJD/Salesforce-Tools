@@ -2,7 +2,7 @@
 private class FileUploaderControllerTest{
 
 	@IsTest
-	static void getUtilityDataFromAccountShouldReturn6MappedData(){
+	static void getUtilityDataFromAccountShouldReturn5MappedData(){
 		fflib_ApexMocks mocks = new fflib_ApexMocks();
 		tlz_IContentDocumentLinksSelector contentDocumentLinksSelectorMock = new Mocks.tlz_ContentDocumentLinksSelector(mocks);
 		tlz_IContentVersionsSelector contentVersionsSelectorMock = new Mocks.tlz_ContentVersionsSelector(mocks);
@@ -45,7 +45,7 @@ private class FileUploaderControllerTest{
 		((tlz_IContentDocumentLinksSelector)mocks.verify(contentDocumentLinksSelectorMock)).selectByLinkedEntityIds(recordIds);
 		((tlz_IContentVersionsSelector)mocks.verify(contentVersionsSelectorMock)).selectLatestByContentDocumentIds(new Set<Id>{contentDocumentId});
 
-		Assert.equals(6, utilityData.size());
+		Assert.equals(5, utilityData.size());
 		List<FilePreview> filePreviews = (List<FilePreview>)utilityData.get('files');
 		Assert.equals(1, filePreviews.size());
 		Assert.equals(2, filePreviews[0].size);
@@ -56,7 +56,6 @@ private class FileUploaderControllerTest{
 		Assert.isTrue(utilityData.get('isAdmin'));
 		Assert.isTrue(utilityData.containsKey('hasEditAccess'));
 		Assert.isTrue(utilityData.containsKey('config'));
-		Assert.equals('Account', utilityData.get('sObjectType'));
 	}
 
 	@IsTest

@@ -1,8 +1,8 @@
 import { LightningElement, track, api, wire } from 'lwc';
-import { displaySpinner, hideSpinner, displaySuccessToast, downloadFile, displayErrorToast, format } from 'c/utils';
-import { loadStyle } from 'lightning/platformResourceLoader';
-import { IsConsoleNavigation, getFocusedTabInfo, openSubtab } from 'lightning/platformWorkspaceApi';
 import { NavigationMixin } from 'lightning/navigation';
+import { IsConsoleNavigation } from 'lightning/platformWorkspaceApi';
+import { displaySpinner, hideSpinner, displaySuccessToast, downloadFile, displayErrorToast, format, navigateToRelationshipPage } from 'c/utils';
+import { loadStyle } from 'lightning/platformResourceLoader';
 import { RefreshEvent, registerRefreshContainer, unregisterRefreshContainer } from 'lightning/refresh';
 import { FilterOption } from 'c/filter';
 import fileUploaderCss from '@salesforce/resourceUrl/fileUploaderCss';
@@ -12,7 +12,6 @@ import label from './labels';
 export default class FileUploader extends NavigationMixin(LightningElement){
 	@wire(IsConsoleNavigation) isConsoleNavigation;
 	@api recordId;
-	@api objectApiName;
 	@api hideAddFiles = false;
 	@api hideDate = false;
 	@api massDeleteOption = false;
@@ -53,10 +52,6 @@ export default class FileUploader extends NavigationMixin(LightningElement){
 
 	get numberOfFiles(){
 		return `(${this.utilityData.files.length})`;
-	}
-
-	get combinedAttachmentsUrl(){
-		return `/lightning/r/Account/${this.recordId}/related/CombinedAttachments/view`;
 	}
 
 	setFilter(e){
@@ -165,23 +160,6 @@ export default class FileUploader extends NavigationMixin(LightningElement){
 	}
 
 	navigateToCombinedAttachments(){
-		this.openSubtab({
-			type: 'standard__recordRelationshipPage',
-			attributes: {
-				recordId: this.recordId,
-				objectApiName: this.objectApiName,
-				relationshipApiName: 'CombinedAttachments',
-				actionName: 'view'
-			}
-		});
-	}
-
-	async openSubtab(pageReference){
-		if(this.isConsoleNavigation){
-			const { parentTabId } = await getFocusedTabInfo();
-			await openSubtab(parentTabId, { pageReference, focus: true });
-		}else{
-			this[NavigationMixin.Navigate](pageReference);
-		}
+		navigateToRelationshipPage(this, this.recordId, 'CombinedAttachments');
 	}
 }

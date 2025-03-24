@@ -5,6 +5,7 @@ export * from './errorUtils';
 export * from './formUtils';
 export * from './mathUtils';
 export * from './messagingUtils';
+export * from './navigationUtils';
 export * from './objectUtils';
 export * from './sfUtils';
 export * from './spinnerUtils';
