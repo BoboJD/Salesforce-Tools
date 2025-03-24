@@ -16,6 +16,7 @@
 			onconfirm={dispatchConfirm}
 		>
 			<template lwc:if={noMessage}><slot></slot></template>
+			<span slot="additional-buttons"><slot name="additional-buttons"></slot></span>
 		</c-modal-container>
 	</section>
 	<div class="slds-backdrop slds-backdrop_open"></div>
