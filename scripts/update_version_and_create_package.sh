@@ -26,7 +26,7 @@ if [ "$newPatch" -gt 9 ]; then
 	newPatch=0
 	minor=$(($minor + 1))
 fi
-if [ "$minor" -gt 9 ]; then
+if [ "$minor" -gt 99 ]; then
     minor=0
     major=$((major + 1))
 fi
