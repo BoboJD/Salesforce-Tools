@@ -37,6 +37,9 @@
 	:host.fixed-position{
 		width: 768px;
 	}
+	:host.max-width{
+		width: 90%;
+	}
 }
 @media all and (max-width: 48em){
 	:host.fixed-position{

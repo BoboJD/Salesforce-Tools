@@ -16,6 +16,7 @@ export default class ModalContainer extends LightningElement{
 	@api position = 'fixed';
 	@api isLoading = false;
 	@api noPadding = false;
+	@api maxWidth = false;
 	@api enableSpinner = false;
 	@api hideSpinnerByDefault = false;
 
@@ -172,6 +173,11 @@ export default class ModalContainer extends LightningElement{
 			this.template.host.classList.add('fixed-position');
 		}else{
 			this.template.host.classList.remove('fixed-position');
+		}
+		if(this.maxWidth){
+			this.template.host.classList.add('max-width');
+		}else{
+			this.template.host.classList.remove('max-width');
 		}
 	}
 

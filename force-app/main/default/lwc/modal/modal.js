@@ -15,6 +15,7 @@ export default class Modal extends LightningElement{
 	@api hideConfirm = false;
 	@api enableSpinner = false;
 	@api hideSpinnerByDefault = false;
+	@api maxWidth = false;
 
 	// Getters and Setters
 	get noMessage(){
