@@ -12,6 +12,7 @@ import label from './labels';
 export default class FileUploader extends NavigationMixin(LightningElement){
 	@wire(IsConsoleNavigation) isConsoleNavigation;
 	@api recordId;
+	@api objectApiName;
 	@api hideAddFiles = false;
 	@api hideDate = false;
 	@api massDeleteOption = false;
