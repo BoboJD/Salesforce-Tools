@@ -147,7 +147,11 @@ export default class ModalContainer extends LightningElement{
 	connectedCallback(){
 		this.updatePosition();
 		if(this.position === 'action'){
-			loadScript(this, HEIGHT_MANAGER).then(this.updateModalHeight.bind(this));
+			loadScript(this, HEIGHT_MANAGER).then(() => {
+				this.updateModalHeight.bind(this);
+				if(this.position === 'action' && this.maxWidth)
+					window.maximizeModalWidth();
+			});
 			window.addEventListener('resize', this.updateModalHeight.bind(this));
 		}else{
 			this.setupKeypressListener();
@@ -171,12 +175,11 @@ export default class ModalContainer extends LightningElement{
 	updatePosition(){
 		if(this.position === 'fixed'){
 			this.template.host.classList.add('fixed-position');
+			if(this.maxWidth){
+				this.template.host.classList.add('max-width');
+			}
 		}else{
 			this.template.host.classList.remove('fixed-position');
-		}
-		if(this.maxWidth){
-			this.template.host.classList.add('max-width');
-		}else{
 			this.template.host.classList.remove('max-width');
 		}
 	}
