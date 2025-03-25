@@ -5,7 +5,7 @@ export const openInSubtab = async(cmp, pageReference, closeCurrentTab = false) =
 	if(cmp.isConsoleNavigation){
 		const { parentTabId, tabId } = await getFocusedTabInfo();
 		await openSubtab(parentTabId || tabId, { pageReference, focus: true });
-		if(closeCurrentTab){
+		if(closeCurrentTab && parentTabId){
 			await closeTab(cmp.enclosingTabId);
 		}
 	}else{
