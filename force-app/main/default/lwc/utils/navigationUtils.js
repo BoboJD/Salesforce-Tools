@@ -33,3 +33,11 @@ export const navigateToRelationshipPage = async(cmp, recordId, relationshipApiNa
 		attributes: { recordId, relationshipApiName, actionName: 'view' }
 	}, closeCurrentTab);
 };
+
+export const navigateToComponent = async(cmp, componentName, state, closeCurrentTab = false) => {
+	await openInSubtab(cmp, {
+		type: 'standard__component',
+		attributes: { componentName },
+		state
+	}, closeCurrentTab);
+};
