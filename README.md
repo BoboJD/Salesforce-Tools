@@ -83,13 +83,18 @@ You can add this repository as a subtree of your project to see the components a
 
 ## Contributing to the Project
 
-We welcome contributions! To get started :
+Want to contribute? Ask me for a **Scratch Org**, and I'll send you your credentials.  
+This allows you to develop and test without accessing the production org.  
 
-1. **Fork the Repository**: Create a fork of the repository to work on your changes.
-2. **Create a Branch**: Create a new branch for each feature or bug fix.
-3. **Make Changes**: Implement your changes and ensure that they adhere to the project’s coding standards.
-4. **Test Your Changes**: Run tests to ensure that your changes do not introduce any issues.
-5. **Submit a Pull Request**: Once you’re satisfied with your changes, submit a pull request for review.
+Once you're ready, feel free to open an issue or a pull request!  
+
+### Contribution Steps  
+
+1. **Fork the Repository** – Create a fork of the repository to work on your changes.  
+2. **Create a Branch** – Use a new branch for each feature or bug fix.  
+3. **Make Changes** – Implement your changes while following the project’s coding standards.  
+4. **Test Your Changes** – Run tests to ensure your changes don’t introduce issues.  
+5. **Submit a Pull Request** – Once satisfied, open a pull request for review.
 
 ### Create a scratch org
 
@@ -138,7 +143,7 @@ Then to promote the new version, use :
 
 For issues or suggestions, please open an issue on the [GitHub Issues](https://github.com/BoboJD/Salesforce-Tools/issues) page.
 
-Thank you for contributing!
+Looking forward to your contributions!
 
 ## License
 

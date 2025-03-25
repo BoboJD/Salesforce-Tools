@@ -1,9 +1,9 @@
 <template>
 	<c-modal-container
 		position="action"
-		title="Test Modal"
-		subtitle="Just some test"
-		confirm-label="Submit form"
+		title="New Contact"
+		subtitle="Create a new contact"
+		confirm-label="Create Contact"
 		steps={steps}
 		is-loading={isLoading}
 		onclosemodal={closeQuickAction}
@@ -14,17 +14,48 @@
 			<div class="slds-form__row">
 				<div class="slds-form__item">
 					<c-input
+						type="text"
+						label="First Name"
+						form={form}
+						field-name="firstName"
+						onvaluechange={handleFieldChange}
+						max="40"
+						required
+					></c-input>
+				</div>
+				<div class="slds-form__item">
+					<c-input
+						type="text"
+						label="Last Name"
+						form={form}
+						field-name="lastName"
+						onvaluechange={handleFieldChange}
+						max="80"
+						required
+					></c-input>
+				</div>
+			</div>
+			<div class="slds-form__row">
+				<div class="slds-form__item">
+					<c-input
 						type="email"
 						label="Email"
 						form={form}
 						field-name="email"
-						onvaluechange={setEmail}
-						max="255"
-						required>
-					</c-input>
+						onvaluechange={handleFieldChange}
+						max="80"
+						required
+					></c-input>
 				</div>
 				<div class="slds-form__item">
-					Value : {form.email}
+					<c-input
+						type="tel"
+						label="Phone"
+						form={form}
+						field-name="phone"
+						onvaluechange={handleFieldChange}
+						max="40"
+					></c-input>
 				</div>
 			</div>
 			<div class="slds-form__row">

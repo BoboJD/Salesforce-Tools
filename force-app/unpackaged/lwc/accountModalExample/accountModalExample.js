@@ -1,10 +1,19 @@
 import { LightningElement, wire, track } from 'lwc';
-import { CurrentPageReference } from 'lightning/navigation';
+import { IsConsoleNavigation } from 'lightning/platformWorkspaceApi';
+import { CurrentPageReference, NavigationMixin } from 'lightning/navigation';
 import { CloseActionScreenEvent } from 'lightning/actions';
-import { displaySpinner, wait, hideSpinner, checkRequiredFields, displayErrorToast, setValue } from 'c/utils';
+import { createRecord } from 'lightning/uiRecordApi';
+import { displaySpinner, wait, hideSpinner, checkRequiredFields, displayErrorToast, displaySuccessToast, setValue, refreshView } from 'c/utils';
+import CONTACT_OBJECT from '@salesforce/schema/Contact';
 
-export default class AccountModalExample extends LightningElement{
-	@track form = { email: 'test@test.fr' };
+export default class AccountModalExample extends NavigationMixin(LightningElement){
+	@wire(IsConsoleNavigation) isConsoleNavigation;
+	@track form = {
+		firstName: 'a',
+		lastName: 'b',
+		email: 'c@c.fr',
+		phone: '06 06 06 06 06'
+	};
 	recordId;
 	isLoading = true;
 	displayNextRow = false;
@@ -17,7 +26,7 @@ export default class AccountModalExample extends LightningElement{
 	}
 
 	get steps(){
-		return ['Page 1', 'Page 2'];
+		return ['Contact Information'];
 	}
 
 	get types(){
@@ -127,17 +136,36 @@ export default class AccountModalExample extends LightningElement{
 		hideSpinner(this);
 	}
 
-	setEmail(e){
+	handleFieldChange(e){
 		const { fieldName, value } = e.detail;
 		setValue(this.form, fieldName, value);
 	}
 
-	submitForm(){
+	async submitForm(){
 		if(!this.formIsValid()){
-			displayErrorToast(this, 'Vérifier les informations du contact.');
-		}else{
-			this.modalContainer.incrementStep();
-			this.displayNextRow = true;
+			displayErrorToast(this, 'Please fill in all required fields.');
+			return;
+		}
+
+		try{
+			displaySpinner(this);
+			await createRecord({
+				apiName: CONTACT_OBJECT.objectApiName,
+				fields: {
+					FirstName: this.form.firstName,
+					LastName: this.form.lastName,
+					Email: this.form.email,
+					Phone: this.form.phone,
+					AccountId: this.recordId
+				}
+			});
+			refreshView(this);
+			displaySuccessToast(this, 'Contact created successfully');
+			this.closeQuickAction();
+		}catch(error){
+			displayErrorToast(this, 'Error creating contact: ' + error.body.message);
+		}finally{
+			hideSpinner(this);
 		}
 	}
 

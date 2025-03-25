@@ -5,6 +5,18 @@
         <type>Region</type>
     </flexiPageRegions>
     <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentName>ToastNotifier</componentName>
+                <identifier>tlz_ToastNotifier</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>RefreshHandler</componentName>
+                <identifier>tlz_RefreshHandler</identifier>
+            </componentInstance>
+        </itemInstances>
         <name>backgroundComponents</name>
         <type>Background</type>
     </flexiPageRegions>

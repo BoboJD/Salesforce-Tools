@@ -20,7 +20,7 @@
 	"homepage": "https://github.com/BoboJD/Salesforce-Tools#readme",
 	"devDependencies": {
 		"@babel/core": "^7.26.10",
-		"@babel/eslint-parser": "^7.26.10",
+		"@babel/eslint-parser": "^7.27.0",
 		"@lwc/eslint-plugin-lwc": "^2.1.0",
 		"@salesforce/eslint-config-lwc": "^3.7.1",
     	"@salesforce/eslint-plugin-aura": "^2.1.0",

@@ -7,6 +7,7 @@ export * from './mathUtils';
 export * from './messagingUtils';
 export * from './navigationUtils';
 export * from './objectUtils';
+export * from './refreshUtils';
 export * from './sfUtils';
 export * from './spinnerUtils';
 export * from './stringUtils';
