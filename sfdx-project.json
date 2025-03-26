@@ -1,7 +1,7 @@
 {
   "packageDirectories": [
     {
-      "versionNumber": "2.1.8.NEXT",
+      "versionNumber": "2.1.9.NEXT",
       "versionDescription": "https://github.com/BoboJD/Salesforce-Tools",
       "path": "force-app",
       "package": "Salesforce Tools"
@@ -11,6 +11,6 @@
   "sourceApiVersion": "63.0",
   "packageAliases": {
     "Salesforce Tools": "0HoJ60000000001KAA",
-    "Salesforce Tools@2.1.8-1": "04tJ6000000LcWuIAK"
+    "Salesforce Tools@2.1.9-1": "04tJ6000000LcbHIAS"
   }
 }

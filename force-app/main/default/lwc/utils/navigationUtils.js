@@ -8,8 +8,10 @@ export const openInSubtab = async(cmp, pageReference, closeCurrentTab = false) =
 		if(closeCurrentTab && parentTabId){
 			await closeTab(cmp.enclosingTabId);
 		}
+	}else if(closeCurrentTab){
+		this[NavigationMixin.Navigate](pageReference);
 	}else{
-		cmp[NavigationMixin.Navigate](pageReference);
+		this[NavigationMixin.GenerateUrl](pageReference).then(url => { window.open(url); });
 	}
 };
 
