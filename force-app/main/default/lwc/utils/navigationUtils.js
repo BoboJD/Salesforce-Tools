@@ -12,9 +12,9 @@ export const openInSubtab = async(cmp, pageReference, closeCurrentTab = false, r
 			await closeTab(cmp.enclosingTabId);
 		}
 	}else if(closeCurrentTab){
-		this[NavigationMixin.Navigate](pageReference);
+		cmp[NavigationMixin.Navigate](pageReference);
 	}else{
-		this[NavigationMixin.GenerateUrl](pageReference).then(url => { window.open(url); });
+		cmp[NavigationMixin.GenerateUrl](pageReference).then(url => { window.open(url); });
 	}
 };
 
