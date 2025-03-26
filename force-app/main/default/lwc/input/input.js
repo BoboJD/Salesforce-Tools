@@ -3,7 +3,7 @@ import { logError } from 'c/logFactory';
 import { NavigationMixin } from 'lightning/navigation';
 import {
 	formatDate, formatDatetime, formatNumber, isEmpty, formatCurrency, getValue,
-	displaySuccessToast, displaySpinner, hideSpinner, handleErrorForUser, recursiveDeepCopy
+	displaySuccessToast, displaySpinner, hideSpinner, handleErrorForUser, recursiveDeepCopy, previewFile
 } from 'c/utils';
 import deleteFile from '@salesforce/apex/FileUploaderController.deleteFile';
 import l from './labels';
@@ -307,15 +307,7 @@ export default class Input extends NavigationMixin(LightningElement){
 
 	previewFile(e){
 		e.preventDefault();
-		this[NavigationMixin.Navigate]({
-			type: 'standard__namedPage',
-			attributes: {
-				pageName: 'filePreview'
-			},
-			state: {
-				selectedRecordId: e.currentTarget.dataset.documentId
-			}
-		});
+		previewFile(this, e.currentTarget.dataset.documentId);
 	}
 
 	connectedCallback(){

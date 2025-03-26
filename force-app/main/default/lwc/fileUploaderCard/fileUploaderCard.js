@@ -1,5 +1,6 @@
 import { api, LightningElement } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
+import { previewFile } from 'c/utils';
 import label from './labels';
 
 export default class FileUploaderCard extends NavigationMixin(LightningElement){
@@ -23,15 +24,7 @@ export default class FileUploaderCard extends NavigationMixin(LightningElement){
 	}
 
 	filePreview(){
-		this[NavigationMixin.Navigate]({
-			type: 'standard__namedPage',
-			attributes: {
-				pageName: 'filePreview'
-			},
-			state: {
-				selectedRecordId: this.file.documentId
-			}
-		});
+		previewFile(this, this.file.documentId);
 	}
 
 	dispatchSelection(e){
