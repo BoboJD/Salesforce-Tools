@@ -1,0 +1,28 @@
+<aura:component implements="flexipage:availableForAllPageTypes">
+	<aura:attribute name="options" type="List" default="[]"/>
+	<aura:attribute name="selectedValue" type="String" default=""/>
+
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+	<div class="slds-card">
+		<div class="slds-card__header slds-grid">
+			<header class="slds-media slds-media_center slds-has-flexi-truncate">
+				<div class="slds-media__body">
+					<h2 class="slds-card__header-title">
+						<span class="slds-text-heading_small">Account Information</span>
+					</h2>
+				</div>
+				<div class="slds-no-flex">
+					<lightning:icon iconName="standard:account" size="small" class="slds-m-left_x-small"/>
+				</div>
+			</header>
+		</div>
+		<div class="slds-card__body slds-card__body_inner">
+			 <c:picklist
+				label="Select an option"
+				options="{!v.options}"
+				value="{!v.selectedValue}"
+				onvaluechange="{!c.handleValueChange}"/>
+		</div>
+	</div>
+</aura:component>

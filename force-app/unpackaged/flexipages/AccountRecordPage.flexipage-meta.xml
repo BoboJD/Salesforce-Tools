@@ -217,6 +217,12 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentName>AccountRecordAura</componentName>
+                <identifier>tlz_AccountRecordAura</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentInstanceProperties>
                     <name>hideAddFiles</name>
                     <value>false</value>
