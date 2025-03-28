@@ -423,7 +423,7 @@ store_last_deployed_commit_hash(){
 	echo -e "\nAdding last deployed commit hash to .preprod/config.json..."
 	yes y | git fetch origin preprod > /dev/null
 	yes y | git pull origin preprod > /dev/null
-	yes y | git add .config/salesforce-tools-config.yml > /dev/null
+	yes y | git add $config_file > /dev/null
 	yes y | git commit -m "Updated last commit hash deployed in preprod" > /dev/null
 	yes y | git push origin preprod > /dev/null
 }
