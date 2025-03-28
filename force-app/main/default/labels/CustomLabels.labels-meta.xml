@@ -33,6 +33,14 @@
         <value>Apply</value>
     </labels>
     <labels>
+        <fullName>Back</fullName>
+        <categories>ui</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Back</shortDescription>
+        <value>Back</value>
+    </labels>
+    <labels>
         <fullName>Cancel</fullName>
         <categories>ui</categories>
         <language>en_US</language>

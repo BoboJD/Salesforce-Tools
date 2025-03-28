@@ -5,10 +5,12 @@ import label from './labels';
 export default class Page extends LightningElement{
 	// Public Properties
 	@api title;
+	@api cancelLabel = label.Cancel;
 	@api backDisabled = false;
 	@api nextDisabled = false;
 	@api hideSpinnerByDefault = false;
 	@api fullWidth = false;
+	@api hideNext = false;
 
 	// Private Properties
 	label = label;
