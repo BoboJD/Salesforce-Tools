@@ -26,10 +26,18 @@ export const navigateToRecord = async(cmp, recordId, closeCurrentTab = false, re
 };
 
 export const navigateToURL = async(cmp, url, closeCurrentTab = false, refreshParentTab = false) => {
-	await openInSubtab(cmp, {
-		type: 'standard__webPage',
-		attributes: { url }
-	}, closeCurrentTab, refreshParentTab);
+	if(url.startsWith('http')){
+		if(closeCurrentTab){
+			window.location.replace(url);
+		}else{
+			window.open(url);
+		}
+	}else{
+		await openInSubtab(cmp, {
+			type: 'standard__webPage',
+			attributes: { url }
+		}, closeCurrentTab, refreshParentTab);
+	}
 };
 
 export const navigateToRelationshipPage = async(cmp, recordId, relationshipApiName, closeCurrentTab = false, refreshParentTab = false) => {
