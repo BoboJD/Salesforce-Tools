@@ -43,3 +43,6 @@
 .edit-button:focus .slds-button__icon{
 	background-position: 0 -42px;
 }
+.slds-dropdown{
+	transform: none !important;
+}

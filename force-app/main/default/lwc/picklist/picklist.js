@@ -201,35 +201,97 @@ export default class Picklist extends LightningElement{
 	}
 
 	connectedCallback(){
-		this.setupClickListener();
 		if(this.isCheckbox || this.isDual)
 			this._multiple = true;
 		if(this.form && this.fieldName)
 			this._value = getValue(this.form, this.fieldName);
 	}
 
-	setupClickListener(){
-		this._watchClickOutsideComponent = this.watchClickOutsideComponent.bind(this);
-		window.addEventListener('click', this._watchClickOutsideComponent);
-	}
-
-	watchClickOutsideComponent(){
-		if(this.isOpened === true) this.closeListbox();
-	}
-
 	disconnectedCallback(){
-		window.removeEventListener('click', this._watchClickOutsideComponent);
+		if(this.isOpened)
+			this.closeListbox();
 	}
 
 	openListbox(){
 		if(this.disabled)
 			return;
 		this.isOpened = true;
+		const { combobox, dropdown } = this.refs;
+		if(combobox && dropdown){
+			document.body.appendChild(dropdown);
+			this.updateDropdownPosition();
+			this.setupIntersectionObserver();
+			setTimeout(() => {
+				document.addEventListener('mousedown', this.handleOutsideClick.bind(this));
+				window.addEventListener('resize', this.updateDropdownPosition.bind(this));
+				window.addEventListener('scroll', this.updateDropdownPosition.bind(this), true);
+				this.dispatchEvent(new CustomEvent('registerscroll', {
+					bubbles: true,
+					composed: true,
+					detail: {
+						callback: this.updateDropdownPosition.bind(this)
+					}
+				}));
+			}, 0);
+		}
+	}
+
+	updateDropdownPosition(){
+		const { dropdown, combobox } = this.refs;
+		if(dropdown && combobox){
+			const rect = combobox.getBoundingClientRect();
+			const dropdownHeight = dropdown.offsetHeight;
+			const windowHeight = window.innerHeight;
+			const spaceBelow = windowHeight - rect.bottom;
+			const spaceAbove = rect.top;
+			dropdown.style.position = 'fixed';
+			dropdown.style.width = `${rect.width}px`;
+			if(spaceBelow < dropdownHeight && spaceAbove > spaceBelow)
+				dropdown.style.top = `${rect.top - dropdownHeight}px`;
+			else
+				dropdown.style.top = `${rect.bottom}px`;
+			dropdown.style.left = `${rect.left}px`;
+		}
+	}
+
+	setupIntersectionObserver(){
+		const observer = new IntersectionObserver(entries => {
+			entries.forEach(entry => {
+				if(!entry.isIntersecting)
+					this.closeListbox();
+			});
+		}, { threshold: [0] });
+
+		const { combobox } = this.refs;
+		if(combobox)
+			observer.observe(combobox);
+	}
+
+	handleOutsideClick(event){
+		const { dropdown, combobox } = this.refs;
+		const clickedInside = dropdown.contains(event.target) || combobox.contains(event.target);
+		if(clickedInside) return;
+		this.closeListbox();
 	}
 
 	closeListbox(){
 		this.isOpened = false;
-		this.reportValidity();
+		const { dropdown } = this.refs;
+		if(dropdown && document.body.contains(dropdown)){
+			document.body.removeChild(dropdown);
+			this.dispatchEvent(new CustomEvent('unregisterscroll', {
+				bubbles: true,
+				composed: true,
+				detail: {
+					callback: this.updateDropdownPosition.bind(this)
+				}
+			}));
+		}
+		document.removeEventListener('mousedown', this.handleOutsideClick);
+		window.removeEventListener('resize', this.updateDropdownPosition);
+		window.removeEventListener('scroll', this.updateDropdownPosition, true);
+		if(this.observer)
+			this.observer.disconnect();
 	}
 
 	ignore(e){

@@ -85,6 +85,17 @@ export default class Page extends LightningElement{
 		this.template.querySelector('.slds-modal__content').scrollTop = 0;
 	}
 
+	// Callbacks
+	connectedCallback(){
+		this.template.addEventListener('registerscroll', this.handleRegisterScroll.bind(this));
+		this.template.addEventListener('unregisterscroll', this.handleUnregisterScroll.bind(this));
+	}
+
+	disconnectedCallback(){
+		this.template.removeEventListener('registerscroll', this.handleRegisterScroll);
+		this.template.removeEventListener('unregisterscroll', this.handleUnregisterScroll);
+	}
+
 	// Event Handlers
 	setScrollingHeight(e){
 		this.scrollingHeight = e.target.scrollTop;
@@ -94,6 +105,18 @@ export default class Page extends LightningElement{
 		const newStep = this.steps.findIndex(step => step === e.target.value);
 		if(newStep < this.step)
 			this.step = newStep;
+	}
+
+	handleRegisterScroll(e){
+		const scrollableContainer = this.template.querySelector('.slds-modal__content');
+		if(scrollableContainer)
+			scrollableContainer.addEventListener('scroll', e.detail.callback);
+	}
+
+	handleUnregisterScroll(e){
+		const scrollableContainer = this.template.querySelector('.slds-modal__content');
+		if(scrollableContainer)
+			scrollableContainer.removeEventListener('scroll', e.detail.callback);
 	}
 
 	// Dispatch Events

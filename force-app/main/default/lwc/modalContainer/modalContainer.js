@@ -146,6 +146,8 @@ export default class ModalContainer extends LightningElement{
 	// Callbacks
 	connectedCallback(){
 		this.updatePosition();
+		this.template.addEventListener('registerscroll', this.handleRegisterScroll.bind(this));
+		this.template.addEventListener('unregisterscroll', this.handleUnregisterScroll.bind(this));
 		if(this.position === 'action'){
 			loadScript(this, HEIGHT_MANAGER).then(() => {
 				this.updateModalHeight.bind(this);
@@ -159,6 +161,8 @@ export default class ModalContainer extends LightningElement{
 	}
 
 	disconnectedCallback(){
+		this.template.removeEventListener('registerscroll', this.handleRegisterScroll);
+		this.template.removeEventListener('unregisterscroll', this.handleUnregisterScroll);
 		if(this.position === 'action'){
 			window.removeEventListener('resize', this.updateModalHeight.bind(this));
 		}else{
@@ -185,6 +189,18 @@ export default class ModalContainer extends LightningElement{
 	}
 
 	// Event Handlers
+	handleRegisterScroll(e){
+		const scrollableContainer = this.template.querySelector('.slds-modal__content');
+		if(scrollableContainer)
+			scrollableContainer.addEventListener('scroll', e.detail.callback);
+	}
+
+	handleUnregisterScroll(e){
+		const scrollableContainer = this.template.querySelector('.slds-modal__content');
+		if(scrollableContainer)
+			scrollableContainer.removeEventListener('scroll', e.detail.callback);
+	}
+
 	watchKeypressComponent(e){
 		if(e.key === 'Escape') this.dispatchCloseModal();
 	}

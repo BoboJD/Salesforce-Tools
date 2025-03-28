@@ -14,6 +14,19 @@
 		<div if:false={isLoading} class="slds-form">
 			<div class="slds-form__row">
 				<div class="slds-form__item">
+					<c-picklist
+						label="Picklist"
+						form={form}
+						field-name="picklist"
+						options={types}
+						onvaluechange={handleFieldChange}
+						multiple
+					></c-picklist>
+					Selected value : {form.picklist}
+				</div>
+			</div>
+			<div class="slds-form__row">
+				<div class="slds-form__item">
 					<c-input
 						type="text"
 						label="First Name"

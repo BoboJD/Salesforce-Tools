@@ -27,6 +27,19 @@ export default class AccountPageExample extends NavigationMixin(LightningElement
 		return ['Page 1', 'Page 2', 'Last Page'];
 	}
 
+	get types(){
+		return [
+			{ value: 'A', label: 'A' },
+			{ value: 'B', label: 'B' },
+			{ value: 'C', label: 'C' },
+			{ value: 'D', label: 'D' },
+			{ value: 'E', label: 'E' },
+			{ value: 'F', label: 'F' },
+			{ value: 'G', label: 'G' },
+			{ value: 'H', label: 'H' }
+		];
+	}
+
 	get page(){
 		return this.template.querySelector('c-page');
 	}

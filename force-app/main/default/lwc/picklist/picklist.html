@@ -17,7 +17,7 @@
             <template if:false={readOnly}>
                 <div if:true={isPicklist} class="slds-combobox_container">
                     <div class={comboboxClass}>
-                        <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" onclick={openListbox}>
+                        <div lwc:ref="combobox" class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" onclick={openListbox}>
                             <input type="text"
                                 class="slds-input slds-combobox__input"
                                 placeholder={placeholder}
@@ -36,7 +36,7 @@
                                 </lightning-icon>
                             </span>
                         </div>
-                        <div class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid">
+                        <div lwc:ref="dropdown" class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid">
                             <ul class="slds-listbox slds-listbox_vertical">
                                 <c-picklist-option
                                     if:true={addNewRecordOption}
