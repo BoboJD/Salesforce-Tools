@@ -1,3 +1,4 @@
+@JsonAccess(serializable='always' deserializable='always')
 global class DecoratedPicklistEntry{
 	@AuraEnabled global String value {get;set;}
 	@AuraEnabled global String label {get;set;}
