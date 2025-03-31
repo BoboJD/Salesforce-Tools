@@ -217,7 +217,7 @@ get_additional_deploy_parameters(){
 
 	if [[ "$is_production_org" = "true" || "$run_apex_tests" = true ]]; then
 		if [ -n "$test_classes" ]; then
-			additional_deploy_parameters+=" -t $test_classes"
+			additional_deploy_parameters+=" -t ${test_classes//,/ }"
 		else
 			additional_deploy_parameters+=" -l RunLocalTests"
 		fi
