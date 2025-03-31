@@ -6,12 +6,12 @@ global class DecoratedPicklistEntry{
 	@AuraEnabled global String validFor {get;set;}
 	@AuraEnabled global Boolean checked {get;set;}
 
-	private DecoratedPicklistEntry(){
+	global DecoratedPicklistEntry(){
 		fields = new Map<String, Object>();
 		checked = false;
 	}
 
-	private DecoratedPicklistEntry(String value, String label){
+	global DecoratedPicklistEntry(String value, String label){
 		this();
 		this.value = value;
 		this.label = label;
