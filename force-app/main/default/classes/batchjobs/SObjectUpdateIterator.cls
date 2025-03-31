@@ -1,4 +1,4 @@
-public without sharing class SObjectUpdateIterator implements Database.Batchable<SObject>, Database.AllowsCallouts, Database.StateFul{
+global without sharing class SObjectUpdateIterator implements Database.Batchable<SObject>, Database.AllowsCallouts, Database.StateFul{
 	private List<SObject> records;
 	private Integer nbOfErrors;
 
@@ -7,15 +7,15 @@ public without sharing class SObjectUpdateIterator implements Database.Batchable
 		nbOfErrors = 0;
 	}
 
-	public static SObjectUpdateIterator newInstance(List<SObject> records){
+	global static SObjectUpdateIterator newInstance(List<SObject> records){
 		return new SObjectUpdateIterator(records);
 	}
 
-	public Iterable<SObject> start(Database.BatchableContext batchableContext){
+	global Iterable<SObject> start(Database.BatchableContext batchableContext){
 		return (Iterable<SObject>)records;
 	}
 
-	public void execute(Database.BatchableContext batchableContext, List<SObject> records){
+	global void execute(Database.BatchableContext batchableContext, List<SObject> records){
 		handleSaveResults(Database.update(records, false));
 	}
 
@@ -23,7 +23,7 @@ public without sharing class SObjectUpdateIterator implements Database.Batchable
 		for(Database.SaveResult saveResult : saveResults) if(!saveResult.isSuccess()) nbOfErrors += 1;
 	}
 
-	public void finish(Database.BatchableContext batchableContext){
+	global void finish(Database.BatchableContext batchableContext){
 		Integer nbOfSuccess = records.size() - nbOfErrors;
 		CustomNotificationsService.notifyUser(UserInfo.getUserId(), Label.SObjectUpdateIteratorTitle,
 			String.format(Label.SObjectUpdateIteratorMessage, new List<Object>{ nbOfSuccess, nbOfErrors }));
