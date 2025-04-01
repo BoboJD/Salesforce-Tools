@@ -1,5 +1,6 @@
 :host{
 	height: 100%;
+	width: 100%;
 }
 .page{
 	display: flex;
@@ -13,15 +14,16 @@
 	width: 100%;
 	max-width: none;
 }
-@media all and (max-width: 48em){
-	:host{
-		width: 100%;
-	}
-}
 .slds-modal__content{
 	flex: 1;
 	position: relative;
 }
 .slds-modal__footer{
 	text-align: center;
+}
+@media all and (max-width: 48em){
+	.page{
+		width: 100%;
+		max-width: initial;
+	}
 }

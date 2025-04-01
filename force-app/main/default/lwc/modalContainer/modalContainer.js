@@ -2,6 +2,7 @@ import { LightningElement, api } from 'lwc';
 import { loadScript } from 'lightning/platformResourceLoader';
 import HEIGHT_MANAGER from '@salesforce/resourceUrl/modalHeightManager';
 import { displaySpinner, hideSpinner } from 'c/utils';
+import formFactorPropertyName from '@salesforce/client/formFactor';
 import label from './labels';
 
 export default class ModalContainer extends LightningElement{
@@ -145,28 +146,32 @@ export default class ModalContainer extends LightningElement{
 
 	// Callbacks
 	connectedCallback(){
-		this.updatePosition();
+		this.setupComponentClassname();
 		this.template.addEventListener('registerscroll', this.handleRegisterScroll.bind(this));
 		this.template.addEventListener('unregisterscroll', this.handleUnregisterScroll.bind(this));
-		if(this.position === 'action'){
-			loadScript(this, HEIGHT_MANAGER).then(() => {
-				this.updateModalHeight.bind(this);
-				if(this.position === 'action' && this.maxWidth)
-					window.maximizeModalWidth();
-			});
-			window.addEventListener('resize', this.updateModalHeight.bind(this));
-		}else{
-			this.setupKeypressListener();
+		if(formFactorPropertyName !== 'Small'){
+			if(this.position === 'action'){
+				loadScript(this, HEIGHT_MANAGER).then(() => {
+					this.updateModalHeight.bind(this);
+					if(this.position === 'action' && this.maxWidth)
+						window.maximizeModalWidth();
+				});
+				window.addEventListener('resize', this.updateModalHeight.bind(this));
+			}else{
+				this.setupKeypressListener();
+			}
 		}
 	}
 
 	disconnectedCallback(){
 		this.template.removeEventListener('registerscroll', this.handleRegisterScroll);
 		this.template.removeEventListener('unregisterscroll', this.handleUnregisterScroll);
-		if(this.position === 'action'){
-			window.removeEventListener('resize', this.updateModalHeight.bind(this));
-		}else{
-			window.removeEventListener('keydown', this._watchKeypressComponent);
+		if(formFactorPropertyName !== 'Small'){
+			if(this.position === 'action'){
+				window.removeEventListener('resize', this.updateModalHeight.bind(this));
+			}else{
+				window.removeEventListener('keydown', this._watchKeypressComponent);
+			}
 		}
 	}
 
@@ -176,7 +181,7 @@ export default class ModalContainer extends LightningElement{
 		window.addEventListener('keydown', this._watchKeypressComponent);
 	}
 
-	updatePosition(){
+	setupComponentClassname(){
 		if(this.position === 'fixed'){
 			this.template.host.classList.add('fixed-position');
 			if(this.maxWidth){
@@ -185,6 +190,9 @@ export default class ModalContainer extends LightningElement{
 		}else{
 			this.template.host.classList.remove('fixed-position');
 			this.template.host.classList.remove('max-width');
+		}
+		if(formFactorPropertyName === 'Small'){
+			this.template.host.classList.add('small-form-factor');
 		}
 	}
 

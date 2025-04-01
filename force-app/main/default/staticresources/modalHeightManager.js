@@ -8,7 +8,7 @@ window.adjustModalHeight = modalElement => {
 
 window.maximizeModalWidth = () => {
 	const modalContainerElements = document.getElementsByClassName('modal-container');
-	if(modalContainerElements){
+	if(modalContainerElements && modalContainerElements[0] && window.innerWidth > 767){
 		modalContainerElements[0].style.width = '90%';
 		modalContainerElements[0].style.maxWidth = 'initial';
 	}

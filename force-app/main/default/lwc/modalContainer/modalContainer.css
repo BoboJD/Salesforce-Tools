@@ -21,6 +21,10 @@
 	min-height: 130px;
 }
 
+.small-form-factor .slds-modal__content{
+	height: 100%;
+}
+
 .slds-modal__content.min-content-height{
 	min-height: 200px;
 }
