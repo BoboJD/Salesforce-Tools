@@ -177,6 +177,7 @@ find_metadata_type_by_folder_name(){
 	folder_to_type_mapping=(
 		["animationRules"]="AnimationRule"
 		["applications"]="CustomApplication"
+		["assignmentRules"]="AssignmentRules"
 		["audience"]="Audience"
 		["aura"]="AuraDefinitionBundle"
 		["brandingSets"]="BrandingSet"
@@ -255,6 +256,7 @@ find_folder_name_by_metadata_type(){
 		["ApexComponent"]="components"
 		["ApexPage"]="pages"
 		["ApexTrigger"]="triggers"
+		["AssignmentRules"]="assignmentRules"
 		["Audience"]="audience"
 		["AuraDefinitionBundle"]="aura"
 		["BrandingSet"]="brandingSets"
