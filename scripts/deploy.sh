@@ -361,7 +361,9 @@ generate_package_xml(){
 				metadata_type="Metadata type not found for folder '$folder$sub_folder'"
 			fi
 
-			if [[ "$metadata_type" == "CustomField" && ! "$fileName" =~ __c$ ]]; then
+			if [[ "$metadata_type" == "CustomField" && ! "$fileName" =~ __c$ ]] || \
+				{ [[ "$metadata_type" == "CustomObject" || "$metadata_type" == "CustomMetadata" ]] && \
+					[[ "$fileName" =~ ^[a-zA-Z0-9]+__ ]]; }; then
 				continue
 			fi
 
