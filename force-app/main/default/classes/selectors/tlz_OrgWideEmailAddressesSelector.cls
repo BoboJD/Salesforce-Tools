@@ -19,7 +19,7 @@ global inherited sharing class tlz_OrgWideEmailAddressesSelector extends fflib_S
 	global Map<String, OrgWideEmailAddress> mapAll(){
 		if(recordByEmail == null){
 			recordByEmail = new Map<String, OrgWideEmailAddress>();
-			for(OrgWideEmailAddress orgWideEmailAddress : Database.query(newQueryFactory().toSOQL()))
+			for(OrgWideEmailAddress orgWideEmailAddress : Database.query(newQueryFactory(false, false, true).toSOQL()))
 				recordByEmail.put(orgWideEmailAddress.Address, orgWideEmailAddress);
 		}
 		return recordByEmail;
