@@ -26,9 +26,18 @@ global with sharing class Settings{
 		return get(Test.isRunningTest(), sObjectField);
 	}
 
+	global static Object get(String sObjectFieldName){
+		return get(Test.isRunningTest(), sObjectFieldName);
+	}
+
 	@TestVisible
 	private static Object get(Boolean bypassException, SObjectField sObjectField){
 		return getInstance(bypassException).record?.get(sObjectField);
+	}
+
+	@TestVisible
+	private static Object get(Boolean bypassException, String sObjectFieldName){
+		return getInstance(bypassException).record?.get(sObjectFieldName);
 	}
 
 	private static Settings getInstance(Boolean bypassException){

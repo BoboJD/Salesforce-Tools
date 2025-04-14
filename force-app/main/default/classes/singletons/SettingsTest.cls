@@ -5,6 +5,7 @@ private class SettingsTest{
 	static void getSettingsNameShouldReturnDefault(){
 		insert new Setting__c(Name = 'Default');
 		Assert.equals('Default', Settings.get(Setting__c.Name));
+		Assert.equals('Default', Settings.get('Name'));
 	}
 
 	@IsTest
@@ -12,6 +13,18 @@ private class SettingsTest{
 		String errorMessage;
 		try{
 			Settings.get(false, Setting__c.Name);
+		}catch(Exception e){
+			errorMessage = e.getMessage();
+		}
+
+		Assert.messageContains(errorMessage, Label.DefaultSettingNotCreated);
+	}
+
+	@IsTest
+	static void getSettingsForStringWithoutDataRecordShouldThrowError(){
+		String errorMessage;
+		try{
+			Settings.get(false, 'Name');
 		}catch(Exception e){
 			errorMessage = e.getMessage();
 		}
