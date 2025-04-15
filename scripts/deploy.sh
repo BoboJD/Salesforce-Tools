@@ -289,7 +289,7 @@ find_deleted_labels(){
 }
 
 construct_deploy_package_xml(){
-	local files_to_deploy=$(git diff --diff-filter=ARM --name-only $commit_hash_or_branch_reference^ $current_commit_hash_or_branch | grep -E '^force-app/')
+	local files_to_deploy=$(git diff --diff-filter=ARM --name-only $commit_hash_or_branch_reference^ $current_commit_hash_or_branch | grep -E '^"?force-app/' | sed 's/^"\(.*\)"$/\1/' | xargs -0 printf "%b")
 	if [[ -n "$files_to_deploy" ]]; then
 		echo -ne "\nGenerating ${RCyan}deployPackage.xml${NC} to perform fast deployment..."
 		local generated_xml=$(generate_package_xml "$files_to_deploy" false)
@@ -310,7 +310,7 @@ generate_package_xml(){
 	declare -A fileNames_by_metadata_type
 
 	while IFS= read -r fileFullPath; do
-		if [[ $fileFullPath == ${project_directory}* ]]; then
+		if [[ $fileFullPath == *${project_directory}* ]]; then
 			local folder=$(echo "$fileFullPath" | awk -F '/' '{print $4}')
 
 			if [ "$is_for_deletion" = true ]; then
