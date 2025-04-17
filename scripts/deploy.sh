@@ -142,7 +142,7 @@ deploy_files_into_current_org(){
 		start_phrase="Validating"
 	fi
 
-	if [[ "$is_production_org" = "true" || "$full_deploy" = true ]]; then
+	if [[ "$full_deploy" = true ]]; then
 		manifest_file="manifest/full.xml"
 	else
 		construct_deploy_package_xml
@@ -363,7 +363,7 @@ generate_package_xml(){
 
 			if [[ "$metadata_type" == "CustomField" && ! "$fileName" =~ __c$ ]] || \
 				{ [[ "$metadata_type" == "CustomObject" || "$metadata_type" == "CustomMetadata" ]] && \
-					[[ "$fileName" =~ ^[a-zA-Z0-9]+__ ]]; }; then
+					[[ "$fileName" =~ ^[a-zA-Z0-9]+__.+__c$ ]]; }; then
 				continue
 			fi
 
