@@ -9,6 +9,12 @@ private class SettingsTest{
 	}
 
 	@IsTest
+	static void getValuesShouldReturnList(){
+		insert new Setting__c(Name = 'Default');
+		Assert.equals(new List<String>{'Default'}, Settings.getValues(Setting__c.Name));
+	}
+
+	@IsTest
 	static void getSettingsWithoutDataRecordShouldThrowError(){
 		String errorMessage;
 		try{

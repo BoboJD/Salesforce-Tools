@@ -30,6 +30,11 @@ global with sharing class Settings{
 		return get(Test.isRunningTest(), sObjectFieldName);
 	}
 
+	global static List<String> getValues(SObjectField sObjectField){
+		String values = (String)get(sObjectField);
+		return values?.split(';') ?? new List<String>();
+	}
+
 	@TestVisible
 	private static Object get(Boolean bypassException, SObjectField sObjectField){
 		return getInstance(bypassException).record?.get(sObjectField);

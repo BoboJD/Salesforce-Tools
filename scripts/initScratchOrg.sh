@@ -22,6 +22,7 @@ main(){
 	deploy_project
 	assign_permissionsets_to_current_user
 	import_data
+	reset_tracking
 	echo -e "\n${RGreen}Scratch org is ready !${NC}"
 	display_duration_of_script
 }
@@ -42,6 +43,12 @@ assign_permissionsets_to_current_user(){
 import_data(){
 	echo -ne "\nImporting ${RBlue}data${NC} to scratch org... "
 	sf data import tree --files data/tlz__EncryptionKey__c.json > /dev/null
+	echo "Done."
+}
+
+reset_tracking(){
+	echo -ne "\nResetting tracking on scratch org... "
+	sf project reset tracking -p --target-org $scratch_org_name > /dev/null
 	echo "Done."
 }
 
