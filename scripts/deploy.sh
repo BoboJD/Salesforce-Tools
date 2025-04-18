@@ -367,7 +367,8 @@ generate_package_xml(){
 				continue
 			fi
 
-			if [[ ! "${fileNames_by_metadata_type[$metadata_type]}" =~ "${fileName};" ]]; then
+			escaped_fileName=$(printf '%s\n' "$fileName" | sed 's/[][\\.^$*+?{}|]/\\&/g')
+			if [[ ! "${fileNames_by_metadata_type[$metadata_type]}" =~ (^|;)"$escaped_fileName"';' ]]; then
 				fileNames_by_metadata_type["$metadata_type"]+="$fileName;"
 			fi
 		fi
