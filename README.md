@@ -86,8 +86,6 @@ You can add this repository as a subtree of your project to see the components a
 Want to contribute? Ask me for a **Scratch Org**, and I'll send you your credentials.  
 This allows you to develop and test without accessing the production org.  
 
-Once you're ready, feel free to open an issue or a pull request!  
-
 ### Contribution Steps  
 
 1. **Fork the Repository** – Create a fork of the repository to work on your changes.  
@@ -95,49 +93,6 @@ Once you're ready, feel free to open an issue or a pull request!
 3. **Make Changes** – Implement your changes while following the project’s coding standards.  
 4. **Test Your Changes** – Run tests to ensure your changes don’t introduce issues.  
 5. **Submit a Pull Request** – Once satisfied, open a pull request for review.
-
-### Create a scratch org
-
-To initialize a new scratch org, use the following `make` command. Add the `-s` flag to set this org as the default.
-
-  ```sh
-  make org p="test -s"
-  ```
-
-* `test`: Replace with your desired scratch org alias.
-* `-s`: Optional flag to set this org as the default.
-
-### Maintaining fflib Libraries
-
-To update the fflib libraries, use the following commands :
-
-  ```sh
-  # Update fflib-apex-mocks
-  git subtree pull --prefix=force-app/fflib-apex-mocks git@github.com:apex-enterprise-patterns/fflib-apex-mocks.git master
-
-  # Update fflib-apex-common
-  git subtree pull --prefix=force-app/fflib-apex-common git@github.com:apex-enterprise-patterns/fflib-apex-common.git master
-  ```
-
-### Managing Package Versions
-
-To create a new version of the package, use :
-
-  ```sh
-  sf package version create --definition-file config/project-scratch-def.json --package "Salesforce Tools" --wait 30 --installation-key-bypass --code-coverage
-  ```
-
-* `--package "Salesforce Tools"`: Replace with the name of your package.
-* `--wait 10`: Adjust the wait time if needed; this specifies the number of minutes to wait for the process to complete.
-* `--installation-key-bypass`: Bypass the installation key prompt.
-
-Then to promote the new version, use :
-
-  ```sh
-  sf package version promote --package "Salesforce Tools@VERSIONNUMBER"
-  ```
-
-* `VERSIONNUMBER`: The version of the package (e.g., 1.0.0).
 
 ### Reporting Issues
 
