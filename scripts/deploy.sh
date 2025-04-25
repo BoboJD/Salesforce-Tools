@@ -160,7 +160,7 @@ deploy_files_into_current_org(){
 		fi
 
 		if [ "$current_branch" = "preprod" ] && [ -f "$config_file" ] && [ "$(yq eval '.deploy_settings.preprod // "null"' "$config_file")" != "null" ]; then
-			yq eval ".deploy_settings.preprod = \"$current_commit_hash_or_branch\"" -i "$config_file"
+			sed -i -E "s|(preprod: ).*|\1\"$current_commit_hash_or_branch\"|" "$config_file"
 		fi
 	else
 		echo -e "${RRed}Deployment failed. Fix the errors then relaunch the script.${NC}"
