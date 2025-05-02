@@ -65,6 +65,7 @@ global without sharing class LogFactory{
 			Type__c = LogConstants.TYPE_WEBSERVICE,
 			File__c = classApex.getName(),
 			Endpoint__c = endpoint,
+			Method__c = request.getMethod(),
 			Parameters__c = parameters,
 			StatusCode__c = response.getStatusCode(),
 			Status__c = response.getStatus(),
