@@ -61,7 +61,11 @@ global class DecoratedPicklistEntry{
 	}
 
 	global DecoratedPicklistEntry setFieldValue(SObject record, SObjectField sObjectField){
-		fields.put(sObjectField.getDescribe(FieldDescribeOptions.DEFAULT).getName(), record.get(sObjectField));
+		return setFieldValue(sObjectField.getDescribe(FieldDescribeOptions.DEFAULT).getName(), record.get(sObjectField));
+	}
+
+	global DecoratedPicklistEntry setFieldValue(String key, Object value){
+		fields.put(key, value);
 		return this;
 	}
 
