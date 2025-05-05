@@ -45,6 +45,7 @@ translation_settings:
 #     check_windows_git_update: true
 #     check_global_npm_packages_update: true
 #     check_npm_packages_update: true
+#   always_retrieve_development: true
 
 # Scratch org creation settings
 # scratch_org_settings:
@@ -188,12 +189,20 @@ translation_settings:
 
 # Missing sObjects configuration for sandbox environments
 # sandbox:
+# sobjects_to_remove:
+#     - "ActionPlan"
+#     - "ActionPlanTemplate"
+#     - "ReceivedDocument"
+#     - "ReceivedDocumentType"
 #   missing_sobjects:
 #     "AppAnalyticsQueryRequest": "ArchiveJobSession"
 #     "Quote": "RebatePayoutSnapshot"
 
 # Missing sObjects configuration for scratch org environments
 # scratch_org:
+# sobjects_to_remove:
+#     - "DataKitDeploymentLog"
+#     - "ProductRelatedServiceProcess"
 #   missing_sobjects:
 #     "AppAnalyticsQueryRequest": "ArchiveJobSession"
 #     "Asset": "AsyncRequestResponseEvent"

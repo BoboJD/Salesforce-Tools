@@ -30,7 +30,6 @@ main(){
 		updating_salesforce_tools_subtree
 		if [ -z "$option" ]; then
 			update_npm_packages
-			retrieve_development
 			if [[ $(yq eval '.data_backup // "null"' "$config_file") != "null" ]]; then
 				create_backup_of_data
 			fi
@@ -39,6 +38,10 @@ main(){
 			fi
 		fi
 		check_installed_managed_packages_version
+	fi
+
+	if [[ "$is_production_org" = "true" || $(yq eval '.features.always_retrieve_development // "null"' "$config_file") = "true" ]]; then
+		retrieve_development
 	fi
 
 	if [[ -z "$option" || "$option" = "-e" || "$option" = "--exclude-experiences" || "$option" = "-oc" || "$option" = "--only-configuration" ]]; then
