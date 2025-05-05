@@ -357,10 +357,7 @@ generate_package_xml(){
 					fileName=$(echo "$fileFullPath" | awk -F '/email/' '{print $2}' | cut -d. -f1)
 				fi
 			else
-				echo "fileFullPath: $fileFullPath"
-				echo "fileName: $fileName"
 				metadata_type=$(find_metadata_type_by_folder_name "$folder")
-				echo "metadata_type: $metadata_type"
 			fi
 
 			if [ -z "$metadata_type" ]; then
