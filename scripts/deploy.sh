@@ -331,9 +331,12 @@ generate_package_xml(){
 			fi
 
 			local fileName=$(basename "$fileFullPath" | sed 's/\.[^.]*-meta\.xml$//')
-			if [[ $folder != "quickActions" ]]; then
+			if [[ $folder == "customMetadata" ]]; then
+				fileName=$(basename "$fileFullPath" | sed 's/\.md-meta\.xml$//')
+			elif [[ $folder != "quickActions" ]]; then
 				fileName=$(echo "$fileName" | cut -d. -f1)
 			fi
+
 			if [[ $folder = objects && $fileFullPath != *.object-meta.xml ]]; then
 				local sobject=$(echo "$fileFullPath" | awk -F '/' '{print $5}')
 				sub_folder=$(echo "$fileFullPath" | awk -F '/' '{print $6}')
@@ -354,7 +357,10 @@ generate_package_xml(){
 					fileName=$(echo "$fileFullPath" | awk -F '/email/' '{print $2}' | cut -d. -f1)
 				fi
 			else
+				echo "fileFullPath: $fileFullPath"
+				echo "fileName: $fileName"
 				metadata_type=$(find_metadata_type_by_folder_name "$folder")
+				echo "metadata_type: $metadata_type"
 			fi
 
 			if [ -z "$metadata_type" ]; then
