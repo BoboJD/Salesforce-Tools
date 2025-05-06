@@ -14,10 +14,11 @@ fi
 # Parameters (not mandatory)
 # -e / --exclude-experiences : doesn't retrieve experience files
 # -oc / --only-configuration : only retrieve configuration files
+# -od / --only-development : only retrieve development files
 # -oe / --only-experiences : only retrieve experience files
-# -trad : only retrieve translation files
 # -op / --only-permissions : only retrieve permission files
-# -s / --subtree : only pull subtree changes
+# -trad : only retrieve translation files
+# -s / --subtree : only pull subtree & packages changes
 option=$1
 
 main(){
@@ -40,7 +41,7 @@ main(){
 		check_installed_managed_packages_version
 	fi
 
-	if [[ "$is_production_org" = "true" || $(yq eval '.features.always_retrieve_development // "null"' "$config_file") = "true" ]]; then
+	if [[ ("$is_production_org" = "true" || $(yq eval '.features.always_retrieve_development // "null"' "$config_file") = "true") && ( -z "$option" || "$option" = "-od" || "$option" = "----only-development" ) ]]; then
 		retrieve_development
 	fi
 
