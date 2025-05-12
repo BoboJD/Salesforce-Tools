@@ -342,7 +342,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>SObjectUpdateIteratorMessage</shortDescription>
-        <value>Result : {0} success(es) &amp; {0} error(s)</value>
+        <value>Result : {0} success(es) &amp; {1} error(s)</value>
     </labels>
     <labels>
         <fullName>SObjectUpdateIteratorTitle</fullName>
