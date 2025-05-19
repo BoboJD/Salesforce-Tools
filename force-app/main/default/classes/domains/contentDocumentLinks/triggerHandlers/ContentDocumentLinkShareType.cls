@@ -38,7 +38,7 @@ global with sharing class ContentDocumentLinkShareType extends ContentDocumentLi
 
 	private Boolean isNotPrivate(ContentDocumentLink contentDocumentLink){
 		ContentDocument cd = contentDocumentById.get(contentDocumentLink.ContentDocumentId);
-		return cd.SharingPrivacy != ContentDocumentConstants.SHARINGPRIVACY_PRIVATE;
+		return cd != null && cd.SharingPrivacy != ContentDocumentConstants.SHARINGPRIVACY_PRIVATE;
 	}
 
 	private Boolean shareTypeNeedsToBeSet(ContentDocumentLink contentDocumentLink){

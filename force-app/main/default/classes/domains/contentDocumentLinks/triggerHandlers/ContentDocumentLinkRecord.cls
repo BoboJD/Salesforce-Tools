@@ -40,6 +40,6 @@ global with sharing class ContentDocumentLinkRecord extends ContentDocumentLinks
 
 	private Boolean recordIdIsEmpty(ContentDocumentLink contentDocumentLink){
 		ContentDocument cd = contentDocumentById.get(contentDocumentLink.ContentDocumentId);
-		return cd.LatestPublishedVersion.RecordId__c == null;
+		return cd?.LatestPublishedVersion != null && cd.LatestPublishedVersion.RecordId__c == null;
 	}
 }
