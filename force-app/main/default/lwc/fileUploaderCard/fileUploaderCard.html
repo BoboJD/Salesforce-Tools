@@ -32,7 +32,7 @@
 							<span if:true={file.extension}>{file.extension}</span>
 						</div>
 					</div>
-					<div if:true={displayDeleteBtn} class="slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open">
+					<div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open">
 						<lightning-button-icon
 							icon-name="utility:down"
 							alternative-text="Menu"
@@ -49,7 +49,7 @@
 										</span>
 									</a>
 								</li>
-								<li class="slds-dropdown__item" onclick={deleteFile}>
+								<li if:true={displayDeleteBtn} class="slds-dropdown__item" onclick={deleteFile}>
 									<a href="javascript:void(0);" tabindex="0">
 										<span class="slds-truncate" title={label.Delete}>
 											<lightning-icon icon-name="utility:delete" alternative-text={label.Delete} size="x-small" class="slds-var-m-right_x-small"></lightning-icon>

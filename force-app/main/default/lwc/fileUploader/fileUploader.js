@@ -15,6 +15,7 @@ export default class FileUploader extends NavigationMixin(LightningElement){
 	@api objectApiName;
 	@api hideAddFiles = false;
 	@api hideDate = false;
+	@api hideDeleteOption = false;
 	@api massDeleteOption = false;
 	@api multiple = false;
 	@track utilityData = { files: [] };
@@ -29,6 +30,10 @@ export default class FileUploader extends NavigationMixin(LightningElement){
 		if(this.utilityData.files.length)
 			return this.utilityData.files.filter(file => this.hasFileTypeIncludedInFilter(file) && this.hasExtensionIncludedInFilter(file));
 		return [];
+	}
+
+	get displayDeleteBtn(){
+		return this.utilityData.hasEditAccess && !this.hideDeleteOption;
 	}
 
 	hasFileTypeIncludedInFilter(file){

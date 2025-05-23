@@ -68,8 +68,9 @@
 				<c-file-uploader-card
 					key={file.id}
 					file={file}
-					display-delete-btn={utilityData.hasEditAccess}
+					display-delete-btn={displayDeleteBtn}
 					hide-date={hideDate}
+					hide-delete-option={hideDeleteOption}
 					mass-delete-option={massDeleteOption}
 					onselection={setSelected}
 					ondownloadfile={downloadFile}

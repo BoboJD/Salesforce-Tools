@@ -7,6 +7,7 @@ export default class FileUploaderCard extends NavigationMixin(LightningElement){
 	@api file;
 	@api displayDeleteBtn = false;
 	@api hideDate = false;
+	@api hideDeleteOption = false;
 	@api massDeleteOption = false;
 	displayMenu = false;
 	label = label;
