@@ -20,6 +20,11 @@ org_settings:
   # org_shape_enable: true
   # profile_used: true
 
+# Test settings
+test_settings:
+  min_coverage: 90
+  # ignore_selectors: true
+
 # Translation to remove
 translation_settings:
   # sobjects:

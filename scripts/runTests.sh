@@ -76,11 +76,19 @@ display_org_wide_coverage(){
 	echo -e "\nOrganization-wide Coverage : $org_wide_coverage"
 }
 
-display_classes_with_coverage_issue(){
-	classes_with_coverage_issue=$(jq -r '
+display_classes_with_coverage_issue() {
+	ignore_selectors=$(yq eval '.test_settings.ignore_selectors // "false"' "$config_file")
+	min_coverage=$(yq eval '.test_settings.min_coverage // "75"' "$config_file")
+
+	selector_exclusion=""
+	if [[ "$ignore_selectors" == "true" ]]; then
+		selector_exclusion='or endswith("Selector")'
+	fi
+
+	classes_with_coverage_issue=$(jq -r --argjson min_coverage "$min_coverage" --arg selector_exclusion "$selector_exclusion" '
 		.coverage.coverage[]
 		| select(
-			.coveredPercent < 95
+			.coveredPercent < $min_coverage
 			and .coveredPercent != 0
 			and (
 				.name
@@ -93,29 +101,47 @@ display_classes_with_coverage_issue(){
 					or startswith("MyProfilePageController")
 					or startswith("SiteRegisterController")
 					or startswith("tlz_OrgWideEmailAddressesSelector")
+					'"$selector_exclusion"'
 				)
 				| not
 			)
 		)
 		| "• \(.name): \(.coveredPercent)%"
-		' "$test_file")
+	' "$test_file")
+
 	if [ -n "$classes_with_coverage_issue" ]; then
-		echo -e "\nClass with coverage less than 95% :"
+		echo -e "\nClass with coverage less than $min_coverage%:"
 		echo "$classes_with_coverage_issue" | sort
 		if [ "$option" = "--output-file" ]; then
-			echo -e "\nClass with coverage less than 95% :" >> $output_file
+			echo -e "\nClass with coverage less than $min_coverage%:" >> $output_file
 			echo "$classes_with_coverage_issue" | sort >> $output_file
 		fi
 	fi
 }
 
 display_classes_without_coverage(){
-	classes_without_coverage=$(jq -r '.coverage.coverage[] | select(.coveredPercent == 0 and (.name | (startswith("fflib_") or startswith("CustomException")) | not)) | "• \(.name)"' "$test_file")
+	classes_without_coverage=$(jq -r --arg selector_exclusion "$selector_exclusion" '
+		.coverage.coverage[]
+		| select(
+			.coveredPercent == 0
+			and (
+				.name
+				| (
+					startswith("fflib_")
+					or startswith("CustomException")
+					'"$selector_exclusion"'
+				)
+				| not
+			)
+		)
+		| "• \(.name)"
+	' "$test_file")
+
 	if [ -n "$classes_without_coverage" ]; then
-		echo -e "\nClass without coverage :"
+		echo -e "\nClass without coverage:"
 		echo "$classes_without_coverage" | sort
 		if [ "$option" = "--output-file" ]; then
-			echo -e "\nClass without coverage :" >> $output_file
+			echo -e "\nClass without coverage:" >> $output_file
 			echo "$classes_without_coverage" | sort >> $output_file
 		fi
 	fi
