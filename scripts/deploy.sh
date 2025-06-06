@@ -70,7 +70,8 @@ main(){
 		fi
 	elif [ "$current_branch" = "prod-release" ]; then
 		if [[ "$is_production_org" = "true" && "$validate" = true ]]; then
-			error_exit "You need to manually deploy the package in the org to finalize the deployment. Don't forget to update the master branch after."
+			echo -e "${RGreen}You need to manually deploy the package in the org to finalize the deployment. Don't forget to update the master branch after, you can run 'make release' while being on prod-release branch to do this.${NC}"
+			exit 1
 		else
 			merge_prod_release_into_master
 			delete_remote_branches_merged_into_master
@@ -137,9 +138,11 @@ deploy_files_into_current_org(){
 
 	local type_of_deploy="start"
 	local start_phrase="Deploying"
+	local success_phrase="Deployment"
 	if [ "$validate" = true ]; then
 		type_of_deploy="validate"
 		start_phrase="Validating"
+		success_phrase="Validation"
 	fi
 
 	if [[ "$full_deploy" = true ]]; then
@@ -153,12 +156,8 @@ deploy_files_into_current_org(){
 	local deploy_files_result=$(sf project deploy $type_of_deploy -x $manifest_file -w 600 --json$additional_deploy_parameters)
 	local deployment_status=$(echo "$deploy_files_result" | jq -r '.status')
 	if [ "$deployment_status" -eq 0 ]; then
-		echo -e "${RGreen}Deployment successful.${NC}"
-
-		if [ -e "postDeployDestructiveChanges.xml" ]; then
-			rm "postDeployDestructiveChanges.xml"
-		fi
-
+		echo -e "${RGreen}${success_phrase} successful.${NC}"
+		remove_files_created_by_script
 		if [ "$current_branch" = "preprod" ] && [ -f "$config_file" ] && [ "$(yq eval '.deploy_settings.preprod // "null"' "$config_file")" != "null" ]; then
 			sed -i -E "s|(preprod: ).*|\1\"$current_commit_hash_or_branch\"|" "$config_file"
 		fi
@@ -385,6 +384,11 @@ generate_package_xml(){
 	local version=$(jq -r '.sourceApiVersion' sfdx-project.json)
 	echo -e "\t<version>$version</version>"
 	echo "</Package>"
+}
+
+remove_files_created_by_script(){
+	rm -f "postDeployDestructiveChanges.xml"
+	rm -f "deployPackage.xml"
 }
 
 deploy_territories_into_current_org(){
