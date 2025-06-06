@@ -189,20 +189,11 @@ get_additional_deploy_parameters(){
 
 	if [ "$current_branch" = "preprod" ]; then
 		current_commit_hash_or_branch=$(git rev-parse HEAD)
-		last_deployed_commit=$(yq eval '.deploy_settings.preprod' "$config_file")
-		if [ -n "$last_deployed_commit" ]; then
-			local commit_timestamp=$(git log -1 --format="%ct" $last_deployed_commit)
-			commit_hash_or_branch_reference=$(git log --since="$commit_timestamp" --reverse --format="%H" --first-parent "$current_branch" | awk -v last_commit="$last_deployed_commit" 'BEGIN { found=0; } { if (found) { print $1; exit; } if ($1 == last_commit) found=1; }')
-			if [ -z "$commit_hash_or_branch_reference" ]; then
-				commit_hash_or_branch_reference=$(git log --since="$commit_timestamp" --reverse --format="%H" --first-parent "$current_branch" | awk 'NR==1{print $1; exit}')
-			fi
-			if [[ "$commit_hash_or_branch_reference" = "null" || -z "$commit_hash_or_branch_reference" ]]; then
-				commit_hash_or_branch_reference="master"
-			fi
+		commit_hash_or_branch_reference=$(yq eval '.deploy_settings.preprod' "$config_file")
+		if [ -n "$commit_hash_or_branch_reference" ]; then
 			echo -e "\nDeploying into preprod since commit : ${RGreen}${commit_hash_or_branch_reference}${NC}"
 		else
-			commit_hash_or_branch_reference="master"
-			echo -e "\nDeploying into preprod by comparing with master"
+			error_exit "You need to file the property .deploy_settings.preprod in the config file"
 		fi
 	else
 		current_commit_hash_or_branch="$current_branch"
@@ -226,7 +217,7 @@ get_additional_deploy_parameters(){
 
 add_option_to_delete_deleted_or_renamed_files(){
 	echo -ne "\nChecking if files have been deleted from project... "
-	local deleted_files=$(git diff --diff-filter=D --name-only $commit_hash_or_branch_reference^ $current_commit_hash_or_branch | awk '$1 ~ /-meta.xml$/ && $1 ~ /^force-app\/main\/default\//')
+	local deleted_files=$(git diff --diff-filter=D --name-only ${commit_hash_or_branch_reference}...${current_commit_hash_or_branch} | awk '$1 ~ /-meta.xml$/ && $1 ~ /^force-app\/main\/default\//')
 	local renamed_files=$(find_deleted_files_in_renamed_files)
 	local deleted_labels=$(find_deleted_labels)
 
@@ -246,7 +237,7 @@ add_option_to_delete_deleted_or_renamed_files(){
 }
 
 find_deleted_files_in_renamed_files(){
-	local renamed_or_moved_files=$(git diff --diff-filter=R --name-status $commit_hash_or_branch_reference^ $current_commit_hash_or_branch | awk '$1 ~ /^R/ && $2 ~ /-meta.xml$/ && $2 ~ /^force-app\/main\/default\// {print $2}')
+	local renamed_or_moved_files=$(git diff --diff-filter=R --name-status ${commit_hash_or_branch_reference}...${current_commit_hash_or_branch} | awk '$1 ~ /^R/ && $2 ~ /-meta.xml$/ && $2 ~ /^force-app\/main\/default\// {print $2}')
 
 	local files_to_delete=""
 	if [[ -n "$renamed_or_moved_files" ]]; then
@@ -268,7 +259,7 @@ find_deleted_files_in_renamed_files(){
 }
 
 find_deleted_labels(){
-	local diff_on_custom_labels=$(git diff $commit_hash_or_branch_reference^ $current_commit_hash_or_branch "${project_directory}labels/CustomLabels.labels-meta.xml")
+	local diff_on_custom_labels=$(git diff ${commit_hash_or_branch_reference}...${current_commit_hash_or_branch} "${project_directory}labels/CustomLabels.labels-meta.xml")
 	local removed_labels=$(echo "$diff_on_custom_labels" | grep -E '^-\s*<fullName>' | awk -F'[<>]' '/<fullName>/{gsub(/^ +/, ""); print $3}' | sed "s|^|${project_directory}label/|")
 
 	local labels_to_delete=""
@@ -289,7 +280,7 @@ find_deleted_labels(){
 }
 
 construct_deploy_package_xml(){
-	local files_to_deploy=$(git diff --diff-filter=ARM --name-only $commit_hash_or_branch_reference^ $current_commit_hash_or_branch | grep -E '^"?force-app/' | sed 's/^"\(.*\)"$/\1/' | xargs -0 printf "%b")
+	local files_to_deploy=$(git diff --diff-filter=ARM --name-only ${commit_hash_or_branch_reference}...${current_commit_hash_or_branch} | grep -E '^"?force-app/' | sed 's/^"\(.*\)"$/\1/' | xargs -0 printf "%b")
 	if [[ -n "$files_to_deploy" ]]; then
 		echo -ne "\nGenerating ${RCyan}deployPackage.xml${NC} to perform fast deployment..."
 		local generated_xml=$(generate_package_xml "$files_to_deploy" false)
@@ -403,11 +394,11 @@ deploy_territories_into_current_org(){
 }
 
 restore_edited_files_and_exit(){
-	local error_message=$1;
+	local error_message=$1
 	if [ "$is_production_org" = "false" ]; then
 		restore_edited_files
 	fi
-	error_exit $error_message;
+	error_exit "$error_message"
 }
 
 restore_edited_files(){

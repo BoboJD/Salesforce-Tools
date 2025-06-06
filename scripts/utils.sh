@@ -9,8 +9,8 @@ project_directory=$(yq eval '.project.directory' "$config_file")
 
 # Common methods
 ## error_exit
-error_exit() {
-	echo -e "${RRed}Error: $1${NC}"
+error_exit(){
+	echo -e "${RRed}Error: $*${NC}"
 	display_duration_of_script
 	exit 1
 }
