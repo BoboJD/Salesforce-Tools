@@ -164,7 +164,7 @@ deploy_files_into_current_org(){
 	else
 		echo -e "${RRed}Deployment failed. Fix the errors then relaunch the script.${NC}"
 		local deployment_message=$(echo "$deploy_files_result" | jq -r '.message')
-		if [[ -n "$deployment_message" ]]; then
+		if [[ -n "$deployment_message" && "$deployment_message" != "null" ]]; then
 			echo -e "${RRed}Error: ${deployment_message}${NC}"
 		fi
 		if [ "$is_production_org" = "false" ]; then
