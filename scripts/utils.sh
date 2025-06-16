@@ -327,15 +327,17 @@ find_folder_name_by_metadata_type(){
 # Methods to manage files for deploy
 ## remove_unsupported_setting_for_lightning_experience
 remove_unsupported_setting_for_lightning_experience(){
-	echo -ne "- Removing ${RBlue}unsupported setting${NC} for lightning experience... "
-	xml ed -L -N x="$xml_namespace" -d "//*/x:enableInAppLearning" "${project_directory}settings/LightningExperience.settings-meta.xml"
-	echo "Done."
+	if [ -d "${project_directory}settings/" ]; then
+		echo -ne "- Removing ${RBlue}unsupported setting${NC} for lightning experience... "
+		xml ed -L -N x="$xml_namespace" -d "//*/x:enableInAppLearning" "${project_directory}settings/LightningExperience.settings-meta.xml"
+		echo "Done."
+	fi
 }
 
 ## remove_components_on_dashboards
 remove_components_on_dashboards(){
-	if [[ $(yq eval '.dashboards // "null"' "$config_file") != "null" ]]; then
-		echo -ne "- Removing ${RBlue}untracked reports${NC} on dashboards... "
+	if [[ -d "${project_directory}dashboards/" && $(yq eval '.dashboards // "null"' "$config_file") != "null" ]]; then
+		echo -ne "- Removing ${RBlue}components${NC} on dashboards... "
 		while IFS= read -r dashboard; do
 			xml ed -L -N x="$xml_namespace" -d "//*/x:dashboardGridComponents" "${project_directory}dashboards/$dashboard.dashboard-meta.xml"
 		done < <(yq eval '.dashboards[]' "$config_file")
@@ -359,29 +361,35 @@ remove_controlling_field_on_picklists(){
 
 ## remove_consumer_key_on_each_connected_app
 remove_consumer_key_on_each_connected_app(){
-	echo -ne "- Removing ${RBlue}consumer key${NC} on connected apps... "
-	for filename in ${project_directory}connectedApps/*.connectedApp-meta.xml; do
-		xml ed -L -N x="$xml_namespace" -d "//*/x:consumerKey" "$filename"
-	done
-	echo "Done."
+	if [ -d "${project_directory}connectedApps/" ]; then
+		echo -ne "- Removing ${RBlue}consumer key${NC} on connected apps... "
+		for filename in ${project_directory}connectedApps/*.connectedApp-meta.xml; do
+			xml ed -L -N x="$xml_namespace" -d "//*/x:consumerKey" "$filename"
+		done
+		echo "Done."
+	fi
 }
 
 ## remove_domain_on_each_site
 remove_domain_on_each_site(){
-	echo -ne "- Removing ${RBlue}custom domain${NC} on sites... "
-	for filename in ${project_directory}sites/*.site-meta.xml; do
-		xml ed -L -N x="$xml_namespace" -d "//*/x:customWebAddresses" "$filename"
-	done
-	echo "Done."
+	if [ -d "${project_directory}sites/" ]; then
+		echo -ne "- Removing ${RBlue}custom domain${NC} on sites... "
+		for filename in ${project_directory}sites/*.site-meta.xml; do
+			xml ed -L -N x="$xml_namespace" -d "//*/x:customWebAddresses" "$filename"
+		done
+		echo "Done."
+	fi
 }
 
 ## remove_users_from_queues
 remove_users_from_queues(){
-	echo -ne "- Removing ${RBlue}users${NC} from queues... "
-	for filename in ${project_directory}queues/*.queue-meta.xml; do
-		xml ed -L -N x="$xml_namespace" -d "//*/x:users" "$filename"
-	done
-	echo "Done."
+	if [ -d "${project_directory}queues/" ]; then
+		echo -ne "- Removing ${RBlue}users${NC} from queues... "
+		for filename in ${project_directory}queues/*.queue-meta.xml; do
+			xml ed -L -N x="$xml_namespace" -d "//*/x:users" "$filename"
+		done
+		echo "Done."
+	fi
 }
 
 ## replace_sender_email_in_case_autoresponse_rule
