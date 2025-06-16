@@ -99,7 +99,7 @@ global inherited sharing class PermissionSetAttributionHelper{
 
 	private List<String> retrievePermissionSetsToAssign(User user){
 		List<String> permissionSetsToAssign = new List<String>();
-		String profileName = user.Profile.Name == ProfileConstants.SYS_ADMIN_USER ? 'System Administrator' : user.Profile.Name;
+		String profileName = user.Profile.Name.equalsIgnoreCase(ProfileConstants.SYS_ADMIN_USER) ? 'System Administrator' : user.Profile.Name;
 		if(permissionSetsByProfileName.containsKey(profileName))
 			permissionSetsToAssign.addAll(permissionSetsByProfileName.get(profileName));
 		for(String checkboxField : permissionSetsByCheckbox.keySet()){
