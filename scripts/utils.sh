@@ -557,9 +557,6 @@ create_scratch_org(){
 
 		echo -e "\nSetting ${RBlue}password${NC} for user..."
 		sf org generate password --complexity 3 --length 16 --target-org $org_alias
-
-		echo # Attempting to change org email deliverability to System
-		sf deliverability access --level System --user $org_alias
 	fi
 }
 
