@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <LightningComponentBundle xmlns="urn:metadata.tooling.soap.sforce.com" fqn="fileUploader">
-    <apiVersion>63.0</apiVersion>
+    <apiVersion>64.0</apiVersion>
     <isExposed>true</isExposed>
     <masterLabel>Files related list</masterLabel>
     <description>Display the files related list, allowing user to define a file type at upload.</description>

@@ -1,6 +1,6 @@
 private void insertOrgWideEmailAddress(){
 	HttpRequest request = new HttpRequest();
-	request.setEndpoint(System.Url.getOrgDomainUrl().toExternalForm() + '/services/Soap/c/62.0/' + UserInfo.getOrganizationId());
+	request.setEndpoint(System.Url.getOrgDomainUrl().toExternalForm() + '/services/Soap/c/64.0/' + UserInfo.getOrganizationId());
 	request.setMethod('POST');
 	request.setHeader('Content-Type', 'text/xml;charset=UTF-8');
 	request.setHeader('SOAPAction', '""');
