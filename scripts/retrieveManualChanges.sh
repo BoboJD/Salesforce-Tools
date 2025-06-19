@@ -272,26 +272,28 @@ retrieve_profiles(){
 }
 
 remove_unnecessary_permissions_in_profiles(){
-	echo -ne "Removing unnecessary permissions... "
-	for profile in ${project_directory}profiles/*.profile-meta.xml; do
-		if [[ $(yq eval '.unused_standard_layouts // "null"' "$config_file") != "null" ]]; then
-			while IFS= read -r unused_layout; do
-				xml ed -L -N x="$xml_namespace" -d "//x:layoutAssignments[starts-with(x:layout, \"${unused_layout}-\")]" "$profile"
-			done < <(yq eval '.unused_standard_layouts[]' "$config_file")
-		fi
-		if [[ $(yq eval '.user_permissions_to_delete // "null"' "$config_file") != "null" ]]; then
-			while IFS= read -r user_permission_name; do
-				xml ed -L -N x="$xml_namespace" -d "//x:userPermissions[x:name = \"$user_permission_name\"]" "$profile"
-			done < <(yq eval '.user_permissions_to_delete[]' "$config_file")
-		fi
-		if [[ $(yq eval '.unnecessary_permissions_to_delete // "null"' "$config_file") != "null" ]]; then
-			while IFS= read -r unnecessary_permission; do
-				xml ed -L -N x="$xml_namespace" -d "//*/x:$unnecessary_permission" "$profile"
-			done < <(yq eval '.unnecessary_permissions_to_delete[]' "$config_file")
-		fi
-		indent "$profile"
-	done
-	echo "Done."
+	if [[ $(yq eval '.profile_settings // "null"' "$config_file") != "null" ]]; then
+		echo -ne "Removing unnecessary permissions... "
+		for profile in ${project_directory}profiles/*.profile-meta.xml; do
+			if [[ $(yq eval '.profile_settings.unused_standard_layouts // "null"' "$config_file") != "null" ]]; then
+				while IFS= read -r unused_layout; do
+					xml ed -L -N x="$xml_namespace" -d "//x:layoutAssignments[starts-with(x:layout, \"${unused_layout}-\")]" "$profile"
+				done < <(yq eval '.profile_settings.unused_standard_layouts[]' "$config_file")
+			fi
+			if [[ $(yq eval '.profile_settings.user_permissions_to_delete // "null"' "$config_file") != "null" ]]; then
+				while IFS= read -r user_permission_name; do
+					xml ed -L -N x="$xml_namespace" -d "//x:userPermissions[x:name = \"$user_permission_name\"]" "$profile"
+				done < <(yq eval '.profile_settings.user_permissions_to_delete[]' "$config_file")
+			fi
+			if [[ $(yq eval '.profile_settings.unnecessary_permissions_to_delete // "null"' "$config_file") != "null" ]]; then
+				while IFS= read -r unnecessary_permission; do
+					xml ed -L -N x="$xml_namespace" -d "//*/x:$unnecessary_permission" "$profile"
+				done < <(yq eval '.profile_settings.unnecessary_permissions_to_delete[]' "$config_file")
+			fi
+			indent "$profile"
+		done
+		echo "Done."
+	fi
 }
 
 remove_ignored_files(){
