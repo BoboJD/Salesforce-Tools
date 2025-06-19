@@ -3,7 +3,7 @@
 
 # Project settings
 project:
-  directory: "force-app/main/default/"
+  # directory: "force-app/main/default/"
   github_repository_url: "https://github.com/BoboJD/Salesforce-Tools"
   # archive_logs_folder: "\\\\NAS\\Archive\\Log__c"
 

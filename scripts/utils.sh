@@ -2,10 +2,14 @@
 SECONDS=0
 . "$SCRIPT_DIR/colors.sh"
 
-# Load configuration
+# Set default properties
 config_file="./config/salesforce-tools-config.yml"
 xml_namespace="http://soap.sforce.com/2006/04/metadata"
-project_directory=$(yq eval '.project.directory' "$config_file")
+project_path=$(jq -r '.packageDirectories[0].path // "force-app"' sfdx-project.json)
+project_directory="$project_path/main/default/"
+if [[ $(yq eval '.project.directory // "null"' "$config_file") != "null" ]]; then
+	project_directory=$(yq eval '.project.directory' "$config_file")
+fi
 
 # Common methods
 ## error_exit
