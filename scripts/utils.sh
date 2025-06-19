@@ -340,11 +340,11 @@ remove_unsupported_setting_for_lightning_experience(){
 
 ## remove_components_on_dashboards
 remove_components_on_dashboards(){
-	if [[ -d "${project_directory}dashboards/" && $(yq eval '.dashboards // "null"' "$config_file") != "null" ]]; then
+	if [[ -d "${project_directory}dashboards/" ]]; then
 		echo -ne "- Removing ${RBlue}components${NC} on dashboards... "
-		while IFS= read -r dashboard; do
-			xml ed -L -N x="$xml_namespace" -d "//*/x:dashboardGridComponents" "${project_directory}dashboards/$dashboard.dashboard-meta.xml"
-		done < <(yq eval '.dashboards[]' "$config_file")
+		while IFS= read -r dashboard_file; do
+			xml ed -L -N x="$xml_namespace" -d "//*/x:dashboardGridComponents" "$dashboard_file"
+		done < <(find "${project_directory}dashboards/" -type f -name "*.dashboard-meta.xml")
 		echo "Done."
 	fi
 }

@@ -50,10 +50,6 @@ translation_settings:
 #     check_npm_packages_update: true
 #   always_retrieve_development: true
 
-# Dashboards to deploy
-# dashboards:
-#   - "MyFolder/MyDashboardIdXCxAtxGYiMIeSHXlPkmFcBzPWUTdgR"
-
 # Picklists with controlling field deploy issues
 # controlling_picklists_with_deploy_issue:
 #   - "Opportunity.SObjectFieldApiName__c"
