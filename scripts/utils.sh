@@ -4,7 +4,7 @@ SECONDS=0
 
 # Load configuration
 config_file="./config/salesforce-tools-config.yml"
-xml_namespace=$(yq eval '.salesforce_settings.xml_namespace' "$config_file")
+xml_namespace="http://soap.sforce.com/2006/04/metadata"
 project_directory=$(yq eval '.project.directory' "$config_file")
 
 # Common methods
