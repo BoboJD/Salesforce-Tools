@@ -605,7 +605,7 @@ install_packages(){
 			fi
 
 			if $should_install; then
-				echo "Latest version not installed, starting installation..."
+				echo -ne "Latest version not installed, starting installation..."
 				package_installation_result=$(sf package install -p "$package_id" -w 60 -s AllUsers -r --target-org "$org_alias" --json 2>/dev/null)
 				package_installation_status=$(echo "$package_installation_result" | jq -r '.status')
 				if [ "$package_installation_status" -eq 0 ]; then

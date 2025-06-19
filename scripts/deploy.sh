@@ -55,8 +55,8 @@ main(){
 	fi
 	check_current_org_type
 	if [ "$is_production_org" = "false" ]; then
-		edit_files_that_fail_deployment
 		install_packages $(get_org_alias)
+		edit_files_that_fail_deployment
 	fi
 	trap ctrl_c SIGINT
 	deploy_files_into_current_org
@@ -421,12 +421,13 @@ restore_edited_files(){
 }
 
 store_last_deployed_commit_hash(){
-	echo -e "\nAdding last deployed commit hash to .preprod/config.json..."
-	yes y | git fetch origin preprod > /dev/null
-	yes y | git pull origin preprod > /dev/null
-	yes y | git add $config_file > /dev/null
-	yes y | git commit -m "Updated last commit hash deployed in preprod" > /dev/null
-	yes y | git push origin preprod > /dev/null
+	echo -ne "\nAdding last deployed commit hash to $config_file... "
+	git fetch origin preprod > /dev/null 2>&1
+	git pull origin preprod > /dev/null 2>&1
+	git add "$config_file" > /dev/null 2>&1
+	git commit -m "Updated last commit hash deployed in preprod" > /dev/null 2>&1 || true
+	git push origin preprod > /dev/null 2>&1
+	echo "Done."
 }
 
 reset_tracking_in_scratch_org(){
