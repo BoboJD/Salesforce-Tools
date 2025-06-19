@@ -510,7 +510,12 @@ delete_remote_branches_merged_into_master(){
 ## checking_salesforce_cli_configuration
 checking_salesforce_cli_configuration(){
 	echo -e "\nChecking ${RGreen}Salesforce CLI${NC} configuration..."
-	local sf_config=$(sf config list --json)
+	local sf_config=$(sf config list --json 2>/dev/null)
+
+	if [[ $? -ne 0 ]]; then
+        local error_message=$(echo "$sf_config" | jq -r '.message // "Unknown error"')
+        error_exit "Error: $error_message"
+    fi
 
 	local devhub_name=$(yq eval '.org_settings.devhub_name' "$config_file")
 	local devhub=$(echo "$sf_config" | jq -e ".result[] | select(.name == \"target-dev-hub\" and .value == \"$devhub_name\")")
