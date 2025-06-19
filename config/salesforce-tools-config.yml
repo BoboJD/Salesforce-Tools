@@ -19,6 +19,8 @@ org_settings:
   # experience_cloud_used: true
   # org_shape_enable: true
   # profile_used: true
+  # packages:
+  #   - "Salesforce Tools"
 
 # Test settings
 test_settings:
@@ -51,12 +53,6 @@ translation_settings:
 #     check_global_npm_packages_update: true
 #     check_npm_packages_update: true
 #   always_retrieve_development: true
-
-# Scratch org creation settings
-# scratch_org_settings:
-#   appexchange:
-#     appexchange_id_by_name:
-#       "Salesforce Tools": "04tJ6000000LPNdIAO"
 
 # Dashboards to deploy
 # dashboards:

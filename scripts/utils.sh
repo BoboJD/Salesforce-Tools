@@ -568,42 +568,50 @@ create_scratch_org(){
 	fi
 }
 
-## install_managed_packages
-install_managed_packages(){
+## install_packages
+install_packages(){
 	local org_alias=$1
-	if [[ $(yq eval '.scratch_org_settings.appexchange.appexchange_id_by_name // "null"' "$config_file") != "null" ]]; then
-		echo -e "\nInstalling managed packages :"
-		installed_packages=$(sf package installed list --target-org $org_alias --json)
-		declare -A appexchange_id_by_name
-		parse_yaml_to_assoc_array "$config_file" '.scratch_org_settings.appexchange.appexchange_id_by_name' appexchange_id_by_name
-		while IFS= read -r appexchange_name; do
-			appexchange_id="${appexchange_id_by_name[$appexchange_name]}"
-			check_package_installation $org_alias "$appexchange_id" "$appexchange_name"
-		done < <(yq eval '.scratch_org_settings.appexchange.appexchange_id_by_name | keys | .[]' "$config_file")
-	fi
-}
+	if [[ $(yq eval '.org_settings.packages // "null"' "$config_file") != "null" ]]; then
+		echo -e "\nVerifying installation of packages :"
+		local devhub_name=$(yq eval '.org_settings.devhub_name' "$config_file")
+		installed_packages_in_devhub=$(sf package installed list --target-org $devhub_name --json 2>/dev/null)
+		installed_packages_in_org=$(sf package installed list --target-org $org_alias --json 2>/dev/null)
+		while IFS= read -r package; do
+			echo -ne "- ${RCyan}${package}${NC}... "
+			devhub_data=$(echo "$installed_packages_in_devhub" | jq -r --arg name "$package" '.result[] | select(.SubscriberPackageName == $name)')
+			devhub_version=$(echo "$devhub_data" | jq -r '.SubscriberPackageVersionNumber')
+			package_id=$(echo "$devhub_data" | jq -r '.SubscriberPackageVersionId')
 
-## check_package_installation
-check_package_installation(){
-	local org_alias=$1
-	local package_id=$2
-	local package_name=$3
+			if [[ -z "$devhub_version" || -z "$package_id" ]]; then
+				echo -e "${Red}Package not found in DevHub${NC}"
+				continue
+			fi
 
-	echo -ne "- Verifying installation of ${RCyan}${package_name}${NC} latest version... "
-	local package_installed=$(echo "$installed_packages" | jq ".result[] | select(.SubscriberPackageVersionId == \"$package_id\")")
+			org_version=$(echo "$installed_packages_in_org" | jq -r --arg name "$package" '.result[] | select(.SubscriberPackageName == $name) | .SubscriberPackageVersionNumber')
+			should_install=false
+			if [[ -z "$org_version" ]]; then
+				should_install=true
+			else
+				higher_version=$(printf "%s\n%s" "$devhub_version" "$org_version" | sort -V | tail -n1)
+				if [[ "$org_version" != "$higher_version" ]]; then
+					should_install=true
+				else
+					echo -e "${RYellow}Latest version already installed.${NC}"
+				fi
+			fi
 
-	if [ -n "$package_installed" ]; then
-		echo -e "${RYellow}Latest version already installed.${NC}"
-	else
-		echo "Latest version not installed, starting installation..."
-		local package_installation_result=$(sf package install -p "$package_id" -w 60 -s AllUsers -r --target-org $org_alias --json)
-		local package_installation_status=$(echo "$package_installation_result" | jq -r '.status')
-		if [ "$package_installation_status" -eq 0 ]; then
-			echo -e "${RGreen}Successfully installed ${package_name} package.${NC}"
-		else
-			local package_installation_message=$(echo "$package_installation_result" | jq -r '.message')
-			error_exit "Package installation failed : ${package_installation_message}"
-		fi
+			if $should_install; then
+				echo "Latest version not installed, starting installation..."
+				package_installation_result=$(sf package install -p "$package_id" -w 60 -s AllUsers -r --target-org "$org_alias" --json 2>/dev/null)
+				package_installation_status=$(echo "$package_installation_result" | jq -r '.status')
+				if [ "$package_installation_status" -eq 0 ]; then
+					echo -e "${Green}Successfully installed ${package}.${NC}"
+				else
+					package_installation_message=$(echo "$package_installation_result" | jq -r '.message')
+					error_exit "Package installation failed: ${package_installation_message}"
+				fi
+			fi
+		done < <(yq eval '.org_settings.packages[]' "$config_file")
 	fi
 }
 
