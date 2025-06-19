@@ -28,7 +28,7 @@ main(){
 	check_org_type
 
 	if [[ "$is_production_org" = "true" && ( -z "$option" || "$option" = "-s" || "$option" = "--subtree" ) ]]; then
-		updating_salesforce_tools_subtree
+		updating_salesforce_tools
 		if [ -z "$option" ]; then
 			update_npm_packages
 			if [[ $(yq eval '.data_backup // "null"' "$config_file") != "null" ]]; then
@@ -38,7 +38,6 @@ main(){
 				recreate_org_shape
 			fi
 		fi
-		check_installed_managed_packages_version
 	fi
 
 	if [[ ("$is_production_org" = "true" || $(yq eval '.features.always_retrieve_development // "null"' "$config_file") = "true") && ( -z "$option" || "$option" = "-od" || "$option" = "----only-development" ) ]]; then
@@ -77,19 +76,70 @@ main(){
 	display_duration_of_script
 }
 
-updating_salesforce_tools_subtree(){
-	echo -ne "\nVerifying if ${RBlue}Salesforce Tools${NC} has new commits... "
-	local PREFIX="tlz"
-	local REPO="git@github.com:BoboJD/Salesforce-Tools.git"
-	local BRANCH="master"
-	git fetch $REPO $BRANCH > /dev/null 2>&1
-	git subtree pull --prefix="$PREFIX" "$REPO" "$BRANCH" -m "Pulled Salesforce Tools new commits" --squash > /dev/null 2>&1
+check_org_type(){
+	echo -ne "\nChecking org type... "
+	is_production_org=$(check_production_org)
+	is_scratch_org=$(check_scratch_org)
 	echo "Done."
 }
 
-retrieve_development(){
-	echo -e "\nRetrieving ${RBlue}development${NC}..."
-	sf project retrieve start -m ApexClass ApexTrigger ApexPage ApexComponent LightningComponentBundle AuraDefinitionBundle --ignore-conflicts > /dev/null
+updating_salesforce_tools() {
+	echo -ne "\nPulling ${RBlue}Salesforce Tools${NC} new commits... "
+	git fetch "git@github.com:BoboJD/Salesforce-Tools.git" "master" > /dev/null 2>&1
+	git subtree pull --prefix="tlz" "git@github.com:BoboJD/Salesforce-Tools.git" "master" -m "Pulled Salesforce Tools new commits" --squash > /dev/null 2>&1
+	echo "Done."
+
+	if [[ $(yq eval '.org_settings.packages // "null"' "$config_file") != "null" ]]; then
+		if yq eval '.org_settings.packages[]' "$config_file" | grep -Fxq "Salesforce Tools"; then
+			check_installation_of_salesforce_tools
+		fi
+	fi
+}
+
+check_installation_of_salesforce_tools() {
+	echo -ne "Verifying installed version of ${RCyan}Salesforce Tools${NC}... "
+	local installed_packages=$(sf package installed list --json 2>/dev/null)
+	local installed_package_id=$(echo "$installed_packages" | jq -r '.result[] | select(.SubscriberPackageName == "Salesforce Tools") | .SubscriberPackageVersionId')
+	if [[ -z "$installed_package_id" || "$installed_package_id" == "null" ]]; then
+		echo -e "${RYellow}Not installed.${NC}"
+		installed_package_id=""
+	fi
+
+	local package_id=$(jq -r '.packageAliases | to_entries | map(select(.key | startswith("Salesforce Tools"))) | last | .value' tlz/sfdx-project.json)
+	if [[ -z "$package_id" || "$package_id" == "null" ]]; then
+		error_exit "No valid package ID found in tlz/sfdx-project.json."
+	fi
+
+	if [[ "$installed_package_id" == "$package_id" ]]; then
+		echo -e "${RYellow}Already up-to-date.${NC}"
+	else
+		echo "Latest version not installed, starting installation..."
+		local install_result=$(sf package install -p "$package_id" -w 60 -r --json 2>/dev/null)
+		local install_status=$(echo "$install_result" | jq -r '.status')
+		if [[ "$install_status" -eq 0 ]]; then
+			sf project deploy start -m "Layout:tlz__OrgSetting__mdt-tlz__OrgSetting Layout" "Layout:tlz__Setting__c-tlz__Setting Layout" --ignore-conflicts --ignore-warnings --json > /dev/null
+			sed -i '/^$/s// #BLANK_LINE/' "$config_file"
+			yq eval -i ".org_settings.packages.[\"Salesforce Tools\"] = \"$package_id\"" "$config_file"
+			sed -i "s/ *#BLANK_LINE//g" "$config_file"
+			echo -e "${RGreen}Package version updated.${NC}"
+		else
+			local msg=$(echo "$install_result" | jq -r '.message // .result.errors[]?.message // "Unknown error"')
+			error_exit "Package installation failed: $msg"
+		fi
+	fi
+}
+
+update_npm_packages(){
+	if [[ $(yq eval '.features.auto_update_settings.check_npm_packages_update // "null"' "$config_file") = "true" ]]; then
+		echo -ne "\nChecking if ${RBlue}npm packages${NC} have update... "
+		ncu --upgrade --silent
+		if git diff --quiet package.json; then
+			echo -e "${RYellow}All dependencies are up to date.${NC}"
+		else
+			echo "Updates detected in package.json, starting installation..."
+			npm install --force --loglevel=error
+		fi
+	fi
 }
 
 create_backup_of_data(){
@@ -105,89 +155,9 @@ recreate_org_shape(){
 	sf org create shape -o $devhub_name
 }
 
-check_installed_managed_packages_version(){
-	if [[ $(yq eval '.scratch_org_settings.appexchange.appexchange_id_by_name // "null"' "$config_file") != "null" ]]; then
-		echo -e "\nChecking if ${RBlue}managed packages${NC} have been updated :"
-		declare -A appexchange_id_by_name
-		parse_yaml_to_assoc_array "$config_file" '.scratch_org_settings.appexchange.appexchange_id_by_name' appexchange_id_by_name
-		local installed_packages=$(sf package installed list --json)
-		while IFS= read -r appexchange_name; do
-			local appexchange_id="${appexchange_id_by_name[$appexchange_name]}"
-			if [ "$appexchange_name" = "Salesforce Tools" ]; then
-				check_update_of_salesforce_tools "$appexchange_id"
-			else
-				check_package_version "$appexchange_id" "$appexchange_name"
-			fi
-		done < <(yq eval '.scratch_org_settings.appexchange.appexchange_id_by_name | keys | .[]' "$config_file")
-	fi
-}
-
-check_update_of_salesforce_tools(){
-	echo -ne "- Verifying last version of ${RCyan}Salesforce Tools${NC}... "
-	local appexchange_id=$1
-	local package_id=$(jq -r '.packageAliases | to_entries | map(select(.key | startswith("Salesforce Tools"))) | last | .value' tlz/sfdx-project.json)
-	if [[ -n "$package_id" ]]; then
-		if [ "$appexchange_id" = "$package_id" ]; then
-			echo -e "${RYellow}Already up-to-date.${NC}"
-		else
-			echo "Latest version not installed, starting installation..."
-			local package_installation_result=$(sf package install -p "$package_id" -w 60 -r --json)
-			local package_installation_status=$(echo "$package_installation_result" | jq -r '.status')
-			if [ "$package_installation_status" -eq 0 ]; then
-				sf project deploy start -m "Layout:tlz__OrgSetting__mdt-tlz__OrgSetting Layout" "Layout:tlz__Setting__c-tlz__Setting Layout" --ignore-conflicts --ignore-warnings --json > /dev/null
-				sed -i '/^$/s// #BLANK_LINE/' "$config_file"
-				yq eval -i ".scratch_org_settings.appexchange.appexchange_id_by_name.[\"Salesforce Tools\"] = \"$package_id\"" "$config_file"
-				sed -i "s/ *#BLANK_LINE//g" "$config_file"
-				echo -e "${RGreen}Package version updated.${NC}"
-			else
-				error_exit "Package installation failed."
-			fi
-		fi
-	else
-		error_exit "No valid package ID found for Salesforce Tools."
-	fi
-}
-
-check_package_version(){
-	local package_id=$1
-	local package_name=$2
-
-	echo -ne "- Verifying package version id of ${RCyan}${package_name}${NC}... "
-	local package_installed=$(echo "$installed_packages" | jq ".result[] | select(.SubscriberPackageVersionId == \"$package_id\")")
-
-	if [ -n "$package_installed" ]; then
-		echo -e "${RYellow}Already up-to-date.${NC}"
-	else
-		local new_package_id=$(echo "$installed_packages" | jq -r ".result[] | select(.SubscriberPackageName == \"$package_name\") | .SubscriberPackageVersionId")
-		if [ -n "$new_package_id" ]; then
-			sed -i '/^$/s// #BLANK_LINE/' "$config_file"
-			yq eval -i ".scratch_org_settings.appexchange.appexchange_id_by_name.[\"$package_name\"] = \"$new_package_id\"" "$config_file"
-			sed -i "s/ *#BLANK_LINE//g" "$config_file"
-			echo -e "${RGreen}Package version id updated.${NC}"
-		else
-			error_exit "Package not found"
-		fi
-	fi
-}
-
-check_org_type(){
-	echo -ne "\nChecking org type... "
-	is_production_org=$(check_production_org)
-	is_scratch_org=$(check_scratch_org)
-	echo "Done."
-}
-
-update_npm_packages(){
-	if [[ $(yq eval '.features.auto_update_settings.check_npm_packages_update // "null"' "$config_file") = "true" ]]; then
-		echo -ne "\nChecking if ${RBlue}npm packages${NC} have update... "
-		ncu --upgrade --silent
-		if git diff --quiet package.json; then
-			echo -e "${RYellow}All dependencies are up to date.${NC}"
-		else
-			echo "Updates detected in package.json, starting installation..."
-			npm install --force --loglevel=error
-		fi
-	fi
+retrieve_development(){
+	echo -e "\nRetrieving ${RBlue}development${NC}..."
+	sf project retrieve start -m ApexClass ApexTrigger ApexPage ApexComponent LightningComponentBundle AuraDefinitionBundle --ignore-conflicts > /dev/null
 }
 
 retrieve_configuration(){
