@@ -279,7 +279,7 @@ remove_unnecessary_permissions_in_profiles(){
 		while IFS= read -r layout_assignment; do
 			base_layout=$(echo "$layout_assignment" | cut -d'-' -f1)
 			if ! echo "$existing_layouts" | grep -qx "$base_layout"; then
-				xml ed -L -N x="$xml_namespace" -d "//x:layoutAssignments[x:layout = \"$layout_assignment\"]" "$profile"
+				xml ed -L -N x="$xml_namespace" -d "//x:layoutAssignments[starts-with(x:layout, \"${base_layout}-\")]" "$profile"
 			fi
 		done < <(xml sel -N x="$xml_namespace" -t -m "//x:layoutAssignments/x:layout" -v . -n "$profile")
 		if [[ $(yq eval '.profile_settings.user_permissions_to_delete // "null"' "$config_file") != "null" ]]; then
