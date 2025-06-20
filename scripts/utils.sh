@@ -481,6 +481,25 @@ add_sobject_to_permissionset(){
 	xml ed -L -N x="$xml_namespace" -r "//*/x:temporaryNode" -v "objectPermissions" "$filename"
 }
 
+## remove_profile_search_layouts_in_sobjects
+remove_profile_search_layouts_in_sobjects(){
+	echo -ne "- Removing ${RBlue}profile search layouts${NC} from sobjects... "
+	for object_file in $(find "${project_directory}objects/" -type f -name "*object-meta.xml"); do
+		xml ed -L -N x="$xml_namespace" -d "//*/x:profileSearchLayouts" "$object_file"
+	done
+	echo "Done."
+}
+
+## remove_surveys_from_flexipages
+remove_surveys_from_flexipages(){
+	echo -ne "- Removing ${RBlue}surveys${NC} from flexipages... "
+	for flexipage in $(find "${project_directory}flexipages/" -type f -name "*.flexipage-meta.xml"); do
+		xml ed -L -N x="$xml_namespace" -d "//x:itemInstances/x:componentInstance[x:componentName = \"survey:survey\"]" "$flexipage"
+		xml ed -L -N x="$xml_namespace" -d "//x:itemInstances/x:componentInstance[x:componentName = 'survey:survey']" -d "//x:itemInstances[not(node())]" "$flexipage"
+	done
+	echo "Done."
+}
+
 # Methods to help manage git branch
 ## merge_prod_release_into_master
 merge_prod_release_into_master(){
