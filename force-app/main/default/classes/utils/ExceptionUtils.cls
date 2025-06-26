@@ -20,6 +20,10 @@ global class ExceptionUtils{
 		return isRestrictedPicklist(e) && e.getMessage().contains(SObjectFieldUtils.getFieldApiName(picklist));
 	}
 
+	global static Boolean isUnableToLockRow(Exception e){
+		return e.getMessage().contains(ExceptionConstants.UNABLE_TO_LOCK_ROW);
+	}
+
 	global static Boolean isUnknown(Exception e){
 		return e.getMessage().contains(ExceptionConstants.UNKNOWN);
 	}

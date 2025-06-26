@@ -89,6 +89,24 @@ private class ExceptionUtilsTest{
 	}
 
 	@IsTest
+	static void isUnableToLockRowWithRestrictedPicklistExceptionShouldReturnFalse(){
+		Test.startTest();
+		Boolean isUnableToLockRow = ExceptionUtils.isUnableToLockRow(new CustomException('toto'+ExceptionConstants.INVALID_OR_NULL_FOR_RESTRICTED_PICKLIST+': tutu'));
+		Test.stopTest();
+
+		Assert.isFalse(isUnableToLockRow);
+	}
+
+	@IsTest
+	static void isUnableToLockRowWithUnableToLockRowExceptionShouldReturnTrue(){
+		Test.startTest();
+		Boolean isUnableToLockRow = ExceptionUtils.isUnableToLockRow(new CustomException('toto'+ExceptionConstants.UNABLE_TO_LOCK_ROW+': tutu'));
+		Test.stopTest();
+
+		Assert.isTrue(isUnableToLockRow);
+	}
+
+	@IsTest
 	static void isUnknownWithRestrictedPicklistExceptionShouldReturnFalse(){
 		Test.startTest();
 		Boolean isUnknown = ExceptionUtils.isUnknown(new CustomException('toto'+ExceptionConstants.INVALID_OR_NULL_FOR_RESTRICTED_PICKLIST+': tutu'));
