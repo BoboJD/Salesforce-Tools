@@ -50,9 +50,14 @@ private class MessagingServiceTest{
 	}
 
 	@IsTest
-	static void setOrgWideEmailAddressShouldModifyOrgWideEmailAddressOnLastEmailAdded(){
+	static void setOrgWideEmailAddressInProductionShouldModifyOrgWideEmailAddressOnLastEmailAdded(){
 		fflib_ApexMocks mocks = new fflib_ApexMocks();
+		tlz_IOrganizationsSelector organizationsSelectorMock = new Mocks.tlz_OrganizationsSelector(mocks);
 		tlz_IOrgWideEmailAddressesSelector orgWideEmailAddressesSelectorMock = new Mocks.tlz_OrgWideEmailAddressesSelector(mocks);
+
+		Organization organization = (Organization)TestUtils.setReadableFields(new Organization(), new Map<SObjectField, Object>{
+			Schema.Organization.IsSandbox => false
+		});
 
 		OrgWideEmailAddress orgWideEmailAddress = new OrgWideEmailAddress(
 			Id = fflib_IDGenerator.generate(Schema.OrgWideEmailAddress.SObjectType),
@@ -60,10 +65,13 @@ private class MessagingServiceTest{
 		);
 
 		mocks.startStubbing();
+		mocks.when(organizationsSelectorMock.sObjectType()).thenReturn(Schema.Organization.SObjectType);
+		mocks.when(organizationsSelectorMock.selectAll()).thenReturn(new List<Organization>{organization});
 		mocks.when(orgWideEmailAddressesSelectorMock.sObjectType()).thenReturn(Schema.OrgWideEmailAddress.SObjectType);
 		mocks.when(orgWideEmailAddressesSelectorMock.selectByAddress(orgWideEmailAddress.Address)).thenReturn(orgWideEmailAddress);
 		mocks.stopStubbing();
 
+		Application.Selector.setMock(organizationsSelectorMock);
 		Application.Selector.setMock(orgWideEmailAddressesSelectorMock);
 
 		MessagingService.newSingleEmailMessage();
@@ -72,13 +80,65 @@ private class MessagingServiceTest{
 		MessagingService.setOrgWideEmailAddressId(orgWideEmailAddress.Address);
 		Test.stopTest();
 
+		((tlz_IOrganizationsSelector)mocks.verify(organizationsSelectorMock)).selectAll();
 		((tlz_IOrgWideEmailAddressesSelector)mocks.verify(orgWideEmailAddressesSelectorMock)).selectByAddress(orgWideEmailAddress.Address);
 
 		Assert.equals(orgWideEmailAddress.Id, MessagingServiceImpl.emails[0].getOrgWideEmailAddressId());
 	}
 
 	@IsTest
+	static void setOrgWideEmailAddressInSandboxShouldModifyOrgWideEmailAddressOnLastEmailAdded(){
+		fflib_ApexMocks mocks = new fflib_ApexMocks();
+		tlz_IOrganizationsSelector organizationsSelectorMock = new Mocks.tlz_OrganizationsSelector(mocks);
+		tlz_IOrgWideEmailAddressesSelector orgWideEmailAddressesSelectorMock = new Mocks.tlz_OrgWideEmailAddressesSelector(mocks);
+
+		Organization organization = (Organization)TestUtils.setReadableFields(new Organization(), new Map<SObjectField, Object>{
+			Schema.Organization.IsSandbox => true
+		});
+
+		OrgWideEmailAddress orgWideEmailAddress = new OrgWideEmailAddress(
+			Id = fflib_IDGenerator.generate(Schema.OrgWideEmailAddress.SObjectType),
+			Address = 'toto@totot.fr'
+		);
+
+		mocks.startStubbing();
+		mocks.when(organizationsSelectorMock.sObjectType()).thenReturn(Schema.Organization.SObjectType);
+		mocks.when(organizationsSelectorMock.selectAll()).thenReturn(new List<Organization>{organization});
+		mocks.when(orgWideEmailAddressesSelectorMock.sObjectType()).thenReturn(Schema.OrgWideEmailAddress.SObjectType);
+		mocks.when(orgWideEmailAddressesSelectorMock.selectByAddress(orgWideEmailAddress.Address)).thenReturn(orgWideEmailAddress);
+		mocks.stopStubbing();
+
+		Application.Selector.setMock(organizationsSelectorMock);
+		Application.Selector.setMock(orgWideEmailAddressesSelectorMock);
+
+		MessagingService.newSingleEmailMessage();
+
+		Test.startTest();
+		MessagingService.setOrgWideEmailAddressId(orgWideEmailAddress.Address);
+		Test.stopTest();
+
+		((tlz_IOrganizationsSelector)mocks.verify(organizationsSelectorMock)).selectAll();
+		((tlz_IOrgWideEmailAddressesSelector)mocks.verify(orgWideEmailAddressesSelectorMock, 0)).selectByAddress(orgWideEmailAddress.Address);
+
+		Assert.isNull(MessagingServiceImpl.emails[0].getOrgWideEmailAddressId());
+	}
+
+	@IsTest
 	static void setOrgWideEmailAddressWithAddressNotFoundShouldThrowError(){
+		fflib_ApexMocks mocks = new fflib_ApexMocks();
+		tlz_IOrganizationsSelector organizationsSelectorMock = new Mocks.tlz_OrganizationsSelector(mocks);
+
+		Organization organization = (Organization)TestUtils.setReadableFields(new Organization(), new Map<SObjectField, Object>{
+			Schema.Organization.IsSandbox => false
+		});
+
+		mocks.startStubbing();
+		mocks.when(organizationsSelectorMock.sObjectType()).thenReturn(Schema.Organization.SObjectType);
+		mocks.when(organizationsSelectorMock.selectAll()).thenReturn(new List<Organization>{organization});
+		mocks.stopStubbing();
+
+		Application.Selector.setMock(organizationsSelectorMock);
+
 		MessagingService.newSingleEmailMessage();
 
 		Test.startTest();
@@ -89,6 +149,8 @@ private class MessagingServiceTest{
 			errorMessage = e.getMessage();
 		}
 		Test.stopTest();
+
+		((tlz_IOrganizationsSelector)mocks.verify(organizationsSelectorMock)).selectAll();
 
 		Assert.messageContains(errorMessage, 'OrgWideEmailAddress "toto@totot.fr" not found.');
 	}

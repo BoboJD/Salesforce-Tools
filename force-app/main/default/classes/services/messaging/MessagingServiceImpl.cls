@@ -28,10 +28,13 @@ global inherited sharing class MessagingServiceImpl implements IMessagingService
 	}
 
 	global void setOrgWideEmailAddressId(String orgWideEmailAddress){
-		OrgWideEmailAddress emailAddress = tlz_OrgWideEmailAddressesSelector.newInstance().selectByAddress(orgWideEmailAddress);
-		if(emailAddress == null)
-			throw new MessagingException('OrgWideEmailAddress "'+orgWideEmailAddress+'" not found.');
-		lastEmail()?.setOrgWideEmailAddressId(emailAddress.Id);
+		List<Organization> orgs = tlz_OrganizationsSelector.newInstance().selectAll();
+		if(!orgs.isEmpty() && !orgs[0].IsSandbox){
+			OrgWideEmailAddress emailAddress = tlz_OrgWideEmailAddressesSelector.newInstance().selectByAddress(orgWideEmailAddress);
+			if(emailAddress == null)
+				throw new MessagingException('OrgWideEmailAddress "'+orgWideEmailAddress+'" not found.');
+			lastEmail()?.setOrgWideEmailAddressId(emailAddress.Id);
+		}
 	}
 
 	global void setToAddress(String toAddress){
