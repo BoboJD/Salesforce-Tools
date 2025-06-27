@@ -1,4 +1,5 @@
 global inherited sharing class tlz_OrganizationsSelector extends fflib_SObjectSelector implements tlz_IOrganizationsSelector{
+	static List<Organization> organizations;
 
 	global static tlz_IOrganizationsSelector newInstance(){
 		return (tlz_IOrganizationsSelector)Application.Selector.newInstance(Organization.SObjectType);
@@ -15,6 +16,8 @@ global inherited sharing class tlz_OrganizationsSelector extends fflib_SObjectSe
 	}
 
 	global List<Organization> selectAll(){
-		return Database.query(newQueryFactory(false, false, true).toSOQL());
+		if(organizations == null)
+			organizations = Database.query(newQueryFactory(false, false, true).toSOQL());
+		return organizations;
 	}
 }
