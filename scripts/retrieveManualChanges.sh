@@ -118,9 +118,6 @@ check_installation_of_salesforce_tools() {
 		local install_status=$(echo "$install_result" | jq -r '.status')
 		if [[ "$install_status" -eq 0 ]]; then
 			sf project deploy start -m "Layout:tlz__OrgSetting__mdt-tlz__OrgSetting Layout" "Layout:tlz__Setting__c-tlz__Setting Layout" --ignore-conflicts --ignore-warnings --json > /dev/null
-			sed -i '/^$/s// #BLANK_LINE/' "$config_file"
-			yq eval -i ".org_settings.packages.[\"Salesforce Tools\"] = \"$package_id\"" "$config_file"
-			sed -i "s/ *#BLANK_LINE//g" "$config_file"
 			echo -e "${RGreen}Package version updated.${NC}"
 		else
 			local msg=$(echo "$install_result" | jq -r '.message // .result.errors[]?.message // "Unknown error"')
