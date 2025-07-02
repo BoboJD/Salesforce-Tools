@@ -1,6 +1,6 @@
 @IsTest
 private class HttpFormBuilderTest{
-	
+
 	@IsTest
 	static void getContentTypeShouldNotReturnNull(){
 		Assert.isNotNull(HttpFormBuilder.getContentType());

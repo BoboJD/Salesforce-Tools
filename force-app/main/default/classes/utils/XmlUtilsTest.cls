@@ -4,7 +4,7 @@ private class XmlUtilsTest{
 	@IsTest
 	static void escapeIllegalCharactersShouldReplaceBadCharacter(){
 		String badCharacters = 'Test &"\'><';
-		
+
 		Test.startTest();
 		String escapedCharacters = XmlUtils.escapeIllegalCharacters(badCharacters);
 		Test.stopTest();

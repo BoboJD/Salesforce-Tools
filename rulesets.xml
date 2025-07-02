@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ruleset xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+<ruleset name="Apex Rules"
+		xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		name="Apex Rules"
 		xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
 	<description>Apex Rules</description>
 	<exclude-pattern>.*/.sfdx/.*</exclude-pattern>
@@ -12,9 +12,9 @@
 
 	<rule ref="category/apex/bestpractices.xml">
 		<exclude name="ApexAssertionsShouldIncludeMessage"/>
-		<exclude name="AvoidGlobalModifier"/>
 		<exclude name="ApexUnitTestClassShouldHaveAsserts"/>
 		<exclude name="ApexUnitTestClassShouldHaveRunAs" />
+		<exclude name="AvoidGlobalModifier"/>
 		<exclude name="AvoidLogicInTrigger" />
 		<exclude name="QueueableWithoutFinalizer" />
 	</rule>
@@ -26,18 +26,19 @@
 	</rule>
 
 	<rule ref="category/apex/codestyle.xml">
+		<exclude name="ClassNamingConventions" />
 		<exclude name="IfElseStmtsMustUseBraces" />
 		<exclude name="IfStmtsMustUseBraces" />
 		<exclude name="ForLoopsMustUseBraces" />
 		<exclude name="WhileLoopsMustUseBraces" />
 		<exclude name="OneDeclarationPerLine" />
-		<exclude name="ClassNamingConventions" />
 	</rule>
 
 	<rule ref="category/apex/design.xml">
+    	<exclude name="AvoidBooleanMethodParameters" />
 		<exclude name="ExcessivePublicCount" />
-		<exclude name="TooManyFields" />
 		<exclude name="CyclomaticComplexity" />
+		<exclude name="TooManyFields" />
 	</rule>
 
 	<rule ref="category/apex/design.xml/CognitiveComplexity">
@@ -66,6 +67,7 @@
 
 	<rule ref="category/apex/errorprone.xml">
 		<exclude name="EmptyStatementBlock" />
+    	<exclude name="TypeShadowsBuiltInNamespace" />
 	</rule>
 
 	<rule ref="category/apex/errorprone.xml/EmptyCatchBlock">

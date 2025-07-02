@@ -11,6 +11,8 @@ if echo "$CHANGED_FILES" | grep -q '^.*\/lwc\/.*\.js$'; then
 fi
 
 if echo "$CHANGED_FILES" | grep -q '^force-app/main/default/'; then
+  echo "Running REGEX..."
+  npm run regex
   echo "Running PMD..."
   npm run pmd
 fi

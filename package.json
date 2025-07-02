@@ -2,11 +2,12 @@
 	"name": "tlz",
 	"description": "Salesforce Tools",
 	"scripts": {
-		"lint": "npm run lint:aura && npm run lint:lwc && npm run pmd",
+		"lint": "npm run lint:aura && npm run lint:lwc && npm run pmd && npm run regex",
     	"lint:aura": "eslint **/aura/**/*.js --format=stylish",
 		"lint:lwc": "eslint **/lwc/**/*.js --format=stylish",
 		"pmd": "pmd check --dir force-app --rulesets ./rulesets.xml --cache .pmdCache --format text",
-		"prepare": "husky"
+		"prepare": "husky",
+    	"regex": "sf code-analyzer run --workspace force-app/main --rule-selector regex"
 	},
 	"repository": {
 		"type": "git",

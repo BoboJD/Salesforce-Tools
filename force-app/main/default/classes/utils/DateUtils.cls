@@ -1,4 +1,4 @@
-@SuppressWarnings('PMD.ExcessiveParameterList, PMD.CognitiveComplexity')
+@SuppressWarnings('PMD.ExcessiveParameterList,PMD.CognitiveComplexity')
 global inherited sharing class DateUtils{
 	global static Datetime nowDate;
 

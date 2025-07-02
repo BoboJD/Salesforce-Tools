@@ -1,0 +1,134 @@
+engines:
+  retire-js:
+    disable_engine: true
+
+  regex:
+    disable_engine: false
+    custom_rules:
+      "NoEqualsTrueUseIsTrue":
+        regex: /Assert\.equals\s*\(\s*true\s*,/gi
+        file_extensions: [".apex", ".cls", ".trigger"]
+        description: "Utiliser 'Assert.isTrue(...)' à la place de 'Assert.equals(true, ...)' dans le code Apex."
+        violation_message: "Remplacer 'Assert.equals(true, ...)' par 'Assert.isTrue(...)'."
+        severity: "Critical"
+        tags: ["BestPractice", "Testing"]
+      "NoEqualsFalseUseIsFalse":
+        regex: /Assert\.equals\s*\(\s*false\s*,/gi
+        file_extensions: [".apex", ".cls", ".trigger"]
+        description: "Utiliser 'Assert.isFalse(...)' à la place de 'Assert.equals(false, ...)' dans le code Apex."
+        violation_message: "Remplacer 'Assert.equals(false, ...)' par 'Assert.isFalse(...)'."
+        severity: "Critical"
+        tags: ["BestPractice", "Testing"]
+      "NoEqualsNullUseIsNull":
+        regex: /Assert\.equals\s*\(\s*null\s*,/gi
+        file_extensions: [".apex", ".cls", ".trigger"]
+        description: "Utiliser 'Assert.isNull(...)' à la place de 'Assert.equals(null, ...)' dans le code Apex."
+        violation_message: "Remplacer 'Assert.equals(null, ...)' par 'Assert.isNull(...)'."
+        severity: "Critical"
+        tags: ["BestPractice", "Testing"]
+      "NoNotEqualsNullUseIsNotNull":
+        regex: /Assert\.notEquals\s*\(\s*null\s*,/gi
+        file_extensions: [".apex", ".cls", ".trigger"]
+        description: "Utiliser 'Assert.isNotNull(...)' à la place de 'Assert.notEquals(null, ...)' dans le code Apex."
+        violation_message: "Remplacer 'Assert.notEquals(null, ...)' par 'Assert.isNotNull(...)'."
+        severity: "Critical"
+        tags: ["BestPractice", "Testing"]
+      "NoEqualsLogsSizeUseLogsCreated":
+        regex: /Assert\.equals\s*\(\s*\d+\s*,\s*logs\.size\s*\(\s*\)\s*\)/gi
+        file_extensions: [".cls", ".apex", ".trigger"]
+        description: "Match Assert.equals(<number>, logs.size())"
+        violation_message: "Replace with Assert.logsCreated(...)"
+        severity: "Critical"
+        tags: ["BestPractice", "Testing"]
+      "OutdatedApiVersion":
+        regex: /<apiVersion>(?!64\.0)\d{2}\.0<\/apiVersion>/gi
+        file_extensions: [".xml"]
+        description: "API version must be exactly <apiVersion>64.0</apiVersion>."
+        violation_message: "Update API version to the latest"
+        severity: "Critical"
+        tags: ["Metadata", "API", "Version"]
+      "NoSpaceIndentation":
+        regex: /^ {2,}/gm
+        file_extensions: [".cls", ".trigger", ".apex"]
+        description: "Apex code should use tabs for indentation, not spaces."
+        violation_message: "Use tabs instead of spaces for indentation."
+        severity: "Critical"
+        tags: ["Formatting", "Style"]
+
+
+  eslint:
+    disable_engine: true
+    eslint_config_file: eslint.config.js
+    file_extensions:
+      javascript:
+        - .js
+        - .cjs
+        - .mjs
+      typescript:
+        - .ts
+      other: []
+
+  pmd:
+    disable_engine: true
+    file_extensions:
+      apex:
+        - .cls
+        - .trigger
+      html:
+        - .html
+        - .htm
+        - .xhtml
+        - .xht
+        - .shtml
+        - .cmp
+      javascript:
+        - .js
+        - .cjs
+        - .mjs
+      typescript:
+        - .ts
+      visualforce:
+        - .page
+        - .component
+      xml:
+        - .xml
+    custom_rulesets:
+      - rulesets.xml
+
+  cpd:
+    disable_engine: true
+    file_extensions:
+      apex:
+        - .cls
+        - .trigger
+      html:
+        - .html
+        - .htm
+        - .xhtml
+        - .xht
+        - .shtml
+        - .cmp
+      javascript:
+        - .js
+        - .cjs
+        - .mjs
+      typescript:
+        - .ts
+      visualforce:
+        - .page
+        - .component
+      xml:
+        - .xml
+    minimum_tokens:
+      apex: 100
+      html: 100
+      javascript: 100
+      typescript: 100
+      visualforce: 100
+      xml: 100
+
+  sfge:
+    disable_engine: true
+
+  flow:
+    disable_engine: true

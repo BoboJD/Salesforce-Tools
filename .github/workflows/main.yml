@@ -18,44 +18,17 @@ jobs:
       - name: Checkout repository code
         uses: actions/checkout@v4
 
-      - name: Check indentation of Apex classes
-        run: |
-          files_with_issues=$(find force-app -name '*.cls' -exec grep -l -n '^  ' {} + || true)
-          if [ -n "$files_with_issues" ]; then
-            echo "The indentation should be in "tab" for the files:"
-            echo "$files_with_issues"
-            exit 1
-          else
-            echo "Indentation is correct for all Apex files."
-          fi
-
-      - name: Check that the <apiVersion> in metadata files is the latest
-        run: |
-          IFS=$'\n' # Set Internal Field Separator to newline to handle spaces in filenames
-          meta_files=$(find force-app -name '*-meta.xml')
-          files_to_update=()
-
-          for meta_file in "${meta_files[@]}"; do
-            if grep -q '<apiVersion>' "$meta_file"; then
-              if ! grep -q '<apiVersion>64.0</apiVersion>' "$meta_file"; then
-                files_to_update+=("$meta_file")
-              fi
-            fi
-          done
-
-          if [ "${#files_to_update[@]}" -ne 0 ]; then
-            echo "The following files need to be updated to <apiVersion>64.0</apiVersion> :"
-            printf "%s\n" "${files_to_update[@]}"
-            exit 1
-          else
-            echo "No files need to be updated to <apiVersion>64.0</apiVersion> ."
-          fi
-
       - name: Install dependencies
         run: npm install --force
 
       - name: Run linting of js code
         run: npm run lint:lwc && npm run lint:aura
+
+      - name: Install SF CLI
+        run: npm install -g @salesforce/cli
+
+      - name: Run REGEX
+        run: npm run regex
 
       - name: Install Java
         uses: actions/setup-java@v4

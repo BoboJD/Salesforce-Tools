@@ -200,7 +200,7 @@ private class ConnectApiServiceTest{
 	static void testMentionInComment() {
 		fflib_ApexMocks mocks = new fflib_ApexMocks();
 		IFeatureManagementService featureManagementServiceMock = new Mocks.FeatureManagementService(mocks);
-		
+
 		mocks.startStubbing();
 		mocks.when(featureManagementServiceMock.checkPermission(PermissionConstants.BYPASS_CHATTER_NOTIFICATION)).thenReturn(false);
 		mocks.stopStubbing();
