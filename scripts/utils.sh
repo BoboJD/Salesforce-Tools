@@ -503,18 +503,18 @@ remove_surveys_from_flexipages(){
 # Methods to help manage git branch
 ## merge_prod_release_into_master
 merge_prod_release_into_master(){
-	echo -e "\nMerging ${RPurple}prod-release${NC} into ${RPurple}master${NC} branch..."
-	yes y | git checkout master > /dev/null
-	yes y | git merge prod-release --no-edit > /dev/null
-	yes y | git push origin master > /dev/null
-	yes y | git checkout prod-release > /dev/null
-	echo -e "Branch ${RPurple}master${NC} is now up-to-date."
+	echo -ne "\nMerging ${RPurple}prod-release${NC} into ${RPurple}master${NC} branch... "
+	yes y | git checkout master > /dev/null 2>&1
+	yes y | git merge prod-release --no-edit > /dev/null 2>&1
+	yes y | git push origin master > /dev/null 2>&1
+	yes y | git checkout prod-release > /dev/null 2>&1
+	echo "Done."
 }
 
 ## delete_remote_branches_merged_into_master
 delete_remote_branches_merged_into_master(){
-	echo -e "\n${RRed}Deleting${NC} remote branches that have already been merged into the master branch... "
-	yes y | git fetch --prune origin
+	echo -e "\n${RRed}Deleting${NC} remote branches that have already been merged into the master branch..."
+	yes y | git fetch --prune origin > /dev/null 2>&1
 	local protected_branches=("master" "prod-release" "preprod")
 	local merged_branches=$(git branch --remote --merged master | grep -v 'master')
 	for branch in $merged_branches; do
