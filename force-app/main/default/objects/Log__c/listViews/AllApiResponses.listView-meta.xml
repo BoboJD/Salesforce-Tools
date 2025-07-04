@@ -4,6 +4,7 @@
     <columns>NAME</columns>
     <columns>CREATEDBY_USER</columns>
     <columns>CREATED_DATE</columns>
+    <columns>Endpoint__c</columns>
     <columns>Method__c</columns>
     <columns>Parameters__c</columns>
     <columns>Message__c</columns>
