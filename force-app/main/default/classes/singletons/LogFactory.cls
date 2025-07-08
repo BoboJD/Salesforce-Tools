@@ -75,7 +75,7 @@ global without sharing class LogFactory{
 		);
 		if(String.isNotBlank(request.getEndpoint()) && request.getEndpoint().contains('?')){
 			log.Endpoint__c = request.getEndpoint().split('\\?')[0];
-			log.Payload__c = request.getEndpoint().split('\\?')[1];
+			log.Parameters__c = request.getEndpoint().split('\\?')[1];
 		}
 		logs.add(log);
 		return instance;
