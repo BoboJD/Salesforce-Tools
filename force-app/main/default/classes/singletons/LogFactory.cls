@@ -54,42 +54,30 @@ global without sharing class LogFactory{
 	}
 
 	global LogFactory logWebserviceError(Type classApex, HttpRequest request, HttpResponse response){
-		String endpoint = request.getEndpoint();
-		String parameters = request.getBody();
-		if(String.isNotBlank(endpoint) && endpoint.contains('?')){
-			endpoint = request.getEndpoint().split('\\?')[0];
-			parameters = request.getEndpoint().split('\\?')[1];
-		}
-		logs.add(new Log__c(
-			RecordTypeId = RecordTypeSingleton.getRecordTypeId(Log__c.SObjectType, LogConstants.RT_ERROR),
-			Type__c = LogConstants.TYPE_WEBSERVICE,
-			File__c = classApex.getName(),
-			Endpoint__c = endpoint,
-			Method__c = request.getMethod(),
-			Parameters__c = parameters,
-			StatusCode__c = response.getStatusCode(),
-			Status__c = response.getStatus(),
-			Message__c = response.getBody()
-		));
-		return instance;
+		return logWebservice(classApex, request, response, LogConstants.RT_ERROR);
 	}
 
 	global LogFactory logWebserviceResponse(Type classApex, HttpRequest request, HttpResponse response){
-		String endpoint = request.getEndpoint();
-		String parameters = request.getBody();
-		if(String.isNotBlank(endpoint) && endpoint.contains('?')){
-			endpoint = request.getEndpoint().split('\\?')[0];
-			parameters = request.getEndpoint().split('\\?')[1];
-		}
-		logs.add(new Log__c(
-			RecordTypeId = RecordTypeSingleton.getRecordTypeId(Log__c.SObjectType, LogConstants.RT_INFO),
+		return logWebservice(classApex, request, response, LogConstants.RT_INFO);
+	}
+
+	private LogFactory logWebservice(Type classApex, HttpRequest request, HttpResponse response, String recordTypeDeveloperName){
+		Log__c log = new Log__c(
+			RecordTypeId = RecordTypeSingleton.getRecordTypeId(Log__c.SObjectType, recordTypeDeveloperName),
 			Type__c = LogConstants.TYPE_WEBSERVICE,
 			File__c = classApex.getName(),
-			Endpoint__c = endpoint,
-			Parameters__c = parameters,
+			Endpoint__c = request.getEndpoint(),
+			Method__c = request.getMethod(),
+			Payload__c = request.getBody(),
 			StatusCode__c = response.getStatusCode(),
+			Status__c = response.getStatus(),
 			Message__c = response.getBody()?.left(131071)
-		));
+		);
+		if(String.isNotBlank(request.getEndpoint()) && request.getEndpoint().contains('?')){
+			log.Endpoint__c = request.getEndpoint().split('\\?')[0];
+			log.Payload__c = request.getEndpoint().split('\\?')[1];
+		}
+		logs.add(log);
 		return instance;
 	}
 
