@@ -6,6 +6,7 @@
     <columns>CREATED_DATE</columns>
     <columns>Type__c</columns>
     <columns>File__c</columns>
+    <columns>Endpoint__c</columns>
     <columns>Method__c</columns>
     <columns>Parameters__c</columns>
     <columns>Message__c</columns>
