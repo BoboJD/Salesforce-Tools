@@ -611,7 +611,7 @@ install_packages(){
 			package_id=$(echo "$devhub_data" | jq -r '.SubscriberPackageVersionId')
 
 			if [[ -z "$devhub_version" || -z "$package_id" ]]; then
-				echo -e "${Red}Package not found in DevHub${NC}"
+				echo -e "${RRed}Package not found in DevHub${NC}"
 				continue
 			fi
 
@@ -633,7 +633,7 @@ install_packages(){
 				package_installation_result=$(sf package install -p "$package_id" -w 60 -s AllUsers -r --target-org "$org_alias" --json 2>/dev/null)
 				package_installation_status=$(echo "$package_installation_result" | jq -r '.status')
 				if [ "$package_installation_status" -eq 0 ]; then
-					echo -e "${Green}Successfully installed ${package}.${NC}"
+					echo -e "${RGreen}Successfully installed ${package}.${NC}"
 				else
 					package_installation_message=$(echo "$package_installation_result" | jq -r '.message')
 					error_exit "Package installation failed: ${package_installation_message}"
