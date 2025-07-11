@@ -157,6 +157,19 @@ global class Mocks{
 		}
 	}
 
+	global class EmailTemplatesSelector extends fflib_SObjectMocks.SObjectSelector implements IEmailTemplatesSelector{
+		private fflib_ApexMocks mocks;
+
+		global EmailTemplatesSelector(fflib_ApexMocks mocks){
+			super(mocks);
+			this.mocks = mocks;
+		}
+
+		global EmailTemplate selectByDeveloperName(String developerName){
+			return (EmailTemplate)mocks.mockNonVoidMethod(this, 'selectByDeveloperName', new List<Type>{String.class}, new List<Object>{developerName});
+		}
+	}
+
 	global class EmailTemplatesService implements IEmailTemplatesService{
 		private fflib_ApexMocks mocks;
 

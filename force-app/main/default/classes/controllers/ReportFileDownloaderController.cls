@@ -1,7 +1,7 @@
-public with sharing class ReportFileDownloaderController{
+global with sharing class ReportFileDownloaderController{
 
 	@AuraEnabled
-	public static Map<String, Object> getUtilityData(){
+	global static Map<String, Object> getUtilityData(){
 		Map<String, Object> utilityData = new Map<String, Object>();
 		utilityData.put('fileTypes', SObjectFieldUtils.getPicklistValues(ContentVersion.tlz__FileType__c));
 		utilityData.put('label', retrieveLabels());
@@ -17,7 +17,7 @@ public with sharing class ReportFileDownloaderController{
 	}
 
 	@AuraEnabled
-	public static Map<String, Object> downloadReportFiles(String formJSON){
+	global static Map<String, Object> downloadReportFiles(String formJSON){
 		Map<String, Object> result;
 		try{
 			Form form = (Form)JSON.deserialize(formJSON, Form.class);
@@ -63,9 +63,9 @@ public with sharing class ReportFileDownloaderController{
 		return tlz_ContentDocumentLinksSelector.newInstance().selectByLinkedEntityIds(recordIds);
 	}
 
-	public class Form{
-		public Id reportId;
-		public String fileType;
+	global class Form{
+		global Id reportId;
+		global String fileType;
 
 		@TestVisible
 		private Form(){}

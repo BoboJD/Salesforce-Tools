@@ -1,10 +1,10 @@
-public with sharing class TestBatchJob implements Database.Batchable<SObject>{
+global with sharing class TestBatchJob implements Database.Batchable<SObject>{
 
-	public Database.QueryLocator start(Database.BatchableContext bc){
+	global Database.QueryLocator start(Database.BatchableContext bc){
 		return Database.getQueryLocator('SELECT Id FROM Account');
 	}
 
-	public void execute(Database.BatchableContext bc, List<Account> accounts){}
+	global void execute(Database.BatchableContext bc, List<Account> accounts){}
 
-	public void finish(Database.BatchableContext bc){}
+	global void finish(Database.BatchableContext bc){}
 }

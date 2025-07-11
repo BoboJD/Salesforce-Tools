@@ -15,7 +15,8 @@ global inherited sharing class Application{
 				IEmailTemplatesService.class => EmailTemplatesServiceImpl.class,
 				IFeatureManagementService.class => FeatureManagementServiceImpl.class,
 				IMessagingService.class => MessagingServiceImpl.class,
-				IOrganizationsService.class => OrganizationsServiceImpl.class});
+				IOrganizationsService.class => OrganizationsServiceImpl.class,
+				IPageReferencesService.class => PageReferencesServiceImpl.class});
 
 	global static final fflib_Application.SelectorFactory Selector =
 		new fflib_Application.SelectorFactory(
@@ -24,6 +25,7 @@ global inherited sharing class Application{
 				ContentDocumentLink.SObjectType => tlz_ContentDocumentLinksSelector.class,
 				ContentVersion.SObjectType => tlz_ContentVersionsSelector.class,
 				CustomNotificationType.SObjectType => tlz_CustomNotificationTypesSelector.class,
+				EmailTemplate.SObjectType => EmailTemplatesSelector.class,
 				Organization.SObjectType => tlz_OrganizationsSelector.class,
 				OrgWideEmailAddress.SObjectType => tlz_OrgWideEmailAddressesSelector.class,
 				PermissionSet.SObjectType => tlz_PermissionSetsSelector.class,

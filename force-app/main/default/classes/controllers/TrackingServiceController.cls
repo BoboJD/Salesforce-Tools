@@ -1,7 +1,7 @@
-public without sharing class TrackingServiceController{
+global without sharing class TrackingServiceController{
 
 	@AuraEnabled
-	public static Map<String, Object> commitTracking(String functionality){
+	global static Map<String, Object> commitTracking(String functionality){
 		Map<String, Object> result = new Map<String, Object>();
 		try{
 			fflib_ISObjectUnitOfWork uow = Application.UnitOfWork.newInstance(new List<SObjectType>{ Tracking__c.SObjectType });
