@@ -328,6 +328,38 @@ global class Mocks{
 		}
 	}
 
+	global class PageReferencesService implements IPageReferencesService{
+		private fflib_ApexMocks mocks;
+
+		global PageReferencesService(fflib_ApexMocks mocks){
+			this.mocks = mocks;
+		}
+
+		global String getVisualforcePageUrl(String pageName, Map<String, String> valueByParameter){
+			return (String)mocks.mockNonVoidMethod(this, 'getVisualforcePageUrl', new List<Type>{String.class, Map<String, String>.class}, new List<Object>{pageName, valueByParameter});
+		}
+
+		global String getUrl(String pageName, Map<String, String> valueByParameter){
+			return (String)mocks.mockNonVoidMethod(this, 'getUrl', new List<Type>{String.class, Map<String, String>.class}, new List<Object>{pageName, valueByParameter});
+		}
+
+		global Blob getVisualforcePageContent(String pageName, Map<String, String> valueByParameter){
+			return (Blob)mocks.mockNonVoidMethod(this, 'getVisualforcePageContent', new List<Type>{String.class, Map<String, String>.class}, new List<Object>{pageName, valueByParameter});
+		}
+
+		global Blob getPageContent(String pageName, Map<String, String> valueByParameter){
+			return (Blob)mocks.mockNonVoidMethod(this, 'getPageContent', new List<Type>{String.class, Map<String, String>.class}, new List<Object>{pageName, valueByParameter});
+		}
+
+		global String getPageReferenceUrl(PageReference page, Map<String, String> valueByParameter){
+			return (String)mocks.mockNonVoidMethod(this, 'getPageReferenceUrl', new List<Type>{PageReference.class, Map<String, String>.class}, new List<Object>{page, valueByParameter});
+		}
+
+		global Blob getPageReferenceContent(PageReference page, Map<String, String> valueByParameter){
+			return (Blob)mocks.mockNonVoidMethod(this, 'getPageReferenceContent', new List<Type>{PageReference.class, Map<String, String>.class}, new List<Object>{page, valueByParameter});
+		}
+	}
+
 	global class tlz_PermissionSetAssignmentsSelector extends fflib_SObjectMocks.SObjectSelector implements tlz_IPermissionSetAssignmentsSelector{
 		private fflib_ApexMocks mocks;
 
