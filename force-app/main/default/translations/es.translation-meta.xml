@@ -149,7 +149,7 @@
         <name>Refresh</name>
     </customLabels>
     <customLabels>
-        <label>Resultado : {0} éxito(s) y {0} error(es)</label>
+        <label>Resultado : {0} éxito(s) y {1} error(es)</label>
         <name>SObjectDmlIteratorMessage</name>
     </customLabels>
     <customLabels>

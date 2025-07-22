@@ -78,4 +78,27 @@ private class SObjectDmlIteratorTest{
 			Assert.isTrue(accountsAfter.isEmpty());
 		}
 	}
+
+	@IsTest
+	static void runIteratorForDeleteWithoutNotificationShouldNotNotifyCurrentUser(){
+		User standardUser = TestUtils.selectStandardUser();
+		System.runAs(standardUser){
+			fflib_ApexMocks mocks = new fflib_ApexMocks();
+			ICustomNotificationsService customNotificationsServiceMock = new Mocks.CustomNotificationsService(mocks);
+
+			Account account = TestUtils.selectAccount();
+
+			Application.Service.setMock(ICustomNotificationsService.class, customNotificationsServiceMock);
+
+			Test.startTest();
+			Database.executeBatch(SObjectDmlIterator.newInstanceWithoutNotification(new List<SObject>{ account }, 'delete'), 1);
+			Test.stopTest();
+
+			((ICustomNotificationsService)mocks.verify(customNotificationsServiceMock, 0)).notifyUser(UserInfo.getUserId(), Label.SObjectDmlIteratorTitle,
+				String.format(Label.SObjectDmlIteratorMessage, new List<Object>{ 1, 0 }));
+
+			List<Account> accountsAfter = [SELECT Id FROM Account];
+			Assert.isTrue(accountsAfter.isEmpty());
+		}
+	}
 }

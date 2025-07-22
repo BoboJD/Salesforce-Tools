@@ -1,16 +1,22 @@
 global without sharing class SObjectDmlIterator implements Database.Batchable<SObject>, Database.AllowsCallouts, Database.StateFul{
 	private List<SObject> records;
 	private String dmlType;
+	private Boolean notifyCurrentUser;
 	private Integer nbOfErrors;
 
-	private SObjectDmlIterator(List<SObject> records, String dmlType){
+	private SObjectDmlIterator(List<SObject> records, String dmlType, Boolean notifyCurrentUser){
 		this.records = records;
 		this.dmlType = dmlType;
+		this.notifyCurrentUser = notifyCurrentUser;
 		nbOfErrors = 0;
 	}
 
 	global static SObjectDmlIterator newInstance(List<SObject> records, String dmlType){
-		return new SObjectDmlIterator(records, dmlType);
+		return new SObjectDmlIterator(records, dmlType, true);
+	}
+
+	global static SObjectDmlIterator newInstanceWithoutNotification(List<SObject> records, String dmlType){
+		return new SObjectDmlIterator(records, dmlType, false);
 	}
 
 	global Iterable<SObject> start(Database.BatchableContext batchableContext){
@@ -33,8 +39,10 @@ global without sharing class SObjectDmlIterator implements Database.Batchable<SO
 	}
 
 	global void finish(Database.BatchableContext batchableContext){
-		Integer nbOfSuccess = records.size() - nbOfErrors;
-		CustomNotificationsService.notifyUser(UserInfo.getUserId(), Label.SObjectDmlIteratorTitle,
-			String.format(Label.SObjectDmlIteratorMessage, new List<Object>{ nbOfSuccess, nbOfErrors }));
+		if(notifyCurrentUser){
+			Integer nbOfSuccess = records.size() - nbOfErrors;
+			CustomNotificationsService.notifyUser(UserInfo.getUserId(), Label.SObjectDmlIteratorTitle,
+				String.format(Label.SObjectDmlIteratorMessage, new List<Object>{ nbOfSuccess, nbOfErrors }));
+		}
 	}
 }
