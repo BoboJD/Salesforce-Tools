@@ -337,19 +337,19 @@
         <value>Refresh</value>
     </labels>
     <labels>
-        <fullName>SObjectUpdateIteratorMessage</fullName>
+        <fullName>SObjectDmlIteratorMessage</fullName>
         <categories>ui</categories>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>SObjectUpdateIteratorMessage</shortDescription>
+        <shortDescription>SObjectDmlIteratorMessage</shortDescription>
         <value>Result : {0} success(es) &amp; {1} error(s)</value>
     </labels>
     <labels>
-        <fullName>SObjectUpdateIteratorTitle</fullName>
+        <fullName>SObjectDmlIteratorTitle</fullName>
         <categories>ui</categories>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>SObjectUpdateIteratorTitle</shortDescription>
+        <shortDescription>SObjectDmlIteratorTitle</shortDescription>
         <value>Update finished</value>
     </labels>
     <labels>

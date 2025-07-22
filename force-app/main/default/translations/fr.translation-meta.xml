@@ -150,11 +150,11 @@
     </customLabels>
     <customLabels>
         <label>Résultat : {0} réussi(s) &amp; {0} erreur(s)</label>
-        <name>SObjectUpdateIteratorMessage</name>
+        <name>SObjectDmlIteratorMessage</name>
     </customLabels>
     <customLabels>
         <label>Mise à jour terminée</label>
-        <name>SObjectUpdateIteratorTitle</name>
+        <name>SObjectDmlIteratorTitle</name>
     </customLabels>
     <customLabels>
         <label>Enregistrer</label>
