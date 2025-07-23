@@ -308,7 +308,7 @@ generate_package_xml(){
 					continue
 				fi
 				case $folder in
-					"assignmentRules" | "audience" | "autoResponseRules" | "dashboards" | "documents" | "escalationRules" | "experiences" | "managedTopics" | "matchingRules" | "moderation" | "navigationMenus" | "networkBranding" | "networks" | "objectTranslations" | "profiles" | "reports" | "recordTypes" | "reportTypes" | "settings" | "sharingRules" | "siteDotComSites" | "sites" | "standardValueSets" | "territory2Models" | "territory2Types" | "translations" | "userCriteria" | "workflows")
+					"assignmentRules" | "audience" | "autoResponseRules" | "dashboards" | "documents" | "escalationRules" | "experiences" | "managedTopics" | "matchingRules" | "moderation" | "navigationMenus" | "networkBranding" | "networks" | "objectTranslations" | "profiles" | "reports" | "reportTypes" | "settings" | "sharingRules" | "siteDotComSites" | "sites" | "standardValueSets" | "territory2Models" | "territory2Types" | "translations" | "userCriteria" | "workflows")
 						continue
 						;;
 				esac
@@ -330,6 +330,15 @@ generate_package_xml(){
 			if [[ $folder = objects && $fileFullPath != *.object-meta.xml ]]; then
 				local sobject=$(echo "$fileFullPath" | awk -F '/' '{print $5}')
 				sub_folder=$(echo "$fileFullPath" | awk -F '/' '{print $6}')
+
+				if [ "$is_for_deletion" = true ]; then
+					case $sub_folder in
+						"recordTypes")
+							continue
+							;;
+					esac
+				fi
+
 				metadata_type=$(find_metadata_type_by_folder_name "$sub_folder")
 				fileName="${sobject}.${fileName}"
 			elif [[ ($folder = aura || $folder = lwc) && $fileFullPath != *.object-meta.xml ]]; then
