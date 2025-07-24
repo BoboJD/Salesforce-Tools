@@ -4,12 +4,14 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 # Parameters (not mandatory)
 # -f / --full-deploy : perform a full deployment of all source files to the default org
+# -dc / --deploy-changes : perform a deployment of all files that has been changed (git status)
 # -v / --validate : validate the deployment to the default org
 # -t / --test [classNames] : execute unit tests while performing deployment. Optional comma-separated class names
 # -s / --shutdown : shutdown computer at the end of deployment (error or success of deployment)
 
 # Initialize parameters
 full_deploy=false
+use_git_status_mode=false
 validate=false
 run_apex_tests=false
 test_classes=""
@@ -20,6 +22,10 @@ while [[ $# -gt 0 ]]; do
 	case $1 in
 		-f|--full-deploy)
 			full_deploy=true
+			shift
+			;;
+		-dc|--deploy-changes)
+			use_git_status_mode=true
 			shift
 			;;
 		-v|--validate)
@@ -216,7 +222,14 @@ get_additional_deploy_parameters(){
 
 add_option_to_delete_deleted_or_renamed_files(){
 	echo -ne "\nChecking if files have been deleted from project... "
-	local deleted_files=$(git diff --diff-filter=D --name-only ${commit_hash_or_branch_reference}...${current_commit_hash_or_branch} | awk '$1 ~ /-meta.xml$/ && $1 ~ /^force-app\/main\/default\//')
+
+	local deleted_files=""
+	if [ "$use_git_status_mode" = true ]; then
+		deleted_files=$(git status --porcelain | awk '$1 == "D" && $2 ~ /-meta\.xml$/ && $2 ~ /^force-app\/main\/default\// {print $2}')
+	else
+		deleted_files=$(git diff --diff-filter=D --name-only ${commit_hash_or_branch_reference}...${current_commit_hash_or_branch} | awk '$1 ~ /-meta\.xml$/ && $1 ~ /^force-app\/main\/default\//')
+	fi
+
 	local renamed_files=$(find_deleted_files_in_renamed_files)
 	local deleted_labels=$(find_deleted_labels)
 
@@ -236,7 +249,13 @@ add_option_to_delete_deleted_or_renamed_files(){
 }
 
 find_deleted_files_in_renamed_files(){
-	local renamed_or_moved_files=$(git diff --diff-filter=R --name-status ${commit_hash_or_branch_reference}...${current_commit_hash_or_branch} | awk '$1 ~ /^R/ && $2 ~ /-meta.xml$/ && $2 ~ /^force-app\/main\/default\// {print $2}')
+	local renamed_or_moved_files=""
+	if [ "$use_git_status_mode" = true ]; then
+		renamed_or_moved_files=$(git status --porcelain -z | tr '\0' '\n' | grep '^R' | awk '{print $2}' | grep -E '^-?force-app/.*-meta\.xml$')
+	else
+		renamed_or_moved_files=$(git diff --diff-filter=R --name-status ${commit_hash_or_branch_reference}...${current_commit_hash_or_branch} | \
+			awk '$1 ~ /^R/ && $2 ~ /-meta.xml$/ && $2 ~ /^force-app\/main\/default\// {print $2}')
+	fi
 
 	local files_to_delete=""
 	if [[ -n "$renamed_or_moved_files" ]]; then
@@ -258,8 +277,14 @@ find_deleted_files_in_renamed_files(){
 }
 
 find_deleted_labels(){
-	local diff_on_custom_labels=$(git diff ${commit_hash_or_branch_reference}...${current_commit_hash_or_branch} "${project_directory}labels/CustomLabels.labels-meta.xml")
-	local removed_labels=$(echo "$diff_on_custom_labels" | grep -E '^-\s*<fullName>' | awk -F'[<>]' '/<fullName>/{gsub(/^ +/, ""); print $3}' | sed "s|^|${project_directory}label/|")
+	local diff_output=""
+	if [ "$use_git_status_mode" = true ]; then
+		diff_output=$(git diff "${project_directory}labels/CustomLabels.labels-meta.xml")
+	else
+		diff_output=$(git diff ${commit_hash_or_branch_reference}...${current_commit_hash_or_branch} "${project_directory}labels/CustomLabels.labels-meta.xml")
+	fi
+
+	local removed_labels=$(echo "$diff_output" | grep -E '^-\s*<fullName>' | awk -F'[<>]' '/<fullName>/{gsub(/^ +/, ""); print $3}' | sed "s|^|${project_directory}label/|")
 
 	local labels_to_delete=""
 	if [[ -n "$removed_labels" ]]; then
@@ -279,7 +304,17 @@ find_deleted_labels(){
 }
 
 construct_deploy_package_xml(){
-	local files_to_deploy=$(git diff --diff-filter=ARM --name-only ${commit_hash_or_branch_reference}...${current_commit_hash_or_branch} | grep -E '^"?force-app/' | sed 's/^"\(.*\)"$/\1/' | xargs -0 printf "%b")
+	local files_to_deploy=""
+
+	if [ "$use_git_status_mode" = true ]; then
+		files_to_deploy=$(git status --porcelain | \
+			awk '$1 ~ /^(A|M|AM|MM|\?\?)/ {print $2}' | \
+			grep -E '^force-app/' | xargs -0 printf "%b")
+	else
+		files_to_deploy=$(git diff --diff-filter=ARM --name-only ${commit_hash_or_branch_reference}...${current_commit_hash_or_branch} | \
+			grep -E '^"?force-app/' | sed 's/^"\(.*\)"$/\1/' | xargs -0 printf "%b")
+	fi
+
 	if [[ -n "$files_to_deploy" ]]; then
 		echo -ne "\nGenerating ${RCyan}deployPackage.xml${NC} to perform fast deployment..."
 		local generated_xml=$(generate_package_xml "$files_to_deploy" false)
