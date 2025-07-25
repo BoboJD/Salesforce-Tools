@@ -13,7 +13,8 @@ global with sharing class ContentDocumentLinkShareType extends ContentDocumentLi
 			if(sObjectsWithShareTypeI == null){
 				sObjectsWithShareTypeI = new List<String>();
 				for(FileTypeConfiguration__mdt config : FileTypeConfiguration__mdt.getAll().values())
-					sObjectsWithShareTypeI.add(config.SObjectApiName__c);
+					if(config.SetInferredPermissionToFile__c)
+						sObjectsWithShareTypeI.add(config.SObjectApiName__c);
 			}
 			return sObjectsWithShareTypeI;
 		}set;

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SetInferredPermissionToFile__c</fullName>
+    <defaultValue>false</defaultValue>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <inlineHelpText>If checked, the user’s permission is determined by the related record.</inlineHelpText>
+    <label>Set inferred permission to file</label>
+    <type>Checkbox</type>
+</CustomField>

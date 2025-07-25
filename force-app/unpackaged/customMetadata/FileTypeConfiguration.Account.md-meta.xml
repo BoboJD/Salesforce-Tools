@@ -8,10 +8,14 @@
     </values>
     <values>
         <field>AvailableValues__c</field>
-        <value xsi:type="xsd:string"></value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>SObjectApiName__c</field>
         <value xsi:type="xsd:string">Account</value>
+    </values>
+    <values>
+        <field>SetInferredPermissionToFile__c</field>
+        <value xsi:type="xsd:boolean">true</value>
     </values>
 </CustomMetadata>
