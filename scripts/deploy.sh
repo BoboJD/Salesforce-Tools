@@ -356,9 +356,9 @@ generate_package_xml(){
 			fi
 
 			local fileName=$(basename "$fileFullPath" | sed 's/\.[^.]*-meta\.xml$//')
-			if [[ $folder == "customMetadata" ]]; then
+			if [[ $folder = customMetadata ]]; then
 				fileName=$(basename "$fileFullPath" | sed 's/\.md-meta\.xml$//')
-			elif [[ $folder != "quickActions" ]]; then
+			elif [[ $folder != quickActions ]]; then
 				fileName=$(echo "$fileName" | cut -d. -f1)
 			fi
 
@@ -389,6 +389,13 @@ generate_package_xml(){
 				else
 					metadata_type="EmailTemplate"
 					fileName=$(echo "$fileFullPath" | awk -F '/email/' '{print $2}' | cut -d. -f1)
+				fi
+			elif [[ $folder = reports ]]; then
+				if [[ $fileFullPath =~ reportFolder-meta\.xml$ ]]; then
+					metadata_type="ReportFolder"
+				else
+					metadata_type="Report"
+					fileName=$(echo "$fileFullPath" | awk -F '/reports/' '{print $2}' | cut -d. -f1)
 				fi
 			else
 				metadata_type=$(find_metadata_type_by_folder_name "$folder")
