@@ -115,19 +115,21 @@ check_current_org_type(){
 }
 
 edit_files_that_fail_deployment(){
-	echo -e "\nRemoving content of metadata files that fail deployment :"
-	if [ -d "${project_directory}connectedApps/" ]; then
-		remove_consumer_key_on_each_connected_app
-	fi
-	remove_missing_sobjects_from_viewallrecords_permission_sets
-	add_missing_sobjects_in_viewallrecords_permission_sets
-	if [ "$is_scratch_org" = "true" ]; then
-		remove_users_from_queues
-		if [ -d "${project_directory}sites/" ]; then
-			remove_domain_on_each_site
+	if [ "$use_git_status_mode" = false ]; then
+		echo -e "\nRemoving content of metadata files that fail deployment :"
+		if [ -d "${project_directory}connectedApps/" ]; then
+			remove_consumer_key_on_each_connected_app
 		fi
-		if [ -d "${project_directory}autoResponseRules/" ]; then
-			replace_sender_email_in_case_autoresponse_rule
+		remove_missing_sobjects_from_viewallrecords_permission_sets
+		add_missing_sobjects_in_viewallrecords_permission_sets
+		if [ "$is_scratch_org" = "true" ]; then
+			remove_users_from_queues
+			if [ -d "${project_directory}sites/" ]; then
+				remove_domain_on_each_site
+			fi
+			if [ -d "${project_directory}autoResponseRules/" ]; then
+				replace_sender_email_in_case_autoresponse_rule
+			fi
 		fi
 	fi
 }
@@ -457,18 +459,20 @@ restore_edited_files_and_exit(){
 }
 
 restore_edited_files(){
-	local modified_directories=("connectedApps")
-	if [[ "$is_production_org" = "false" && $(yq eval '.viewallrecords_permissionsets // "null"' "$config_file") != "null" ]]; then
-		while IFS= read -r viewallrecords_permissionset; do
-			git restore "${project_directory}permissionsets/${viewallrecords_permissionset}.permissionset-meta.xml" > /dev/null 2>&1
-		done < <(yq eval '.viewallrecords_permissionsets[]' "$config_file")
+	if [ "$use_git_status_mode" = false ]; then
+		local modified_directories=("connectedApps")
+		if [[ "$is_production_org" = "false" && $(yq eval '.viewallrecords_permissionsets // "null"' "$config_file") != "null" ]]; then
+			while IFS= read -r viewallrecords_permissionset; do
+				git restore "${project_directory}permissionsets/${viewallrecords_permissionset}.permissionset-meta.xml" > /dev/null 2>&1
+			done < <(yq eval '.viewallrecords_permissionsets[]' "$config_file")
+		fi
+		if [ "$is_scratch_org" = "true" ]; then
+			modified_directories+=("queues" "autoResponseRules" "sites")
+		fi
+		for dir in "${modified_directories[@]}"; do
+			git restore "${project_directory}${dir}" > /dev/null 2>&1
+		done
 	fi
-	if [ "$is_scratch_org" = "true" ]; then
-		modified_directories+=("queues" "autoResponseRules" "sites")
-	fi
-	for dir in "${modified_directories[@]}"; do
-		git restore "${project_directory}${dir}" > /dev/null 2>&1
-	done
 }
 
 store_last_deployed_commit_hash(){
