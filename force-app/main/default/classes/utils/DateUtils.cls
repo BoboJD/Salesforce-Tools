@@ -105,4 +105,14 @@ global inherited sharing class DateUtils{
 			|| (referenceStartDate < endDateToCompare && endDateToCompare <= referenceEndDate)
 			|| (startDateToCompare < referenceStartDate && referenceEndDate < endDateToCompare);
 	}
+
+	global static Date changeYear(Date originalDate, Integer newYear){
+		if(originalDate == null || newYear == null)
+			throw new IllegalArgumentException('Date and year must not be null.');
+		Integer month = originalDate.month();
+		Integer day = originalDate.day();
+		if(month == 2 && day == 29 && !Date.isLeapYear(newYear))
+			day = 28;
+		return Date.newInstance(newYear, month, day);
+	}
 }

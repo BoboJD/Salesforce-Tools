@@ -249,4 +249,27 @@ private class DateUtilsTest{
 
 		Assert.isFalse(overlap);
 	}
+
+	@IsTest
+	static void changeYearWithNullParametersShouldThrowException(){
+		Test.startTest();
+		String errorMessage;
+		try{
+			DateUtils.changeYear(null, null);
+		}catch(Exception e){
+			errorMessage = e.getMessage();
+		}
+		Test.stopTest();
+
+		Assert.messageContains(errorMessage, 'Date and year must not be null.');
+	}
+
+	@IsTest
+	static void changeYearWithLeapYearShouldHandleDay(){
+		Test.startTest();
+		Date newDate = DateUtils.changeYear(Date.newInstance(2028, 2, 29), 2029);
+		Test.stopTest();
+
+		Assert.equals(Date.newInstance(2029, 2, 28), newDate);
+	}
 }
