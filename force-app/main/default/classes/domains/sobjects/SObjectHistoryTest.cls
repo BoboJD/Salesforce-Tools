@@ -42,7 +42,6 @@ private class SObjectHistoryTest{
 		fflib_ApexMocks mocks = new fflib_ApexMocks();
 		fflib_ISObjectUnitOfWork uowMock = new fflib_SObjectMocks.SObjectUnitOfWork(mocks);
 
-
 		User user = new User(
 			Id = fflib_IDGenerator.generate(Schema.User.SObjectType),
 			FirstName = 'FirstName'

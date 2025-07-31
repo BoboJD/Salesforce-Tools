@@ -1,0 +1,31 @@
+<template>
+	<lightning-card>
+		<h2 slot="title" class="slds-card__header-title">
+			<div class="slds-media slds-no-space slds-grow">
+				<div class="slds-var-m-right_small stencil slds-avatar slds-avatar_small">
+					<lightning-icon icon-name="standard:ad_event_info" size="small"></lightning-icon>
+				</div>
+				<div class="slds-media__body slds-align-middle">
+					<h2 class="slds-card__header-title">
+						<a class="slds-card__header-link baseCard__header-title-container" href={combinedAttachmentUrl} onclick={navigateToCombinedAttachments}>
+							<span class="slds-truncate slds-var-m-right_xx-small" title={label.ModificationHistory}>{label.ModificationHistory}</span>
+							<span class="lds-shrink-none slds-var-m-right_xx-small" title={visibleRecords.length}>({visibleRecords.length}<template if:true={showLoadMore}>+</template>)</span>
+						</a>
+					</h2>
+				</div>
+			</div>
+		</h2>
+		<c-spinner size="small"></c-spinner>
+		<lightning-datatable
+			if:true={visibleRecords.length}
+			key-field="Id"
+			data={visibleRecords}
+			columns={columns}
+			onrowaction={handleRowAction}
+			hide-checkbox-column
+		></lightning-datatable>
+		<div if:true={showLoadMore} slot="footer" class="slds-align_absolute-center">
+			<a href="javascript:void(0);" onclick={handleLoadMore} class="slds-text-link">{label.DisplayMore}</a>
+		</div>
+	</lightning-card>
+</template>

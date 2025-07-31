@@ -17,6 +17,10 @@
         <name>Apply</name>
     </customLabels>
     <customLabels>
+        <label><!-- Back --></label>
+        <name>Back</name>
+    </customLabels>
+    <customLabels>
         <label>Annuler</label>
         <name>Cancel</name>
     </customLabels>
@@ -37,6 +41,14 @@
         <name>Continue</name>
     </customLabels>
     <customLabels>
+        <label>Créé le</label>
+        <name>CreatedAt</name>
+    </customLabels>
+    <customLabels>
+        <label>Créé par</label>
+        <name>CreatedBy</name>
+    </customLabels>
+    <customLabels>
         <label>L&apos;enregistrement nommé &apos;Default&apos; n&apos;a pas été créé pour le SObject &quot;Setting&quot; (tlz__Setting__c).</label>
         <name>DefaultSettingNotCreated</name>
     </customLabels>
@@ -53,12 +65,28 @@
         <name>DeselectAll</name>
     </customLabels>
     <customLabels>
+        <label>Afficher plus</label>
+        <name>DisplayMore</name>
+    </customLabels>
+    <customLabels>
         <label>Télécharger</label>
         <name>Download</name>
     </customLabels>
     <customLabels>
         <label>Télécharger tous les fichiers</label>
         <name>DownloadAllFiles</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- DownloadFilesFromReport --></label>
+        <name>DownloadFiles</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- DownloadFilesFromReport --></label>
+        <name>DownloadFilesFromReport</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- EmailNoReplySenderDisplayName --></label>
+        <name>EmailNoReplySenderDisplayName</name>
     </customLabels>
     <customLabels>
         <label>Perte de connexion Internet.</label>
@@ -105,12 +133,20 @@
         <name>Filter</name>
     </customLabels>
     <customLabels>
+        <label>Historique n°</label>
+        <name>HistoryNumber</name>
+    </customLabels>
+    <customLabels>
         <label>Lien pour fusionner des PDF</label>
         <name>LinkToMergePDFs</name>
     </customLabels>
     <customLabels>
         <label>Lien pour réduire la taille des PDF</label>
         <name>LinkToReduceTheSizeOfPDFs</name>
+    </customLabels>
+    <customLabels>
+        <label>Historique de modification</label>
+        <name>ModificationHistory</name>
     </customLabels>
     <customLabels>
         <label>Modifier</label>
@@ -123,6 +159,10 @@
     <customLabels>
         <label>Suivant</label>
         <name>Next</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- NoFilesWereFoundInTheRecordsRelatedToYourReport --></label>
+        <name>NoFilesWereFoundInTheRecordsRelatedToYourReport</name>
     </customLabels>
     <customLabels>
         <label>Chatter Free User</label>
@@ -193,6 +233,18 @@
         <name>SetTheFileAsPrivate</name>
     </customLabels>
     <customLabels>
+        <label><!-- TheReportHasNoRecords --></label>
+        <name>TheRecordIdShouldBeTheFirstColumnOfYourReport</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- TheReportHasNoRecords --></label>
+        <name>TheReportHasNoRecords</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- UnknownPageReference --></label>
+        <name>UnknownPageReference</name>
+    </customLabels>
+    <customLabels>
         <label>Déposer au moins un fichier</label>
         <name>UploadAtLeastOneFile</name>
     </customLabels>
@@ -248,4 +300,8 @@
         <label><!-- fflib_security_error_object_not_updateable --></label>
         <name>fflib_security_error_object_not_updateable</name>
     </customLabels>
+    <customTabs>
+        <label><!-- Export Files --></label>
+        <name>ExportFiles</name>
+    </customTabs>
 </Translations>

@@ -17,6 +17,10 @@
         <name>Apply</name>
     </customLabels>
     <customLabels>
+        <label><!-- Back --></label>
+        <name>Back</name>
+    </customLabels>
+    <customLabels>
         <label>Cancelar</label>
         <name>Cancel</name>
     </customLabels>
@@ -37,6 +41,14 @@
         <name>Continue</name>
     </customLabels>
     <customLabels>
+        <label>Creado en</label>
+        <name>CreatedAt</name>
+    </customLabels>
+    <customLabels>
+        <label>Creado por</label>
+        <name>CreatedBy</name>
+    </customLabels>
+    <customLabels>
         <label>Configuración predeterminada no creada</label>
         <name>DefaultSettingNotCreated</name>
     </customLabels>
@@ -53,12 +65,28 @@
         <name>DeselectAll</name>
     </customLabels>
     <customLabels>
+        <label>Mostrar más</label>
+        <name>DisplayMore</name>
+    </customLabels>
+    <customLabels>
         <label>Descargar</label>
         <name>Download</name>
     </customLabels>
     <customLabels>
         <label>Descargar todos los archivos</label>
         <name>DownloadAllFiles</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- DownloadFilesFromReport --></label>
+        <name>DownloadFiles</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- DownloadFilesFromReport --></label>
+        <name>DownloadFilesFromReport</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- EmailNoReplySenderDisplayName --></label>
+        <name>EmailNoReplySenderDisplayName</name>
     </customLabels>
     <customLabels>
         <label>Pérdida de conexión a Internet.</label>
@@ -105,12 +133,20 @@
         <name>Filter</name>
     </customLabels>
     <customLabels>
+        <label>Historia n°</label>
+        <name>HistoryNumber</name>
+    </customLabels>
+    <customLabels>
         <label>Vincular para fusionar archivos PDF</label>
         <name>LinkToMergePDFs</name>
     </customLabels>
     <customLabels>
         <label>Enlace para reducir el tamaño de los archivos PDF</label>
         <name>LinkToReduceTheSizeOfPDFs</name>
+    </customLabels>
+    <customLabels>
+        <label>Historial de modificaciones</label>
+        <name>ModificationHistory</name>
     </customLabels>
     <customLabels>
         <label>Modificar</label>
@@ -123,6 +159,10 @@
     <customLabels>
         <label>Próximo</label>
         <name>Next</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- NoFilesWereFoundInTheRecordsRelatedToYourReport --></label>
+        <name>NoFilesWereFoundInTheRecordsRelatedToYourReport</name>
     </customLabels>
     <customLabels>
         <label>Chatter Free User</label>
@@ -193,6 +233,18 @@
         <name>SetTheFileAsPrivate</name>
     </customLabels>
     <customLabels>
+        <label><!-- TheReportHasNoRecords --></label>
+        <name>TheRecordIdShouldBeTheFirstColumnOfYourReport</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- TheReportHasNoRecords --></label>
+        <name>TheReportHasNoRecords</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- UnknownPageReference --></label>
+        <name>UnknownPageReference</name>
+    </customLabels>
+    <customLabels>
         <label>Cargar al menos un archivo</label>
         <name>UploadAtLeastOneFile</name>
     </customLabels>
@@ -248,4 +300,8 @@
         <label><!-- fflib_security_error_object_not_updateable --></label>
         <name>fflib_security_error_object_not_updateable</name>
     </customLabels>
+    <customTabs>
+        <label><!-- Export Files --></label>
+        <name>ExportFiles</name>
+    </customTabs>
 </Translations>

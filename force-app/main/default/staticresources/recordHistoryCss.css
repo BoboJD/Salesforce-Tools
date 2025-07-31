@@ -1,0 +1,16 @@
+.slds-tabs_card tlz-record-history .slds-card{
+	border: var(--lwc-borderWidthThin,1px) solid var(--lwc-cardColorBorder,rgb(221, 219, 218))!important;
+	border-radius: var(--lwc-borderRadiusMedium,0.25rem)!important;
+}
+tlz-record-history .slds-card .slds-card__header{
+	background: var(--lwc-pageHeaderColorBackground,rgb(243, 242, 242))!important;
+	padding: var(--lwc-varSpacingVerticalMedium,1rem) var(--lwc-varSpacingHorizontalMedium,1rem)!important;
+	margin: 0!important;
+}
+tlz-record-history .slds-card .slds-card__body{
+	margin: 0!important;
+	border-top: var(--lwc-borderWidthThin,1px) solid var(--lwc-cardColorBorder,rgb(221, 219, 218))!important;
+}
+tlz-record-history .slds-card .slds-card__footer{
+	margin: 0!important;
+}

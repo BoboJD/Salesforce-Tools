@@ -22,7 +22,7 @@
 	"devDependencies": {
 		"@babel/core": "^7.28.0",
 		"@babel/eslint-parser": "^7.28.0",
-		"@lwc/eslint-plugin-lwc": "^3.1.0",
+		"@lwc/eslint-plugin-lwc": "^3.2.0",
 		"@salesforce/eslint-config-lwc": "^4.0.0",
     	"@salesforce/eslint-plugin-aura": "^3.0.0",
 		"@salesforce/eslint-plugin-lightning": "^2.0.0",

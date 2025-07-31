@@ -49,6 +49,16 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>numberOfRows</name>
+                    <value>4</value>
+                </componentInstanceProperties>
+                <componentName>recordHistory</componentName>
+                <identifier>tlz_recordHistory</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
                     <name>relatedListComponentOverride</name>
                     <value>NONE</value>
                 </componentInstanceProperties>
@@ -213,6 +223,10 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>hideDate</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>hideDeleteOption</name>
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>

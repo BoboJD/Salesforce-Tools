@@ -472,4 +472,44 @@
         <shortDescription>YouHaveEnteredAnInvalidFormat</shortDescription>
         <value>You have entered an invalid format.</value>
     </labels>
+    <labels>
+        <fullName>CreatedAt</fullName>
+        <categories>ui</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CreatedAt</shortDescription>
+        <value>Created at</value>
+    </labels>
+    <labels>
+        <fullName>CreatedBy</fullName>
+        <categories>ui</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CreatedBy</shortDescription>
+        <value>Created by</value>
+    </labels>
+    <labels>
+        <fullName>DisplayMore</fullName>
+        <categories>ui</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DisplayMore</shortDescription>
+        <value>Display more</value>
+    </labels>
+    <labels>
+        <fullName>HistoryNumber</fullName>
+        <categories>ui</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>HistoryNumber</shortDescription>
+        <value>History n°</value>
+    </labels>
+    <labels>
+        <fullName>ModificationHistory</fullName>
+        <categories>ui</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ModificationHistory</shortDescription>
+        <value>Modification history</value>
+    </labels>
 </CustomLabels>
