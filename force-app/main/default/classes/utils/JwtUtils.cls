@@ -1,6 +1,6 @@
 global class JwtUtils{
 
-	global static Long getJwtExpirationInMinutes(String jwt){
+	global static Integer getJwtExpirationInMinutes(String jwt){
 		String payloadJson = extractPayloadJson(jwt);
 		Long exp = extractExpirationTimestamp(payloadJson);
 		return calculateMinutesUntilExpiration(exp);
@@ -30,12 +30,12 @@ global class JwtUtils{
 		return (Long)payloadMap.get('exp');
 	}
 
-	private static Long calculateMinutesUntilExpiration(Long expTimestamp){
+	private static Integer calculateMinutesUntilExpiration(Long expTimestamp){
 		Integer expSeconds = (Integer)expTimestamp.intValue();
 		DateTime epoch = DateTime.newInstanceGMT(1970, 1, 1, 0, 0, 0);
 		DateTime expDateTime = epoch.addSeconds(expSeconds);
 		DateTime now = tlz.DateUtils.now();
 		Long minutesLeft = (expDateTime.getTime() - now.getTime()) / (1000 * 60);
-		return Math.max(minutesLeft, 0);
+		return Integer.valueOf(Math.max(minutesLeft, 0));
 	}
 }

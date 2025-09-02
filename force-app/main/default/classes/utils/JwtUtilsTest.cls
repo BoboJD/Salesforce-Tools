@@ -10,7 +10,7 @@ private class JwtUtilsTest{
 		String payload = '{"exp":' + futureExp + '}';
 		String jwt = buildFakeJwtWithPayload(payload);
 
-		Long minutes = JwtUtils.getJwtExpirationInMinutes(jwt);
+		Integer minutes = JwtUtils.getJwtExpirationInMinutes(jwt);
 		Assert.isTrue(minutes > 0);
 	}
 
@@ -23,7 +23,7 @@ private class JwtUtilsTest{
 		String payload = '{"exp":' + pastExp + '}';
 		String jwt = buildFakeJwtWithPayload(payload);
 
-		Long minutes = JwtUtils.getJwtExpirationInMinutes(jwt);
+		Integer minutes = JwtUtils.getJwtExpirationInMinutes(jwt);
 		Assert.equals(0, minutes);
 	}
 
