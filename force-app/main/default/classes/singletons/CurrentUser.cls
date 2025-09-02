@@ -21,14 +21,14 @@ global class CurrentUser{
 	}
 
 	global static Boolean canEditRecord(Id recordId){
-		return tlz_UserRecordAccessesSelector.newInstance().canEditRecord(UserInfo.getUserId(), recordId);
+		return UserRecordAccessesSelector.newInstance().canEditRecord(UserInfo.getUserId(), recordId);
 	}
 
 	global static Map<Id, Boolean> canDeleteRecords(Set<Id> recordIds){
-		return tlz_UserRecordAccessesSelector.newInstance().canDeleteRecords(UserInfo.getUserId(), recordIds);
+		return UserRecordAccessesSelector.newInstance().canDeleteRecords(UserInfo.getUserId(), recordIds);
 	}
 
 	global static Map<Id, Boolean> canEditRecords(Set<Id> recordIds){
-		return tlz_UserRecordAccessesSelector.newInstance().canEditRecords(UserInfo.getUserId(), recordIds);
+		return UserRecordAccessesSelector.newInstance().canEditRecords(UserInfo.getUserId(), recordIds);
 	}
 }

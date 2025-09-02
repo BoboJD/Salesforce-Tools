@@ -31,7 +31,7 @@ global inherited sharing class Application{
 				PermissionSet.SObjectType => tlz_PermissionSetsSelector.class,
 				PermissionSetAssignment.SObjectType => tlz_PermissionSetAssignmentsSelector.class,
 				User.SObjectType => tlz_UsersSelector.class,
-				UserRecordAccess.SObjectType => tlz_UserRecordAccessesSelector.class});
+				UserRecordAccess.SObjectType => UserRecordAccessesSelector.class});
 
 	global static final fflib_Application.DomainFactory Domain =
 		new fflib_Application.DomainFactory(

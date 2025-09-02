@@ -386,10 +386,10 @@ global class Mocks{
 		}
 	}
 
-	global class tlz_UserRecordAccessesSelector extends fflib_SObjectMocks.SObjectSelector implements tlz_IUserRecordAccessesSelector{
+	global class UserRecordAccessesSelector extends fflib_SObjectMocks.SObjectSelector implements IUserRecordAccessesSelector{
 		private fflib_ApexMocks mocks;
 
-		global tlz_UserRecordAccessesSelector(fflib_ApexMocks mocks){
+		global UserRecordAccessesSelector(fflib_ApexMocks mocks){
 			super(mocks);
 			this.mocks = mocks;
 		}

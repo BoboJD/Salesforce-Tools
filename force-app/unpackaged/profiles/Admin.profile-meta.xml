@@ -1058,7 +1058,7 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>tlz_IUserRecordAccessesSelector</apexClass>
+        <apexClass>IUserRecordAccessesSelector</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -1086,7 +1086,7 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>tlz_UserRecordAccessesSelector</apexClass>
+        <apexClass>UserRecordAccessesSelector</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
