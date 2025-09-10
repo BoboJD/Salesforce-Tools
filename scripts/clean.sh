@@ -27,16 +27,21 @@ define_branches_to_update() {
 
 fetch_and_pull_changes_of_branches() {
 	for branch in "${branches[@]}"; do
-		echo -ne "Fetching and pulling changes for ${RCyan}${branch}${NC} branch... "
-		if [ "$current_branch" = "$branch" ]; then
-			yes y | git fetch origin "$current_branch" > /dev/null 2>&1 && yes y | git pull origin "$current_branch" > /dev/null 2>&1
+		if git show-ref --verify --quiet "refs/heads/$branch"; then
+			echo -ne "Fetching and pulling changes for ${RCyan}${branch}${NC} branch... "
+			if [ "$current_branch" = "$branch" ]; then
+				yes y | git fetch origin "$current_branch" > /dev/null 2>&1 \
+				&& yes y | git pull origin "$current_branch" > /dev/null 2>&1
+			else
+				yes y | git fetch -u origin "${branch}:${branch}" > /dev/null 2>&1
+			fi
+			if [ $? -ne 0 ]; then
+				error_exit "Failed to update ${branch} branch."
+			fi
+			echo "Done."
 		else
-			yes y | git fetch -u origin "${branch}:${branch}" > /dev/null 2>&1
+			echo -e "${RYellow}Skipping ${branch}${NC} (no local branch)."
 		fi
-		if [ $? -ne 0 ]; then
-			error_exit "Failed to update ${branch} branch."
-		fi
-		echo "Done."
 	done
 }
 
