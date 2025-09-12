@@ -207,6 +207,7 @@ remove_untracked_xml_blocks_in_translations(){
 		for translation in ${project_directory}translations/*.translation-meta.xml; do
 			remove_untracked_xml_tags "$translation"
 			remove_untracked_globalQuickActions "$translation"
+			remove_untracked_flowDefinitions "$translation"
 			indent "$translation"
 		done
 	fi
@@ -247,6 +248,15 @@ remove_untracked_globalQuickActions(){
 		while IFS= read -r action_to_remove; do
 			xml ed -L -N x="$xml_namespace" -d "//x:globalQuickActions[starts-with(x:name, \"$action_to_remove\")]" "$file_path"
 		done < <(yq eval '.translation_settings.globalQuickActions[]' "$config_file")
+	fi
+}
+
+remove_untracked_flowDefinitions(){
+	local file_path=$1
+	if [[ $(yq eval '.translation_settings.flowDefinitions // "null"' "$config_file") != "null" ]]; then
+		while IFS= read -r flow_to_remove; do
+			xml ed -L -N x="$xml_namespace" -d "//x:flowDefinitions[starts-with(x:fullName, \"$flow_to_remove\")]" "$file_path"
+		done < <(yq eval '.translation_settings.flowDefinitions[]' "$config_file")
 	fi
 }
 
