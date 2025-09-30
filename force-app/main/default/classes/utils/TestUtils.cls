@@ -86,6 +86,10 @@ global class TestUtils{
 		return [SELECT Id FROM Account WHERE Name = 'TestAccount' LIMIT 1];
 	}
 
+	global static ContentVersion selectContentVersion(){
+		return [SELECT Id, ContentDocumentId FROM ContentVersion WHERE Title = 'TestFile' LIMIT 1];
+	}
+
 	global static User selectChatterFreeUser(){
 		return [SELECT Id FROM User WHERE Name = 'Chatter Free User' LIMIT 1];
 	}

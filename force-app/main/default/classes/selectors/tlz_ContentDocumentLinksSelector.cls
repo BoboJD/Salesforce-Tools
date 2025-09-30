@@ -43,7 +43,10 @@ global inherited sharing class tlz_ContentDocumentLinksSelector extends fflib_SO
 	global Map<Id, List<ContentDocumentLink>> mapByContentDocumentId(Set<Id> contentDocumentIds){
 		Map<Id, List<ContentDocumentLink>> contentDocumentLinksByContentDocumentId = new Map<Id, List<ContentDocumentLink>>();
 		if(!contentDocumentIds.isEmpty()){
-			for(ContentDocumentLink cdl : Database.query(newQueryFactory().setCondition('ContentDocumentId = :contentDocumentIds').toSOQL())){
+			fflib_QueryFactory query = newQueryFactory()
+				.setCondition('ContentDocumentId = :contentDocumentIds')
+				.setOrdering('ContentDocument.LatestPublishedVersion.CreatedDate', fflib_QueryFactory.SortOrder.ASCENDING);
+			for(ContentDocumentLink cdl : Database.query(query.toSOQL())){
 				if(!contentDocumentLinksByContentDocumentId.containsKey(cdl.ContentDocumentId))
 					contentDocumentLinksByContentDocumentId.put(cdl.ContentDocumentId, new List<ContentDocumentLink>());
 				contentDocumentLinksByContentDocumentId.get(cdl.ContentDocumentId).add(cdl);
