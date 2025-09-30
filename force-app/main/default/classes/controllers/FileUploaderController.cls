@@ -19,6 +19,7 @@ global with sharing class FileUploaderController{
 		Map<Id, Boolean> hasDeleteAccessByContentDocumentId = CurrentUser.canDeleteRecords(contentDocumentIds);
 		List<FilePreview> files = new List<FilePreview>();
 		for(ContentVersion contentVersion : tlz_ContentVersionsSelector.newInstance().selectLatestByContentDocumentIds(contentDocumentIds)){
+			if(contentVersion.FileExtension == 'snote') continue;
 			Id contentDocumentLinkId = contentDocumentLinkIdByContentDocumentId.get(contentVersion.ContentDocumentId);
 			Boolean hasDeleteAccess = hasDeleteAccessByContentDocumentId.get(contentVersion.ContentDocumentId);
 			files.add(new FilePreview(contentVersion, contentDocumentLinkId, hasDeleteAccess));
