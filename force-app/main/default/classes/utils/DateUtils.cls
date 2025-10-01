@@ -115,4 +115,13 @@ global inherited sharing class DateUtils{
 			day = 28;
 		return Date.newInstance(newYear, month, day);
 	}
+
+	global static Boolean isEndOfMonth(Date inputDate){
+		if(inputDate == null) return false;
+		Integer year = inputDate.year();
+		Integer month = inputDate.month();
+		Integer day = inputDate.day();
+		Integer lastDay = Date.daysInMonth(year, month);
+		return day == lastDay;
+	}
 }

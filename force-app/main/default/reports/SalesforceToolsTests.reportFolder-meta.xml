@@ -5,10 +5,5 @@
         <sharedTo>AllInternalUsers</sharedTo>
         <sharedToType>Organization</sharedToType>
     </folderShares>
-    <folderShares>
-        <accessLevel>Manage</accessLevel>
-        <sharedTo>test-kqycdyfiukck@example.com</sharedTo>
-        <sharedToType>User</sharedToType>
-    </folderShares>
     <name>Salesforce Tools Tests</name>
 </ReportFolder>

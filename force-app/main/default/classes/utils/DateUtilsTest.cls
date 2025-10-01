@@ -272,4 +272,40 @@ private class DateUtilsTest{
 
 		Assert.equals(Date.newInstance(2029, 2, 28), newDate);
 	}
+
+	@IsTest
+	static void isEndOfMonthWithNullDateShouldReturnFalse(){
+		Test.startTest();
+		Boolean isEndOfMonth = DateUtils.isEndOfMonth(null);
+		Test.stopTest();
+
+		Assert.isFalse(isEndOfMonth);
+	}
+
+	@IsTest
+	static void isEndOfMonthWithEndOfMonthDateShouldReturnTrue(){
+		Test.startTest();
+		Boolean isEndOfMonth = DateUtils.isEndOfMonth(Date.newInstance(2025, 10, 31));
+		Test.stopTest();
+
+		Assert.isTrue(isEndOfMonth);
+	}
+
+	@IsTest
+	static void isEndOfMonthWithNotEndOfMonthDateShouldReturnFalse(){
+		Test.startTest();
+		Boolean isEndOfMonth = DateUtils.isEndOfMonth(Date.newInstance(2025, 10, 30));
+		Test.stopTest();
+
+		Assert.isFalse(isEndOfMonth);
+	}
+
+	@IsTest
+	static void isEndOfMonthWithEndOfMonthDateInLeapYearShouldReturnTrue(){
+		Test.startTest();
+		Boolean isEndOfMonth = DateUtils.isEndOfMonth(Date.newInstance(2024, 2, 29));
+		Test.stopTest();
+
+		Assert.isTrue(isEndOfMonth);
+	}
 }
