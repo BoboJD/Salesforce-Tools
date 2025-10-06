@@ -43,7 +43,7 @@ engines:
       "OutdatedApiVersion":
         regex: /<apiVersion>(?!64\.0)\d{2}\.0<\/apiVersion>/gi
         file_extensions: [".xml"]
-        description: "API version must be exactly <apiVersion>64.0</apiVersion>."
+        description: "API version must be exactly <apiVersion>65.0</apiVersion>."
         violation_message: "Update API version to the latest"
         severity: "Critical"
         tags: ["Metadata", "API", "Version"]

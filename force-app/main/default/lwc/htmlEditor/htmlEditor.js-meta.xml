@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <LightningComponentBundle xmlns="urn:metadata.tooling.soap.sforce.com" fqn="htmlEditor">
-    <apiVersion>64.0</apiVersion>
+    <apiVersion>65.0</apiVersion>
     <isExposed>true</isExposed>
     <masterLabel>HTML Editor</masterLabel>
     <targets>
