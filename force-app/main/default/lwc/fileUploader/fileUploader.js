@@ -20,7 +20,8 @@ export default class FileUploader extends NavigationMixin(LightningElement){
 	@api multiple = false;
 	@track utilityData = { files: [] };
 	@track modal = {
-		addFile: { displayed: false }
+		addFile: { displayed: false },
+		editType: { displayed: false }
 	};
 	@track filter = {};
 	label = label;
@@ -130,6 +131,15 @@ export default class FileUploader extends NavigationMixin(LightningElement){
 		this.refreshFiles();
 	}
 
+	hideEditTypeModal(){
+		this.modal.editType.displayed = false;
+	}
+
+	hideEditTypeModalAndRefreshFiles(){
+		this.hideEditTypeModal();
+		this.refreshFiles();
+	}
+
 	downloadFile(e){
 		const { contentVersionId } = e.detail;
 		downloadFile(contentVersionId);
@@ -144,6 +154,14 @@ export default class FileUploader extends NavigationMixin(LightningElement){
 			displaySuccessToast(this, format(label.File_0_deleted, [title]));
 			this.refreshFiles();
 		});
+	}
+
+	modifyType(e){
+		const { contentVersionId } = e.detail;
+		this.modal.editType = {
+			displayed: true,
+			contentVersionId
+		};
 	}
 
 	refreshFiles(){

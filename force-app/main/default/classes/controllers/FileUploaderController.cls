@@ -94,4 +94,19 @@ global with sharing class FileUploaderController{
 		}
 		return result;
 	}
+
+	@AuraEnabled
+	global static Map<String, Object> updateFileType(Id contentVersionId, String fileType){
+		Map<String, Object> result = new Map<String, Object>();
+		try{
+			fflib_ISObjectUnitOfWork uow = Application.UnitOfWork.newInstance(new List<SObjectType>{ ContentVersion.SObjectType });
+			uow.registerDirty(new ContentVersion(Id = contentVersionId, FileType__c = fileType));
+			uow.commitWork();
+			result = ControllerUtils.success();
+		}catch(Exception e){
+			LogFactory.commitError(FileUploaderController.class, 'updateFileType', new List<Object>{ contentVersionId, fileType }, e);
+			result = ControllerUtils.error(e);
+		}
+		return result;
+	}
 }

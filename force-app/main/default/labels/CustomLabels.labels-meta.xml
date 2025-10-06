@@ -193,6 +193,14 @@
         <value>File types</value>
     </labels>
     <labels>
+        <fullName>FileTypeUpdated</fullName>
+        <categories>ui</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>FileTypeUpdated</shortDescription>
+        <value>File type updated</value>
+    </labels>
+    <labels>
         <fullName>File_0_deleted</fullName>
         <categories>ui</categories>
         <language>en_US</language>
@@ -263,6 +271,14 @@
         <protected>false</protected>
         <shortDescription>Modify</shortDescription>
         <value>Modify</value>
+    </labels>
+    <labels>
+        <fullName>ModifyType</fullName>
+        <categories>ui</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ModifyType</shortDescription>
+        <value>Modify Type</value>
     </labels>
     <labels>
         <fullName>NewRecord</fullName>

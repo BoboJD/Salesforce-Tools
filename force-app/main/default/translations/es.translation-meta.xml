@@ -109,6 +109,10 @@
         <name>FileTypes</name>
     </customLabels>
     <customLabels>
+        <label>Tipo de archivo actualizado</label>
+        <name>FileTypeUpdated</name>
+    </customLabels>
+    <customLabels>
         <label>Archivo {0} eliminado.</label>
         <name>File_0_deleted</name>
     </customLabels>
@@ -151,6 +155,10 @@
     <customLabels>
         <label>Modificar</label>
         <name>Modify</name>
+    </customLabels>
+    <customLabels>
+        <label>Modificar typo</label>
+        <name>ModifyType</name>
     </customLabels>
     <customLabels>
         <label>Nuevo registro</label>

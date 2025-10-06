@@ -5,6 +5,7 @@ import label from './labels';
 
 export default class FileUploaderCard extends NavigationMixin(LightningElement){
 	@api file;
+	@api hasEditAccess = false;
 	@api displayDeleteBtn = false;
 	@api hideDate = false;
 	@api hideDeleteOption = false;
@@ -40,6 +41,15 @@ export default class FileUploaderCard extends NavigationMixin(LightningElement){
 	downloadFile(){
 		this.displayMenu = false;
 		this.dispatchEvent(new CustomEvent('downloadfile', {
+			detail: {
+				contentVersionId: this.file.id
+			}
+		}));
+	}
+
+	modifyType(){
+		this.displayMenu = false;
+		this.dispatchEvent(new CustomEvent('modifytype', {
 			detail: {
 				contentVersionId: this.file.id
 			}

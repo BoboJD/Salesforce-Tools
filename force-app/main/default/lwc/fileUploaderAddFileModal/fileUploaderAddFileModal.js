@@ -46,23 +46,9 @@ export default class FileUploaderAddFileModal extends LightningElement{
 	}
 
 	connectedCallback(){
-		this.setupKeypressListener();
 		if(this.fileTypes.length === 1)
 			this.fieldsFileupload.tlz__FileType__c = this.fileTypes[0].value;
 		this.fieldsFileupload.tlz__RecordId__c = this.recordId;
-	}
-
-	setupKeypressListener(){
-		this._watchKeypressComponent = this.watchKeypressComponent.bind(this);
-		window.addEventListener('keydown', this._watchKeypressComponent);
-	}
-
-	watchKeypressComponent(e){
-		if(e.key === 'Escape') this.dispatchHideModal();
-	}
-
-	disconnectedCallback(){
-		window.removeEventListener('keydown', this._watchKeypressComponent);
 	}
 
 	dispatchHideModal(){

@@ -141,9 +141,41 @@ private class FileUploaderControllerTest{
 	}
 
 	@IsTest
-	static void deleteFileShouldReturnErrorAndCommitOneLog(){
+	static void deleteFileWithNullParameterShouldReturnErrorAndCommitOneLog(){
 		Test.startTest();
 		Map<String, Object> result = FileUploaderController.deleteFile(null);
+		Test.stopTest();
+
+		Assert.errorWithLog(result);
+	}
+
+	@IsTest
+	static void updateFileTypeShouldReturnSuccess(){
+		fflib_ApexMocks mocks = new fflib_ApexMocks();
+		fflib_ISObjectUnitOfWork uowMock = new fflib_SObjectMocks.SObjectUnitOfWork(mocks);
+
+		Id contentVersionId = fflib_IDGenerator.generate(Schema.ContentVersion.SObjectType);
+		String fileType = 'test';
+
+		Application.UnitOfWork.setMock(uowMock);
+
+		Test.startTest();
+		Map<String, Object> result = FileUploaderController.updateFileType(contentVersionId, fileType);
+		Test.stopTest();
+
+		((fflib_ISObjectUnitOfWork)mocks.verify(uowMock)).registerDirty(
+			fflib_Match.sObjectWith(new Map<SObjectField, Object>{
+				Schema.ContentVersion.Id => contentVersionId,
+				Schema.ContentVersion.FileType__c => fileType}));
+		((fflib_ISObjectUnitOfWork)mocks.verify(uowMock)).commitWork();
+
+		Assert.success(result);
+	}
+
+	@IsTest
+	static void updateFileTypeWithNullParametersShouldReturnErrorAndCommitOneLog(){
+		Test.startTest();
+		Map<String, Object> result = FileUploaderController.updateFileType(null, null);
 		Test.stopTest();
 
 		Assert.errorWithLog(result);

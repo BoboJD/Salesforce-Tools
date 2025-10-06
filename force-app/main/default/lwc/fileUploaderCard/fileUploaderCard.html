@@ -49,6 +49,14 @@
 										</span>
 									</a>
 								</li>
+								<li if:true={hasEditAccess} class="slds-dropdown__item" onclick={modifyType}>
+									<a href="javascript:void(0);" tabindex="0">
+										<span class="slds-truncate" title={label.ModifyType}>
+											<lightning-icon icon-name="utility:edit" alternative-text={label.ModifyType} size="x-small" class="slds-var-m-right_x-small"></lightning-icon>
+											{label.ModifyType}
+										</span>
+									</a>
+								</li>
 								<li if:true={displayDeleteBtn} class="slds-dropdown__item" onclick={deleteFile}>
 									<a href="javascript:void(0);" tabindex="0">
 										<span class="slds-truncate" title={label.Delete}>

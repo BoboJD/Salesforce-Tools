@@ -8,6 +8,14 @@
 		onfileupload={hideAddFileModalAndRefreshFiles}>
 	</c-file-uploader-add-file-modal>
 
+	<c-file-uploader-edit-type-modal
+		if:true={modal.editType.displayed}
+		content-version-id={modal.editType.contentVersionId}
+		utility-data={utilityData}
+		onhidemodal={hideEditTypeModal}
+		onsubmitsuccess={hideEditTypeModalAndRefreshFiles}>
+	</c-file-uploader-edit-type-modal>
+
 	<lightning-card>
 		<h2 slot="title" class="slds-card__header-title">
 			<div class="slds-media slds-no-space slds-grow">
@@ -68,12 +76,14 @@
 				<c-file-uploader-card
 					key={file.id}
 					file={file}
+					has-edit-access={utilityData.hasEditAccess}
 					display-delete-btn={displayDeleteBtn}
 					hide-date={hideDate}
 					hide-delete-option={hideDeleteOption}
 					mass-delete-option={massDeleteOption}
 					onselection={setSelected}
 					ondownloadfile={downloadFile}
+					onmodifytype={modifyType}
 					ondeletefile={deleteFile}>
 				</c-file-uploader-card>
 			</template>

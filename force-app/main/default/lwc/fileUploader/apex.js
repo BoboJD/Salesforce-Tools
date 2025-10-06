@@ -1,5 +1,5 @@
 import { logError } from 'c/logFactory';
-import { handleErrorForUser } from 'c/utils';
+import { handleErrorForUser, hasNoApexError } from 'c/utils';
 import getUtilityData from '@salesforce/apex/FileUploaderController.getUtilityData';
 import deleteFiles from '@salesforce/apex/FileUploaderController.deleteFiles';
 import getFiles from '@salesforce/apex/FileUploaderController.getFiles';
@@ -21,9 +21,8 @@ export default {
 	deleteFiles: (cmp, params, onfulfilled) => {
 		deleteFiles(params)
 			.then(result => {
-				if(result.status !== 'SUCCESS')
-					throw new Error(result.message);
-				onfulfilled();
+				if(hasNoApexError(cmp, result))
+					onfulfilled();
 			})
 			.catch(error => {
 				handleError(cmp, error, 'deleteFiles');

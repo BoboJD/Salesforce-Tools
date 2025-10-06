@@ -1,0 +1,23 @@
+<template>
+	<c-modal
+		title={label.ModifyType}
+		confirm-label={label.Save}
+		onclosemodal={dispatchHideModal}
+		onconfirm={submitNewFileType}
+	>
+		<c-spinner size="small" hide-by-default></c-spinner>
+		<div class="slds-form">
+			<div class="slds-form__row">
+				<div class="slds-form__item">
+					<c-picklist
+						label={label.FileType}
+						options={fileTypes}
+						value={selectedFileType}
+						onvaluechange={setSelectedFileType}
+						required>
+					</c-picklist>
+				</div>
+			</div>
+		</div>
+	</c-modal>
+</template>
