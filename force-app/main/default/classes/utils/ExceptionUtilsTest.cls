@@ -62,6 +62,24 @@ private class ExceptionUtilsTest{
 	}
 
 	@IsTest
+	static void isReadTimedOutWithFieldCustomValidationExceptionShouldReturnFalse(){
+		Test.startTest();
+		Boolean isReadTimedOut = ExceptionUtils.isReadTimedOut(new CustomException('toto'+ExceptionConstants.FIELD_CUSTOM_VALIDATION+': tutu'));
+		Test.stopTest();
+
+		Assert.isFalse(isReadTimedOut);
+	}
+
+	@IsTest
+	static void isReadTimedOutWithReadTimedOutExceptionShouldReturnTrue(){
+		Test.startTest();
+		Boolean isReadTimedOut = ExceptionUtils.isReadTimedOut(new CustomException('toto'+ExceptionConstants.READ_TIMED_OUT+': tutu'));
+		Test.stopTest();
+
+		Assert.isTrue(isReadTimedOut);
+	}
+
+	@IsTest
 	static void isRestrictedPicklistWithFieldCustomValidationExceptionShouldReturnFalse(){
 		Test.startTest();
 		Boolean isRestrictedPicklist = ExceptionUtils.isRestrictedPicklist(new CustomException('toto'+ExceptionConstants.FIELD_CUSTOM_VALIDATION+': tutu'));

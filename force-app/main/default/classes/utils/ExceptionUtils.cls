@@ -12,6 +12,10 @@ global class ExceptionUtils{
 		return e.getMessage().contains(ExceptionConstants.INVALID_ID_FIELD);
 	}
 
+	global static Boolean isReadTimedOut(Exception e){
+		return e.getMessage().contains(ExceptionConstants.READ_TIMED_OUT);
+	}
+
 	global static Boolean isRestrictedPicklist(Exception e){
 		return e.getMessage().contains(ExceptionConstants.INVALID_OR_NULL_FOR_RESTRICTED_PICKLIST);
 	}
