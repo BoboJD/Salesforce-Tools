@@ -12,7 +12,12 @@ fi
 
 if echo "$CHANGED_FILES" | grep -q '^force-app/main/default/'; then
   echo "Running REGEX..."
-  npm run regex
+  output=$(npm run regex)
+  if echo "$output" | grep -q "severity violation"; then
+    echo "$output"
+    exit 1
+  fi
+
   echo "Running PMD..."
   npm run pmd
 fi
