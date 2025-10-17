@@ -4,7 +4,7 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 # Parameters (not mandatory)
 # -f / --full-deploy : perform a full deployment of all source files to the default org
-# -dc / --deploy-changes : perform a deployment of all files that has been changed (git status)
+# -dc / --deploy-changes / -lc / --local-changes : perform a deployment of all files that has been changed (git status)
 # -v / --validate : validate the deployment to the default org
 # -t / --test [classNames] : execute unit tests while performing deployment. Optional comma-separated class names
 # -s / --shutdown : shutdown computer at the end of deployment (error or success of deployment)
@@ -24,7 +24,7 @@ while [[ $# -gt 0 ]]; do
 			full_deploy=true
 			shift
 			;;
-		-dc|--deploy-changes)
+		-dc|--deploy-changes|-lc|--local-changes)
 			use_git_status_mode=true
 			shift
 			;;
