@@ -1,7 +1,9 @@
 public without sharing class FileRecordIdUpdateJob implements Database.Batchable<SObject>{
+	private List<Id> excludedFileIds = new List<Id>();
 	private Boolean verifyAllRecords = false;
 
 	private FileRecordIdUpdateJob(Boolean verifyAllRecords){
+		for(WorkspaceFile__c workspaceFile : [SELECT ContentDocumentId__c FROM WorkspaceFile__c LIMIT 2000]) excludedFileIds.add(workspaceFile.ContentDocumentId__c);
 		this.verifyAllRecords = verifyAllRecords;
 	}
 
@@ -21,7 +23,8 @@ public without sharing class FileRecordIdUpdateJob implements Database.Batchable
 		String soql = 'SELECT Id, ContentDocumentId'
 			+ ' FROM ContentVersion'
 			+ ' WHERE IsLatest = true'
-			+ ' AND (LastCheckOfRelationship__c < LAST_MONTH OR LastCheckOfRelationship__c  = null)';
+			+ ' AND (LastCheckOfRelationship__c < LAST_MONTH OR LastCheckOfRelationship__c  = null)'
+			+ ' AND Id NOT IN :excludedFileIds';
 		if(!verifyAllRecords)
 			soql += ' AND UnrelatedToRecords__c = false';
 		return soql;
@@ -34,17 +37,20 @@ public without sharing class FileRecordIdUpdateJob implements Database.Batchable
 				contentDocumentIds.add(cv.ContentDocumentId);
 			Map<Id, List<ContentDocumentLink>> contentDocumentLinksByContentDocumentId = tlz_ContentDocumentLinksSelector.newInstance().mapByContentDocumentId(contentDocumentIds);
 			fflib_ISObjectUnitOfWork uow = Application.UnitOfWork.newInstance(new List<SObjectType>{
-				Schema.ContentVersion.SObjectType
+				Schema.ContentVersion.SObjectType, Schema.WorkspaceFile__c.SObjectType
 			}, DmlManager.allowPartialSuccess());
 			for(ContentVersion cv : contentVersions){
-				if(isRelatedToContentWorkspace(cv, contentDocumentLinksByContentDocumentId)) continue;
-				Id relatedToRecordId = findRelatedRecord(cv, contentDocumentLinksByContentDocumentId);
-				uow.registerDirty(new ContentVersion(
-					Id = cv.Id,
-					LastCheckOfRelationship__c = DateUtils.now(),
-					UnrelatedToRecords__c = relatedToRecordId == null,
-					RecordId__c = relatedToRecordId
-				));
+				if(isRelatedToContentWorkspace(cv, contentDocumentLinksByContentDocumentId)){
+					uow.registerNew(new WorkspaceFile__c(ContentDocumentId__c = cv.ContentDocumentId));
+				}else{
+					Id relatedToRecordId = findRelatedRecord(cv, contentDocumentLinksByContentDocumentId);
+					uow.registerDirty(new ContentVersion(
+						Id = cv.Id,
+						LastCheckOfRelationship__c = DateUtils.now(),
+						UnrelatedToRecords__c = relatedToRecordId == null,
+						RecordId__c = relatedToRecordId
+					));
+				}
 			}
 			uow.commitWork();
 		}catch(Exception e){

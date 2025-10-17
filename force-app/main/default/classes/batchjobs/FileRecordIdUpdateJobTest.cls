@@ -44,7 +44,7 @@ private class FileRecordIdUpdateJobTest{
 	}
 
 	@IsTest
-	static void runBatchWithLinkOnContentWorkspaceShouldSetFileToExcludedFiles(){
+	static void runBatchWithLinkOnContentWorkspaceShouldCreateWorkspaceFile(){
 		User standardUser = TestUtils.selectStandardUser();
 		System.runAs(standardUser){
 			ContentWorkspace contentWorkspace = new ContentWorkspace(Name = 'Workspace');
@@ -58,6 +58,8 @@ private class FileRecordIdUpdateJobTest{
 
 			ContentVersion contentVersionAfter = [SELECT LastCheckOfRelationship__c, UnrelatedToRecords__c FROM ContentVersion WHERE ContentDocument.Title = 'TestFile' LIMIT 1];
 			Assert.isNull(contentVersionAfter.LastCheckOfRelationship__c);
+			List<WorkspaceFile__c> workspaceFiles = [SELECT Id FROM WorkspaceFile__c];
+			tlz.Assert.equals(1, workspaceFiles.size());
 		}
 	}
 }
