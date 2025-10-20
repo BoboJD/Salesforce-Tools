@@ -23,10 +23,9 @@ public without sharing class FileRecordIdUpdateJob implements Database.Batchable
 		String soql = 'SELECT Id, ContentDocumentId'
 			+ ' FROM ContentVersion'
 			+ ' WHERE IsLatest = true'
-			+ ' AND (LastCheckOfRelationship__c < LAST_MONTH OR LastCheckOfRelationship__c  = null)'
 			+ ' AND Id NOT IN :excludedFileIds';
 		if(!verifyAllRecords)
-			soql += ' AND UnrelatedToRecords__c = false';
+			soql += ' AND (LastCheckOfRelationship__c < LAST_MONTH OR LastCheckOfRelationship__c  = null)';
 		return soql;
 	}
 
@@ -47,7 +46,7 @@ public without sharing class FileRecordIdUpdateJob implements Database.Batchable
 					uow.registerDirty(new ContentVersion(
 						Id = cv.Id,
 						LastCheckOfRelationship__c = DateUtils.now(),
-						UnrelatedToRecords__c = relatedToRecordId == null,
+						RelatedToRecord__c = relatedToRecordId != null,
 						RecordId__c = relatedToRecordId
 					));
 				}

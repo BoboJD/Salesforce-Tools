@@ -11,21 +11,21 @@ private class FileRecordIdUpdateJobTest{
 	}
 
 	@IsTest
-	static void runBatchWithoutLinkOnAccountShouldFlagFileToUnrelatedRecords(){
+	static void runBatchWithoutLinkOnAccountShouldNotFlagFileToRlatedRecords(){
 		User standardUser = TestUtils.selectStandardUser();
 		System.runAs(standardUser){
 			Test.startTest();
 			Database.executeBatch(FileRecordIdUpdateJob.instanceForNewRecords());
 			Test.stopTest();
 
-			ContentVersion contentVersionAfter = [SELECT LastCheckOfRelationship__c, UnrelatedToRecords__c FROM ContentVersion WHERE ContentDocument.Title = 'TestFile' LIMIT 1];
+			ContentVersion contentVersionAfter = [SELECT LastCheckOfRelationship__c, RelatedToRecord__c FROM ContentVersion WHERE ContentDocument.Title = 'TestFile' LIMIT 1];
 			Assert.equals(DateUtils.now(), contentVersionAfter.LastCheckOfRelationship__c);
-			Assert.isTrue(contentVersionAfter.UnrelatedToRecords__c);
+			Assert.isFalse(contentVersionAfter.RelatedToRecord__c);
 		}
 	}
 
 	@IsTest
-	static void runBatchWithoutLinkOnAccountShouldNotFlagFileToUnrelatedRecords(){
+	static void runBatchWithoutLinkOnAccountShouldFlagFileToRelatedRecord(){
 		User standardUser = TestUtils.selectStandardUser();
 		System.runAs(standardUser){
 			Account account = TestUtils.selectAccount();
@@ -36,9 +36,9 @@ private class FileRecordIdUpdateJobTest{
 			Database.executeBatch(FileRecordIdUpdateJob.instanceForNewRecords());
 			Test.stopTest();
 
-			ContentVersion contentVersionAfter = [SELECT LastCheckOfRelationship__c, UnrelatedToRecords__c, RecordId__c FROM ContentVersion WHERE ContentDocument.Title = 'TestFile' LIMIT 1];
+			ContentVersion contentVersionAfter = [SELECT LastCheckOfRelationship__c, RelatedToRecord__c, RecordId__c FROM ContentVersion WHERE ContentDocument.Title = 'TestFile' LIMIT 1];
 			Assert.equals(DateUtils.now(), contentVersionAfter.LastCheckOfRelationship__c);
-			Assert.isFalse(contentVersionAfter.UnrelatedToRecords__c);
+			Assert.isTrue(contentVersionAfter.RelatedToRecord__c);
 			Assert.equals(account.Id, contentVersionAfter.RecordId__c);
 		}
 	}
@@ -56,7 +56,7 @@ private class FileRecordIdUpdateJobTest{
 			Database.executeBatch(FileRecordIdUpdateJob.instanceForAllRecords());
 			Test.stopTest();
 
-			ContentVersion contentVersionAfter = [SELECT LastCheckOfRelationship__c, UnrelatedToRecords__c FROM ContentVersion WHERE ContentDocument.Title = 'TestFile' LIMIT 1];
+			ContentVersion contentVersionAfter = [SELECT LastCheckOfRelationship__c FROM ContentVersion WHERE ContentDocument.Title = 'TestFile' LIMIT 1];
 			Assert.isNull(contentVersionAfter.LastCheckOfRelationship__c);
 			List<WorkspaceFile__c> workspaceFiles = [SELECT Id FROM WorkspaceFile__c];
 			tlz.Assert.equals(1, workspaceFiles.size());
