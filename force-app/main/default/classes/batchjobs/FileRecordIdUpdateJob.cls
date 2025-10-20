@@ -1,4 +1,4 @@
-public without sharing class FileRecordIdUpdateJob implements Database.Batchable<SObject>{
+global without sharing class FileRecordIdUpdateJob implements Database.Batchable<SObject>{
 	private List<Id> excludedFileIds = new List<Id>();
 	private Boolean verifyAllRecords = false;
 
@@ -7,15 +7,15 @@ public without sharing class FileRecordIdUpdateJob implements Database.Batchable
 		this.verifyAllRecords = verifyAllRecords;
 	}
 
-	public static FileRecordIdUpdateJob instanceForNewRecords(){
+	global static FileRecordIdUpdateJob instanceForNewRecords(){
 		return new FileRecordIdUpdateJob(false);
 	}
 
-	public static FileRecordIdUpdateJob instanceForAllRecords(){
+	global static FileRecordIdUpdateJob instanceForAllRecords(){
 		return new FileRecordIdUpdateJob(true);
 	}
 
-	public Database.QueryLocator start(Database.BatchableContext bc){
+	global Database.QueryLocator start(Database.BatchableContext bc){
 		return Database.getQueryLocator(constructSoqlQuery());
 	}
 
@@ -29,7 +29,7 @@ public without sharing class FileRecordIdUpdateJob implements Database.Batchable
 		return soql;
 	}
 
-	public void execute(Database.BatchableContext bc, List<ContentVersion> contentVersions){
+	global void execute(Database.BatchableContext bc, List<ContentVersion> contentVersions){
 		try{
 			Set<Id> contentDocumentIds = new Set<Id>();
 			for(ContentVersion cv : contentVersions)
@@ -74,5 +74,5 @@ public without sharing class FileRecordIdUpdateJob implements Database.Batchable
 		return null;
 	}
 
-	public void finish(Database.BatchableContext bc){}
+	global void finish(Database.BatchableContext bc){}
 }
