@@ -1,4 +1,4 @@
-.PHONY: archive clean crypt delete deploy key org release retrieve tests update version
+.PHONY: archive clean crypt delete deploy diff key org release retrieve tests update version
 
 p=
 
@@ -21,6 +21,10 @@ delete:
 # Deploy project metadata files into current org
 deploy:
 	@bash scripts/deploy.sh $(p)
+
+# List metadata files that has been changed in the current branch
+diff:
+	@bash scripts/gitDiffSummary.sh $(p)
 
 # Generate the encryption key to be stored in EncryptionKey__c custom setting
 key:
