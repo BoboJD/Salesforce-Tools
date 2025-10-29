@@ -419,57 +419,6 @@ replace_sender_email_in_case_autoresponse_rule(){
 	echo "Done."
 }
 
-## remove_missing_sobjects_from_viewallrecords_permission_sets
-remove_missing_sobjects_from_viewallrecords_permission_sets(){
-	if [[ $(yq eval '.viewallrecords_permissionsets // "null"' "$config_file") != "null" ]]; then
-		echo -ne "- Removing ${RBlue}missing sObjects${NC} from permission set with 'ViewAllRecords' permission... "
-
-		local missing_sobjects=("ActiveScratchOrg" "NamespaceRegistry" "ScratchOrgInfo")
-		if [[ "$is_sandbox_org" = "true" ]]; then
-			yaml_path='.sandbox'
-		elif [[ "$is_scratch_org" = "true" ]]; then
-			yaml_path='.scratch_org'
-		fi
-		if [[ -n "$yaml_path" && $(yq eval "$yaml_path.sobjects_to_remove // null" "$config_file") != "null" ]]; then
-			while IFS= read -r sobject_to_remove; do
-				missing_sobjects+=("$sobject_to_remove")
-			done < <(yq eval "$yaml_path.sobjects_to_remove[]" "$config_file")
-		fi
-
-		while IFS= read -r viewallrecords_permissionset; do
-			for missing_sobject in "${missing_sobjects[@]}"; do
-				xml ed -L -N x="$xml_namespace" -d "//*/x:objectPermissions[starts-with(x:object, \"$missing_sobject\")]" "${project_directory}permissionsets/${viewallrecords_permissionset}.permissionset-meta.xml"
-			done
-		done < <(yq eval '.viewallrecords_permissionsets[]' "$config_file")
-
-		echo "Done."
-	fi
-}
-
-## add_missing_sobjects_in_viewallrecords_permission_sets
-add_missing_sobjects_in_viewallrecords_permission_sets(){
-	if [[ $(yq eval '.viewallrecords_permissionsets // "null"' "$config_file") != "null" ]]; then
-		local yaml_path=""
-		if [[ "$is_sandbox_org" = "true" ]]; then
-			yaml_path=".sandbox.missing_sobjects"
-		elif [[ "$is_scratch_org" = "true" ]]; then
-			yaml_path=".scratch_org.missing_sobjects"
-		fi
-		if [[ -n "$yaml_path" && $(yq eval "$yaml_path // null" "$config_file") != "null" ]]; then
-			echo -ne "- Adding ${RBlue}missing sObjects${NC} in permission set with 'ViewAllRecords' permission... "
-			declare -A missing_sobject_map
-			parse_yaml_to_assoc_array "$config_file" "$yaml_path" missing_sobject_map
-			while IFS= read -r permissionset; do
-				local filename="${project_directory}permissionsets/${permissionset}.permissionset-meta.xml"
-				for sobject in "${!missing_sobject_map[@]}"; do
-					add_sobject_to_permissionset "$filename" "$sobject" "${missing_sobject_map[$sobject]}"
-				done
-			done < <(yq eval '.viewallrecords_permissionsets[]' "$config_file")
-			echo "Done."
-		fi
-	fi
-}
-
 ## add_sobject_to_permissionset
 add_sobject_to_permissionset(){
 	local filename="$1"

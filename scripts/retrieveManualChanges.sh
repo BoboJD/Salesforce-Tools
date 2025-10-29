@@ -268,6 +268,17 @@ indent(){
 retrieve_permissions(){
 	echo -e "\nRetrieving ${RRed}permissions${NC}..."
 	retrieve "permissions"
+	remove_unnecessary_permissions_in_permissionsets
+}
+
+remove_unnecessary_permissions_in_permissionsets(){
+	if [[ $(yq eval '.viewallrecords_permissionsets // "null"' "$config_file") != "null" ]]; then
+		echo -ne "Removing unnecessary permissions... "
+		while IFS= read -r viewallrecords_permissionset; do
+			xml ed -L -N x="$xml_namespace" -d "//*/x:objectPermissions" "${project_directory}permissionsets/${viewallrecords_permissionset}.permissionset-meta.xml"
+		done < <(yq eval '.viewallrecords_permissionsets[]' "$config_file")
+		echo "Done."
+	fi
 }
 
 retrieve_profiles(){

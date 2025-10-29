@@ -120,8 +120,6 @@ edit_files_that_fail_deployment(){
 		if [ -d "${project_directory}connectedApps/" ]; then
 			remove_consumer_key_on_each_connected_app
 		fi
-		remove_missing_sobjects_from_viewallrecords_permission_sets
-		add_missing_sobjects_in_viewallrecords_permission_sets
 		if [ "$is_scratch_org" = "true" ]; then
 			remove_users_from_queues
 			if [ -d "${project_directory}sites/" ]; then
@@ -461,11 +459,6 @@ restore_edited_files_and_exit(){
 restore_edited_files(){
 	if [ "$use_git_status_mode" = false ]; then
 		local modified_directories=("connectedApps")
-		if [[ "$is_production_org" = "false" && $(yq eval '.viewallrecords_permissionsets // "null"' "$config_file") != "null" ]]; then
-			while IFS= read -r viewallrecords_permissionset; do
-				git restore "${project_directory}permissionsets/${viewallrecords_permissionset}.permissionset-meta.xml" > /dev/null 2>&1
-			done < <(yq eval '.viewallrecords_permissionsets[]' "$config_file")
-		fi
 		if [ "$is_scratch_org" = "true" ]; then
 			modified_directories+=("queues" "autoResponseRules" "sites")
 		fi
