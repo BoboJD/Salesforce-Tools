@@ -397,6 +397,11 @@ generate_package_xml(){
 					metadata_type="Report"
 					fileName=$(echo "$fileFullPath" | awk -F '/reports/' '{print $2}' | cut -d. -f1)
 				fi
+			elif [[ $folder = objectTranslations ]]; then
+				translationType=$(basename "$fileFullPath" | awk -F'[.-]' '{print $(NF-2)}')
+				metadata_type=$(find_metadata_type_by_folder_name "$translationType")
+				local sobject=$(echo "$fileFullPath" | awk -F '/' '{print $5}')
+				fileName="${sobject}.${fileName}"
 			else
 				metadata_type=$(find_metadata_type_by_folder_name "$folder")
 			fi
