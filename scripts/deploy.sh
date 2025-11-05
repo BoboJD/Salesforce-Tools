@@ -180,9 +180,9 @@ deploy_files_into_current_org(){
 		if [ "$shutdown" = true ]; then
 			shutdown /s /t 0
 		else
-			local deploy_url=$(echo "$deploy_files_result" | jq -r '.result.deployUrl')
+			local deploy_url=$(echo "$deploy_files_result" | jq -r '.result.deployUrl' | sed 's~https://[^/]*~~')
 			if [[ -n "$deploy_url" && "$deploy_url" != "null" ]]; then
-				sf org open -p "$deploy_url"
+				sf org open -p "$deploy_url" > /dev/null
 			fi
 		fi
 		exit 1
