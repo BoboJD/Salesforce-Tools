@@ -231,7 +231,11 @@ add_option_to_delete_deleted_or_renamed_files(){
 	fi
 
 	local renamed_files=$(find_deleted_files_in_renamed_files)
-	local deleted_labels=$(find_deleted_labels)
+
+	local deleted_labels=""
+	if [ "$decompose_custom_labels" = false ]; then
+		deleted_labels=$(find_deleted_labels)
+	fi
 
 	if [[ -n "$deleted_files" || -n "$renamed_files" || -n "$deleted_labels" ]]; then
 		echo -n "Deleted files found."

@@ -6,6 +6,12 @@ SECONDS=0
 config_file="./config/salesforce-tools-config.yml"
 xml_namespace="http://soap.sforce.com/2006/04/metadata"
 project_path=$(jq -r '.packageDirectories[0].path // "force-app"' sfdx-project.json)
+if jq -e '.sourceBehaviorOptions[]? | select(. == "decomposeCustomLabelsBeta2")' sfdx-project.json > /dev/null; then
+  decompose_custom_labels=true
+else
+  decompose_custom_labels=false
+fi
+
 project_directory="$project_path/main/default/"
 if [[ $(yq eval '.project.directory // "null"' "$config_file") != "null" ]]; then
 	project_directory=$(yq eval '.project.directory' "$config_file")
@@ -177,6 +183,11 @@ delete_folders(){
 ## find_metadata_type_by_folder_name
 find_metadata_type_by_folder_name(){
 	local folder="$1"
+	if $decompose_custom_labels; then
+		label_metadata_type="CustomLabel"
+	else
+		label_metadata_type="CustomLabels"
+	fi
 	declare -A folder_to_type_mapping
 	folder_to_type_mapping=(
 		["animationRules"]="AnimationRule"
@@ -207,8 +218,7 @@ find_metadata_type_by_folder_name(){
 		["globalValueSets"]="GlobalValueSet"
 		["globalValueSetTranslations"]="GlobalValueSetTranslation"
 		["groups"]="Group"
-		["label"]="CustomLabel"
-		["labels"]="CustomLabels"
+		["labels"]=$label_metadata_type
 		["layouts"]="Layout"
 		["LeadConvertSettings"]="LeadConvertSettings"
 		["letterhead"]="Letterhead"
@@ -278,7 +288,7 @@ find_folder_name_by_metadata_type(){
 		["ConnectedApp"]="connectedApps"
 		["CustomApplication"]="applications"
 		["CustomField"]="fields"
-		["CustomLabel"]="label"
+		["CustomLabel"]="labels"
 		["CustomLabels"]="labels"
 		["CustomMetadata"]="customMetadata"
 		["CustomNotificationType"]="notificationtypes"
