@@ -405,7 +405,9 @@ generate_package_xml(){
 				translationType=$(basename "$fileFullPath" | awk -F'[.-]' '{print $(NF-2)}')
 				metadata_type=$(find_metadata_type_by_folder_name "$translationType")
 				local sobject=$(echo "$fileFullPath" | awk -F '/' '{print $5}')
-				fileName="${sobject}.${fileName}"
+				if [ "$metadata_type" != "CustomObjectTranslation" ]; then
+					fileName="${sobject}.${fileName}"
+				fi
 			else
 				metadata_type=$(find_metadata_type_by_folder_name "$folder")
 			fi

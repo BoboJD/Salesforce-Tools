@@ -232,6 +232,7 @@ find_metadata_type_by_folder_name(){
 		["networks"]="Network"
 		["notificationtypes"]="CustomNotificationType"
 		["objects"]="CustomObject"
+		["objectTranslation"]="CustomObjectTranslation"
 		["objectTranslations"]="CustomObjectTranslation"
 		["pages"]="ApexPage"
 		["pathAssistants"]="PathAssistant"
