@@ -551,19 +551,16 @@ create_scratch_org(){
 		local status=$(echo "$scratch_org_creation_result" | jq -r '.status')
 		if [ "$status" -eq 0 ]; then
 			echo -e "${RGreen}Scratch org has been created.${NC}"
+			sleep 3 # Fix for unfound org
+			echo
+			sf data create record -s DebugLevel -v "DeveloperName=DEBUG MasterLabel='DEBUG' ApexCode=DEBUG ApexProfiling=NONE Callout=NONE Database=NONE Validation=NONE Visualforce=NONE Workflow=NONE" --use-tooling-api --target-org $org_alias > /dev/null
+			echo -ne "\nSetting ${RBlue}password${NC} for user... "
+			sf org generate password --complexity 3 --length 16 --target-org $org_alias
 		else
 			local message=$(echo "$scratch_org_creation_result" | jq -r '.message')
 			error_exit "Scratch org creation failed : $message"
 		fi
 
-		sleep 3 # Fix for unfound org
-
-		echo -e "\nSetting ${RBlue}password${NC} for user..."
-		sf org generate password --complexity 3 --length 16 --target-org $org_alias
-
-		echo -ne "\Creating ${RPurple}debug level${NC} for apex code... "
-		sf data create record -s DebugLevel -v "DeveloperName=DEBUG MasterLabel='DEBUG' ApexCode=DEBUG ApexProfiling=NONE Callout=NONE Database=NONE Validation=NONE Visualforce=NONE Workflow=NONE" --use-tooling-api > /dev/null
-		echo "Done."
 	fi
 }
 
