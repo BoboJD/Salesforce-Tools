@@ -21,6 +21,14 @@ fi
 # -s / --subtree : only pull subtree & packages changes
 option=$1
 
+USER_PERMISSIONS_TO_DELETE=(
+    "TraceXdsQueries"
+    "AllowObjectDetectionTraining"
+    "ModifyAllPolicyCenterPolicies"
+    "UserInteractionInsights"
+    "ViewAllPolicyCenterPolicies"
+)
+
 main(){
 	display_start_time
 	check_update_of_git
@@ -310,6 +318,11 @@ remove_unnecessary_permissions_in_profiles(){
 				xml ed -L -N x="$xml_namespace" -d "//x:layoutAssignments[starts-with(x:layout, \"${base_layout}-\")]" "$profile"
 			fi
 		done < <(xml sel -N x="$xml_namespace" -t -m "//x:layoutAssignments/x:layout" -v . -n "$profile")
+		for user_permission_name in "${USER_PERMISSIONS_TO_DELETE[@]}"; do
+			xml ed -L -N x="$xml_namespace" \
+				-d "//x:userPermissions[x:name = \"$user_permission_name\"]" \
+				"$profile"
+		done
 		if [[ $(yq eval '.profile_settings.user_permissions_to_delete // "null"' "$config_file") != "null" ]]; then
 			while IFS= read -r user_permission_name; do
 				xml ed -L -N x="$xml_namespace" -d "//x:userPermissions[x:name = \"$user_permission_name\"]" "$profile"

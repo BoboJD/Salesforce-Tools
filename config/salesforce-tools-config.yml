@@ -63,7 +63,6 @@ translation_settings:
 # profile_settings:
 #   user_permissions_to_delete:
 #     - "TraceXdsQueries"
-#     - "AllowObjectDetectionTraining"
 #   unnecessary_permissions_to_delete:
 #     - "customMetadataTypeAccesses"
 #     - "fieldPermissions"
