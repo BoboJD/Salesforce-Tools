@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabel>
+    <fullName>Back</fullName>
+    <categories>ui</categories>
+    <language>en_US</language>
+    <protected>false</protected>
+    <shortDescription>Back</shortDescription>
+    <value>Back</value>
+</CustomLabel>

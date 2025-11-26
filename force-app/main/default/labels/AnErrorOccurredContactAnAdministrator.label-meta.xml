@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabel>
+    <fullName>AnErrorOccurredContactAnAdministrator</fullName>
+    <categories>ui,error</categories>
+    <language>en_US</language>
+    <protected>false</protected>
+    <shortDescription>AnErrorOccurredContactAnAdministrator</shortDescription>
+    <value>An error occurred, contact an administrator.</value>
+</CustomLabel>

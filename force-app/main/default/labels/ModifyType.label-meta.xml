@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabel>
+    <fullName>ModifyType</fullName>
+    <categories>ui</categories>
+    <language>en_US</language>
+    <protected>false</protected>
+    <shortDescription>ModifyType</shortDescription>
+    <value>Modify Type</value>
+</CustomLabel>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabel>
+    <fullName>DeselectAll</fullName>
+    <categories>ui</categories>
+    <language>en_US</language>
+    <protected>false</protected>
+    <shortDescription>DeselectAll</shortDescription>
+    <value>Deselect all</value>
+</CustomLabel>

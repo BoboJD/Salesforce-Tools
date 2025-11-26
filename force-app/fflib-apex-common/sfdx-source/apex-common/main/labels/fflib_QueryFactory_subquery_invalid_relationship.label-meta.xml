@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabel>
+    <fullName>fflib_QueryFactory_subquery_invalid_relationship</fullName>
+    <language>en_US</language>
+    <protected>false</protected>
+    <shortDescription>Presented when attempting to create a subquery from an invalid relationship.</shortDescription>
+    <value>Invalid call to subselectQuery.  Invalid relationship for table.</value>
+</CustomLabel>

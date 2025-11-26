@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabel>
+    <fullName>FileTypeUpdated</fullName>
+    <categories>ui</categories>
+    <language>en_US</language>
+    <protected>false</protected>
+    <shortDescription>FileTypeUpdated</shortDescription>
+    <value>File type updated</value>
+</CustomLabel>

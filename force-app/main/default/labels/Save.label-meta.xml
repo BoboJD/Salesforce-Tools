@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabel>
+    <fullName>Save</fullName>
+    <categories>ui</categories>
+    <language>en_US</language>
+    <protected>false</protected>
+    <shortDescription>Save</shortDescription>
+    <value>Save</value>
+</CustomLabel>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabel>
+    <fullName>fflib_QueryFactory_recursive_subquery_error</fullName>
+    <language>en_US</language>
+    <protected>false</protected>
+    <shortDescription>Presented when attempting to nest subqueries.</shortDescription>
+    <value>Invalid call to subselectQuery.  You may not add a subselect query to a subselect query.</value>
+</CustomLabel>

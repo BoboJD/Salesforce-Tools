@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabel>
+    <fullName>DefaultSettingNotCreated</fullName>
+    <categories>ui</categories>
+    <language>en_US</language>
+    <protected>false</protected>
+    <shortDescription>DefaultSettingNotCreated</shortDescription>
+    <value>The record named &apos;Default&apos; has not been created for the SObject &quot;Setting&quot; (tlz__Setting__c).</value>
+</CustomLabel>

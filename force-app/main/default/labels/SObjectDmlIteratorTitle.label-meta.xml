@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabel>
+    <fullName>SObjectDmlIteratorTitle</fullName>
+    <categories>ui</categories>
+    <language>en_US</language>
+    <protected>true</protected>
+    <shortDescription>SObjectDmlIteratorTitle</shortDescription>
+    <value>Update finished</value>
+</CustomLabel>

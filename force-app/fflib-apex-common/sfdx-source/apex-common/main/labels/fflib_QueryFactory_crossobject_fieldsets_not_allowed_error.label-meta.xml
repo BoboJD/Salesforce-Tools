@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabel>
+    <fullName>fflib_QueryFactory_crossobject_fieldsets_not_allowed_error</fullName>
+    <language>en_US</language>
+    <protected>false</protected>
+    <shortDescription>Error when selecting a cross-object fieldsset is not allowed and attempted.</shortDescription>
+    <value>Cross-object fields not allowed and field &quot;{0}&quot; is a cross-object field.</value>
+</CustomLabel>

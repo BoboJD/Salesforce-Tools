@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabel>
+    <fullName>YouHaveEnteredAnInvalidFormat</fullName>
+    <categories>ui,error</categories>
+    <language>en_US</language>
+    <protected>true</protected>
+    <shortDescription>YouHaveEnteredAnInvalidFormat</shortDescription>
+    <value>You have entered an invalid format.</value>
+</CustomLabel>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabel>
+    <fullName>LinkToReduceTheSizeOfPDFs</fullName>
+    <categories>ui</categories>
+    <language>en_US</language>
+    <protected>false</protected>
+    <shortDescription>LinkToReduceTheSizeOfPDFs</shortDescription>
+    <value>Link to reduce the size of PDFs</value>
+</CustomLabel>

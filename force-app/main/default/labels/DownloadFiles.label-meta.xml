@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabel>
+    <fullName>DownloadFiles</fullName>
+    <categories>ui</categories>
+    <language>en_US</language>
+    <protected>true</protected>
+    <shortDescription>DownloadFilesFromReport</shortDescription>
+    <value>Download files</value>
+</CustomLabel>

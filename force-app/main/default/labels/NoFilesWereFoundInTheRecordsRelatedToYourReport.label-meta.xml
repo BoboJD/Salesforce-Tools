@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabel>
+    <fullName>NoFilesWereFoundInTheRecordsRelatedToYourReport</fullName>
+    <categories>ui</categories>
+    <language>en_US</language>
+    <protected>true</protected>
+    <shortDescription>NoFilesWereFoundInTheRecordsRelatedToYourReport</shortDescription>
+    <value>No files were found in the records related to your report.</value>
+</CustomLabel>

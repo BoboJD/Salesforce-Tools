@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabel>
+    <fullName>ErrorProcessingFailed</fullName>
+    <categories>ui,error</categories>
+    <language>en_US</language>
+    <protected>false</protected>
+    <shortDescription>ErrorProcessingFailed</shortDescription>
+    <value>Processing failed, please try again.</value>
+</CustomLabel>

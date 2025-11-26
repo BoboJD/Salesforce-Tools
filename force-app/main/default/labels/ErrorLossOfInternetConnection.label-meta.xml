@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabel>
+    <fullName>ErrorLossOfInternetConnection</fullName>
+    <categories>ui,error</categories>
+    <language>en_US</language>
+    <protected>false</protected>
+    <shortDescription>ErrorLossOfInternetConnection</shortDescription>
+    <value>Loss of internet connection.</value>
+</CustomLabel>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabel>
+    <fullName>XSelectedOptions</fullName>
+    <categories>ui</categories>
+    <language>en_US</language>
+    <protected>false</protected>
+    <shortDescription>XSelectedOptions</shortDescription>
+    <value>{0} selected option(s)</value>
+</CustomLabel>

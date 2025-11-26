@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabel>
+    <fullName>fflib_security_error_object_not_deletable</fullName>
+    <language>en_US</language>
+    <protected>true</protected>
+    <shortDescription>fflib_security_error_object_not_deletable</shortDescription>
+    <value>You do not have permission to delete {0}</value>
+</CustomLabel>

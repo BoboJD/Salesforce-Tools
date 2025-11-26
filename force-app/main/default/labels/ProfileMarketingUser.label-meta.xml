@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabel>
+    <fullName>ProfileMarketingUser</fullName>
+    <categories>profile</categories>
+    <language>en_US</language>
+    <protected>false</protected>
+    <shortDescription>ProfileMarketingUser</shortDescription>
+    <value>Marketing User</value>
+</CustomLabel>

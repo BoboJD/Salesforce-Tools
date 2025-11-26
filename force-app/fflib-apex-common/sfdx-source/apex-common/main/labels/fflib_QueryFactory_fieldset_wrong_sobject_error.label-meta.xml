@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabel>
+    <fullName>fflib_QueryFactory_fieldset_wrong_sobject_error</fullName>
+    <language>en_US</language>
+    <protected>false</protected>
+    <shortDescription>Error when selecting a field set for a different sobject type.</shortDescription>
+    <value>Field set &quot;{0}&quot; is not for SObject type &quot;{1}&quot;</value>
+</CustomLabel>

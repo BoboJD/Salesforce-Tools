@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabel>
+    <fullName>SObjectDmlIteratorMessage</fullName>
+    <categories>ui</categories>
+    <language>en_US</language>
+    <protected>true</protected>
+    <shortDescription>SObjectDmlIteratorMessage</shortDescription>
+    <value>Result : {0} success(es) &amp; {1} error(s)</value>
+</CustomLabel>
