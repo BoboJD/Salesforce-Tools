@@ -68,7 +68,3 @@ translation_settings:
 #     - "customMetadataTypeAccesses"
 #     - "fieldPermissions"
 #     - "recordTypeVisibilities"
-
-# ViewAllRecords permissionsets
-# viewallrecords_permissionsets:
-#   - "ViewAllFiles"

@@ -271,14 +271,24 @@ retrieve_permissions(){
 	remove_unnecessary_permissions_in_permissionsets
 }
 
-remove_unnecessary_permissions_in_permissionsets(){
-	if [[ $(yq eval '.viewallrecords_permissionsets // "null"' "$config_file") != "null" ]]; then
-		echo -ne "Removing unnecessary permissions... "
-		while IFS= read -r viewallrecords_permissionset; do
-			xml ed -L -N x="$xml_namespace" -d "//*/x:objectPermissions" "${project_directory}permissionsets/${viewallrecords_permissionset}.permissionset-meta.xml"
-		done < <(yq eval '.viewallrecords_permissionsets[]' "$config_file")
-		echo "Done."
-	fi
+remove_unnecessary_permissions_in_permissionsets() {
+    echo "Checking permission sets for ViewAllData..."
+
+    shopt -s nullglob
+    for ps_file in "${project_directory}permissionsets/"*.permissionset-meta.xml; do
+        if xml sel \
+            -N x="$xml_namespace" \
+            -t -c "//x:userPermissions[x:enabled='true' and x:name='ViewAllData']" \
+            "$ps_file" | grep -q .; then
+            echo -ne "Removing unnecessary permissions in $(basename "$ps_file")... "
+            xml ed -L \
+                -N x="$xml_namespace" \
+                -d "//*/x:objectPermissions" \
+                "$ps_file"
+            echo "Done."
+        fi
+    done
+    shopt -u nullglob
 }
 
 retrieve_profiles(){
