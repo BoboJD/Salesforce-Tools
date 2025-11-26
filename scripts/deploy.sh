@@ -16,6 +16,7 @@ validate=false
 run_apex_tests=false
 test_classes=""
 shutdown=false
+apex_to_deploy=false
 
 # Parse command line options
 while [[ $# -gt 0 ]]; do
@@ -214,7 +215,7 @@ get_additional_deploy_parameters(){
 	if [[ "$is_production_org" = "true" || "$run_apex_tests" = true ]]; then
 		if [ -n "$test_classes" ]; then
 			additional_deploy_parameters+=" -t ${test_classes//,/ }"
-		else
+		elif [[ "$full_deploy" = true || "$apex_to_deploy" = true ]]; then
 			additional_deploy_parameters+=" -l RunLocalTests"
 		fi
 	fi
@@ -341,6 +342,10 @@ generate_package_xml(){
 	while IFS= read -r fileFullPath; do
 		if [[ $fileFullPath == *${project_directory}* ]]; then
 			local folder=$(echo "$fileFullPath" | awk -F '/' '{print $4}')
+
+			if [[ $folder = classes || $folder = triggers ]]; then
+				apex_to_deploy=true
+			fi
 
 			if [ "$is_for_deletion" = true ]; then
 				if [[ ! $fileFullPath =~ -meta\.xml$ ]]; then
