@@ -11,8 +11,9 @@ clean:
 	@bash scripts/clean.sh
 
 # Crypt a password to be stored in OrgSettings__mdt
+# if your password contains '$' in it, directly call bash command instead of using Makefile
 crypt:
-	@bash scripts/crypt_password.sh $(p)
+	@bash scripts/crypt_password.sh '$(p)'
 
 # Delete metadata files specified in 'manifest/destructiveChanges.xml'
 delete:
