@@ -1,5 +1,5 @@
 @SuppressWarnings('PMD.StdCyclomaticComplexity,PMD.ExcessiveParameterList')
-public class AddressUtils{
+global class AddressUtils{
 
 	private static final Map<String, String> SUFFIX_MAP = new Map<String, String>{
 		'b' => 'bis',
@@ -34,7 +34,7 @@ public class AddressUtils{
 	private static final PatternSpec NUMBER_TRAILING_SPEC = new PatternSpec(STREET_THEN_NUMBER_PATTERN, 3, 4, 1, 2);
 	private static final PatternSpec STREET_ONLY_SPEC = new PatternSpec(STREET_ONLY_PATTERN, null, null, 1, 2);
 
-	public static ParseResult parseAddress(String addressText){
+	global static ParseResult parseAddress(String addressText){
 		if(String.isBlank(addressText))
 			return new ParseResult(null, null);
 		String cleaned = addressText.trim().replaceAll('\\s+', ' ');
@@ -88,16 +88,16 @@ public class AddressUtils{
 		return numberStr + trimmedSuffix;
 	}
 
-	public class ParseResult{
-		public String streetNumber;
-		public String streetName;
+	global class ParseResult{
+		global String streetNumber;
+		global String streetName;
 
-		public ParseResult(String streetNumber, String streetName){
+		global ParseResult(String streetNumber, String streetName){
 			this.streetNumber = streetNumber;
 			this.streetName = streetName;
 		}
 
-		public Boolean hasData(){
+		global Boolean hasData(){
 			return streetNumber != null || streetName != null;
 		}
 	}
