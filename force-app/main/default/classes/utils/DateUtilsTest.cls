@@ -20,21 +20,21 @@ private class DateUtilsTest{
 	}
 
 	@IsTest
-	static void getNumberOfMonthsBetweenTwoDatetimesShouldReturnOneMonth(){
+	static void getNumberOfMonthsBetweenTwoDatesWithOneDayOfDifferenceShouldReturnOneMonth(){
 		Test.startTest();
-		Decimal numberOfMonths = DateUtils.getNumberOfMonthsBetweenTwoDates(System.now(), System.now().addMonths(1));
+		Decimal numberOfMonths = DateUtils.getNumberOfMonthsBetweenTwoDates(Date.newInstance(2025, 12, 9), Date.newInstance(2025, 12, 10));
 		Test.stopTest();
 
 		Assert.equals(1, numberOfMonths);
 	}
 
 	@IsTest
-	static void getNumberOfMonthsBetweenTwoDatesShouldReturnOneYear(){
+	static void getNumberOfMonthsBetweenTwoDatetimesShouldReturnOneMonth(){
 		Test.startTest();
-		Decimal numberOfMonths = DateUtils.getNumberOfMonthsBetweenTwoDates(Date.today().toStartOfMonth(), Date.today().toStartOfMonth().addYears(1));
+		Decimal numberOfMonths = DateUtils.getNumberOfMonthsBetweenTwoDates(System.now(), System.now().addMonths(1));
 		Test.stopTest();
 
-		Assert.equals(12, numberOfMonths);
+		Assert.equals(1, numberOfMonths);
 	}
 
 	@IsTest
