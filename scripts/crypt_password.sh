@@ -13,13 +13,17 @@ fi
 apex_file=$(mktemp)
 
 if [ ! -f "$apex_file" ]; then
-    error_exit "Failed to create temporary Apex file"
+	error_exit "Failed to create temporary Apex file"
 fi
 
 # Write the anonymous Apex code into the temporary file
 cat <<EOF > "$apex_file"
 String password = '$password';
-Blob encryptionKey = EncodingUtil.base64Decode(tlz__EncryptionKey__c.getOrgDefaults().tlz__Value__c);
+String encryptionKeyValue = tlz__EncryptionKey__c.getOrgDefaults().tlz__Value__c;
+if (String.isBlank(encryptionKeyValue)) {
+	throw new tlz.CustomException('No value is set for Custom Setting tlz__EncryptionKey__c. Generate a key using "make key" and add the generated value to this Custom Setting.');
+}
+Blob encryptionKey = EncodingUtil.base64Decode(encryptionKeyValue);
 Blob encryptedPassword = Crypto.encryptWithManagedIV('AES256', encryptionKey, Blob.valueOf(password));
 String encryptedPasswordString = EncodingUtil.base64Encode(encryptedPassword);
 System.debug(encryptedPasswordString);
@@ -29,16 +33,16 @@ EOF
 output=$(sf apex run --file "$apex_file" 2>&1)
 
 if [ $? -ne 0 ]; then
-    rm "$apex_file"  # Clean up even if the command failed
-    error_exit "Failed to run Apex code: $output"
+	rm "$apex_file"  # Clean up even if the command failed
+	error_exit "Failed to run Apex code: $output"
 fi
 
 # Extract the encrypted password from the output using grep and sed
 encrypted_password=$(echo "$output" | grep 'DEBUG|' | sed 's/.*DEBUG|//')
 
 if [ -z "$encrypted_password" ]; then
-    rm "$apex_file"
-    error_exit "Failed to extract the encrypted password from output"
+	rm "$apex_file"
+	error_exit "Failed to extract the encrypted password from output"
 fi
 
 # Display the encrypted password
