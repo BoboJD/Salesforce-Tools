@@ -17,6 +17,23 @@ jobs:
     steps:
       - name: Checkout repository code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Ensure *Constants.cls classes have corresponding *ConstantsTest.cls
+        run: |
+          set -euo pipefail
+
+          # Determine files changed in this pull request compared to the base branch
+          if [ -n "${{ github.base_ref }}" ]; then
+            BASE_REF="origin/${{ github.base_ref }}"
+          else
+            # Fallback for non-PR runs: compare against default branch
+            BASE_REF="origin/${{ github.event.repository.default_branch }}"
+          fi
+
+          echo "Comparing changes against $BASE_REF"
+          bash scripts/check_constants_tests.sh --diff-base "$BASE_REF"
 
       - name: Install dependencies
         run: npm install --force

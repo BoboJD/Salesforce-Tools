@@ -1,18 +1,52 @@
-CHANGED_FILES=$(git diff --cached --name-only)
+#!/usr/bin/env bash
 
-if echo "$CHANGED_FILES" | grep -q '^.*\/aura\/.*\.js$'; then
-  echo "Running lint:aura..."
-  npm run lint:aura
-fi
+set -euo pipefail
 
-if echo "$CHANGED_FILES" | grep -q '^.*\/lwc\/.*\.js$'; then
-  echo "Running lint:lwc..."
-  npm run lint:lwc
-fi
+###############################################################################
+# 1. Enforce tests for *Constants.cls classes
+###############################################################################
 
-if echo "$CHANGED_FILES" | grep -q '^force-app/main/default/'; then
+check_constants_tests() {
+  scripts/check_constants_tests.sh --staged
+}
+
+###############################################################################
+# Collect staged files (for other checks)
+###############################################################################
+
+CHANGED_FILES="$(git diff --cached --name-only)"
+
+changed_matches() {
+  # Usage: changed_matches "pattern"
+  echo "$CHANGED_FILES" | grep -q "$1"
+}
+###############################################################################
+# 2. JavaScript linting (Aura & LWC)
+###############################################################################
+
+run_js_linters() {
+  if changed_matches '^.*\/aura\/.*\.js$'; then
+    echo "Running lint:aura..."
+    npm run lint:aura
+  fi
+
+  if changed_matches '^.*\/lwc\/.*\.js$'; then
+    echo "Running lint:lwc..."
+    npm run lint:lwc
+  fi
+}
+
+###############################################################################
+# 3. Apex / metadata checks (regex + PMD)
+###############################################################################
+
+run_apex_checks() {
+  if ! changed_matches '^force-app/main/default/'; then
+    return 0
+  fi
+
   echo "Running REGEX..."
-  output=$(npm run regex)
+  output="$(npm run regex)"
   if echo "$output" | grep -q "severity violation"; then
     echo "$output"
     exit 1
@@ -20,4 +54,12 @@ if echo "$CHANGED_FILES" | grep -q '^force-app/main/default/'; then
 
   echo "Running PMD..."
   npm run pmd
-fi
+}
+
+###############################################################################
+# Main
+###############################################################################
+
+check_constants_tests
+run_js_linters
+run_apex_checks
