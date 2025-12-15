@@ -44,7 +44,11 @@ run_test_and_store_id(){
 		test_option="--class-names ${option}"
 	fi
 	test_run=$(sf apex run test $test_option --result-format json --code-coverage --json)
-
+	invalid_input_code=$(echo "$test_run" | jq -r '.code // empty')
+	if [[ "$invalid_input_code" == "INVALID_INPUT" ]]; then
+		invalid_input_message=$(echo "$test_run" | jq -r '.message // "Class apex not found"')
+		error_exit "${RRed}${invalid_input_message}${NC}"
+	fi
 	test_run_id=$(echo "$test_run" | jq -r '.result.testRunId')
 	echo -e "Test run id : ${BYellow}${test_run_id}${NC}\n"
 }
