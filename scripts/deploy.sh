@@ -413,6 +413,11 @@ generate_package_xml(){
 				if [ "$metadata_type" != "CustomObjectTranslation" ]; then
 					fileName="${sobject}.${fileName}"
 				fi
+			elif [[ $folder = territory2Models && $fileFullPath != *.territory2Model-meta.xml ]]; then
+				local territory2Model=$(echo "$fileFullPath" | awk -F '/' '{print $5}')
+				sub_folder=$(echo "$fileFullPath" | awk -F '/' '{print $6}')
+				metadata_type=$(find_metadata_type_by_folder_name "$sub_folder")
+				fileName="${territory2Model}.${fileName}"
 			else
 				metadata_type=$(find_metadata_type_by_folder_name "$folder")
 			fi
