@@ -7,6 +7,7 @@ global inherited sharing class tlz_OrganizationsSelector extends fflib_SObjectSe
 
 	global override List<SObjectField> getSObjectFieldList() {
 		return new List<SObjectField>{
+			Organization.Country,
 			Organization.IsSandbox
 		};
 	}

@@ -1,6 +1,7 @@
 @SuppressWarnings('PMD.ExcessiveParameterList,PMD.CognitiveComplexity')
 global inherited sharing class DateUtils{
 	global static Datetime nowDate;
+	private static Map<String, Map<String, Set<String>>> publicHolidaysCache;
 
 	global static Datetime now(){
 		if(nowDate == null)
@@ -48,12 +49,15 @@ global inherited sharing class DateUtils{
 	}
 
 	global static Integer businessDaysBetween(Date startDate, Date endDate){
+		return businessDaysBetween(startDate, endDate, OrganizationsService.retrieveCountryCode());
+	}
+
+	global static Integer businessDaysBetween(Date startDate, Date endDate, String countryCode){
 		if(startDate == null || endDate == null) return null;
 		Integer numberOfBusinessDays = 0;
 		Date dateToCheck = startDate;
 		while(dateToCheck < endDate){
-			String day = Datetime.newInstance(dateToCheck.year(), dateToCheck.month(), dateToCheck.day()).format('E');
-			if(day != 'Sat' && day != 'Sun')
+			if(!isWeekendDay(dateToCheck) && !isPublicHoliday(dateToCheck, countryCode))
 				numberOfBusinessDays++;
 			dateToCheck = dateToCheck.addDays(1);
 		}
@@ -61,12 +65,16 @@ global inherited sharing class DateUtils{
 	}
 
 	global static Date addBusinessDays(Date startDate, Integer businessDaysToAdd){
+		return addBusinessDays(startDate, businessDaysToAdd, OrganizationsService.retrieveCountryCode());
+	}
+
+	global static Date addBusinessDays(Date startDate, Integer businessDaysToAdd, String countryCode){
 		if(startDate == null || businessDaysToAdd == null) return startDate;
 		Date finalDate = startDate;
 		Integer direction = businessDaysToAdd < 0 ? -1 : 1;
 		while(businessDaysToAdd != 0){
 			finalDate = finalDate.addDays(direction);
-			if(!isWeekendDay(finalDate))
+			if(!isWeekendDay(finalDate) && !isPublicHoliday(finalDate, countryCode))
 				businessDaysToAdd -= direction;
 		}
 		return finalDate;
@@ -118,5 +126,41 @@ global inherited sharing class DateUtils{
 		Integer day = inputDate.day();
 		Integer lastDay = Date.daysInMonth(year, month);
 		return day == lastDay;
+	}
+
+	global static Boolean isPublicHoliday(Date inputDate){
+		return isPublicHoliday(inputDate, OrganizationsService.retrieveCountryCode());
+	}
+
+	global static Boolean isPublicHoliday(Date inputDate, String countryCode){
+		if(inputDate == null || String.isBlank(countryCode)) return false;
+		loadPublicHolidays();
+		String year = String.valueOf(inputDate.year());
+		String dateStr = formatDate(inputDate, 'yyyy-MM-dd');
+		return publicHolidaysCache?.containsKey(countryCode.toUpperCase())
+			&& publicHolidaysCache.get(countryCode.toUpperCase()).containsKey(year)
+			&& publicHolidaysCache.get(countryCode.toUpperCase()).get(year).contains(dateStr);
+	}
+
+	@SuppressWarnings('PMD.ApexCRUDViolation')
+	private static void loadPublicHolidays(){
+		if(publicHolidaysCache != null) return;
+		publicHolidaysCache = new Map<String, Map<String, Set<String>>>();
+		StaticResource resource = [SELECT Body FROM StaticResource WHERE Name = 'PublicHolidays' LIMIT 1];
+		String jsonContent = resource.Body.toString();
+		Map<String, Object> holidaysByCountry = (Map<String, Object>)JSON.deserializeUntyped(jsonContent);
+		for(String countryCode : holidaysByCountry.keySet()){
+			Map<String, Object> holidaysByYear = (Map<String, Object>)holidaysByCountry.get(countryCode);
+			Map<String, Set<String>> yearMap = new Map<String, Set<String>>();
+			for(String year : holidaysByYear.keySet()){
+				List<Object> holidays = (List<Object>)holidaysByYear.get(year);
+				Set<String> holidaySet = new Set<String>();
+				for(Object holiday : holidays){
+					holidaySet.add((String)holiday);
+				}
+				yearMap.put(year, holidaySet);
+			}
+			publicHolidaysCache.put(countryCode, yearMap);
+		}
 	}
 }

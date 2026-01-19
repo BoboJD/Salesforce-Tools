@@ -1,5 +1,6 @@
 global inherited sharing class OrganizationsServiceImpl implements IOrganizationsService{
 	private static String organizationName;
+	private static String organizationCountryCode;
 
 	global String retrieveOrganizationName(){
 		if(organizationName == null){
@@ -12,5 +13,13 @@ global inherited sharing class OrganizationsServiceImpl implements IOrganization
 			}
 		}
 		return organizationName;
+	}
+
+	global String retrieveCountryCode(){
+		if(organizationCountryCode == null){
+			List<Organization> orgs = tlz_OrganizationsSelector.newInstance().selectAll();
+			organizationCountryCode = orgs.isEmpty() ? '' : orgs[0].Country;
+		}
+		return organizationCountryCode;
 	}
 }

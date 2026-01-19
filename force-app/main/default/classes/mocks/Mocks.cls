@@ -309,6 +309,10 @@ global class Mocks{
 		global String retrieveOrganizationName(){
 			return (String)mocks.mockNonVoidMethod(this, 'retrieveOrganizationName', new List<Type>(), new List<Object>());
 		}
+
+		global String retrieveCountryCode(){
+			return (String)mocks.mockNonVoidMethod(this, 'retrieveCountryCode', new List<Type>(), new List<Object>());
+		}
 	}
 
 	global class tlz_OrgWideEmailAddressesSelector extends fflib_SObjectMocks.SObjectSelector implements tlz_IOrgWideEmailAddressesSelector{

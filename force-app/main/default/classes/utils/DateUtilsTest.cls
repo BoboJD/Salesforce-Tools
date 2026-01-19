@@ -308,4 +308,406 @@ private class DateUtilsTest{
 
 		Assert.isTrue(isEndOfMonth);
 	}
+
+	@IsTest
+	static void isPublicHolidayWithoutCountryCodeShouldUseOrganizationsService(){
+		fflib_ApexMocks mocks = new fflib_ApexMocks();
+		IOrganizationsService organizationsServiceMock = new Mocks.OrganizationsService(mocks);
+
+		mocks.startStubbing();
+		mocks.when(organizationsServiceMock.retrieveCountryCode()).thenReturn('FR');
+		mocks.stopStubbing();
+
+		Application.Service.setMock(IOrganizationsService.class, organizationsServiceMock);
+
+		Test.startTest();
+		Boolean isHoliday = DateUtils.isPublicHoliday(Date.newInstance(2024, 7, 14));
+		Test.stopTest();
+
+		((IOrganizationsService)mocks.verify(organizationsServiceMock)).retrieveCountryCode();
+		Assert.isTrue(isHoliday);
+	}
+
+	@IsTest
+	static void isPublicHolidayWithoutCountryCodeWithEmptyStringShouldReturnFalse(){
+		fflib_ApexMocks mocks = new fflib_ApexMocks();
+		IOrganizationsService organizationsServiceMock = new Mocks.OrganizationsService(mocks);
+
+		mocks.startStubbing();
+		mocks.when(organizationsServiceMock.retrieveCountryCode()).thenReturn('');
+		mocks.stopStubbing();
+
+		Application.Service.setMock(IOrganizationsService.class, organizationsServiceMock);
+
+		Test.startTest();
+		Boolean isHoliday = DateUtils.isPublicHoliday(Date.newInstance(2024, 7, 14));
+		Test.stopTest();
+
+		((IOrganizationsService)mocks.verify(organizationsServiceMock)).retrieveCountryCode();
+		Assert.isFalse(isHoliday);
+	}
+
+	@IsTest
+	static void isPublicHolidayWithNullDateShouldReturnFalse(){
+		Test.startTest();
+		Boolean isHoliday = DateUtils.isPublicHoliday(null, 'FR');
+		Test.stopTest();
+
+		Assert.isFalse(isHoliday);
+	}
+
+	@IsTest
+	static void isPublicHolidayWithBlankCountryCodeShouldReturnFalse(){
+		Test.startTest();
+		Boolean isHoliday = DateUtils.isPublicHoliday(Date.newInstance(2024, 7, 14), '');
+		Test.stopTest();
+
+		Assert.isFalse(isHoliday);
+	}
+
+	@IsTest
+	static void isPublicHolidayForFranceBastilleDayShouldReturnTrue(){
+		Test.startTest();
+		Boolean isHoliday = DateUtils.isPublicHoliday(Date.newInstance(2024, 7, 14), 'FR');
+		Test.stopTest();
+
+		Assert.isTrue(isHoliday);
+	}
+
+	@IsTest
+	static void isPublicHolidayForFranceNewYearShouldReturnTrue(){
+		Test.startTest();
+		Boolean isHoliday = DateUtils.isPublicHoliday(Date.newInstance(2024, 1, 1), 'FR');
+		Test.stopTest();
+
+		Assert.isTrue(isHoliday);
+	}
+
+	@IsTest
+	static void isPublicHolidayForFranceEasterMondayShouldReturnTrue(){
+		Test.startTest();
+		Boolean isHoliday = DateUtils.isPublicHoliday(Date.newInstance(2024, 4, 1), 'FR');
+		Test.stopTest();
+
+		Assert.isTrue(isHoliday);
+	}
+
+	@IsTest
+	static void isPublicHolidayForFranceRegularDayShouldReturnFalse(){
+		Test.startTest();
+		Boolean isHoliday = DateUtils.isPublicHoliday(Date.newInstance(2024, 6, 15), 'FR');
+		Test.stopTest();
+
+		Assert.isFalse(isHoliday);
+	}
+
+	@IsTest
+	static void isPublicHolidayForBelgiumNationalDayShouldReturnTrue(){
+		Test.startTest();
+		Boolean isHoliday = DateUtils.isPublicHoliday(Date.newInstance(2024, 7, 21), 'BE');
+		Test.stopTest();
+
+		Assert.isTrue(isHoliday);
+	}
+
+	@IsTest
+	static void isPublicHolidayForBelgiumAscensionDayShouldReturnTrue(){
+		Test.startTest();
+		Boolean isHoliday = DateUtils.isPublicHoliday(Date.newInstance(2024, 5, 9), 'BE');
+		Test.stopTest();
+
+		Assert.isTrue(isHoliday);
+	}
+
+	@IsTest
+	static void isPublicHolidayForSpainGoodFridayShouldReturnTrue(){
+		Test.startTest();
+		Boolean isHoliday = DateUtils.isPublicHoliday(Date.newInstance(2024, 3, 29), 'ES');
+		Test.stopTest();
+
+		Assert.isTrue(isHoliday);
+	}
+
+	@IsTest
+	static void isPublicHolidayForSpainEpiphanyShouldReturnTrue(){
+		Test.startTest();
+		Boolean isHoliday = DateUtils.isPublicHoliday(Date.newInstance(2024, 1, 6), 'ES');
+		Test.stopTest();
+
+		Assert.isTrue(isHoliday);
+	}
+
+	@IsTest
+	static void isPublicHolidayWithCaseInsensitiveCountryCodeShouldWork(){
+		Test.startTest();
+		Boolean isHolidayLower = DateUtils.isPublicHoliday(Date.newInstance(2024, 7, 14), 'fr');
+		Boolean isHolidayUpper = DateUtils.isPublicHoliday(Date.newInstance(2024, 7, 14), 'FR');
+		Boolean isHolidayMixed = DateUtils.isPublicHoliday(Date.newInstance(2024, 7, 14), 'Fr');
+		Test.stopTest();
+
+		Assert.isTrue(isHolidayLower);
+		Assert.isTrue(isHolidayUpper);
+		Assert.isTrue(isHolidayMixed);
+	}
+
+	@IsTest
+	static void isPublicHolidayWithInvalidCountryCodeShouldReturnFalse(){
+		Test.startTest();
+		Boolean isHoliday = DateUtils.isPublicHoliday(Date.newInstance(2024, 7, 14), 'XX');
+		Test.stopTest();
+
+		Assert.isFalse(isHoliday);
+	}
+
+	@IsTest
+	static void isPublicHolidayForDifferentYearsShouldWork(){
+		Test.startTest();
+		Boolean isHoliday2024 = DateUtils.isPublicHoliday(Date.newInstance(2024, 7, 14), 'FR');
+		Boolean isHoliday2025 = DateUtils.isPublicHoliday(Date.newInstance(2025, 7, 14), 'FR');
+		Boolean isHoliday2040 = DateUtils.isPublicHoliday(Date.newInstance(2040, 7, 14), 'FR');
+		Test.stopTest();
+
+		Assert.isTrue(isHoliday2024);
+		Assert.isTrue(isHoliday2025);
+		Assert.isTrue(isHoliday2040);
+	}
+
+	@IsTest
+	static void addBusinessDaysWithCountryCodeShouldSkipHolidays(){
+		// Starting on Friday July 12, 2024, adding 1 business day should skip July 14 (Bastille Day, Sunday)
+		// and land on Monday July 15
+		Test.startTest();
+		Date returnedDate = DateUtils.addBusinessDays(Date.newInstance(2024, 7, 12), 1, 'FR');
+		Test.stopTest();
+
+		Assert.equals(Date.newInstance(2024, 7, 15), returnedDate);
+	}
+
+	@IsTest
+	static void addBusinessDaysWithCountryCodeShouldSkipMultipleHolidays(){
+		// Starting on May 8 (Wednesday - Victory Day, holiday), adding 1 business day should skip:
+		// - May 8 (Victory Day - holiday, starting point)
+		// - May 9 (Ascension Day - holiday)
+		// - May 10 (Friday - business day)
+		// Result: May 10
+		Test.startTest();
+		Date returnedDate = DateUtils.addBusinessDays(Date.newInstance(2024, 5, 8), 1, 'FR');
+		Test.stopTest();
+
+		Assert.equals(Date.newInstance(2024, 5, 10), returnedDate);
+	}
+
+	@IsTest
+	static void addBusinessDaysWithoutCountryCodeShouldUseOrganizationsService(){
+		fflib_ApexMocks mocks = new fflib_ApexMocks();
+		IOrganizationsService organizationsServiceMock = new Mocks.OrganizationsService(mocks);
+
+		mocks.startStubbing();
+		mocks.when(organizationsServiceMock.retrieveCountryCode()).thenReturn('FR');
+		mocks.stopStubbing();
+
+		Application.Service.setMock(IOrganizationsService.class, organizationsServiceMock);
+
+		// Starting on Friday July 12, 2024, adding 1 business day should skip July 14 (Bastille Day, Sunday)
+		// and land on Monday July 15
+		Test.startTest();
+		Date returnedDate = DateUtils.addBusinessDays(Date.newInstance(2024, 7, 12), 1);
+		Test.stopTest();
+
+		((IOrganizationsService)mocks.verify(organizationsServiceMock)).retrieveCountryCode();
+		Assert.equals(Date.newInstance(2024, 7, 15), returnedDate);
+	}
+
+	@IsTest
+	static void addBusinessDaysWithoutCountryCodeWithEmptyStringShouldNotCheckHolidays(){
+		fflib_ApexMocks mocks = new fflib_ApexMocks();
+		IOrganizationsService organizationsServiceMock = new Mocks.OrganizationsService(mocks);
+
+		mocks.startStubbing();
+		mocks.when(organizationsServiceMock.retrieveCountryCode()).thenReturn('');
+		mocks.stopStubbing();
+
+		Application.Service.setMock(IOrganizationsService.class, organizationsServiceMock);
+
+		// Without country code, should work as before (no holiday checking)
+		Test.startTest();
+		Date returnedDate = DateUtils.addBusinessDays(Date.newInstance(2024, 7, 12), 1);
+		Test.stopTest();
+
+		((IOrganizationsService)mocks.verify(organizationsServiceMock)).retrieveCountryCode();
+		Assert.equals(Date.newInstance(2024, 7, 15), returnedDate);
+	}
+
+	@IsTest
+	static void addBusinessDaysWithCountryCodeNegativeDaysShouldWork(){
+		// Starting on Monday July 15, 2024, going back 1 business day should skip July 14 (Bastille Day)
+		Test.startTest();
+		Date returnedDate = DateUtils.addBusinessDays(Date.newInstance(2024, 7, 15), -1, 'FR');
+		Test.stopTest();
+
+		Assert.equals(Date.newInstance(2024, 7, 12), returnedDate);
+	}
+
+	@IsTest
+	static void addBusinessDaysWithBelgiumHolidayShouldSkipHoliday(){
+		// Starting on Friday July 19, 2024, adding 1 business day should skip July 21 (Belgian National Day, Sunday)
+		Test.startTest();
+		Date returnedDate = DateUtils.addBusinessDays(Date.newInstance(2024, 7, 19), 1, 'BE');
+		Test.stopTest();
+
+		Assert.equals(Date.newInstance(2024, 7, 22), returnedDate);
+	}
+
+	@IsTest
+	static void addBusinessDaysWithSpainHolidayShouldSkipHoliday(){
+		// Starting on Thursday January 4, 2024, adding 1 business day should skip January 6 (Epiphany, Saturday)
+		// Actually, since Jan 6 is Saturday, it would be skipped anyway. Let's use a weekday holiday.
+		// Starting on Friday December 5, 2024, adding 1 business day should skip December 6 (Constitution Day, Friday)
+		Test.startTest();
+		Date returnedDate = DateUtils.addBusinessDays(Date.newInstance(2024, 12, 5), 1, 'ES');
+		Test.stopTest();
+
+		Assert.equals(Date.newInstance(2024, 12, 9), returnedDate);
+	}
+
+	@IsTest
+	static void businessDaysBetweenWithCountryCodeShouldExcludeHolidays(){
+		// From August 14 (Wednesday) to August 16 (Friday) = 1 business day (excluding August 15 - Assumption Day, Thursday)
+		Test.startTest();
+		Integer businessDays = DateUtils.businessDaysBetween(Date.newInstance(2024, 8, 14), Date.newInstance(2024, 8, 16), 'FR');
+		Test.stopTest();
+
+		Assert.equals(1, businessDays);
+	}
+
+	@IsTest
+	static void businessDaysBetweenWithCountryCodeShouldExcludeMultipleHolidays(){
+		// From May 8 (Wednesday) to May 11 (Saturday) = 1 business day
+		// May 8 is Victory Day (holiday), May 9 is Ascension Day (holiday), May 10 is Friday (business day), May 11 is Saturday
+		Test.startTest();
+		Integer businessDays = DateUtils.businessDaysBetween(Date.newInstance(2024, 5, 8), Date.newInstance(2024, 5, 11), 'FR');
+		Test.stopTest();
+
+		Assert.equals(1, businessDays);
+	}
+
+	@IsTest
+	static void businessDaysBetweenWithoutCountryCodeShouldUseOrganizationsService(){
+		fflib_ApexMocks mocks = new fflib_ApexMocks();
+		IOrganizationsService organizationsServiceMock = new Mocks.OrganizationsService(mocks);
+
+		mocks.startStubbing();
+		mocks.when(organizationsServiceMock.retrieveCountryCode()).thenReturn('FR');
+		mocks.stopStubbing();
+
+		Application.Service.setMock(IOrganizationsService.class, organizationsServiceMock);
+
+		// From August 14 (Wednesday) to August 16 (Friday) = 1 business day (excluding August 15 - Assumption Day, Thursday)
+		Test.startTest();
+		Integer businessDays = DateUtils.businessDaysBetween(Date.newInstance(2024, 8, 14), Date.newInstance(2024, 8, 16));
+		Test.stopTest();
+
+		((IOrganizationsService)mocks.verify(organizationsServiceMock)).retrieveCountryCode();
+		Assert.equals(1, businessDays);
+	}
+
+	@IsTest
+	static void businessDaysBetweenWithoutCountryCodeWithEmptyStringShouldNotCheckHolidays(){
+		fflib_ApexMocks mocks = new fflib_ApexMocks();
+		IOrganizationsService organizationsServiceMock = new Mocks.OrganizationsService(mocks);
+
+		mocks.startStubbing();
+		mocks.when(organizationsServiceMock.retrieveCountryCode()).thenReturn('');
+		mocks.stopStubbing();
+
+		Application.Service.setMock(IOrganizationsService.class, organizationsServiceMock);
+
+		Test.startTest();
+		Integer businessDays = DateUtils.businessDaysBetween(Date.newInstance(2024, 7, 12), Date.newInstance(2024, 7, 16));
+		Test.stopTest();
+
+		((IOrganizationsService)mocks.verify(organizationsServiceMock)).retrieveCountryCode();
+
+		Assert.equals(2, businessDays);
+	}
+
+	@IsTest
+	static void businessDaysBetweenWithBelgiumHolidayShouldExcludeHoliday(){
+		// From August 14 (Wednesday) to August 16 (Friday) = 1 business day (excluding August 15 - Assumption Day, Thursday)
+		Test.startTest();
+		Integer businessDays = DateUtils.businessDaysBetween(Date.newInstance(2024, 8, 14), Date.newInstance(2024, 8, 16), 'BE');
+		Test.stopTest();
+
+		Assert.equals(1, businessDays);
+	}
+
+	@IsTest
+	static void businessDaysBetweenWithSpainHolidayShouldExcludeHoliday(){
+		// From December 5 (Thursday) to December 10 (Tuesday) = 2 business days (excluding December 6 - Constitution Day)
+		Test.startTest();
+		Integer businessDays = DateUtils.businessDaysBetween(Date.newInstance(2024, 12, 5), Date.newInstance(2024, 12, 10), 'ES');
+		Test.stopTest();
+
+		Assert.equals(2, businessDays);
+	}
+
+	@IsTest
+	static void businessDaysBetweenWithNullCountryCodeShouldNotCheckHolidays(){
+		// When explicitly passing null, should not check holidays (null overrides OrganizationsService)
+		Test.startTest();
+		Integer businessDays = DateUtils.businessDaysBetween(Date.newInstance(2024, 7, 12), Date.newInstance(2024, 7, 16), null);
+		Test.stopTest();
+
+		Assert.equals(2, businessDays);
+	}
+
+	@IsTest
+	static void addBusinessDaysWithNullCountryCodeShouldNotCheckHolidays(){
+		// When explicitly passing null, should not check holidays (null overrides OrganizationsService)
+		Test.startTest();
+		Date returnedDate = DateUtils.addBusinessDays(Date.newInstance(2024, 7, 12), 1, null);
+		Test.stopTest();
+
+		Assert.equals(Date.newInstance(2024, 7, 15), returnedDate);
+	}
+
+	@IsTest
+	static void addBusinessDaysWithoutCountryCodeWithBelgiumShouldUseBelgiumHolidays(){
+		fflib_ApexMocks mocks = new fflib_ApexMocks();
+		IOrganizationsService organizationsServiceMock = new Mocks.OrganizationsService(mocks);
+
+		mocks.startStubbing();
+		mocks.when(organizationsServiceMock.retrieveCountryCode()).thenReturn('BE');
+		mocks.stopStubbing();
+
+		Application.Service.setMock(IOrganizationsService.class, organizationsServiceMock);
+
+		// Starting on Friday July 19, 2024, adding 1 business day should skip July 21 (Belgian National Day, Sunday)
+		Test.startTest();
+		Date returnedDate = DateUtils.addBusinessDays(Date.newInstance(2024, 7, 19), 1);
+		Test.stopTest();
+
+		((IOrganizationsService)mocks.verify(organizationsServiceMock)).retrieveCountryCode();
+		Assert.equals(Date.newInstance(2024, 7, 22), returnedDate);
+	}
+
+	@IsTest
+	static void businessDaysBetweenWithoutCountryCodeWithSpainShouldUseSpainHolidays(){
+		fflib_ApexMocks mocks = new fflib_ApexMocks();
+		IOrganizationsService organizationsServiceMock = new Mocks.OrganizationsService(mocks);
+
+		mocks.startStubbing();
+		mocks.when(organizationsServiceMock.retrieveCountryCode()).thenReturn('ES');
+		mocks.stopStubbing();
+
+		Application.Service.setMock(IOrganizationsService.class, organizationsServiceMock);
+
+		// From December 5 (Thursday) to December 10 (Tuesday) = 2 business days (excluding December 6 - Constitution Day)
+		Test.startTest();
+		Integer businessDays = DateUtils.businessDaysBetween(Date.newInstance(2024, 12, 5), Date.newInstance(2024, 12, 10));
+		Test.stopTest();
+
+		((IOrganizationsService)mocks.verify(organizationsServiceMock)).retrieveCountryCode();
+		Assert.equals(2, businessDays);
+	}
 }

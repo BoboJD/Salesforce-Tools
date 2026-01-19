@@ -50,4 +50,29 @@ private class OrganizationsServiceTest{
 
 		Assert.notEquals(OrganizationConstants.PROD, organizationName);
 	}
+
+	@IsTest
+	static void retrieveCountryCodeShouldReturnCountryCode(){
+		fflib_ApexMocks mocks = new fflib_ApexMocks();
+		tlz_IOrganizationsSelector organizationsSelectorMock = new Mocks.tlz_OrganizationsSelector(mocks);
+
+		Organization organization = (Organization)TestUtils.setReadableFields(new Organization(), new Map<SObjectField, Object>{
+			Schema.Organization.Country => 'FR'
+		});
+
+		mocks.startStubbing();
+		mocks.when(organizationsSelectorMock.sObjectType()).thenReturn(Schema.Organization.SObjectType);
+		mocks.when(organizationsSelectorMock.selectAll()).thenReturn(new List<Organization>{organization});
+		mocks.stopStubbing();
+
+		Application.Selector.setMock(organizationsSelectorMock);
+
+		Test.startTest();
+		String countryCode = OrganizationsService.retrieveCountryCode();
+		Test.stopTest();
+
+		((tlz_IOrganizationsSelector)mocks.verify(organizationsSelectorMock)).selectAll();
+
+		Assert.equals(organization.Country, countryCode);
+	}
 }
