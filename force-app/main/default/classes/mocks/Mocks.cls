@@ -390,6 +390,38 @@ global class Mocks{
 		}
 	}
 
+	global class PublicHolidaysSelector implements IPublicHolidaysSelector{
+		private fflib_ApexMocks mocks;
+
+		global PublicHolidaysSelector(fflib_ApexMocks mocks){
+			this.mocks = mocks;
+		}
+
+		global Map<String, Map<String, Set<String>>> selectAll(){
+			return (Map<String, Map<String, Set<String>>>)mocks.mockNonVoidMethod(this, 'selectAll', new List<Type>(), new List<Object>());
+		}
+
+		global Map<String, Set<String>> selectByCountryCode(String countryCode){
+			return (Map<String, Set<String>>)mocks.mockNonVoidMethod(this, 'selectByCountryCode', new List<Type>{String.class}, new List<Object>{countryCode});
+		}
+	}
+
+	global class PublicHolidaysService implements IPublicHolidaysService{
+		private fflib_ApexMocks mocks;
+
+		global PublicHolidaysService(fflib_ApexMocks mocks){
+			this.mocks = mocks;
+		}
+
+		global Boolean isPublicHoliday(Date dateValue, String countryCode){
+			return (Boolean)mocks.mockNonVoidMethod(this, 'isPublicHoliday', new List<Type>{Date.class, String.class}, new List<Object>{dateValue, countryCode});
+		}
+
+		global Boolean isPublicHoliday(Date dateValue){
+			return (Boolean)mocks.mockNonVoidMethod(this, 'isPublicHoliday', new List<Type>{Date.class}, new List<Object>{dateValue});
+		}
+	}
+
 	global class UserRecordAccessesSelector extends fflib_SObjectMocks.SObjectSelector implements IUserRecordAccessesSelector{
 		private fflib_ApexMocks mocks;
 

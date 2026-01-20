@@ -1,7 +1,10 @@
 global inherited sharing class PublicHolidaysSelector implements IPublicHolidaysSelector{
 	private static Map<String, Map<String, Set<String>>> publicHolidaysCache;
+	@TestVisible
+	private static IPublicHolidaysSelector mockInstance;
 
 	global static IPublicHolidaysSelector newInstance(){
+		if(Test.isRunningTest() && mockInstance != null) return mockInstance;
 		return new PublicHolidaysSelector();
 	}
 

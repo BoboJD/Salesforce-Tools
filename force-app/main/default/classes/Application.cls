@@ -16,7 +16,8 @@ global inherited sharing class Application{
 				IFeatureManagementService.class => FeatureManagementServiceImpl.class,
 				IMessagingService.class => MessagingServiceImpl.class,
 				IOrganizationsService.class => OrganizationsServiceImpl.class,
-				IPageReferencesService.class => PageReferencesServiceImpl.class});
+				IPageReferencesService.class => PageReferencesServiceImpl.class,
+				IPublicHolidaysService.class => PublicHolidaysServiceImpl.class});
 
 	global static final fflib_Application.SelectorFactory Selector =
 		new fflib_Application.SelectorFactory(
