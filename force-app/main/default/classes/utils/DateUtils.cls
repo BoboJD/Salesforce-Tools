@@ -1,7 +1,6 @@
 @SuppressWarnings('PMD.ExcessiveParameterList,PMD.CognitiveComplexity')
 global inherited sharing class DateUtils{
 	global static Datetime nowDate;
-	private static Map<String, Map<String, Set<String>>> publicHolidaysCache;
 
 	global static Datetime now(){
 		if(nowDate == null)
@@ -134,33 +133,11 @@ global inherited sharing class DateUtils{
 
 	global static Boolean isPublicHoliday(Date inputDate, String countryCode){
 		if(inputDate == null || String.isBlank(countryCode)) return false;
-		loadPublicHolidays();
+		Map<String, Map<String, Set<String>>> publicHolidaysCache = PublicHolidaysSelector.newInstance().selectAll();
 		String year = String.valueOf(inputDate.year());
 		String dateStr = formatDate(inputDate, 'yyyy-MM-dd');
 		return publicHolidaysCache?.containsKey(countryCode.toUpperCase())
 			&& publicHolidaysCache.get(countryCode.toUpperCase()).containsKey(year)
 			&& publicHolidaysCache.get(countryCode.toUpperCase()).get(year).contains(dateStr);
-	}
-
-	@SuppressWarnings('PMD.ApexCRUDViolation')
-	private static void loadPublicHolidays(){
-		if(publicHolidaysCache != null) return;
-		publicHolidaysCache = new Map<String, Map<String, Set<String>>>();
-		StaticResource resource = [SELECT Body FROM StaticResource WHERE Name = 'PublicHolidays' LIMIT 1];
-		String jsonContent = resource.Body.toString();
-		Map<String, Object> holidaysByCountry = (Map<String, Object>)JSON.deserializeUntyped(jsonContent);
-		for(String countryCode : holidaysByCountry.keySet()){
-			Map<String, Object> holidaysByYear = (Map<String, Object>)holidaysByCountry.get(countryCode);
-			Map<String, Set<String>> yearMap = new Map<String, Set<String>>();
-			for(String year : holidaysByYear.keySet()){
-				List<Object> holidays = (List<Object>)holidaysByYear.get(year);
-				Set<String> holidaySet = new Set<String>();
-				for(Object holiday : holidays){
-					holidaySet.add((String)holiday);
-				}
-				yearMap.put(year, holidaySet);
-			}
-			publicHolidaysCache.put(countryCode, yearMap);
-		}
 	}
 }
