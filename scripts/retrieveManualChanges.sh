@@ -4,7 +4,7 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 current_branch=$(git symbolic-ref --short HEAD)
 
 if [ $current_branch = "master" ]; then
-	git checkout -b admin master
+	git checkout -b admin master > /dev/null 2>&1
 fi
 
 if [ $current_branch = "prod-release" ]; then
@@ -81,6 +81,7 @@ main(){
 		restore_files_modified_by_scratch_org
 	fi
 
+	cleanup_branch_if_no_changes
 	display_duration_of_script
 }
 
@@ -360,6 +361,20 @@ restore_files_modified_by_scratch_org(){
 	for dir in "${files_modified_by_scratch_org[@]}"; do
 		git restore "${project_directory}${dir}" > /dev/null 2>&1
 	done
+}
+
+cleanup_branch_if_no_changes(){
+	if git diff --quiet master HEAD && git diff --cached --quiet; then
+		echo -e "\n${RYellow}Warning: No changes have been retrieved.${NC}"
+		local branch_to_delete=$(git symbolic-ref --short HEAD)
+		if [[ "$branch_to_delete" = "admin" || "$branch_to_delete" = "hotfix" ]]; then
+			git checkout master > /dev/null 2>&1
+			# Delete local branch only if it hasn't been pushed to remote
+			if ! git ls-remote --heads origin "$branch_to_delete" | grep -q "$branch_to_delete"; then
+				git branch -d "$branch_to_delete" > /dev/null 2>&1
+			fi
+		fi
+	fi
 }
 
 main
