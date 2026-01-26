@@ -364,7 +364,7 @@ restore_files_modified_by_scratch_org(){
 }
 
 cleanup_branch_if_no_changes(){
-	if git diff --quiet master HEAD && git diff --cached --quiet; then
+	if git diff --quiet master HEAD && git diff --cached --quiet && git diff --quiet; then
 		echo -e "\n${RYellow}Warning: No changes have been retrieved.${NC}"
 		local branch_to_delete=$(git symbolic-ref --short HEAD)
 		if [[ "$branch_to_delete" = "admin" || "$branch_to_delete" = "hotfix" ]]; then
