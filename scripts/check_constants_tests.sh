@@ -62,5 +62,3 @@ if [ -n "$MISSING_TESTS" ]; then
   echo "Please add/update the corresponding *ConstantsTest.cls test classes."
   exit 1
 fi
-
-echo "All *Constants.cls changes have corresponding *ConstantsTest.cls tests."
