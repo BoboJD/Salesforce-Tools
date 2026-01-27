@@ -2,6 +2,8 @@
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 . "$SCRIPT_DIR/utils.sh"
 
+current_branch=$(git rev-parse --abbrev-ref HEAD)
+
 echo -ne "\nChecking if ${RBlue}npm packages${NC} have update... "
 ncu --upgrade --silent
 if git diff --quiet package.json; then
@@ -63,6 +65,13 @@ if [ "$status" = "0" ]; then
 				)
 			' "sfdx-project.json" > temp.json && mv temp.json "sfdx-project.json"
 			echo -e "${RGreen}Promotion of package was successful.${NC}"
+			if [ "$current_branch" = "develop" ]; then
+				release_version="$major.$minor.$newPatch"
+				release_branch="release/$release_version"
+				echo -ne "Creating release branch ${RPurple}${release_branch}${NC}... "
+				git checkout -b "$release_branch" > /dev/null 2>&1
+				echo "Done."
+			fi
 		else
 			errors=$(echo $result | jq -r '.result.errors' | tr '\\n' '\n')
 			error_exit "$errors"
