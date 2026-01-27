@@ -15,6 +15,8 @@ main(){
 		merge_prod_release_into_master
 		delete_remote_branches_merged_into_master
 		echo -e "${RGreen}Release done.${NC}"
+	elif [[ $current_branch =~ ^release/[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+		merge_version_release_branch
 	elif [[ $current_branch == "release/"* ]]; then
 		display_pull_request_uri
 	else
@@ -44,6 +46,51 @@ control_current_branch_state(){
     if [ "$(git rev-parse $current_branch)" != "$(git rev-parse origin/$current_branch)" ]; then
         error_exit "Current branch '$current_branch' has unpushed commits. Please push them before proceeding."
     fi
+}
+
+merge_version_release_branch(){
+	version=${current_branch#release/}
+	echo -e "\nReleasing version ${RGreen}${version}${NC} :"
+
+	# Merge into master
+	echo -ne "\n - Switching to ${RBlue}master${NC}... "
+	yes y | git fetch origin master:master > /dev/null 2>&1
+	yes y | git checkout master > /dev/null 2>&1
+	echo -n "Merging changes... "
+	if yes y | git merge --no-ff "$current_branch" --no-edit > /dev/null 2>&1; then
+		echo -n "Updating remote... "
+		yes y | git push origin master > /dev/null 2>&1
+		echo "Done."
+	else
+		error_exit "Merge conflict detected on branch master. Resolve conflicts then push manually."
+	fi
+
+	# Tag the release on master
+	echo -ne "\n - Creating tag ${RGreen}v${version}${NC}... "
+	yes y | git tag -a "v${version}" -m "Release ${version}" > /dev/null 2>&1
+	yes y | git push origin "v${version}" > /dev/null 2>&1
+	echo "Done."
+
+	# Merge into develop
+	echo -ne "\n - Switching to ${RBlue}develop${NC}... "
+	yes y | git fetch origin develop:develop > /dev/null 2>&1
+	yes y | git checkout develop > /dev/null 2>&1
+	echo -n "Merging changes... "
+	if yes y | git merge --no-ff "$current_branch" --no-edit > /dev/null 2>&1; then
+		echo -n "Updating remote... "
+		yes y | git push origin develop > /dev/null 2>&1
+		echo "Done."
+	else
+		error_exit "Merge conflict detected on branch develop. Resolve conflicts then push manually."
+	fi
+
+	# Delete release branch
+	echo -ne "\n - Deleting ${RPurple}${current_branch}${NC} branch... "
+	yes y | git push origin --delete "$current_branch" > /dev/null 2>&1
+	yes y | git branch -D "$current_branch" > /dev/null 2>&1
+	echo "Done."
+
+	echo -e "\n${RGreen}Release v${version} done.${NC}"
 }
 
 merge_current_branch_in_every_branch(){
