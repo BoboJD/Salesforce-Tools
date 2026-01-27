@@ -39,7 +39,6 @@ esac
 CONSTANTS_FILES=$(echo "$CHANGED_FILES" | grep 'Constants\.cls$' | grep -v 'ConstantsTest\.cls$' || true)
 
 if [ -z "$CONSTANTS_FILES" ]; then
-  echo "No *Constants.cls changes detected."
   exit 0
 fi
 
@@ -63,5 +62,3 @@ if [ -n "$MISSING_TESTS" ]; then
   echo "Please add/update the corresponding *ConstantsTest.cls test classes."
   exit 1
 fi
-
-echo "All *Constants.cls changes have corresponding *ConstantsTest.cls tests."
