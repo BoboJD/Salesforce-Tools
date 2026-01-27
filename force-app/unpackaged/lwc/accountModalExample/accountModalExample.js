@@ -4,6 +4,7 @@ import { CurrentPageReference, NavigationMixin } from 'lightning/navigation';
 import { CloseActionScreenEvent } from 'lightning/actions';
 import { createRecord } from 'lightning/uiRecordApi';
 import { displaySpinner, wait, hideSpinner, checkRequiredFields, displayErrorToast, displaySuccessToast, setValue, refreshView } from 'c/utils';
+import { query, countQuery, getSObjectList, getFieldsForSObject } from 'c/soqlService';
 import CONTACT_OBJECT from '@salesforce/schema/Contact';
 
 export default class AccountModalExample extends NavigationMixin(LightningElement){
@@ -18,6 +19,12 @@ export default class AccountModalExample extends NavigationMixin(LightningElemen
 	isLoading = true;
 	displayNextRow = false;
 	previousFormHeight;
+
+	// soqlService example properties
+	accountCount = 0;
+	@track accounts = [];
+	sObjectCount = 0;
+	@track accountFields = [];
 
 	@wire(CurrentPageReference)
 	getStateParameters(currentPageReference){
@@ -102,6 +109,29 @@ export default class AccountModalExample extends NavigationMixin(LightningElemen
 		setTimeout(() => {
 			hideSpinner(this);
 		}, 2000);
+		this.loadSoqlServiceExamples();
+	}
+
+	async loadSoqlServiceExamples(){
+		// Example 1: Count query
+		const countResult = await countQuery('SELECT COUNT() FROM Account');
+		if(countResult.status === 'SUCCESS'){
+			this.accountCount = countResult.count;
+		}
+
+		// Example 2: Query records
+		const queryResult = await query('SELECT Id, Name FROM Account LIMIT 5');
+		if(queryResult.status === 'SUCCESS'){
+			this.accounts = queryResult.records;
+		}
+
+		// Example 3: Get list of SObjects
+		const sObjects = await getSObjectList();
+		this.sObjectCount = sObjects.length;
+
+		// Example 4: Get fields for Account
+		const fields = await getFieldsForSObject('Account');
+		this.accountFields = fields.slice(0, 5); // Just show first 5 fields
 	}
 
 	renderedCallback(){

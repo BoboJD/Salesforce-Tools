@@ -77,7 +77,31 @@
 					<c-chart config={chartConfig}></c-chart>
 				</div>
 			</div>
+
+			<!-- soqlService Example -->
+			<div class="slds-form__row slds-var-m-top_medium">
+				<div class="slds-form__item">
+					<div class="slds-box slds-theme_shade">
+						<h3 class="slds-text-heading_small slds-var-m-bottom_small">soqlService Example</h3>
+						<p><strong>Account Count:</strong> {accountCount}</p>
+						<p><strong>SObject Count:</strong> {sObjectCount}</p>
+						<p class="slds-var-m-top_small"><strong>First 5 Accounts:</strong></p>
+						<ul class="slds-list_dotted">
+							<template for:each={accounts} for:item="account">
+								<li key={account.Id}>{account.Name}</li>
+							</template>
+						</ul>
+						<p class="slds-var-m-top_small"><strong>First 5 Account Fields:</strong></p>
+						<ul class="slds-list_dotted">
+							<template for:each={accountFields} for:item="field">
+								<li key={field.apiName}>{field.label} ({field.apiName}) - {field.type}</li>
+							</template>
+						</ul>
+					</div>
+				</div>
+			</div>
 		</div>
+
 		<lightning-button
 			slot="additional-buttons"
 			variant="brand"
