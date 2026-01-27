@@ -39,7 +39,6 @@ esac
 CONSTANTS_FILES=$(echo "$CHANGED_FILES" | grep 'Constants\.cls$' | grep -v 'ConstantsTest\.cls$' || true)
 
 if [ -z "$CONSTANTS_FILES" ]; then
-  echo "No *Constants.cls changes detected."
   exit 0
 fi
 
