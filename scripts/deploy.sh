@@ -454,7 +454,7 @@ generate_package_xml(){
 	done
 
 	local version=$(jq -r '.sourceApiVersion' sfdx-project.json)
-	echo -e "\t<version>65.0</version>"
+	echo -e "\t<version>66.0</version>"
 	echo "</Package>"
 }
 
