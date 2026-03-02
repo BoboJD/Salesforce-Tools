@@ -5,7 +5,7 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 current_branch=$(git rev-parse --abbrev-ref HEAD)
 
 echo -ne "\nChecking if ${RBlue}npm packages${NC} have update... "
-ncu --upgrade --silent
+ncu --upgrade --silent --reject "eslint,eslint-plugin-import,eslint-plugin-jest"
 if git diff --quiet package.json; then
 	echo -e "${RYellow}All dependencies are up to date.${NC}"
 else
