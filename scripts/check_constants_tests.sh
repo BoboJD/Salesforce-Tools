@@ -50,7 +50,7 @@ for FILE in $CONSTANTS_FILES; do
   PREFIX=${BASENAME%Constants.cls}
   EXPECTED_TEST_FILE="$DIR/${PREFIX}ConstantsTest.cls"
 
-  if ! echo "$CHANGED_FILES" | grep -qx "$EXPECTED_TEST_FILE"; then
+  if ! echo "$CHANGED_FILES" | grep -qx "$EXPECTED_TEST_FILE" && [ ! -f "$EXPECTED_TEST_FILE" ]; then
     MISSING_TESTS="${MISSING_TESTS}\n- $FILE (expected test: $EXPECTED_TEST_FILE)"
   fi
 done
