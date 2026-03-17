@@ -46,9 +46,7 @@ global class TestUtils{
 	}
 
 	global static String generateUniqueName(){
-		String dateString = String.valueOf(Datetime.now()).replace(' ', '').replace(':', '').replace('-', '');
-		Integer randomInt = Integer.valueOf(Math.rint(Math.random() * 1000000));
-		return dateString + randomInt;
+		return EncodingUtil.convertToHex(Crypto.generateAesKey(128)).substring(0, 20);
 	}
 
 	global static String generateRandomString(Integer numberOfChars) {
