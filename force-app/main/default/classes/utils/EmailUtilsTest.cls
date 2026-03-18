@@ -18,4 +18,22 @@ private class EmailUtilsTest{
 
 		Assert.equals('', domain);
 	}
+
+	@IsTest
+	static void returnBlankStringWithNullParameter(){
+		Test.startTest();
+		String domain = EmailUtils.getDomain(null);
+		Test.stopTest();
+
+		Assert.equals('', domain);
+	}
+
+	@IsTest
+	static void returnBlankStringWithNoAtSign(){
+		Test.startTest();
+		String domain = EmailUtils.getDomain('notanemail');
+		Test.stopTest();
+
+		Assert.equals('', domain);
+	}
 }
