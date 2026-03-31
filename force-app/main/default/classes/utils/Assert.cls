@@ -121,4 +121,9 @@ global with sharing class Assert{
 		}
 		System.Assert.isTrue(fieldValueFound, 'Value in list not found for sObjectField '+SObjectFieldUtils.getFieldApiName(sObjectField));
 	}
+
+	global static void throwsWith(Exception e, String expectedMessage){
+		System.Assert.isNotNull(e, 'No exception thrown.');
+		messageContains(e.getMessage(), expectedMessage);
+	}
 }
