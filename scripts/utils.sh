@@ -115,13 +115,16 @@ check_update_for_global_npm_packages(){
 		if [[ $ncu_output == *"All global packages are up-to-date"* ]]; then
 			echo "All global npm packages are up-to-date."
 		else
-			upgrade_command=$(echo "$ncu_output" | grep -o 'npm -g install .*')
-			if [ -n "$upgrade_command" ]; then
+			raw_command=$(echo "$ncu_output" | grep -o 'npm -g install .*')
+			upgrade_command=$(echo "$raw_command" | sed 's/ npm@[^ ]*//g')
+			if [ -z "$raw_command" ]; then
+				error_exit "Error extracting upgrade command of 'ncu -g'."
+			elif [[ "$upgrade_command" == "npm -g install" ]]; then
+				echo "All global npm packages are up-to-date (npm excluded from auto-update)."
+			else
 				echo -e "Updates detected, running : ${RBlue}$upgrade_command${NC}"
 				eval "$upgrade_command"
 				sf autocomplete --refresh-cache
-			else
-				error_exit "Error extracting upgrade command of 'ncu -g'."
 			fi
 		fi
 	fi
