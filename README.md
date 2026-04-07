@@ -6,6 +6,9 @@ This project is an unlocked package containing fflib apex files, utility classes
 
 For more detailed documentation, check out the [docs](./docs).
 
+- [Unlocked Package Overview](./docs/presentation.md)
+- [Release Process](./docs/release-process.md)
+
 ## Prerequisites for using bash scripts
 
 * Install "Chocolatey" which allows "choco" command line on windows (https://chocolatey.org/install)
