@@ -17,6 +17,8 @@ main(){
 		echo -e "${RGreen}Release done.${NC}"
 	elif [[ $current_branch =~ ^release/[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
 		merge_version_release_branch
+	elif [[ $current_branch == "scripts/"* ]]; then
+		merge_scripts_branch
 	elif [[ $current_branch == "release/"* ]]; then
 		display_pull_request_uri
 	else
@@ -46,6 +48,45 @@ control_current_branch_state(){
     if [ "$(git rev-parse $current_branch)" != "$(git rev-parse origin/$current_branch)" ]; then
         error_exit "Current branch '$current_branch' has unpushed commits. Please push them before proceeding."
     fi
+}
+
+merge_scripts_branch(){
+	name=${current_branch#scripts/}
+	echo -e "\nReleasing scripts ${RGreen}${name}${NC} :"
+
+	# Merge into master
+	echo -ne "\n - Switching to ${RBlue}master${NC}... "
+	yes y | git fetch origin master:master > /dev/null 2>&1
+	yes y | git checkout master > /dev/null 2>&1
+	echo -n "Merging changes... "
+	if yes y | git merge --no-ff "$current_branch" --no-edit > /dev/null 2>&1; then
+		echo -n "Updating remote... "
+		yes y | git push origin master > /dev/null 2>&1
+		echo "Done."
+	else
+		error_exit "Merge conflict detected on branch master. Resolve conflicts then push manually."
+	fi
+
+	# Merge into develop
+	echo -ne "\n - Switching to ${RBlue}develop${NC}... "
+	yes y | git fetch origin develop:develop > /dev/null 2>&1
+	yes y | git checkout develop > /dev/null 2>&1
+	echo -n "Merging changes... "
+	if yes y | git merge --no-ff "$current_branch" --no-edit > /dev/null 2>&1; then
+		echo -n "Updating remote... "
+		yes y | git push origin develop > /dev/null 2>&1
+		echo "Done."
+	else
+		error_exit "Merge conflict detected on branch develop. Resolve conflicts then push manually."
+	fi
+
+	# Delete scripts branch
+	echo -ne "\n - Deleting ${RPurple}${current_branch}${NC} branch... "
+	yes y | git push origin --delete "$current_branch" > /dev/null 2>&1
+	yes y | git branch -D "$current_branch" > /dev/null 2>&1
+	echo "Done."
+
+	echo -e "\n${RGreen}Release done.${NC}"
 }
 
 merge_version_release_branch(){
