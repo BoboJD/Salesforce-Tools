@@ -72,7 +72,9 @@ main(){
 	check_current_org_type
 	if [ "$is_production_org" = "false" ]; then
 		install_packages $(get_org_alias)
-		edit_files_that_fail_deployment
+		if [ "$full_deploy" = true ]; then
+			edit_files_that_fail_deployment
+		fi
 	fi
 	trap ctrl_c SIGINT
 	deploy_files_into_current_org
@@ -80,7 +82,9 @@ main(){
 		if [[ "$full_deploy" = true && $(yq eval '.org_settings.territories_used // "null"' "$config_file") = "true" ]]; then
 			deploy_territories_into_current_org
 		fi
-		restore_edited_files
+		if [ "$full_deploy" = true ]; then
+			restore_edited_files
+		fi
 		if [ "$current_branch" = "preprod" ]; then
 			store_last_deployed_commit_hash
 		fi
