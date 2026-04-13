@@ -168,6 +168,9 @@ retrieve_development(){
 
 retrieve_configuration(){
 	echo -e "\nRetrieving ${RCyan}configuration${NC}..."
+	if [[ -f "manifest/configuration-org.xml" ]]; then
+		retrieve "configuration-org"
+	fi
 	retrieve "configuration"
 	if [[ $(yq eval '.translation_settings // "null"' "$config_file") != "null" ]]; then
 		remove_untracked_xml_blocks_in_translations
