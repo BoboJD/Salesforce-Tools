@@ -8,6 +8,7 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 # -v / --validate : validate the deployment to the default org
 # -t / --test [classNames] : execute unit tests while performing deployment. Optional comma-separated class names
 # -s / --shutdown : shutdown computer at the end of deployment (error or success of deployment)
+# -o / --option [optionName] : specify a deploy option. Available options: IgnoreAssignmentRules
 
 # Initialize parameters
 full_deploy=false
@@ -17,6 +18,7 @@ run_apex_tests=false
 test_classes=""
 shutdown=false
 apex_to_deploy=false
+deploy_options=""
 
 # Parse command line options
 while [[ $# -gt 0 ]]; do
@@ -44,6 +46,13 @@ while [[ $# -gt 0 ]]; do
 		-s|--shutdown)
 			shutdown=true
 			shift
+			;;
+		-o|--option)
+			shift
+			if [[ $# -gt 0 && ! $1 =~ ^- ]]; then
+				deploy_options+="$1 "
+				shift
+			fi
 			;;
 		*)
 			echo "Invalid option: $1" >&2
@@ -318,6 +327,10 @@ construct_deploy_package_xml(){
 	else
 		files_to_deploy=$(git diff --diff-filter=ARM --name-only ${commit_hash_or_branch_reference}...${current_commit_hash_or_branch} | \
 			grep -E '^"?force-app/' | sed 's/^"\(.*\)"$/\1/' | xargs -0 printf "%b")
+	fi
+
+	if [[ "$deploy_options" =~ IgnoreAssignmentRules ]]; then
+		files_to_deploy=$(echo "$files_to_deploy" | grep -v 'assignmentRules-meta\.xml')
 	fi
 
 	if [[ -n "$files_to_deploy" ]]; then
