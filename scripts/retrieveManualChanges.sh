@@ -17,7 +17,6 @@ fi
 # -od / --only-development : only retrieve development files
 # -oe / --only-experiences : only retrieve experience files
 # -op / --only-permissions : only retrieve permission files
-# -trad : only retrieve translation files
 # -s / --subtree : only pull subtree & packages changes
 option=$1
 
