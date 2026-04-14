@@ -356,6 +356,20 @@ generate_package_xml(){
 
 	declare -A fileNames_by_metadata_type
 
+	# Pre-pass: collect names of custom objects being deleted so their sub-items can be skipped
+	local deleted_custom_objects=""
+	if [ "$is_for_deletion" = true ]; then
+		while IFS= read -r fileFullPath; do
+			if [[ $fileFullPath == *${project_directory}* ]]; then
+				local folder=$(echo "$fileFullPath" | awk -F '/' '{print $4}')
+				if [[ $folder = objects && $fileFullPath == *.object-meta.xml ]]; then
+					local sobject=$(echo "$fileFullPath" | awk -F '/' '{print $5}')
+					deleted_custom_objects+=";${sobject}"
+				fi
+			fi
+		done <<< "$(echo -e "$files_to_put_in_xml")"
+	fi
+
 	while IFS= read -r fileFullPath; do
 		if [[ $fileFullPath == *${project_directory}* ]]; then
 			local folder=$(echo "$fileFullPath" | awk -F '/' '{print $4}')
@@ -393,6 +407,9 @@ generate_package_xml(){
 				sub_folder=$(echo "$fileFullPath" | awk -F '/' '{print $6}')
 
 				if [ "$is_for_deletion" = true ]; then
+					if [[ "${deleted_custom_objects}" == *";${sobject}"* ]]; then
+						continue
+					fi
 					case $sub_folder in
 						"recordTypes")
 							continue
