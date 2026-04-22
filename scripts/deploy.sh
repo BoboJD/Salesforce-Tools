@@ -327,10 +327,10 @@ construct_deploy_package_xml(){
 	if [ "$use_git_status_mode" = true ]; then
 		files_to_deploy=$(git status --porcelain | \
 			awk '$1 ~ /^(A|M|AM|MM|\?\?)/ {print $2}' | \
-			grep -E '^force-app/' | xargs -0 printf "%b")
+			grep -E '^force-app/' | while IFS= read -r line; do printf "%b\n" "$line"; done)
 	else
 		files_to_deploy=$(git diff --diff-filter=ARM --name-only ${commit_hash_or_branch_reference}...${current_commit_hash_or_branch} | \
-			grep -E '^"?force-app/' | sed 's/^"\(.*\)"$/\1/' | xargs -0 printf "%b")
+			grep -E '^"?force-app/' | sed 's/^"\(.*\)"$/\1/' | while IFS= read -r line; do printf "%b\n" "$line"; done)
 	fi
 
 	if [[ "$deploy_options" =~ IgnoreAssignmentRules ]]; then
