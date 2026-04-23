@@ -137,7 +137,29 @@ check_installation_of_salesforce_tools() {
 update_npm_packages(){
 	if [[ $(yq eval '.features.auto_update_settings.check_npm_packages_update // "null"' "$config_file") = "true" ]]; then
 		echo -ne "\nChecking if ${RBlue}npm packages${NC} have update... "
-		ncu --upgrade --silent
+		local ncu_args=("--upgrade" "--silent")
+		local constraints_defined
+		constraints_defined=$(yq eval '.features.auto_update_settings.npm_package_version_constraints // "null"' "$config_file")
+		if [[ "$constraints_defined" != "null" ]]; then
+			local ncu_json reject_list=""
+			ncu_json=$(ncu --jsonUpgraded 2>/dev/null || echo "{}")
+			while IFS= read -r entry; do
+				[[ -z "$entry" ]] && continue
+				local package="${entry%%=*}"
+				local constraint="${entry#*=}"
+				local proposed_raw proposed_major
+				proposed_raw=$(echo "$ncu_json" | yq eval ".\"$package\" // \"\"" - 2>/dev/null)
+				proposed_major=$(echo "$proposed_raw" | sed 's/[^0-9]*//' | cut -d. -f1)
+				if [[ -n "$proposed_major" && "$constraint" =~ ^[[:space:]]*\<([0-9]+) ]]; then
+					local max_major="${BASH_REMATCH[1]}"
+					if (( proposed_major >= max_major )); then
+						reject_list="${reject_list:+$reject_list,}$package"
+					fi
+				fi
+			done < <(yq eval '.features.auto_update_settings.npm_package_version_constraints | to_entries | .[] | .key + "=" + .value' "$config_file" 2>/dev/null)
+			[[ -n "$reject_list" ]] && ncu_args+=("--reject" "$reject_list")
+		fi
+		ncu "${ncu_args[@]}"
 		if git diff --quiet package.json; then
 			echo -e "${RYellow}All dependencies are up to date.${NC}"
 		else
