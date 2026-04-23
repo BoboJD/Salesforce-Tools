@@ -48,6 +48,8 @@ translation_settings:
 #     check_windows_git_update: true
 #     check_global_npm_packages_update: true
 #     check_npm_packages_update: true
+#     npm_package_version_constraints:
+#       eslint: "<10"
 #   always_retrieve_development: true
 
 # Picklists with controlling field deploy issues
