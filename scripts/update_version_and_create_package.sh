@@ -71,6 +71,11 @@ if [ "$status" = "0" ]; then
 				echo -ne "Creating release branch ${RPurple}${release_branch}${NC}... "
 				git checkout -b "$release_branch" > /dev/null 2>&1
 				echo "Done."
+				echo -ne "Committing and pushing ${RPurple}${release_branch}${NC}... "
+				git add -u > /dev/null 2>&1
+				git commit -m "Release $release_version" > /dev/null 2>&1
+				git push --set-upstream origin "$release_branch" > /dev/null 2>&1
+				echo "Done."
 			fi
 		else
 			errors=$(echo $result | jq -r '.result.errors' | tr '\\n' '\n')
