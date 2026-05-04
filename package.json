@@ -33,6 +33,6 @@
 		"jest": "^30.3.0"
 	},
 	"dependencies": {
-		"globals": "^17.4.0"
+		"globals": "^17.6.0"
 	}
 }
