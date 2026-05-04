@@ -2,6 +2,56 @@
 private class OrganizationsServiceTest{
 
 	@IsTest
+	static void isProductionWithOrgNotSandboxShouldReturnTrue(){
+		fflib_ApexMocks mocks = new fflib_ApexMocks();
+		tlz_IOrganizationsSelector organizationsSelectorMock = new Mocks.tlz_OrganizationsSelector(mocks);
+
+		Organization organization = (Organization)TestUtils.setReadableFields(new Organization(), new Map<SObjectField, Object>{
+			Schema.Organization.IsSandbox => false
+		});
+
+		mocks.startStubbing();
+		mocks.when(organizationsSelectorMock.sObjectType()).thenReturn(Schema.Organization.SObjectType);
+		mocks.when(organizationsSelectorMock.selectAll()).thenReturn(new List<Organization>{organization});
+		mocks.stopStubbing();
+
+		Application.Selector.setMock(organizationsSelectorMock);
+
+		Test.startTest();
+		Boolean isProduction = OrganizationsService.isProduction();
+		Test.stopTest();
+
+		((tlz_IOrganizationsSelector)mocks.verify(organizationsSelectorMock)).selectAll();
+
+		Assert.isTrue(isProduction);
+	}
+
+	@IsTest
+	static void isProductionWithSandboxShouldReturnFalse(){
+		fflib_ApexMocks mocks = new fflib_ApexMocks();
+		tlz_IOrganizationsSelector organizationsSelectorMock = new Mocks.tlz_OrganizationsSelector(mocks);
+
+		Organization organization = (Organization)TestUtils.setReadableFields(new Organization(), new Map<SObjectField, Object>{
+			Schema.Organization.IsSandbox => true
+		});
+
+		mocks.startStubbing();
+		mocks.when(organizationsSelectorMock.sObjectType()).thenReturn(Schema.Organization.SObjectType);
+		mocks.when(organizationsSelectorMock.selectAll()).thenReturn(new List<Organization>{organization});
+		mocks.stopStubbing();
+
+		Application.Selector.setMock(organizationsSelectorMock);
+
+		Test.startTest();
+		Boolean isProduction = OrganizationsService.isProduction();
+		Test.stopTest();
+
+		((tlz_IOrganizationsSelector)mocks.verify(organizationsSelectorMock)).selectAll();
+
+		Assert.isFalse(isProduction);
+	}
+
+	@IsTest
 	static void retrieveOrganizationNameWithOrgNotSandboxShouldReturnProd(){
 		fflib_ApexMocks mocks = new fflib_ApexMocks();
 		tlz_IOrganizationsSelector organizationsSelectorMock = new Mocks.tlz_OrganizationsSelector(mocks);
