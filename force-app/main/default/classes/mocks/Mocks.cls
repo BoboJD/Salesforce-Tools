@@ -306,6 +306,10 @@ global class Mocks{
 			this.mocks = mocks;
 		}
 
+		global Boolean isProduction(){
+			return (Boolean)mocks.mockNonVoidMethod(this, 'isProduction', new List<Type>(), new List<Object>());
+		}
+
 		global String retrieveOrganizationName(){
 			return (String)mocks.mockNonVoidMethod(this, 'retrieveOrganizationName', new List<Type>(), new List<Object>());
 		}
