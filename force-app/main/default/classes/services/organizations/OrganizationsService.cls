@@ -1,5 +1,9 @@
 global inherited sharing class OrganizationsService{
 
+	global static Boolean isProduction(){
+		return service().isProduction();
+	}
+
 	global static String retrieveOrganizationName(){
 		return service().retrieveOrganizationName();
 	}
