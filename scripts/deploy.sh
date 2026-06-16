@@ -5,6 +5,7 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 # Parameters (not mandatory)
 # -f / --full-deploy : perform a full deployment of all source files to the default org
 # -dc / --deploy-changes / -lc / --local-changes : perform a deployment of all files that has been changed (git status)
+# -bc / --branch-changes : perform a deployment of changes on the current branch compared to master
 # -v / --validate : validate the deployment to the default org
 # -t / --test [classNames] : execute unit tests while performing deployment. Optional comma-separated class names
 # -s / --shutdown : shutdown computer at the end of deployment (error or success of deployment)
@@ -13,6 +14,7 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 # Initialize parameters
 full_deploy=false
 use_git_status_mode=false
+use_branch_changes_mode=false
 validate=false
 run_apex_tests=false
 test_classes=""
@@ -29,6 +31,12 @@ while [[ $# -gt 0 ]]; do
 			;;
 		-dc|--deploy-changes|-lc|--local-changes)
 			use_git_status_mode=true
+			use_branch_changes_mode=false
+			shift
+			;;
+		-bc|--branch-changes)
+			use_branch_changes_mode=true
+			use_git_status_mode=false
 			shift
 			;;
 		-v|--validate)
@@ -70,6 +78,7 @@ main(){
 		pull_last_commits_on_current_branch
 	fi
 	check_current_org_type
+	block_deploy_to_production_from_non_release_branch
 	if [ "$is_production_org" = "false" ]; then
 		install_packages $(get_org_alias)
 		if [ "$full_deploy" = true ]; then
@@ -110,6 +119,15 @@ block_deploy_from_master_branch(){
 	current_branch=$(git rev-parse --abbrev-ref HEAD)
 	if [ "$current_branch" = "master" ]; then
 		error_exit "Script cannot run on master branch."
+	fi
+}
+
+block_deploy_to_production_from_non_release_branch(){
+	if [ "$is_production_org" = "true" ]; then
+		if [[ "$current_branch" != "hotfix" && "$current_branch" != "prod-release" ]]; then
+			local prod_org_id=$(yq eval '.org_settings.production_org_id // "null"' "$config_file")
+			error_exit "Deployment to production org (${prod_org_id}) is only allowed from 'hotfix' or 'prod-release' branches (current: '${current_branch}')."
+		fi
 	fi
 }
 
