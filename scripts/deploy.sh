@@ -6,6 +6,7 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 # -f / --full-deploy : perform a full deployment of all source files to the default org
 # -dc / --deploy-changes / -lc / --local-changes : perform a deployment of all files that has been changed (git status)
 # -bc / --branch-changes : perform a deployment of changes on the current branch compared to master
+# -ch / --commit-hash [hash...] : deploy files changed in one or more specific commits
 # -v / --validate : validate the deployment to the default org
 # -t / --test [classNames] : execute unit tests while performing deployment. Optional comma-separated class names
 # -s / --shutdown : shutdown computer at the end of deployment (error or success of deployment)
@@ -15,6 +16,8 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 full_deploy=false
 use_git_status_mode=false
 use_branch_changes_mode=false
+use_commit_hash_mode=false
+commit_hashes=()
 validate=false
 run_apex_tests=false
 test_classes=""
@@ -38,6 +41,20 @@ while [[ $# -gt 0 ]]; do
 			use_branch_changes_mode=true
 			use_git_status_mode=false
 			shift
+			;;
+		-ch|--commit-hash)
+			use_commit_hash_mode=true
+			use_git_status_mode=false
+			use_branch_changes_mode=false
+			shift
+			while [[ $# -gt 0 && ! $1 =~ ^- ]]; do
+				commit_hashes+=("$1")
+				shift
+			done
+			if [ ${#commit_hashes[@]} -eq 0 ]; then
+				echo "Error: --commit-hash requires at least one commit hash." >&2
+				exit 1
+			fi
 			;;
 		-v|--validate)
 			validate=true
@@ -232,6 +249,8 @@ get_additional_deploy_parameters(){
 		else
 			error_exit "You need to file the property .deploy_settings.preprod in the config file"
 		fi
+	elif [ "$use_commit_hash_mode" = true ]; then
+		echo -e "\nDeploying files from commit(s): ${RGreen}${commit_hashes[*]}${NC}"
 	else
 		current_commit_hash_or_branch="$current_branch"
 		commit_hash_or_branch_reference="master"
@@ -258,6 +277,13 @@ add_option_to_delete_deleted_or_renamed_files(){
 	local deleted_files=""
 	if [ "$use_git_status_mode" = true ]; then
 		deleted_files=$(git status --porcelain | awk '$1 == "D" && $2 ~ /-meta\.xml$/ && $2 ~ /^force-app\/main\/default\// {print $2}')
+	elif [ "$use_commit_hash_mode" = true ]; then
+		for hash in "${commit_hashes[@]}"; do
+			deleted_files+=$(git diff-tree --no-commit-id -r --diff-filter=D --name-only "$hash" | \
+				awk '$1 ~ /-meta\.xml$/ && $1 ~ /^force-app\/main\/default\//')
+			deleted_files+=$'\n'
+		done
+		deleted_files=$(echo "$deleted_files" | sort -u | grep -v '^$')
 	else
 		deleted_files=$(git diff --diff-filter=D --name-only ${commit_hash_or_branch_reference}...${current_commit_hash_or_branch} | awk '$1 ~ /-meta\.xml$/ && $1 ~ /^force-app\/main\/default\//')
 	fi
@@ -288,6 +314,14 @@ find_deleted_files_in_renamed_files(){
 	local renamed_or_moved_files=""
 	if [ "$use_git_status_mode" = true ]; then
 		renamed_or_moved_files=$(git status --porcelain -z | tr '\0' '\n' | grep '^R' | awk '{print $2}' | grep -E '^-?force-app/.*-meta\.xml$')
+	elif [ "$use_commit_hash_mode" = true ]; then
+		local accumulated=""
+		for hash in "${commit_hashes[@]}"; do
+			accumulated+=$(git diff-tree --no-commit-id -r --diff-filter=R --name-status "$hash" | \
+				awk '$1 ~ /^R/ && $2 ~ /-meta.xml$/ && $2 ~ /^force-app\/main\/default\// {print $2}')
+			accumulated+=$'\n'
+		done
+		renamed_or_moved_files=$(echo "$accumulated" | sort -u | grep -v '^$')
 	else
 		renamed_or_moved_files=$(git diff --diff-filter=R --name-status ${commit_hash_or_branch_reference}...${current_commit_hash_or_branch} | \
 			awk '$1 ~ /^R/ && $2 ~ /-meta.xml$/ && $2 ~ /^force-app\/main\/default\// {print $2}')
@@ -316,6 +350,11 @@ find_deleted_labels(){
 	local diff_output=""
 	if [ "$use_git_status_mode" = true ]; then
 		diff_output=$(git diff "${project_directory}labels/CustomLabels.labels-meta.xml")
+	elif [ "$use_commit_hash_mode" = true ]; then
+		for hash in "${commit_hashes[@]}"; do
+			diff_output+=$(git diff-tree --no-commit-id -r -p "$hash" -- "${project_directory}labels/CustomLabels.labels-meta.xml")
+			diff_output+=$'\n'
+		done
 	else
 		diff_output=$(git diff ${commit_hash_or_branch_reference}...${current_commit_hash_or_branch} "${project_directory}labels/CustomLabels.labels-meta.xml")
 	fi
@@ -346,6 +385,14 @@ construct_deploy_package_xml(){
 		files_to_deploy=$(git status --porcelain | \
 			awk '$1 ~ /^(A|M|AM|MM|\?\?)/ {print $2}' | \
 			grep -E '^force-app/' | while IFS= read -r line; do printf "%b\n" "$line"; done)
+	elif [ "$use_commit_hash_mode" = true ]; then
+		local accumulated=""
+		for hash in "${commit_hashes[@]}"; do
+			accumulated+=$(git diff-tree --no-commit-id -r --diff-filter=ARM --name-only "$hash" | \
+				grep -E '^force-app/' | while IFS= read -r line; do printf "%b\n" "$line"; done)
+			accumulated+=$'\n'
+		done
+		files_to_deploy=$(echo "$accumulated" | sort -u | grep -v '^$')
 	else
 		files_to_deploy=$(git diff --diff-filter=ARM --name-only ${commit_hash_or_branch_reference}...${current_commit_hash_or_branch} | \
 			grep -E '^"?force-app/' | sed 's/^"\(.*\)"$/\1/' | while IFS= read -r line; do printf "%b\n" "$line"; done)
